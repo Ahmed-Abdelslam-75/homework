@@ -496,7 +496,7 @@ function roundCount(r) {
 }
 function viewStart() {
   const canvas = el("canvas", { class: "net", "aria-hidden": "true" });
-  const input = el("input", { class: "name", id: "studentName", type: "text", autocomplete: "name", maxlength: "60", placeholder: "e.g. Youssef Ahmed" });
+  const input = el("input", { class: "name", id: "studentName", type: "text", autocomplete: "name", maxlength: "60", placeholder: "e.g. Ahmed" });
   input.value = S.name;
   const err = el("p", { class: "err", hidden: true, text: "Write your full name first, so El Bashmohandes knows whose homework this is." });
   const begin = () => {
