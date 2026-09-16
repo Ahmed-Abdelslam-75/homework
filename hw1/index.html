@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="From ENIAC to ChatGPT · Homework 1">
 <meta property="og:description" content="Six rounds, one journey through computing. Answer, check, build a streak, and see which level you reach.">
-<meta property="og:image" content="https://ahmed-abdelslam-75.github.io/ai-homework/hw1/og.png">
+<meta property="og:image" content="https://ahmed-abdelslam-75.github.io/homework/hw1/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -332,7 +332,7 @@ const ROUNDS = [
   { era: "1990s", tag: "90s", eraName: "The Internet", title: "Match it", how: "Give every situation its answer, then check the whole set." },
   { era: "2000s", tag: "00s", eraName: "Smartphones", title: "Put it in order", how: "Move each card up or down until the order is right, then check." },
   { era: "2010s", tag: "10s", eraName: "The cloud", title: "Fill the gap", how: "Type the missing word, or tap one from the word bank." },
-  { era: "Now", tag: "Now", eraName: "Generative AI", title: "Explain it", how: "Write full answers in English, like in the exam, in your own words and without any AI help. Your teacher marks these." }
+  { era: "Now", tag: "Now", eraName: "Generative AI", title: "Explain it", how: "Write full answers in English, like in the exam, in your own words and without any AI help. El Bashmohandes marks these." }
 ];
 const TYPE_LABEL = { mcq: "Quick pick", tf: "True or false", match: "Match it", order: "In order", fill: "Fill the gap", essay: "Explain it" };
 
@@ -498,7 +498,7 @@ function viewStart() {
   const canvas = el("canvas", { class: "net", "aria-hidden": "true" });
   const input = el("input", { class: "name", id: "studentName", type: "text", autocomplete: "name", maxlength: "60", placeholder: "e.g. Youssef Ahmed" });
   input.value = S.name;
-  const err = el("p", { class: "err", hidden: true, text: "Write your full name first, so your teacher knows whose homework this is." });
+  const err = el("p", { class: "err", hidden: true, text: "Write your full name first, so El Bashmohandes knows whose homework this is." });
   const begin = () => {
     const nm = input.value.trim();
     if (nm.length < 2) { err.hidden = false; input.focus(); return; }
@@ -522,8 +522,8 @@ function viewStart() {
       el("label", { for: "studentName", text: "Your full name" }),
       input, err,
       el("button", { class: "btn primary wide", type: "button", onclick: begin }, "Start the journey", el("span", { svg: ICON.arrow })),
-      el("p", { class: "note", text: "About 75 minutes. Your answers save on this phone as you go, so you can stop and come back. When you finish, one tap sends everything to your teacher." }),
-      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "حوالي ساعة وربع. إجاباتك بتتحفظ على الموبايل أول بأول، تقدر تقفل وترجع تكمّل. وفي الآخر بضغطة واحدة كل إجاباتك توصل للمدرس." })));
+      el("p", { class: "note", text: "About 75 minutes. Your answers save on this phone as you go, so you can stop and come back. When you finish, one tap sends everything to El Bashmohandes." }),
+      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "حوالي ساعة وربع. إجاباتك بتتحفظ على الموبايل أول بأول، تقدر تقفل وترجع تكمّل. وفي الآخر بضغطة واحدة كل إجاباتك توصل للباشمهندس." })));
   requestAnimationFrame(() => startNet(canvas));
   return { node, actions: null };
 }
@@ -847,7 +847,7 @@ function essayIdx() { return SCREENS.map((s, i) => i).filter((i) => SCREENS[i].t
 function viewFinish() {
   if (S.sent) return viewResult();
   const status = el("p", { class: "status", role: "status", "aria-live": "polite" });
-  const sendBtn = el("button", { class: "btn primary wide", type: "button" }, "Send to my teacher", el("span", { svg: ICON.send }));
+  const sendBtn = el("button", { class: "btn primary wide", type: "button" }, "Send to El Bashmohandes", el("span", { svg: ICON.send }));
   sendBtn.addEventListener("click", () => doSend(sendBtn, status));
 
   const pending = SCREENS.map((s, i) => i).filter((i) => SCREENS[i].type === "essay" ? !hasAnswer(i) : !S.checked[i]);
@@ -906,7 +906,7 @@ function buildPayload() {
 async function doSend(btn, status) {
   if (!HW.endpoint) {
     status.className = "status bad";
-    status.textContent = "Sending is not switched on yet. Tell your teacher, and keep this page: your answers are saved.";
+    status.textContent = "Sending is not switched on yet. Tell El Bashmohandes, and keep this page: your answers are saved.";
     return;
   }
   SCREENS.forEach((s, i) => { if (s.type !== "essay") S.checked[i] = true; });
@@ -914,7 +914,7 @@ async function doSend(btn, status) {
   const payload = JSON.stringify(buildPayload());
   btn.disabled = true;
   status.className = "status";
-  status.replaceChildren(el("span", { class: "spin" }), "Sending to your teacher...");
+  status.replaceChildren(el("span", { class: "spin" }), "Sending to El Bashmohandes...");
   let confirmed = false, reached = false;
   try {
     const res = await fetch(HW.endpoint, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: payload, redirect: "follow" });
@@ -964,16 +964,16 @@ function viewResult() {
   });
   const node = el("div", { class: "view" },
     el("section", { class: "panel result" },
-      el("p", { class: "kicker", style: "color:var(--cyan)" }, el("span", { svg: ICON.check }), " Sent to your teacher · " + fmtDate(S.sent.at)),
+      el("p", { class: "kicker", style: "color:var(--cyan)" }, el("span", { svg: ICON.check }), " Sent to El Bashmohandes · " + fmtDate(S.sent.at)),
       el("div", { class: "ring" }, svg, el("div", { class: "num" }, sc, el("span", { class: "of", text: "out of " + t.of + " · " + pct + "%" }))),
       el("p", { class: "level", text: "You reached" }),
       el("h1", { class: "big-title grad", text: lvl }),
       el("p", { style: "color:var(--ice-2);max-width:26rem", text: msg }),
       el("div", { class: "bars" }, bars,
-        el("div", { class: "brow" }, el("span", { text: "Explain it" }), el("span", { class: "note", text: "your teacher marks these" }), el("span", { class: "v", text: "/" + ESSAY_MARKS }))),
+        el("div", { class: "brow" }, el("span", { text: "Explain it" }), el("span", { class: "note", text: "El Bashmohandes marks these" }), el("span", { class: "v", text: "/" + ESSAY_MARKS }))),
       el("p", { class: "note", text: "Best streak: " + S.best + " in a row." }),
       el("button", { class: "btn primary wide", type: "button", onclick: () => go("q:0") }, "Review my answers", el("span", { svg: ICON.arrow })),
-      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "إجاباتك وصلت للمدرس. راجع الأسئلة اللي غلطت فيها، وشوف مثال الإجابة القوية تحت كل سؤال مقالي." })));
+      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "إجاباتك وصلت للباشمهندس. راجع الأسئلة اللي غلطت فيها، وشوف مثال الإجابة القوية تحت كل سؤال مقالي." })));
   requestAnimationFrame(() => requestAnimationFrame(() => {
     const a = document.getElementById("ringArc"); if (a) a.setAttribute("stroke-dashoffset", String(C * (1 - t.got / t.of)));
     const t0 = performance.now();
