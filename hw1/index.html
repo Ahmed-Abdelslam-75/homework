@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>From ENIAC to ChatGPT · Homework 1</title>
+<meta name="description" content="Six rounds, one journey through computing. Homework 1 for Programming and AI.">
+<meta name="theme-color" content="#060B20">
+<meta property="og:type" content="website">
+<meta property="og:title" content="From ENIAC to ChatGPT · Homework 1">
+<meta property="og:description" content="Six rounds, one journey through computing. Answer, check, build a streak, and see which level you reach.">
+<meta property="og:image" content="https://ahmed-abdelslam-75.github.io/ai-homework/hw1/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23060B20'/%3E%3Cg stroke='%2327E1C1' stroke-width='3'%3E%3Cpath d='M16 20L32 32L48 20M16 44L32 32L48 44M16 20L16 44'/%3E%3C/g%3E%3Cg fill='%23060B20' stroke='%2327E1C1' stroke-width='3'%3E%3Ccircle cx='16' cy='20' r='5'/%3E%3Ccircle cx='16' cy='44' r='5'/%3E%3Ccircle cx='48' cy='20' r='5'/%3E%3Ccircle cx='48' cy='44' r='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='6' fill='%23FFB020'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&family=Tajawal:wght@400;500;700&family=Unbounded:wght@500;600;700;800&display=swap">
+<style>
+[hidden]{display:none!important}
+:root{
+  --night:#060B20; --navy:#0B1437; --panel:#111B45; --panel-2:#16235A; --panel-3:#1C2B6B;
+  --line:rgba(127,147,184,.22); --line-2:rgba(127,147,184,.38);
+  --ice:#E6F0FA; --ice-2:#B7C6DD; --muted:#7F93B8;
+  --cyan:#27E1C1; --cyan-2:#8FF3E2; --cyan-t:rgba(39,225,193,.12);
+  --amber:#FFB020; --amber-t:rgba(255,176,32,.13);
+  --coral:#FF6B6B; --coral-t:rgba(255,107,107,.13);
+  --display:"Unbounded","Arial Black",Impact,system-ui,sans-serif;
+  --sans:"Atkinson Hyperlegible",Arial,"Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",Consolas,"Courier New",monospace;
+  --arabic:"Tajawal","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --r:18px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--night);-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;color:var(--ice);font-family:var(--sans);font-size:17px;line-height:1.5;
+  background:
+    radial-gradient(900px 520px at 8% -8%,rgba(39,225,193,.13),transparent 62%),
+    radial-gradient(800px 560px at 108% 104%,rgba(255,176,32,.09),transparent 60%),
+    var(--night);
+  background-attachment:fixed;padding-inline:16px;padding-block:0 120px}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(rgba(183,198,221,.10) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 70%);mask-image:linear-gradient(180deg,#000 0%,transparent 70%)}
+.app{position:relative;z-index:1;max-width:680px;margin-inline:auto}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--cyan-2);outline-offset:3px;border-radius:8px}
+.ar{font-family:var(--arabic);direction:rtl;text-align:right;letter-spacing:0;line-height:1.8}
+.mono{font-family:var(--mono)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.icon{width:1em;height:1em;flex:none;display:inline-block;vertical-align:-.125em}
+
+/* ---------- HUD ---------- */
+.hud{position:sticky;top:0;z-index:20;margin-inline:-16px;padding:10px 16px 12px;
+  background:rgba(6,11,32,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hud-in{max-width:680px;margin-inline:auto;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"map tl stats";gap:14px;align-items:center}
+.map-btn{grid-area:map;width:42px;height:42px;border-radius:12px;border:1px solid var(--line-2);background:var(--panel);display:grid;place-items:center;font-size:20px;color:var(--ice)}
+.map-btn:hover{border-color:var(--cyan)}
+.stats{grid-area:stats;display:flex;gap:6px}
+.stat{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:13px;font-weight:700;padding:6px 9px;border-radius:999px;background:var(--panel);border:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap}
+.stat.ok{color:var(--cyan)}
+.stat.streak{color:var(--amber)}
+.stat.streak.hot{background:var(--amber-t);border-color:rgba(255,176,32,.5)}
+.tl{grid-area:tl;position:relative;display:grid;grid-template-columns:repeat(6,1fr);padding-top:2px}
+.tl-track{position:absolute;left:calc(100%/12);right:calc(100%/12);top:8px;height:2px;background:var(--line-2);border-radius:2px}
+.tl-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,var(--cyan),var(--cyan-2));border-radius:2px;box-shadow:0 0 12px rgba(39,225,193,.6);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.era{position:relative;display:grid;justify-items:center;gap:4px;background:none;border:0;padding:0;color:var(--muted)}
+.era .dot{width:14px;height:14px;border-radius:50%;background:var(--night);border:2px solid var(--line-2);transition:all .3s}
+.era .lab{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+.era.done .dot{background:var(--cyan);border-color:var(--cyan)}
+.era.now .dot{background:var(--amber);border-color:var(--amber);box-shadow:0 0 0 5px rgba(255,176,32,.18);animation:pulse 2s infinite}
+.era.now .lab{color:var(--ice)}
+@keyframes pulse{50%{box-shadow:0 0 0 9px rgba(255,176,32,0)}}
+@media (max-width:520px){
+  .hud-in{grid-template-columns:auto 1fr;grid-template-areas:"map stats" "tl tl";row-gap:10px}
+  .stats{justify-self:end}
+}
+
+/* ---------- views ---------- */
+.view{padding-top:22px;animation:enter .45s cubic-bezier(.2,.8,.2,1) both}
+@keyframes enter{from{opacity:.001;transform:translateY(14px)}to{opacity:1;transform:none}}
+.kicker{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.grad{background:linear-gradient(95deg,var(--cyan) 0%,var(--cyan-2) 45%,var(--ice) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---------- start ---------- */
+.hero{position:relative;margin-top:18px;border-radius:26px;overflow:hidden;border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(22,35,90,.85),rgba(11,20,55,.92))}
+.net{display:block;width:100%;height:230px}
+.hero-body{position:relative;padding:4px 24px 26px;display:grid;gap:14px;margin-top:-54px}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(36px,10vw,62px);line-height:1;letter-spacing:-.025em}
+.hero .lead{color:var(--ice-2);font-size:18px;max-width:34rem}
+.rounds{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px}
+.rcard{padding:12px;border-radius:14px;background:rgba(6,11,32,.45);border:1px solid var(--line);display:grid;gap:2px}
+.rcard .yr{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--amber)}
+.rcard .nm{font-family:var(--display);font-size:13px;font-weight:600;line-height:1.2}
+.rcard .ct{font-family:var(--mono);font-size:11px;color:var(--muted)}
+@media (max-width:420px){.rounds{grid-template-columns:repeat(2,1fr)}}
+.join{margin-top:18px;padding:22px;border-radius:22px;background:var(--panel);border:1px solid var(--line);display:grid;gap:12px}
+.join label{font-family:var(--display);font-size:15px;font-weight:600}
+.name{width:100%;padding:16px 18px;border-radius:14px;border:2px solid var(--line-2);background:var(--night);font-size:20px;font-weight:700;color:var(--ice)}
+.name::placeholder{color:#4F618A;font-weight:400}
+.name:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 4px rgba(39,225,193,.15)}
+.err{color:var(--coral);font-weight:700;font-size:15px}
+.note{color:var(--muted);font-size:14.5px}
+.note.ar{font-size:15px}
+
+/* ---------- round intro ---------- */
+.round{min-height:62vh;display:grid;align-content:center;justify-items:center;text-align:center;gap:14px;position:relative;padding-block:30px}
+.rings{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:-1}
+.rings span{position:absolute;width:220px;height:220px;border-radius:50%;border:1px solid rgba(39,225,193,.25);animation:ring 3.6s cubic-bezier(.2,.6,.3,1) infinite}
+.rings span:nth-child(2){animation-delay:1.2s}
+.rings span:nth-child(3){animation-delay:2.4s}
+@keyframes ring{from{transform:scale(.4);opacity:1}to{transform:scale(2.4);opacity:0}}
+.round .decade{font-family:var(--display);font-weight:800;font-size:clamp(52px,17vw,104px);line-height:.95;letter-spacing:-.03em}
+.round .era-name{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+.round h2{font-family:var(--display);font-size:clamp(24px,6vw,32px);font-weight:700;margin-top:6px}
+.round .how{color:var(--ice-2);max-width:28rem}
+.round .count{font-family:var(--mono);font-size:13px;color:var(--muted)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:16px;padding:16px 22px;font-family:var(--display);font-size:15px;font-weight:700;letter-spacing:.01em;text-decoration:none;transition:transform .12s,box-shadow .2s,opacity .2s}
+.btn:active{transform:scale(.97)}
+.btn.primary{color:#04112B;background:linear-gradient(135deg,var(--cyan-2),var(--cyan) 55%,#1BC3A7);box-shadow:0 8px 28px rgba(39,225,193,.32),inset 0 1px 0 rgba(255,255,255,.5)}
+.btn.primary:hover{box-shadow:0 10px 34px rgba(39,225,193,.45),inset 0 1px 0 rgba(255,255,255,.5)}
+.btn.amber{color:#1D1302;background:linear-gradient(135deg,#FFD27A,var(--amber));box-shadow:0 8px 28px rgba(255,176,32,.3)}
+.btn.ghost{color:var(--ice);background:var(--panel);border:1px solid var(--line-2)}
+.btn[disabled]{opacity:.38;box-shadow:none;cursor:not-allowed}
+.btn.wide{width:100%}
+
+/* ---------- question screen ---------- */
+.meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.chip-type{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--cyan-t);color:var(--cyan)}
+.chip-type.essay{background:var(--amber-t);color:var(--amber)}
+.qnum{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ice-2)}
+.qpos{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.stem{margin-top:16px;font-size:clamp(20px,5.2vw,24px);line-height:1.38;font-weight:700;letter-spacing:-.005em}
+.instr{margin-top:8px;color:var(--ice-2);font-size:16px}
+.body{margin-top:20px;display:grid;gap:10px}
+
+.opt{position:relative;display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:14px 16px;border-radius:16px;border:1.5px solid var(--line);background:var(--panel);color:var(--ice);font-size:17px;line-height:1.4;transition:border-color .15s,background .15s,transform .12s}
+.opt:hover:not([disabled]){border-color:var(--line-2);background:var(--panel-2)}
+.opt:active:not([disabled]){transform:scale(.985)}
+.opt .key{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-family:var(--mono);font-size:14px;font-weight:700;background:var(--night);border:1px solid var(--line-2);transition:all .15s}
+.opt[aria-checked="true"]{border-color:var(--cyan);background:var(--cyan-t)}
+.opt[aria-checked="true"] .key{background:var(--cyan);color:#04112B;border-color:var(--cyan)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--cyan);background:rgba(39,225,193,.16)}
+.opt.right .key{background:var(--cyan);color:#04112B;border-color:var(--cyan)}
+.opt.wrong{border-color:var(--coral);background:var(--coral-t);animation:shake .42s}
+.opt.wrong .key{background:var(--coral);color:#2A0606;border-color:var(--coral)}
+.opt.dim{opacity:.5}
+@keyframes shake{20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.opt.right.pop{animation:pop .5s cubic-bezier(.2,.8,.2,1.4)}
+@keyframes pop{40%{transform:scale(1.03)}}
+
+.tf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tf .opt{flex-direction:column;justify-content:center;gap:6px;padding:22px 10px;min-height:150px}
+.tf .glyph{font-family:var(--display);font-size:58px;line-height:1;font-weight:500}
+.tf .word{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ice-2)}
+
+/* match */
+.mrow{border-radius:16px;border:1.5px solid var(--line);background:var(--panel);padding:14px 16px;display:grid;gap:10px}
+.mrow .mt{display:flex;gap:12px;align-items:flex-start}
+.mrow .n{flex:none;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--muted);padding-top:3px}
+.picks{display:flex;flex-wrap:wrap;gap:8px}
+.pick{padding:9px 13px;border-radius:999px;border:1.5px solid var(--line-2);background:var(--night);color:var(--ice-2);font-size:15px;font-weight:700;transition:all .15s}
+.pick:hover:not([disabled]){border-color:var(--cyan);color:var(--ice)}
+.pick[aria-checked="true"]{background:var(--cyan);border-color:var(--cyan);color:#04112B}
+.pick[disabled]{cursor:default}
+.pick.right{background:var(--cyan);border-color:var(--cyan);color:#04112B}
+.pick.wrong{background:var(--coral);border-color:var(--coral);color:#2A0606}
+.pick.dim{opacity:.35}
+.mrow.good{border-color:rgba(39,225,193,.6)}
+.mrow.bad{border-color:rgba(255,107,107,.6)}
+
+/* order */
+.ends{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:8px}
+.orow{display:flex;align-items:center;gap:12px;padding:10px 10px 10px 14px;border-radius:16px;border:1.5px solid var(--line);background:var(--panel);transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .2s}
+.orow .pos{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:13px;background:var(--night);border:1px solid var(--line-2)}
+.orow .ot{flex:1;font-weight:700}
+.orow .mv{display:flex;gap:6px}
+.orow .mv button{width:42px;height:42px;border-radius:12px;border:1px solid var(--line-2);background:var(--night);display:grid;place-items:center;font-size:18px;color:var(--ice)}
+.orow .mv button:hover:not([disabled]){border-color:var(--cyan)}
+.orow .mv button[disabled]{opacity:.25;cursor:default}
+.orow.moved{border-color:var(--cyan)}
+.orow.good{border-color:rgba(39,225,193,.7);background:rgba(39,225,193,.1)}
+.orow.bad{border-color:rgba(255,107,107,.7);background:var(--coral-t)}
+.orow .fix{font-size:14px;color:var(--ice-2);font-weight:400}
+
+/* fill */
+.bank{position:sticky;top:112px;z-index:5;padding:12px;border-radius:16px;background:rgba(17,27,69,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px dashed var(--line-2);display:grid;gap:8px}
+@media (min-width:521px){.bank{top:78px}}
+.bank .picks{gap:6px}
+.bank .pick.used{opacity:.4}
+.frow{padding:14px 16px;border-radius:16px;border:1.5px solid var(--line);background:var(--panel);display:flex;gap:12px;align-items:flex-start}
+.frow .n{flex:none;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--muted);padding-top:9px}
+.frow .s{line-height:2.4;font-size:17px}
+.blank{display:inline-block;width:8.5em;max-width:100%;padding:4px 10px;border:0;border-bottom:2.5px solid var(--cyan);border-radius:10px 10px 4px 4px;background:var(--night);color:var(--cyan-2);font-weight:700;text-align:center;font-size:17px}
+.blank:focus{outline:none;box-shadow:0 0 0 3px rgba(39,225,193,.25)}
+.blank.right{border-bottom-color:var(--cyan);background:rgba(39,225,193,.16);color:var(--ice)}
+.blank.wrong{border-bottom-color:var(--coral);background:var(--coral-t);color:var(--ice);text-decoration:line-through;text-decoration-color:var(--coral)}
+.fix-inline{display:inline-block;margin-left:6px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--cyan);line-height:1.4}
+
+/* essay */
+.marks{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber);padding:5px 10px;border-radius:999px;border:1px solid rgba(255,176,32,.45)}
+.refer{padding:14px 16px;border-radius:16px;background:var(--amber-t);border:1px solid rgba(255,176,32,.28);display:grid;gap:10px}
+.refer .t{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--amber)}
+.tick{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:8px 10px;border-radius:10px;border:0;background:rgba(6,11,32,.35);color:var(--ice);font-size:16px}
+.tick .box{flex:none;width:22px;height:22px;border-radius:7px;border:2px solid var(--amber);display:grid;place-items:center;font-size:13px;color:#1D1302}
+.tick[aria-checked="true"] .box{background:var(--amber)}
+.tick[aria-checked="true"] .lb{color:var(--ice-2);text-decoration:line-through;text-decoration-color:rgba(255,176,32,.7)}
+.essay{width:100%;min-height:22rem;padding:18px;border-radius:18px;border:1.5px solid var(--line-2);background:var(--night);color:var(--ice);font-size:18px;line-height:1.65;resize:vertical}
+.essay:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 4px rgba(255,176,32,.14)}
+.essay[readonly]{opacity:.85}
+.wc{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.wc .bar{flex:1;height:6px;border-radius:6px;background:var(--panel-2);overflow:hidden}
+.wc .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),#FFD27A);border-radius:6px;transition:width .3s}
+.wc .saved{color:var(--cyan)}
+.model{padding:16px;border-radius:16px;border:1px solid rgba(39,225,193,.35);background:var(--cyan-t);display:grid;gap:8px}
+.model .t{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cyan)}
+.model .h{font-size:14.5px;color:var(--ice-2)}
+
+/* feedback */
+.fb{margin-top:18px;padding:16px 18px;border-radius:18px;display:grid;gap:8px;animation:enter .35s cubic-bezier(.2,.8,.2,1) both}
+.fb.good{background:linear-gradient(135deg,rgba(39,225,193,.18),rgba(39,225,193,.06));border:1px solid rgba(39,225,193,.45)}
+.fb.bad{background:linear-gradient(135deg,rgba(255,107,107,.16),rgba(255,107,107,.05));border:1px solid rgba(255,107,107,.45)}
+.fb.part{background:linear-gradient(135deg,rgba(255,176,32,.16),rgba(255,176,32,.05));border:1px solid rgba(255,176,32,.45)}
+.fb .hd{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:18px;font-weight:700}
+.fb.good .hd{color:var(--cyan)}
+.fb.bad .hd{color:var(--coral)}
+.fb.part .hd{color:var(--amber)}
+.fb .ic{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:16px;color:#04112B}
+.fb.good .ic{background:var(--cyan)}
+.fb.bad .ic{background:var(--coral)}
+.fb.part .ic{background:var(--amber)}
+.fb .ans{font-weight:700}
+.fb .ar{color:var(--ice-2);font-size:15.5px}
+
+/* sticky action bar */
+.actions{position:fixed;left:0;right:0;bottom:0;z-index:15;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(6,11,32,0),rgba(6,11,32,.92) 30%)}
+.actions-in{max-width:680px;margin-inline:auto;display:flex;gap:10px}
+.actions-in .btn.primary,.actions-in .btn.amber{flex:1}
+
+/* map drawer */
+.scrim{position:fixed;inset:0;z-index:30;background:rgba(3,6,18,.66);animation:fade .2s both}
+@keyframes fade{from{opacity:0}}
+.drawer{position:fixed;left:0;right:0;bottom:0;z-index:31;max-height:86vh;overflow:auto;padding:18px 16px 28px;border-radius:24px 24px 0 0;background:var(--navy);border-top:1px solid var(--line-2);animation:up .3s cubic-bezier(.2,.8,.2,1) both}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.drawer-in{max-width:680px;margin-inline:auto;display:grid;gap:18px}
+.drawer-hd{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.drawer-hd h2{font-family:var(--display);font-size:20px}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--ice-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:4px;display:inline-block}
+.mapgrp{display:grid;gap:8px}
+.mapgrp .t{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px}
+.cell{height:40px;border-radius:10px;border:1.5px solid var(--line-2);background:transparent;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ice-2)}
+.cell.seen{background:var(--panel-2);color:var(--ice)}
+.cell.good{background:var(--cyan);border-color:var(--cyan);color:#04112B}
+.cell.bad{background:var(--coral);border-color:var(--coral);color:#2A0606}
+.cell.part{background:var(--amber);border-color:var(--amber);color:#1D1302}
+.cell.essay{border-color:var(--amber);color:var(--amber)}
+.cell.here{box-shadow:0 0 0 3px var(--ice)}
+
+/* finish + result */
+.panel{margin-top:18px;padding:22px;border-radius:22px;background:var(--panel);border:1px solid var(--line);display:grid;gap:14px}
+.big-title{font-family:var(--display);font-weight:800;font-size:clamp(30px,8vw,44px);line-height:1.05;letter-spacing:-.02em}
+.checklist{display:grid;gap:8px}
+.ck{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--night);border:1px solid var(--line)}
+.ck .d{flex:none;width:12px;height:12px;border-radius:50%}
+.ck .x{flex:1}
+.ck .v{font-family:var(--mono);font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+.linkbtn{background:none;border:0;padding:0;color:var(--cyan);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.status{display:flex;align-items:center;gap:10px;font-weight:700;min-height:1.5em}
+.status.bad{color:var(--coral)}
+.status.good{color:var(--cyan)}
+.spin{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--line-2);border-top-color:var(--cyan);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.result{text-align:center;justify-items:center;padding-block:34px 26px;background:radial-gradient(420px 260px at 50% 0%,rgba(39,225,193,.16),transparent 70%),var(--panel)}
+.ring{position:relative;width:210px;height:210px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .num{position:absolute;inset:0;display:grid;place-content:center;gap:2px}
+.ring .sc{font-family:var(--display);font-weight:800;font-size:46px;line-height:1;font-variant-numeric:tabular-nums}
+.ring .of{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.level{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber)}
+.bars{display:grid;gap:10px;width:100%;text-align:left}
+.brow{display:grid;grid-template-columns:minmax(6.5rem,9rem) 1fr auto;gap:12px;align-items:center;font-size:14.5px}
+.brow .tr{height:10px;border-radius:10px;background:var(--night);overflow:hidden}
+.brow .tr i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,var(--cyan),var(--cyan-2));width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.brow .v{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40}
+.foot{margin-top:34px;text-align:center;color:var(--muted);font-size:13px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+.view.still{animation:none}
+.opt.still{animation:none}
+</style>
+</head>
+<body>
+<header class="hud" id="hud" hidden>
+  <div class="hud-in">
+    <button class="map-btn" id="mapBtn" type="button" aria-label="Open the question map"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg></button>
+    <nav class="tl" id="tl" aria-label="Rounds"></nav>
+    <div class="stats">
+      <span class="stat ok" id="statOk" title="Correct answers so far"></span>
+      <span class="stat streak" id="statStreak"></span>
+    </div>
+  </div>
+</header>
+<main class="app">
+  <div id="view"></div>
+  <p class="foot">Programming and Artificial Intelligence · Egyptian Baccalaureate · Year 2</p>
+</main>
+<div class="actions" id="actions" hidden><div class="actions-in" id="actionsIn"></div></div>
+<noscript><p style="padding:24px;color:#E6F0FA">This homework needs JavaScript. Please open the link in Chrome or Safari.</p></noscript>
+<script>
+const HW = {"id": "hw1", "title": "Homework 1: From ENIAC to ChatGPT", "sheet": "Homework 1", "salt": "vacuum-tubes-ENIAC-1946", "endpoint": "", "screens": [{"type": "mcq", "round": 0, "ids": ["Q1"], "q": "A grandmother says: “In the 1970s and 80s, computers started to appear in homes and offices for the first time.” Which stage of IT development is she describing?", "options": ["Birth of the computer", "Spread of personal computers (PCs)", "Commercialization of the Internet", "Spread of cloud computing"]}, {"type": "mcq", "round": 0, "ids": ["Q2"], "q": "In traditional programming, a person writes the rules. What happens in machine learning?", "options": ["The computer learns patterns from data and uses them to make predictions and judgments", "The computer works without any data", "A person still writes every rule by hand", "The computer chooses answers at random"]}, {"type": "mcq", "round": 0, "ids": ["Q3"], "q": "The course comes in two books. What does Part One mainly help you do?", "options": ["Build and analyze data and AI tools yourself", "Understand the world of IT that you already use every day", "Memorize the history of computers", "Learn to repair smartphones"]}, {"type": "mcq", "round": 0, "ids": ["Q4"], "q": "Omar keeps all his school photos online. He opens them from his phone, his laptop or a friend's computer, and they are not stored on any one device. Which technology is he using?", "options": ["Edge computing", "Virtual reality (VR)", "Cloud computing", "Quantum computing"]}, {"type": "mcq", "round": 0, "ids": ["Q5"], "q": "A phone unlocks when it recognizes its owner's face. It uses a neural network trained on a very large number of face images. What is the MOST specific correct name for this technology?", "options": ["AI", "Machine learning", "Deep learning", "Generative AI"]}, {"type": "mcq", "round": 0, "ids": ["Q6"], "q": "The first computers, such as ENIAC, were built using:", "options": ["Touch screens", "Vacuum tubes", "Cloud servers", "Qubits"]}, {"type": "mcq", "round": 0, "ids": ["Q7"], "q": "Which of these is an example of AI?", "options": ["A printed dictionary", "A wall clock", "Speech recognition that turns your voice into text", "A light switch"]}, {"type": "mcq", "round": 0, "ids": ["Q8"], "q": "A delivery drone must swerve the moment a bird flies in front of it. Where should this decision be made?", "options": ["In a cloud data centre in another country", "On the drone itself, using edge computing", "By sending an email to the drone's owner", "It does not matter, because all methods take the same time"]}, {"type": "mcq", "round": 0, "ids": ["Q9"], "q": "Which statement about ChatGPT is correct?", "options": ["It is generative AI, but it is not AI", "It is machine learning, but it is not deep learning", "It is generative AI, deep learning, machine learning and AI, all at the same time", "It is a traditional program that follows hand-written rules"]}, {"type": "mcq", "round": 0, "ids": ["Q10"], "q": "According to Moore's Law, a chip has about 1,000 transistors. About how many transistors would a chip made two years later have?", "options": ["1,000", "1,500", "2,000", "10,000"]}, {"type": "mcq", "round": 0, "ids": ["Q11"], "q": "In which part of a lesson do you investigate a real situation and make a reasoned decision, like a professional?", "options": ["Key Terms", "Worked Example", "Guiding Question", "Think as an Engineer"]}, {"type": "mcq", "round": 0, "ids": ["Q12"], "q": "A music app notices that you often play songs by the same singers, and suggests similar songs. What does it learn from?", "options": ["A separate rule a programmer typed for every user", "Patterns in data, such as your listening history", "A printed list of all the songs in Egypt", "Nothing, the suggestions are random"]}, {"type": "mcq", "round": 0, "ids": ["Q13"], "q": "A furniture shop's app lets you point your phone camera at your living room and see a virtual sofa standing on your real floor. This is an example of:", "options": ["AR (Augmented Reality)", "VR (Virtual Reality)", "Autonomous driving", "Cashless payment"]}, {"type": "mcq", "round": 0, "ids": ["Q14"], "q": "Compared with ordinary machine learning, what makes deep learning “advanced”?", "options": ["It uses neural networks to learn complex patterns from large-scale data", "It does not need any data", "It follows fixed rules written by experts", "It only works with text"]}, {"type": "mcq", "round": 0, "ids": ["Q15"], "q": "Which situation best shows the 2000s stage of IT development?", "options": ["A scientist uses a room-sized computer for military calculations", "A teenager watches videos on the mobile Internet from a smartphone", "A family buys its first personal computer", "A company rents computing power in the cloud to analyze huge amounts of data"]}, {"type": "mcq", "round": 0, "ids": ["Q16"], "q": "You type “a calm song about the Nile” and an app creates a brand-new song that did not exist before. This is:", "options": ["A spam filter", "Generative AI", "Edge computing", "A traditional program with fixed rules"]}, {"type": "mcq", "round": 0, "ids": ["Q17"], "q": "A student in Aswan joins a live lesson with a teacher in Cairo through the Internet, then downloads the lesson notes. Which social change is this?", "options": ["Remote work", "E-commerce", "Online learning", "SNS"]}, {"type": "mcq", "round": 0, "ids": ["Q18"], "q": "What is the main difference between generative AI and a spam filter?", "options": ["A spam filter is not AI at all", "Generative AI creates new data, while a spam filter makes a judgment about data that already exists", "Generative AI never uses data", "A spam filter uses deep learning, but generative AI does not"]}, {"type": "mcq", "round": 0, "ids": ["Q19"], "q": "A company stops buying its own servers and instead pays for computing power and storage over the Internet when it needs them. This idea is called:", "options": ["IT as a service", "Edge computing", "Virtual reality", "Moore's Law"]}, {"type": "mcq", "round": 0, "ids": ["Q20"], "q": "Why can a neural network make complex judgments?", "options": ["One very clever part inside it understands the whole picture", "Many simple components are connected together and learn from data", "A programmer writes a rule for every possible situation", "It copies answers from the Internet"]}, {"type": "mcq", "round": 0, "ids": ["Q21"], "q": "Egypt updated ICT curricula in line with Vision 2030. What is ICT meant to build in students?", "options": ["Fast typing skills", "Memorization of facts and dates", "Critical thinking, problem-solving and a deep understanding of concepts", "The ability to use social media"]}, {"type": "tf", "round": 1, "ids": ["Q22"], "q": "Smartphones became widespread before personal computers."}, {"type": "tf", "round": 1, "ids": ["Q23"], "q": "Every deep learning system is also a machine learning system."}, {"type": "tf", "round": 1, "ids": ["Q24"], "q": "A trainee pilot wears a headset and practises flying in a completely computer-generated sky, without seeing the real room. This is VR."}, {"type": "tf", "round": 1, "ids": ["Q25"], "q": "A calculator app follows the exact steps a programmer wrote and never learns from data. It is an example of machine learning."}, {"type": "tf", "round": 1, "ids": ["Q26"], "q": "Moore's Law can continue forever, because transistors can always be made smaller."}, {"type": "tf", "round": 1, "ids": ["Q27"], "q": "Every AI system is generative AI."}, {"type": "tf", "round": 1, "ids": ["Q28"], "q": "An engineer who works from home and sends her designs to the office over the Internet is an example of e-commerce."}, {"type": "tf", "round": 1, "ids": ["Q29"], "q": "Deep learning usually learns from only a few examples."}, {"type": "tf", "round": 1, "ids": ["Q30"], "q": "The commercialization of the Internet in the 1990s helped email spread around the world."}, {"type": "tf", "round": 1, "ids": ["Q31"], "q": "Generative AI can create programs, not only text, images and audio."}, {"type": "tf", "round": 1, "ids": ["Q32"], "q": "Edge computing processes data on the device itself, instead of sending it to the cloud for judgment."}, {"type": "tf", "round": 1, "ids": ["Q33"], "q": "If a chatbot's answer sounds fluent and confident, it is safe to copy it into a school report without checking."}, {"type": "tf", "round": 1, "ids": ["Q34"], "q": "Quantum computing is a technology that overlays digital information on real-world images."}, {"type": "tf", "round": 1, "ids": ["Q35"], "q": "In the Worked Example part of a lesson, the problem is already solved for you, step by step."}, {"type": "match", "round": 2, "ids": ["Q36", "Q37", "Q38", "Q39", "Q40"], "note": "Match each situation to the social change it shows. Each answer is used once.", "choices": ["SNS", "E-commerce", "Remote work", "Online learning", "Cashless payment"], "rows": ["A small bakery in Mansoura posts photos of its cakes, and followers share them with their friends within hours.", "A father pays the electricity bill with a mobile wallet app.", "A student watches recorded biology lessons on a free learning website.", "A family orders school uniforms from an online store and has them delivered home.", "An accountant does her job from home and joins meetings by video call."]}, {"type": "match", "round": 2, "ids": ["Q41", "Q42", "Q43", "Q44", "Q45", "Q46"], "note": "Match each example to its MOST specific category. An answer can be used more than once.", "choices": ["Machine learning", "Deep learning", "Generative AI"], "rows": ["A spam filter that learns from emails people marked as spam", "Image analysis for autonomous driving", "An image generation AI that draws a new picture from a sentence", "Product recommendations on a shopping website, based on what people bought before", "Speech synthesis: a computer reading text aloud in a human-like voice", "A chatbot that writes a brand-new story from your prompt"]}, {"type": "match", "round": 2, "ids": ["Q47", "Q48", "Q49", "Q50", "Q51"], "note": "Match each situation to the technology it uses. Each answer is used once.", "choices": ["AR", "VR", "Autonomous driving", "Quantum computing", "Edge computing"], "rows": ["A bus uses cameras, sensors and AI to drive itself with no human driver.", "A museum app shows the name of each statue floating next to it on your camera screen.", "A smart camera at a gate decides on the spot, without sending the video anywhere, that the gate must open.", "A student wears a headset and walks around inside a computer-made model of the human heart.", "A new kind of computer uses quantum mechanics to solve, very quickly, a problem that is too hard for traditional computers."]}, {"type": "order", "round": 3, "ids": ["Q52", "Q53", "Q54", "Q55", "Q56"], "note": "Put the stages of IT development in order, from the oldest (top) to the newest (bottom).", "top": "Oldest", "bottom": "Newest", "items": ["Rise of smartphones", "Birth of the computer", "Spread of cloud computing", "Commercialization of the Internet", "Spread of personal computers"]}, {"type": "order", "round": 3, "ids": ["Q57", "Q58", "Q59", "Q60"], "note": "These technologies sit inside each other. Put them in order, from the broadest (top) to the most specific (bottom).", "top": "Broadest", "bottom": "Most specific", "items": ["Deep learning", "Generative AI", "AI", "Machine learning"]}, {"type": "fill", "round": 4, "ids": ["Q61", "Q62", "Q63", "Q64", "Q65"], "note": "Type the missing word, or tap a word from the bank. Not every word is used.", "bank": ["Moore's Law", "deep", "0.1", "check", "SNS", "copy", "10", "VR"], "rows": [{"before": "The observation that the number of transistors on a chip doubles about every two years is called", "after": "."}, {"before": "Within machine learning there is", "after": "learning, and within it there is generative AI."}, {"before": "In autonomous driving, a delay of even", "after": "seconds can lead to an accident."}, {"before": "Before using a chatbot's answer in your homework, you should", "after": "important facts against the textbook or a teacher."}, {"before": "Services that let users connect, post and share information, and spread it rapidly, are called", "after": "."}]}, {"type": "fill", "round": 4, "ids": ["Q66", "Q67", "Q68", "Q69", "Q70"], "note": "Type the missing word, or tap a word from the bank. Not every word is used.", "bank": ["tunneling", "components", "sensors", "judgment", "data", "leakage", "pixels", "rules"], "rows": [{"before": "When circuits get too small, electrons can slip through barriers. This is the quantum", "after": "effect."}, {"before": "A neural network connects many", "after": "and learns from data."}, {"before": "A self-driving car uses cameras and", "after": "to recognize its surroundings."}, {"before": "AI reproduces intelligent human behavior, such as learning, reasoning and", "after": "."}, {"before": "Generative AI uses deep learning to generate new", "after": ", such as text, images and audio."}]}, {"type": "essay", "round": 5, "ids": ["E1"], "q": "Compare the 1990s and the 2000s stages of information technology development.", "marks": 4, "refer": ["the main technology of each stage", "one impact on society of each stage"]}, {"type": "essay", "round": 5, "ids": ["E2"], "q": "Explain the difference between traditional programming and machine learning. Give one example of each.", "marks": 5, "refer": ["who makes the rules in each", "data and patterns", "one example of each"]}, {"type": "essay", "round": 5, "ids": ["E3"], "q": "Explain why it is becoming difficult to make computers more powerful just by making transistors smaller, and describe the new directions being pursued.", "marks": 5, "refer": ["Moore's Law", "one physical problem at very small sizes", "two new directions"]}, {"type": "essay", "round": 5, "ids": ["E4"], "q": "Nour's email app moves junk messages to a spam folder. Her brother says: “Someone must have written a rule for every spam email in the world.” Explain why he is wrong.", "marks": 4, "refer": ["machine learning", "patterns", "data"]}, {"type": "essay", "round": 5, "ids": ["E5"], "q": "Choose TWO of the social changes brought by information technology (SNS, e-commerce, remote work, online learning, cashless payment). For each one, explain what it is and how it changed daily life in Egypt.", "marks": 6, "refer": ["the name and meaning of each change", "how daily life changed", "one Egyptian example for each"]}, {"type": "essay", "round": 5, "ids": ["E6"], "q": "A news reporter says: “Machine learning and deep learning are two competing technologies, so a company must choose one of them.” Explain why this statement is incorrect.", "marks": 4, "refer": ["nested categories", "neural networks", "one example"]}, {"type": "essay", "round": 5, "ids": ["E7"], "q": "A tourism company has two goals. Goal 1: let people anywhere in the world explore the Abu Simbel temple from home. Goal 2: help visitors standing at the real temple read information about each statue. Recommend AR or VR for each goal, and justify your choices.", "marks": 5, "refer": ["what AR does", "what VR does", "a reason for each choice"]}, {"type": "essay", "round": 5, "ids": ["E8"], "q": "Salma uses a generative AI chatbot to write a report about the Aswan High Dam. Explain one benefit and one risk of doing this, and state what Salma should do before handing the report in.", "marks": 5, "refer": ["generative AI", "one benefit and one risk", "hallucination", "what she should check"]}]};
+const KEYBLOB = "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";
+/* ===== Part A: data, state, scoring ===== */
+const ROUNDS = [
+  { era: "1940s–60s", tag: "40s", eraName: "Birth of the computer", title: "Quick picks", how: "Choose one answer, then tap Check. Once checked, it is locked in." },
+  { era: "1970s–80s", tag: "70s", eraName: "Personal computers", title: "○ or ×", how: "Is the statement true (○) or false (×)?" },
+  { era: "1990s", tag: "90s", eraName: "The Internet", title: "Match it", how: "Give every situation its answer, then check the whole set." },
+  { era: "2000s", tag: "00s", eraName: "Smartphones", title: "Put it in order", how: "Move each card up or down until the order is right, then check." },
+  { era: "2010s", tag: "10s", eraName: "The cloud", title: "Fill the gap", how: "Type the missing word, or tap one from the word bank." },
+  { era: "Now", tag: "Now", eraName: "Generative AI", title: "Explain it", how: "Write full answers in English, like in the exam, in your own words and without any AI help. Your teacher marks these." }
+];
+const TYPE_LABEL = { mcq: "Quick pick", tf: "True or false", match: "Match it", order: "In order", fill: "Fill the gap", essay: "Explain it" };
+
+const $ = (s, r) => (r || document).querySelector(s);
+function el(tag, attrs, ...kids) {
+  const n = document.createElement(tag);
+  if (attrs) for (const k in attrs) {
+    const v = attrs[k];
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "class") n.className = v;
+    else if (k === "text") n.textContent = v;
+    else if (k === "svg") n.innerHTML = v;
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v === true ? "" : v);
+  }
+  for (const c of kids.flat(Infinity)) if (c !== null && c !== undefined && c !== false) n.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return n;
+}
+const ICON = {
+  check: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  cross: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  half: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 12h12"/></svg>',
+  grid: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg>',
+  bolt: '<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 2L4 14h6.5L9.5 22 20 9.5h-6.8z"/></svg>',
+  up: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>',
+  down: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  send: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M3 11.5L21 3l-6.5 18-3.5-7.5z"/><path d="M11 13.5L21 3"/></svg>',
+  arrow: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  back: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
+};
+
+/* answer key, scrambled so it is not readable in the page source */
+const KEY = (function () {
+  const raw = atob(KEYBLOB), pass = HW.salt, bytes = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i) ^ pass.charCodeAt(i % pass.length);
+  return JSON.parse(new TextDecoder().decode(bytes));
+})();
+
+const SCREENS = HW.screens;
+const AUTO_TOTAL = SCREENS.filter((s) => s.type !== "essay").reduce((a, s) => a + s.ids.length, 0);
+const ESSAY_MARKS = SCREENS.filter((s) => s.type === "essay").reduce((a, s) => a + s.marks, 0);
+
+/* ---------- state, kept on this device ---------- */
+const STORE = "hw-" + HW.id + "-v2";
+function fresh() {
+  return { name: "", view: "start", answers: {}, ticks: {}, checked: {}, visited: {}, streak: 0, best: 0,
+           startedAt: null, sent: null, submissionId: null };
+}
+let S = fresh();
+try { const raw = localStorage.getItem(STORE); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
+function save() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} }
+
+/* ---------- scoring ---------- */
+function norm(s) {
+  return String(s || "").toLowerCase().replace(/[‘’`´]/g, "'").replace(/[^a-z0-9.,'\/ ]/g, " ")
+    .replace(/\s+/g, " ").trim().replace(/[.,]+$/, "").trim();
+}
+function orderOf(i) {
+  const s = SCREENS[i];
+  const cur = S.answers["order-" + i];
+  return Array.isArray(cur) && cur.length === s.items.length ? cur : s.items.map((_, k) => k);
+}
+/* one entry per point: {id, ok, given, correct} */
+function itemResults(i) {
+  const s = SCREENS[i], k = KEY.screens[i], A = S.answers;
+  if (s.type === "mcq") {
+    const v = A[s.ids[0]];
+    return [{ id: s.ids[0], ok: v === k.answer, given: typeof v === "number" ? "ABCD"[v] + ". " + s.options[v] : "no answer", correct: "ABCD"[k.answer] + ". " + s.options[k.answer] }];
+  }
+  if (s.type === "tf") {
+    const v = A[s.ids[0]];
+    const t = (b) => (b ? "True" : "False");
+    return [{ id: s.ids[0], ok: v === k.answer, given: typeof v === "boolean" ? t(v) : "no answer", correct: t(k.answer) }];
+  }
+  if (s.type === "match") return s.ids.map((id, r) => {
+    const v = A[id];
+    return { id, ok: v === k.answers[r], given: typeof v === "number" ? s.choices[v] : "no answer", correct: s.choices[k.answers[r]] };
+  });
+  if (s.type === "order") {
+    const cur = orderOf(i);
+    return s.ids.map((id, p) => ({ id, ok: cur[p] === k.correct[p], given: s.items[cur[p]], correct: s.items[k.correct[p]] }));
+  }
+  if (s.type === "fill") return s.ids.map((id, r) => {
+    const v = String(A[id] || "").trim();
+    return { id, ok: k.accept[r].map(norm).includes(norm(v)), given: v || "no answer", correct: k.show[r] };
+  });
+  return [];
+}
+function screenScore(i) { const r = itemResults(i); return { got: r.filter((x) => x.ok).length, of: r.length }; }
+function hasAnswer(i) {
+  const s = SCREENS[i], A = S.answers;
+  if (s.type === "mcq" || s.type === "tf") return A[s.ids[0]] !== undefined;
+  if (s.type === "order") return !!S.visited[i];
+  if (s.type === "essay") return String(A[s.ids[0]] || "").trim().length > 0;
+  return s.ids.some((id) => A[id] !== undefined && String(A[id]).trim() !== "");
+}
+function screenState(i) {
+  const s = SCREENS[i];
+  if (s.type === "essay") return hasAnswer(i) ? "essay" : "";
+  if (S.checked[i]) { const sc = screenScore(i); return sc.got === sc.of ? "good" : sc.got === 0 ? "bad" : "part"; }
+  return hasAnswer(i) ? "seen" : "";
+}
+function totals() {
+  let got = 0;
+  const rounds = ROUNDS.map((r, ri) => ({ title: r.title, got: 0, of: 0 }));
+  SCREENS.forEach((s, i) => {
+    if (s.type === "essay") return;
+    const sc = screenScore(i);
+    rounds[s.round].of += sc.of;
+    if (S.checked[i]) { rounds[s.round].got += sc.got; got += sc.got; }
+  });
+  return { got, of: AUTO_TOTAL, rounds: rounds.filter((r) => r.of > 0) };
+}
+function checkedCorrect() {
+  let n = 0;
+  SCREENS.forEach((s, i) => { if (S.checked[i] && s.type !== "essay") n += screenScore(i).got; });
+  return n;
+}
+
+/* ---------- HUD ---------- */
+function currentRound() {
+  if (S.view.startsWith("round:")) return Number(S.view.slice(6));
+  if (S.view.startsWith("q:")) return SCREENS[Number(S.view.slice(2))].round;
+  if (S.view === "finish" || S.view === "result") return ROUNDS.length;
+  return -1;
+}
+function renderHud() {
+  const hud = $("#hud");
+  hud.hidden = S.view === "start";
+  if (hud.hidden) return;
+  const cr = currentRound();
+  $("#tl").replaceChildren(
+    el("div", { class: "tl-track" }, el("div", { class: "tl-fill", style: "width:" + Math.max(0, Math.min(100, (cr / (ROUNDS.length - 1)) * 100)) + "%" })),
+    ...ROUNDS.map((r, ri) => el("button", {
+      class: "era" + (ri < cr ? " done" : ri === cr ? " now" : ""), type: "button", title: r.era + ": " + r.title,
+      "aria-label": "Round " + (ri + 1) + ", " + r.title, onclick: () => go("round:" + ri)
+    }, el("span", { class: "dot" }), el("span", { class: "lab", text: r.tag }))));
+  $("#statOk").replaceChildren(el("span", { svg: ICON.check }), String(checkedCorrect()));
+  const st = $("#statStreak");
+  st.replaceChildren(el("span", { svg: ICON.bolt }), String(S.streak));
+  st.classList.toggle("hot", S.streak >= 3);
+  st.title = "Streak: " + S.streak + " in a row (best " + S.best + ")";
+}
+
+/* ===== Part B: views ===== */
+let lastBlank = null;
+let justChecked = -1;
+
+function roundScreens(r) { return SCREENS.map((s, i) => i).filter((i) => SCREENS[i].round === r); }
+function idLabel(s) { return s.ids.length === 1 ? s.ids[0] : s.ids[0] + "–" + s.ids[s.ids.length - 1]; }
+function locked(i) { return !!S.sent || (!!S.checked[i] && SCREENS[i].type !== "essay"); }
+function countWords(t) { t = String(t || "").trim(); return t ? t.split(/\s+/).length : 0; }
+
+/* ---------- start ---------- */
+function roundCount(r) {
+  const ids = roundScreens(r);
+  const s0 = SCREENS[ids[0]];
+  if (s0.type === "essay") return ids.length + " essays";
+  if (s0.type === "mcq" || s0.type === "tf") return ids.length + " questions";
+  return ids.length + " sets · " + ids.reduce((a, i) => a + SCREENS[i].ids.length, 0) + " pts";
+}
+function viewStart() {
+  const canvas = el("canvas", { class: "net", "aria-hidden": "true" });
+  const input = el("input", { class: "name", id: "studentName", type: "text", autocomplete: "name", maxlength: "60", placeholder: "e.g. Youssef Ahmed" });
+  input.value = S.name;
+  const err = el("p", { class: "err", hidden: true, text: "Write your full name first, so your teacher knows whose homework this is." });
+  const begin = () => {
+    const nm = input.value.trim();
+    if (nm.length < 2) { err.hidden = false; input.focus(); return; }
+    S.name = nm; S.startedAt = S.startedAt || new Date().toISOString();
+    if (!S.submissionId) S.submissionId = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    go("round:0");
+  };
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") begin(); });
+  const node = el("div", { class: "view" },
+    el("section", { class: "hero" },
+      canvas,
+      el("div", { class: "hero-body" },
+        el("p", { class: "kicker", text: "Homework 1 · Programming and AI" }),
+        el("h1", null, "From ENIAC ", el("br"), "to ", el("span", { class: "grad", text: "ChatGPT" })),
+        el("p", { class: "lead", text: "Six rounds, one journey through the history of computing. Answer, check, build a streak, and see which level you reach." }),
+        el("div", { class: "rounds" }, ROUNDS.map((r, ri) => el("div", { class: "rcard" },
+          el("span", { class: "yr", text: "Round " + (ri + 1) + " · " + r.tag }),
+          el("span", { class: "nm", text: r.title }),
+          el("span", { class: "ct", text: roundCount(ri) })))))),
+    el("section", { class: "join" },
+      el("label", { for: "studentName", text: "Your full name" }),
+      input, err,
+      el("button", { class: "btn primary wide", type: "button", onclick: begin }, "Start the journey", el("span", { svg: ICON.arrow })),
+      el("p", { class: "note", text: "About 75 minutes. Your answers save on this phone as you go, so you can stop and come back. When you finish, one tap sends everything to your teacher." }),
+      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "حوالي ساعة وربع. إجاباتك بتتحفظ على الموبايل أول بأول، تقدر تقفل وترجع تكمّل. وفي الآخر بضغطة واحدة كل إجاباتك توصل للمدرس." })));
+  requestAnimationFrame(() => startNet(canvas));
+  return { node, actions: null };
+}
+
+/* animated neural network: the knowledge is in the lines */
+function startNet(c) {
+  const ctx = c.getContext("2d"); if (!ctx) return;
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W, H, nodes, edges, pulses = [];
+  const layers = [3, 5, 6, 4, 2];
+  function build() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = c.clientWidth; H = c.clientHeight; c.width = W * dpr; c.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    nodes = []; edges = [];
+    layers.forEach((n, li) => {
+      const x = W * (0.1 + 0.8 * li / (layers.length - 1));
+      for (let k = 0; k < n; k++) nodes.push({ x, y: H * 0.14 + (H * 0.6) * ((k + 0.5) / n), li, glow: 0 });
+    });
+    nodes.forEach((a) => nodes.forEach((b) => { if (b.li === a.li + 1) edges.push({ a, b, w: Math.pow(Math.random(), 2.2) }); }));
+  }
+  build();
+  let t0 = performance.now(), last = 0;
+  function frame(t) {
+    if (!c.isConnected) return;
+    if (c.clientWidth !== W) build();
+    const dt = Math.min(50, t - (last || t)); last = t;
+    ctx.clearRect(0, 0, W, H);
+    edges.forEach((e) => {
+      ctx.strokeStyle = "rgba(143,243,226," + (0.05 + e.w * 0.35) + ")";
+      ctx.lineWidth = 0.6 + e.w * 3.2;
+      ctx.beginPath(); ctx.moveTo(e.a.x, e.a.y); ctx.lineTo(e.b.x, e.b.y); ctx.stroke();
+    });
+    if (!reduce && Math.random() < 0.22) {
+      const starts = edges.filter((e) => e.a.li === 0 || Math.random() < 0.08);
+      const e = starts[Math.floor(Math.random() * starts.length)];
+      if (e && e.w > 0.25) pulses.push({ e, p: 0 });
+    }
+    pulses = pulses.filter((p) => {
+      p.p += dt / (700 - p.e.w * 300);
+      if (p.p >= 1) {
+        p.e.b.glow = 1;
+        const nxt = edges.filter((x) => x.a === p.e.b && x.w > 0.3);
+        if (nxt.length && Math.random() < 0.8) pulses.push({ e: nxt[Math.floor(Math.random() * nxt.length)], p: 0 });
+        return false;
+      }
+      const x = p.e.a.x + (p.e.b.x - p.e.a.x) * p.p, y = p.e.a.y + (p.e.b.y - p.e.a.y) * p.p;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, 9);
+      g.addColorStop(0, "rgba(255,210,122,.95)"); g.addColorStop(1, "rgba(255,176,32,0)");
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 9, 0, Math.PI * 2); ctx.fill();
+      return true;
+    });
+    nodes.forEach((n) => {
+      n.glow = Math.max(0, n.glow - dt / 600);
+      ctx.fillStyle = "#060B20"; ctx.strokeStyle = n.glow > 0 ? "rgba(255,176,32," + (0.5 + n.glow / 2) + ")" : "rgba(39,225,193,.85)";
+      ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(n.x, n.y, 6 + n.glow * 2.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    });
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- round intro ---------- */
+function viewRound(r) {
+  const R = ROUNDS[r];
+  const first = roundScreens(r)[0];
+  const node = el("div", { class: "view" },
+    el("section", { class: "round" },
+      el("div", { class: "rings", "aria-hidden": "true" }, el("span"), el("span"), el("span")),
+      el("p", { class: "kicker", text: "Round " + (r + 1) + " of " + ROUNDS.length }),
+      el("p", { class: "decade grad", text: R.era }),
+      el("p", { class: "era-name", text: R.eraName }),
+      el("h2", { text: R.title }),
+      el("p", { class: "how", text: R.how }),
+      el("p", { class: "count", text: roundCount(r) })));
+  const actions = [
+    r > 0 ? el("button", { class: "btn ghost", type: "button", "aria-label": "Back", onclick: () => go("q:" + (first - 1)), svg: ICON.back }) : null,
+    el("button", { class: "btn primary", type: "button", onclick: () => go("q:" + first) }, S.checked[first] || S.sent ? "Open round" : "Let's go", el("span", { svg: ICON.arrow }))
+  ];
+  return { node, actions };
+}
+
+/* ---------- question screens ---------- */
+function viewScreen(i) {
+  const s = SCREENS[i], lock = locked(i), rs = roundScreens(s.round);
+  S.visited[i] = true;
+  const checkBtn = el("button", { class: "btn primary", type: "button", id: "checkBtn" });
+  const refreshCheck = () => { if (!lock && s.type !== "essay") checkBtn.disabled = !readyToCheck(i); };
+
+  let body, stem = s.type === "mcq" || s.type === "tf" || s.type === "essay" ? s.q : s.note;
+  if (s.type === "mcq") body = bodyChoice(i, s.options.map((o, k) => ({ v: k, key: "ABCD"[k], label: o })), lock, refreshCheck, false);
+  else if (s.type === "tf") body = bodyChoice(i, [{ v: true, glyph: "○", label: "True" }, { v: false, glyph: "×", label: "False" }], lock, refreshCheck, true);
+  else if (s.type === "match") body = bodyMatch(i, lock, refreshCheck);
+  else if (s.type === "order") body = bodyOrder(i, lock);
+  else if (s.type === "fill") body = bodyFill(i, lock, refreshCheck);
+  else body = bodyEssay(i);
+
+  const node = el("div", { class: "view" + (justChecked === i ? " still" : "") },
+    el("div", { class: "meta" },
+      el("span", { class: "chip-type" + (s.type === "essay" ? " essay" : ""), text: TYPE_LABEL[s.type] }),
+      el("span", { class: "qnum", text: idLabel(s) }),
+      s.type === "essay" ? el("span", { class: "marks", text: "[" + s.marks + " marks]" }) : null,
+      el("span", { class: "qpos", text: "Round " + (s.round + 1) + " · " + (rs.indexOf(i) + 1) + " / " + rs.length })),
+    el("h2", { class: "stem", id: "stem", text: stem }),
+    body,
+    S.checked[i] && s.type !== "essay" ? feedback(i) : null);
+
+  const back = i > 0 ? el("button", { class: "btn ghost", type: "button", "aria-label": "Previous", onclick: () => go(SCREENS[i - 1].round !== s.round && !S.sent ? "round:" + s.round : "q:" + (i - 1)), svg: ICON.back }) : null;
+  const next = () => {
+    if (i + 1 >= SCREENS.length) return go(S.sent ? "result" : "finish");
+    const nr = SCREENS[i + 1].round;
+    go(nr !== s.round && !S.sent ? "round:" + nr : "q:" + (i + 1));
+  };
+  let main;
+  if (lock || s.type === "essay") {
+    main = el("button", { class: "btn " + (s.type === "essay" && !S.sent ? "amber" : "primary"), type: "button", onclick: () => { saveNow(); next(); } },
+      s.type === "essay" && !S.sent ? "Save and continue" : i + 1 >= SCREENS.length ? (S.sent ? "Back to my result" : "Finish") : "Next", el("span", { svg: ICON.arrow }));
+  } else {
+    checkBtn.append("Check", el("span", { svg: ICON.check }));
+    checkBtn.addEventListener("click", () => doCheck(i));
+    refreshCheck();
+    main = checkBtn;
+  }
+  return { node, actions: [back, main] };
+}
+
+function readyToCheck(i) {
+  const s = SCREENS[i], A = S.answers;
+  if (s.type === "mcq" || s.type === "tf") return A[s.ids[0]] !== undefined;
+  if (s.type === "match") return s.ids.every((id) => typeof A[id] === "number");
+  if (s.type === "fill") return s.ids.every((id) => String(A[id] || "").trim() !== "");
+  return true;
+}
+
+function doCheck(i) {
+  S.checked[i] = true;
+  const sc = screenScore(i);
+  if (sc.got === sc.of) { S.streak++; S.best = Math.max(S.best, S.streak); } else S.streak = 0;
+  justChecked = i;
+  save(); render(false);
+  const fb = $(".fb");
+  if (fb) fb.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+  justChecked = -1;
+}
+
+function bodyChoice(i, opts, lock, refresh, isTf) {
+  const s = SCREENS[i], id = s.ids[0], k = KEY.screens[i], chosen = S.answers[id];
+  const wrap = el("div", { class: isTf ? "body tf" : "body", role: "radiogroup", "aria-labelledby": "stem" });
+  opts.forEach((o) => {
+    let cls = "opt";
+    if (S.checked[i]) {
+      if (o.v === k.answer) cls += " right" + (justChecked === i && chosen === o.v ? " pop" : "");
+      else if (o.v === chosen) cls += justChecked === i ? " wrong" : " wrong still";
+      else cls += " dim";
+    }
+    const b = el("button", { class: cls, type: "button", role: "radio", "aria-checked": chosen === o.v ? "true" : "false", disabled: lock,
+      onclick: () => {
+        if (locked(i)) return;
+        S.answers[id] = o.v; save();
+        wrap.querySelectorAll(".opt").forEach((x) => x.setAttribute("aria-checked", x === b ? "true" : "false"));
+        refresh();
+      } },
+      isTf ? [el("span", { class: "glyph", "aria-hidden": "true", text: o.glyph }), el("span", { class: "word", text: o.label })]
+           : [el("span", { class: "key", text: o.key }), el("span", { text: o.label })]);
+    wrap.append(b);
+  });
+  return wrap;
+}
+
+function bodyMatch(i, lock, refresh) {
+  const s = SCREENS[i], k = KEY.screens[i];
+  return el("div", { class: "body" }, s.rows.map((text, r) => {
+    const id = s.ids[r], chosen = S.answers[id];
+    let rowCls = "mrow";
+    if (S.checked[i]) rowCls += chosen === k.answers[r] ? " good" : " bad";
+    const picks = el("div", { class: "picks", role: "radiogroup", "aria-label": id });
+    s.choices.forEach((c, ci) => {
+      let cls = "pick";
+      if (S.checked[i]) cls += ci === k.answers[r] ? " right" : ci === chosen ? " wrong" : " dim";
+      const b = el("button", { class: cls, type: "button", role: "radio", "aria-checked": chosen === ci ? "true" : "false", disabled: lock, text: c,
+        onclick: () => {
+          if (locked(i)) return;
+          S.answers[id] = ci; save();
+          picks.querySelectorAll(".pick").forEach((x) => x.setAttribute("aria-checked", x === b ? "true" : "false"));
+          refresh();
+        } });
+      picks.append(b);
+    });
+    return el("div", { class: rowCls }, el("div", { class: "mt" }, el("span", { class: "n", text: id }), el("span", { text: text })), picks);
+  }));
+}
+
+function bodyOrder(i, lock) {
+  const s = SCREENS[i], k = KEY.screens[i];
+  const wrap = el("div", { class: "body" });
+  const draw = (moved) => {
+    const cur = orderOf(i);
+    wrap.replaceChildren(
+      el("p", { class: "ends" }, el("span", { svg: ICON.up }), s.top),
+      ...cur.map((item, p) => {
+        let cls = "orow" + (moved === p ? " moved" : "");
+        const ok = cur[p] === k.correct[p];
+        if (S.checked[i]) cls += ok ? " good" : " bad";
+        const move = (d) => {
+          if (locked(i)) return;
+          const arr = orderOf(i).slice(); const q = p + d;
+          [arr[p], arr[q]] = [arr[q], arr[p]];
+          S.answers["order-" + i] = arr; S.visited[i] = true; save(); draw(q);
+        };
+        return el("div", { class: cls },
+          el("span", { class: "pos", text: String(p + 1) }),
+          el("span", { class: "ot" }, s.items[item],
+            S.checked[i] && !ok ? el("span", { class: "fix", text: " → should be: " + s.items[k.correct[p]] }) : null),
+          lock ? null : el("span", { class: "mv" },
+            el("button", { type: "button", "aria-label": "Move " + s.items[item] + " up", disabled: p === 0, onclick: () => move(-1), svg: ICON.up }),
+            el("button", { type: "button", "aria-label": "Move " + s.items[item] + " down", disabled: p === cur.length - 1, onclick: () => move(1), svg: ICON.down })));
+      }),
+      el("p", { class: "ends" }, el("span", { svg: ICON.down }), s.bottom));
+  };
+  draw(-1);
+  return wrap;
+}
+
+function bodyFill(i, lock, refresh) {
+  const s = SCREENS[i], k = KEY.screens[i];
+  const inputs = [];
+  const chips = [];
+  const markUsed = () => chips.forEach((c) => c.classList.toggle("used", inputs.some((inp) => norm(inp.value) === norm(c.textContent))));
+  const bank = el("div", { class: "bank" }, el("p", { class: "kicker", text: "Word bank" }),
+    el("div", { class: "picks" }, s.bank.map((w) => {
+      const c = el("button", { class: "pick", type: "button", disabled: lock, text: w, onclick: () => {
+        if (locked(i)) return;
+        let target = lastBlank && inputs.includes(lastBlank) && !lastBlank.value.trim() ? lastBlank : inputs.find((x) => !x.value.trim()) || lastBlank || inputs[0];
+        target.value = w; S.answers[target.dataset.id] = w; save();
+        const nextEmpty = inputs.find((x) => !x.value.trim());
+        lastBlank = nextEmpty || null;
+        markUsed(); refresh();
+      } });
+      chips.push(c); return c;
+    })));
+  const rows = s.rows.map((row, r) => {
+    const id = s.ids[r];
+    const inp = el("input", { class: "blank", type: "text", autocomplete: "off", autocapitalize: "off", spellcheck: "false", "data-id": id, readonly: lock, "aria-label": id + " blank" });
+    inp.value = S.answers[id] || "";
+    const ok = S.checked[i] && k.accept[r].map(norm).includes(norm(inp.value));
+    if (S.checked[i]) inp.classList.add(ok ? "right" : "wrong");
+    inp.addEventListener("focus", () => { lastBlank = inp; });
+    inp.addEventListener("input", () => { if (locked(i)) return; S.answers[id] = inp.value; save(); markUsed(); refresh(); });
+    inputs.push(inp);
+    return el("div", { class: "frow" }, el("span", { class: "n", text: id }),
+      el("p", { class: "s" }, row.before + " ", inp, S.checked[i] && !ok ? el("span", { class: "fix-inline", text: "→ " + k.show[r] }) : null, " " + row.after));
+  });
+  markUsed();
+  return el("div", { class: "body" }, bank, rows);
+}
+
+let essayTimer = null;
+function saveNow() { if (essayTimer) { clearTimeout(essayTimer); essayTimer = null; } save(); }
+function bodyEssay(i) {
+  const s = SCREENS[i], id = s.ids[0], k = KEY.screens[i];
+  const target = s.marks * 20;
+  const ticks = S.ticks[id] || [];
+  const ta = el("textarea", { class: "essay", id: "essay-" + id, "aria-labelledby": "stem", placeholder: "Write your answer here, in full sentences...", readonly: !!S.sent });
+  ta.value = S.answers[id] || "";
+  const fillBar = el("i");
+  const words = el("span");
+  const saved = el("span", { class: "saved" });
+  const upd = () => {
+    const n = countWords(ta.value);
+    words.textContent = n + " words";
+    fillBar.style.width = Math.min(100, (n / target) * 100) + "%";
+  };
+  ta.addEventListener("input", () => {
+    if (S.sent) return;
+    S.answers[id] = ta.value; upd(); saved.textContent = "";
+    clearTimeout(essayTimer);
+    essayTimer = setTimeout(() => { save(); saved.textContent = "Saved"; renderHud(); }, 500);
+  });
+  upd();
+  return el("div", { class: "body" },
+    el("div", { class: "refer" },
+      el("p", { class: "t", text: "In your answer, refer to:" }),
+      s.refer.map((r, ri) => {
+        const b = el("button", { class: "tick", type: "button", role: "checkbox", "aria-checked": ticks[ri] ? "true" : "false", disabled: !!S.sent,
+          onclick: () => { const t = (S.ticks[id] = S.ticks[id] || []); t[ri] = !t[ri]; b.setAttribute("aria-checked", t[ri] ? "true" : "false"); save(); } },
+          el("span", { class: "box", svg: ICON.check }), el("span", { class: "lb", text: r }));
+        return b;
+      })),
+    ta,
+    el("div", { class: "wc" }, words, el("span", { class: "bar", title: "Aim for about " + target + " words" }, fillBar), el("span", { text: "aim " + target }), saved),
+    S.sent ? el("div", { class: "model" },
+      el("p", { class: "t", text: "Example of a strong answer" }),
+      el("p", { text: k.model }),
+      el("p", { class: "h", text: "One good answer, not the only one. Compare your reasoning with it, and check you covered every point." })) : null);
+}
+
+function feedback(i) {
+  const s = SCREENS[i], k = KEY.screens[i], sc = screenScore(i);
+  const kind = sc.got === sc.of ? "good" : sc.got === 0 ? "bad" : "part";
+  const icon = kind === "good" ? ICON.check : kind === "bad" ? ICON.cross : ICON.half;
+  let head;
+  if (s.ids.length === 1) head = kind === "good" ? (S.streak >= 3 && justChecked === i ? "Correct! " + S.streak + " in a row" : "Correct!") : "Not quite";
+  else head = kind === "good" ? "All " + sc.of + " correct!" : sc.got + " of " + sc.of + " correct";
+  const parts = [el("p", { class: "hd" }, el("span", { class: "ic", svg: icon }), head)];
+  if (s.type === "mcq" || s.type === "tf") {
+    if (kind !== "good") parts.push(el("p", { class: "ans", text: "Answer: " + itemResults(i)[0].correct }));
+    parts.push(el("p", { text: k.why }), el("p", { class: "ar", dir: "rtl", lang: "ar", text: k.ar }));
+  } else if (kind !== "good") {
+    parts.push(el("p", { text: "The correct answers are marked above. Read them once more before you move on." }));
+  }
+  return el("div", { class: "fb " + kind, role: "status" }, parts);
+}
+
+/* ===== Part C: finish, send, result, map, boot ===== */
+function fmtDate(d) {
+  try { return new Date(d).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }); }
+  catch (e) { return String(d); }
+}
+function essayIdx() { return SCREENS.map((s, i) => i).filter((i) => SCREENS[i].type === "essay"); }
+
+/* ---------- finish ---------- */
+function viewFinish() {
+  if (S.sent) return viewResult();
+  const status = el("p", { class: "status", role: "status", "aria-live": "polite" });
+  const sendBtn = el("button", { class: "btn primary wide", type: "button" }, "Send to my teacher", el("span", { svg: ICON.send }));
+  sendBtn.addEventListener("click", () => doSend(sendBtn, status));
+
+  const pending = SCREENS.map((s, i) => i).filter((i) => SCREENS[i].type === "essay" ? !hasAnswer(i) : !S.checked[i]);
+  const rows = ROUNDS.map((r, ri) => {
+    const ids = roundScreens(ri);
+    const isEssay = SCREENS[ids[0]].type === "essay";
+    const done = ids.filter((i) => isEssay ? hasAnswer(i) : S.checked[i]).length;
+    const full = done === ids.length;
+    return el("div", { class: "ck" },
+      el("span", { class: "d", style: "background:" + (full ? "var(--cyan)" : done ? "var(--amber)" : "var(--line-2)") }),
+      el("span", { class: "x", text: "Round " + (ri + 1) + " · " + r.title }),
+      el("span", { class: "v", text: done + " / " + ids.length + (isEssay ? " written" : " checked") }));
+  });
+  const node = el("div", { class: "view" },
+    el("section", { class: "panel" },
+      el("p", { class: "kicker", text: "Finish line" }),
+      el("h1", { class: "big-title" }, "Ready to ", el("span", { class: "grad", text: "send?" })),
+      el("div", { class: "checklist" }, rows),
+      pending.length ? el("div", { style: "display:grid;gap:10px" },
+        el("p", { text: "Still open (" + pending.length + "). Tap one to go back to it:" }),
+        el("div", { class: "cells" }, pending.map((i) => el("button", { class: "cell " + screenState(i), type: "button", text: idLabel(SCREENS[i]).split("–")[0], onclick: () => go("q:" + i) }))),
+        el("p", { class: "note", text: "If you send now, unchecked answers are locked and marked exactly as they are, and empty essays are sent empty." }))
+        : el("p", { style: "color:var(--cyan);font-weight:700", text: "Every round is complete. Nice work." }),
+      el("p", { class: "note", text: "Sending as " + S.name + ". After sending you cannot change any answer." }),
+      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "بعد ما تبعت، إجاباتك هتتقفل ومش هتقدر تغيّر فيها حاجة." }),
+      sendBtn, status));
+  const back = el("button", { class: "btn ghost", type: "button", "aria-label": "Back to the last question", onclick: () => go("q:" + (SCREENS.length - 1)), svg: ICON.back });
+  return { node, actions: [back] };
+}
+
+function buildPayload() {
+  const now = new Date();
+  const results = [];
+  SCREENS.forEach((s, i) => { if (s.type !== "essay") itemResults(i).forEach((r) => results.push(r)); });
+  const t = totals();
+  const pct = Math.round((t.got / t.of) * 100);
+  const mistakes = results.filter((r) => !r.ok).map((r) => ({ id: r.id, lesson: KEY.lessons[r.id], given: r.given, correct: r.correct }));
+  const essays = essayIdx().map((i) => {
+    const s = SCREENS[i], id = s.ids[0], a = String(S.answers[id] || "").trim();
+    return { id, lesson: KEY.lessons[id], marks: s.marks, question: s.q, answer: a, words: countWords(a) };
+  });
+  const minutes = S.startedAt ? Math.round((now - new Date(S.startedAt)) / 60000) : "";
+  const columns = [
+    ["Submitted at", fmtDate(now)], ["Student", S.name], ["Score", t.got], ["Out of", t.of], ["Percent", pct + "%"],
+    ["Essay mark /" + ESSAY_MARKS + " (you fill)", ""], ["Mistakes", mistakes.length], ["Minutes since starting", minutes], ["Best streak", S.best]
+  ];
+  t.rounds.forEach((r) => columns.push([r.title, r.got + "/" + r.of]));
+  results.forEach((r) => columns.push([r.id + " [" + KEY.lessons[r.id] + "]", (r.ok ? "✓ " : "✗ ") + r.given + (r.ok ? "" : "  →  " + r.correct)]));
+  essays.forEach((e) => columns.push([e.id + " [" + e.lesson + "] /" + e.marks, e.answer || "(no answer)"]));
+  columns.push(["Submission ID", S.submissionId]);
+  return { homework: HW.title, sheet: HW.sheet, submissionId: S.submissionId, name: S.name, submittedAt: now.toISOString(),
+           minutes, score: t.got, outOf: t.of, percent: pct, essayMarks: ESSAY_MARKS, bestStreak: S.best,
+           rounds: t.rounds, mistakes, essays, columns };
+}
+
+async function doSend(btn, status) {
+  if (!HW.endpoint) {
+    status.className = "status bad";
+    status.textContent = "Sending is not switched on yet. Tell your teacher, and keep this page: your answers are saved.";
+    return;
+  }
+  SCREENS.forEach((s, i) => { if (s.type !== "essay") S.checked[i] = true; });
+  save();
+  const payload = JSON.stringify(buildPayload());
+  btn.disabled = true;
+  status.className = "status";
+  status.replaceChildren(el("span", { class: "spin" }), "Sending to your teacher...");
+  let confirmed = false, reached = false;
+  try {
+    const res = await fetch(HW.endpoint, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: payload, redirect: "follow" });
+    const data = await res.json();
+    if (data && data.ok) { confirmed = true; reached = true; }
+    else throw new Error((data && data.error) || "Server did not accept it");
+  } catch (e) {
+    try { await fetch(HW.endpoint, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: payload }); reached = true; }
+    catch (e2) { reached = false; }
+  }
+  if (!reached) {
+    btn.disabled = false;
+    status.className = "status bad";
+    status.textContent = "Could not send. Check your internet connection and tap Send again. Your answers are safe on this phone.";
+    return;
+  }
+  S.sent = { at: new Date().toISOString(), confirmed };
+  save();
+  go("result");
+  burst();
+}
+
+/* ---------- result ---------- */
+function levelFor(p) {
+  if (p >= 90) return ["Generative AI level", "The smallest, most specialized circle. Outstanding work."];
+  if (p >= 75) return ["Deep learning level", "Nearly at the top. Review your red questions and you are there."];
+  if (p >= 50) return ["Machine learning level", "You are learning from the data. Go over your mistakes to level up."];
+  return ["AI level", "Every model gets better with more training. Review the answers, then try the ideas again."];
+}
+function viewResult() {
+  const t = totals();
+  const pct = Math.round((t.got / t.of) * 100);
+  const [lvl, msg] = levelFor(pct);
+  const C = 2 * Math.PI * 88;
+  const svgNS = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(svgNS, "svg");
+  svg.setAttribute("viewBox", "0 0 210 210");
+  svg.setAttribute("aria-hidden", "true");
+  svg.innerHTML = '<defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FF3E2"/><stop offset="1" stop-color="#27E1C1"/></linearGradient></defs>' +
+    '<circle cx="105" cy="105" r="88" fill="none" stroke="#16235A" stroke-width="16"/>' +
+    '<circle id="ringArc" cx="105" cy="105" r="88" fill="none" stroke="url(#rg)" stroke-width="16" stroke-linecap="round" stroke-dasharray="' + C + '" stroke-dashoffset="' + C + '" style="transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)"/>';
+  const sc = el("span", { class: "sc", text: "0" });
+  const bars = t.rounds.map((r) => {
+    const fill = el("i");
+    requestAnimationFrame(() => requestAnimationFrame(() => { fill.style.width = Math.round((r.got / r.of) * 100) + "%"; }));
+    return el("div", { class: "brow" }, el("span", { text: r.title }), el("span", { class: "tr" }, fill), el("span", { class: "v", text: r.got + "/" + r.of }));
+  });
+  const node = el("div", { class: "view" },
+    el("section", { class: "panel result" },
+      el("p", { class: "kicker", style: "color:var(--cyan)" }, el("span", { svg: ICON.check }), " Sent to your teacher · " + fmtDate(S.sent.at)),
+      el("div", { class: "ring" }, svg, el("div", { class: "num" }, sc, el("span", { class: "of", text: "out of " + t.of + " · " + pct + "%" }))),
+      el("p", { class: "level", text: "You reached" }),
+      el("h1", { class: "big-title grad", text: lvl }),
+      el("p", { style: "color:var(--ice-2);max-width:26rem", text: msg }),
+      el("div", { class: "bars" }, bars,
+        el("div", { class: "brow" }, el("span", { text: "Explain it" }), el("span", { class: "note", text: "your teacher marks these" }), el("span", { class: "v", text: "/" + ESSAY_MARKS }))),
+      el("p", { class: "note", text: "Best streak: " + S.best + " in a row." }),
+      el("button", { class: "btn primary wide", type: "button", onclick: () => go("q:0") }, "Review my answers", el("span", { svg: ICON.arrow })),
+      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "إجاباتك وصلت للمدرس. راجع الأسئلة اللي غلطت فيها، وشوف مثال الإجابة القوية تحت كل سؤال مقالي." })));
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const a = document.getElementById("ringArc"); if (a) a.setAttribute("stroke-dashoffset", String(C * (1 - t.got / t.of)));
+    const t0 = performance.now();
+    const step = (now) => { const p = Math.min(1, (now - t0) / 1300); sc.textContent = String(Math.round(t.got * (1 - Math.pow(1 - p, 3)))); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }));
+  return { node, actions: null };
+}
+
+/* ---------- confetti ---------- */
+function burst() {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c = el("canvas", { id: "confetti", "aria-hidden": "true" });
+  document.body.append(c);
+  const ctx = c.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 2);
+  const W = innerWidth, H = innerHeight; c.width = W * dpr; c.height = H * dpr; ctx.scale(dpr, dpr);
+  const cols = ["#27E1C1", "#8FF3E2", "#FFB020", "#FFD27A", "#E6F0FA", "#FF6B6B"];
+  const ps = Array.from({ length: 160 }, () => ({ x: W / 2 + (Math.random() - .5) * 80, y: H * .38, vx: (Math.random() - .5) * 13, vy: -Math.random() * 15 - 4,
+    s: 5 + Math.random() * 7, r: Math.random() * 6, vr: (Math.random() - .5) * .3, c: cols[Math.floor(Math.random() * cols.length)] }));
+  const t0 = performance.now();
+  (function f(now) {
+    const el2 = now - t0; ctx.clearRect(0, 0, W, H);
+    ps.forEach((p) => { p.vy += .38; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.globalAlpha = Math.max(0, 1 - el2 / 3200); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); ctx.restore(); });
+    if (el2 < 3200) requestAnimationFrame(f); else c.remove();
+  })(t0);
+}
+
+/* ---------- question map ---------- */
+let resetArmed = false;
+function openMap() {
+  const close = () => { scrim.remove(); drawer.remove(); $("#mapBtn").focus(); };
+  const here = S.view.startsWith("q:") ? Number(S.view.slice(2)) : -1;
+  const scrim = el("div", { class: "scrim", onclick: () => close() });
+  const resetBtn = el("button", { class: "linkbtn", type: "button", style: "color:var(--muted);font-weight:400", text: "A different student on this phone? Start over" });
+  resetBtn.addEventListener("click", () => {
+    if (!resetArmed) { resetArmed = true; resetBtn.textContent = "Tap again to delete the answers on this phone and start over"; setTimeout(() => { resetArmed = false; resetBtn.textContent = "A different student on this phone? Start over"; }, 5000); return; }
+    resetArmed = false; try { localStorage.removeItem(STORE); } catch (e) {}
+    S = fresh(); close(); go("start");
+  });
+  const legend = [["Not started", "transparent;border:1.5px solid var(--line-2)"], ["Answered", "var(--panel-2)"], ["Correct", "var(--cyan)"], ["Partly", "var(--amber)"], ["Wrong", "var(--coral)"], ["Essay written", "transparent;border:1.5px solid var(--amber)"]];
+  const drawer = el("div", { class: "drawer", role: "dialog", "aria-modal": "true", "aria-label": "Question map" },
+    el("div", { class: "drawer-in" },
+      el("div", { class: "drawer-hd" }, el("h2", { text: "Question map" }), el("button", { class: "btn ghost", type: "button", style: "padding:10px 14px", onclick: () => close(), text: "Close" })),
+      el("div", { class: "legend" }, legend.map(([n, bg]) => el("span", null, el("i", { style: "background:" + bg }), n))),
+      ROUNDS.map((r, ri) => el("div", { class: "mapgrp" },
+        el("p", { class: "t", text: "Round " + (ri + 1) + " · " + r.title }),
+        el("div", { class: "cells" }, roundScreens(ri).map((i) => el("button", {
+          class: "cell " + screenState(i) + (i === here ? " here" : ""), type: "button", "aria-label": idLabel(SCREENS[i]),
+          text: idLabel(SCREENS[i]).split("–")[0], onclick: () => { close(); go("q:" + i); } }))))),
+      el("button", { class: "btn primary wide", type: "button", onclick: () => { close(); go(S.sent ? "result" : "finish"); } }, S.sent ? "My result" : "Go to the finish line", el("span", { svg: ICON.arrow })),
+      resetBtn));
+  document.body.append(scrim, drawer);
+  drawer.querySelector("button").focus();
+  drawer.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+}
+
+/* ---------- navigation ---------- */
+function viewFor(v) {
+  if (!S.name && v !== "start") v = S.view = "start";
+  if (v === "start") return viewStart();
+  if (v.startsWith("round:")) return viewRound(Number(v.slice(6)));
+  if (v.startsWith("q:")) return viewScreen(Math.max(0, Math.min(SCREENS.length - 1, Number(v.slice(2)))));
+  if (v === "result" && S.sent) return viewResult();
+  return viewFinish();
+}
+function render(scrollTop) {
+  const v = viewFor(S.view);
+  $("#view").replaceChildren(v.node);
+  const bar = $("#actions");
+  const acts = (v.actions || []).filter(Boolean);
+  bar.hidden = acts.length === 0;
+  $("#actionsIn").replaceChildren(...acts);
+  renderHud();
+  if (scrollTop) window.scrollTo(0, 0);
+}
+function go(view) { saveNow(); S.view = view; save(); render(true); }
+
+document.addEventListener("keydown", (e) => {
+  const tag = (e.target.tagName || "").toLowerCase();
+  if (tag === "textarea" || tag === "input" || document.querySelector(".drawer")) return;
+  if (!S.view.startsWith("q:")) return;
+  const i = Number(S.view.slice(2)), s = SCREENS[i];
+  if ((s.type === "mcq" && /^[a-d]$/i.test(e.key)) || (s.type === "tf" && /^[tf]$/i.test(e.key))) {
+    const idx = s.type === "mcq" ? "abcd".indexOf(e.key.toLowerCase()) : e.key.toLowerCase() === "t" ? 0 : 1;
+    const b = document.querySelectorAll("#view .opt")[idx]; if (b && !b.disabled) b.click();
+  } else if (e.key === "Enter") {
+    const main = document.querySelector("#actionsIn .btn:last-child"); if (main && !main.disabled) { e.preventDefault(); main.click(); }
+  }
+});
+$("#mapBtn").addEventListener("click", openMap);
+render(false);
+
+</script>
+</body>
+</html>
