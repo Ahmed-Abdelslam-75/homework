@@ -535,7 +535,7 @@ function roundCount(r) {
   const s0 = SCREENS[ids[0]];
   if (s0.type === "essay") return ids.length + " essays";
   if (s0.type === "mcq" || s0.type === "tf") return ids.length + " questions";
-  return ids.length + " sets · " + ids.reduce((a, i) => a + SCREENS[i].ids.length, 0) + " pts";
+  return ids.length + (ids.length === 1 ? " set · " : " sets · ") + ids.reduce((a, i) => a + SCREENS[i].ids.length, 0) + " pts";
 }
 function viewStart() {
   const canvas = el("canvas", { class: "net", "aria-hidden": "true" });
@@ -590,9 +590,9 @@ function viewStart() {
       input, err, startBtn,
       STORE_OK ? null : el("p", { class: "err" }, "This browser is not saving anything you type. If this tab is Private, close it and open the link in a normal tab, or everything you write will be lost."),
       STORE_OK ? null : el("p", { class: "err ar", dir: "rtl", lang: "ar" }, "المتصفح ده مش بيحفظ حاجة. لو التبويب خاص (Private) اقفله وافتح اللينك في تبويب عادي، وإلا كل اللي هتكتبه هيضيع."),
-      el("p", { class: "note", text: "About 75 minutes. Your answers save on this phone as you go, so you can close the page and come back. When you finish, one tap sends everything to El Bashmohandes." }),
+      el("p", { class: "note", text: "About " + (HW.minutes || 75) + " minutes. Your answers save on this phone as you go, so you can close the page and come back. When you finish, one tap sends everything to El Bashmohandes." }),
       el("p", { class: "note", text: "Two things erase them: a Private tab, and clearing your browser data. Use a normal tab. If you are stopping for more than a few days, open the question map and save a copy to your phone." }),
-      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "حوالي ساعة وربع. إجاباتك بتتحفظ على الموبايل أول بأول، تقدر تقفل وترجع تكمّل. وفي الآخر بضغطة واحدة كل إجاباتك توصل للباشمهندس." }),
+      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "حوالي " + (HW.arTime || "ساعة وربع") + ". إجاباتك بتتحفظ على الموبايل أول بأول، تقدر تقفل وترجع تكمّل. وفي الآخر بضغطة واحدة كل إجاباتك توصل للباشمهندس." }),
       el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "حاجتين بس بيمسحوا إجاباتك: التبويب الخاص (Private)، ومسح بيانات المتصفح. استخدم تبويب عادي، ولو هتسيب الواجب كام يوم افتح خريطة الأسئلة واحفظ نسخة على الموبايل." }),
       openCopy, pick, fileMsg));
   requestAnimationFrame(() => startNet(canvas));
