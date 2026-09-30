@@ -1095,6 +1095,8 @@ function openMap() {
 }
 
 /* ---------- answers found on El Bashmohandes's copy ---------- */
+/* The sheet may hand the time back as a cell value rather than the text that was written, so read it either way. */
+function when(v) { const d = new Date(v); return isNaN(d.getTime()) ? String(v) : fmtDate(d); }
 function offerRestore(found, nm) {
   const close = () => { scrim.remove(); sheet.remove(); };
   const scrim = el("div", { class: "scrim" });
@@ -1115,7 +1117,7 @@ function offerRestore(found, nm) {
     el("div", { class: "drawer-in" },
       el("div", { class: "drawer-hd" }, el("h2", { text: "Your answers are not lost" })),
       el("p", { text: "El Bashmohandes's copy has " + n + " answered question" + (n === 1 ? "" : "s") +
-                      " under the name " + (found.name || nm) + ", saved " + found.savedAt + "." }),
+                      " under the name " + (found.name || nm) + ", saved " + when(found.savedAt) + "." }),
       el("p", { class: "note ar", dir: "rtl", lang: "ar",
                 text: "الموبايل مسح إجاباتك، بس النسخة اللي عند الباشمهندس لسه موجودة. تحب تكمّل من مكانك؟" }),
       keep, anew));
