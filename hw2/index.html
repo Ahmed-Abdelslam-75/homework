@@ -383,47 +383,48 @@ function fresh() {
 }
 let S = fresh();
 try { const raw = localStorage.getItem(STORE); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
-function save() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} cloudSoon(); }
+function save() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} }
 
-/* ---------- a second copy, on El Bashmohandes's sheet ----------
-   Some phones clear a website's storage on their own: a private tab drops it the moment the tab closes, and
-   Safari on iPhone wipes it after a week without opening the site. So the answers are also pushed to the
-   receiver every half minute, and the start screen can pull them back by the student's name. */
-const CLOUD_GAP = 30000;
-let cloudAt = 0, cloudTimer = null, cloudDirty = false;
+/* ---------- is this browser actually keeping anything? ----------
+   A private tab on an iPhone throws the answers away the moment the tab closes, and Safari clears a site it
+   has not seen for a week. The page cannot stop either one, so it checks that writing works, asks to keep the
+   storage, and lets the student carry a copy of their own. */
+const STORE_OK = (function () {
+  try {
+    const probe = STORE + "-probe";
+    localStorage.setItem(probe, "1");
+    const ok = localStorage.getItem(probe) === "1";
+    localStorage.removeItem(probe);
+    return ok;
+  } catch (e) { return false; }
+})();
 function answeredCount() { return SCREENS.reduce((a, s, i) => a + (hasAnswer(i) ? 1 : 0), 0); }
-function cloudBody() {
-  return JSON.stringify({ kind: "progress", hw: HW.id, homework: HW.title, name: S.name,
-                          answered: answeredCount(), state: JSON.stringify(S) });
+
+/* A copy the student keeps in their own Files, which nothing on the phone clears. */
+function backupBlob() {
+  return new Blob([JSON.stringify({ app: "homework", hw: HW.id, name: S.name, savedAt: new Date().toISOString(),
+                                    answered: answeredCount(), state: S }, null, 1)], { type: "application/json" });
 }
-function cloudPush(leaving) {
-  if (!HW.endpoint || !S.name) return;
-  cloudDirty = false; cloudAt = Date.now();
-  const body = cloudBody(), type = "text/plain;charset=utf-8";
-  if (leaving && navigator.sendBeacon) { try { navigator.sendBeacon(HW.endpoint, new Blob([body], { type })); return; } catch (e) {} }
-  fetch(HW.endpoint, { method: "POST", headers: { "Content-Type": type }, body, redirect: "follow", keepalive: true })
-    .catch(() => fetch(HW.endpoint, { method: "POST", mode: "no-cors", headers: { "Content-Type": type }, body }).catch(() => {}));
+function saveBackup() {
+  const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-");
+  const url = URL.createObjectURL(backupBlob());
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = (HW.id + "-" + (S.name || "answers") + "-" + stamp + ".json").replace(/\s+/g, "-");
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
 }
-function cloudSoon() {
-  if (!HW.endpoint || !S.name || cloudTimer) return;
-  cloudDirty = true;
-  cloudTimer = setTimeout(() => { cloudTimer = null; if (cloudDirty) cloudPush(false); },
-                          Math.max(2000, CLOUD_GAP - (Date.now() - cloudAt)));
-}
-/* Reading back uses a <script> tag, not fetch: it is the one request a browser never blocks for being
-   cross-site, so it works the same in every phone browser. */
-function cloudFind(name) {
+function readBackup(file) {
   return new Promise((resolve) => {
-    if (!HW.endpoint) return resolve(null);
-    const cb = "hwcb" + Math.random().toString(36).slice(2, 9);
-    const tag = document.createElement("script");
-    let t = 0;
-    const done = (v) => { clearTimeout(t); try { delete window[cb]; } catch (e) { window[cb] = undefined; } tag.remove(); resolve(v); };
-    t = setTimeout(() => done(null), 6000);
-    window[cb] = (d) => done(d && d.found && d.state ? d : null);
-    tag.onerror = () => done(null);
-    tag.src = HW.endpoint + "?restore=" + encodeURIComponent(name) + "&hw=" + encodeURIComponent(HW.id) + "&cb=" + cb;
-    document.head.append(tag);
+    const r = new FileReader();
+    r.onerror = () => resolve(null);
+    r.onload = () => {
+      try {
+        const d = JSON.parse(String(r.result));
+        resolve(d && d.state && d.hw === HW.id ? d : null);
+      } catch (e) { resolve(null); }
+    };
+    r.readAsText(file);
   });
 }
 
@@ -543,22 +544,34 @@ function viewStart() {
   const err = el("p", { class: "err", hidden: true, text: "Write your full name first, so El Bashmohandes knows whose homework this is." });
   const startBtn = el("button", { class: "btn primary wide", type: "button", onclick: () => begin() },
                       "Start the journey", el("span", { svg: ICON.arrow }));
-  const begin = async () => {
+  const begin = () => {
     const nm = input.value.trim();
     if (nm.length < 2) { err.hidden = false; input.focus(); return; }
     S.name = nm; S.startedAt = S.startedAt || new Date().toISOString();
     if (!S.submissionId) S.submissionId = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-    /* Nothing on this phone: the answers may still be on El Bashmohandes's sheet under this name. */
-    if (answeredCount() === 0 && HW.endpoint) {
-      startBtn.disabled = true;
-      startBtn.replaceChildren(el("span", { class: "spin" }), "Looking for answers you saved before...");
-      const found = await cloudFind(nm);
-      startBtn.disabled = false;
-      startBtn.replaceChildren("Start the journey", el("span", { svg: ICON.arrow }));
-      if (found) return offerRestore(found, nm);
-    }
     go("round:0");
   };
+
+  /* Opening a copy the student saved on their own phone. */
+  const fileMsg = el("p", { class: "err", hidden: true });
+  const pick = el("input", { type: "file", accept: "application/json,.json", hidden: true });
+  pick.addEventListener("change", async () => {
+    const f = pick.files && pick.files[0];
+    pick.value = "";
+    if (!f) return;
+    const d = await readBackup(f);
+    if (!d) {
+      fileMsg.hidden = false;
+      fileMsg.textContent = "That file is not a copy of this homework. Look for one ending in .json.";
+      return;
+    }
+    S = Object.assign(fresh(), d.state);
+    if (!S.name) S.name = input.value.trim();
+    save();
+    go(S.sent ? "result" : (S.view && S.view !== "start" ? S.view : "round:0"));
+  });
+  const openCopy = el("button", { class: "linkbtn", type: "button", style: "color:var(--muted);font-weight:400",
+                                  text: "Lost your answers? Open a copy you saved", onclick: () => pick.click() });
   input.addEventListener("keydown", (e) => { if (e.key === "Enter") begin(); });
   const node = el("div", { class: "view" },
     el("section", { class: "hero" },
@@ -575,8 +588,13 @@ function viewStart() {
     el("section", { class: "join" },
       el("label", { for: "studentName", text: "Your full name" }),
       input, err, startBtn,
-      el("p", { class: "note", text: "About 75 minutes. Write the same name every time. Your answers save as you go, on this phone and on El Bashmohandes's copy, so you can close the page and come back even if the phone forgets. When you finish, one tap sends everything to El Bashmohandes." }),
-      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "حوالي ساعة وربع. اكتب نفس الاسم في كل مرة. إجاباتك بتتحفظ أول بأول على الموبايل وعند الباشمهندس، فلو الموبايل مسحها هترجعلك لما تكتب اسمك تاني. وفي الآخر بضغطة واحدة كل إجاباتك توصل للباشمهندس." })));
+      STORE_OK ? null : el("p", { class: "err" }, "This browser is not saving anything you type. If this tab is Private, close it and open the link in a normal tab, or everything you write will be lost."),
+      STORE_OK ? null : el("p", { class: "err ar", dir: "rtl", lang: "ar" }, "المتصفح ده مش بيحفظ حاجة. لو التبويب خاص (Private) اقفله وافتح اللينك في تبويب عادي، وإلا كل اللي هتكتبه هيضيع."),
+      el("p", { class: "note", text: "About 75 minutes. Your answers save on this phone as you go, so you can close the page and come back. When you finish, one tap sends everything to El Bashmohandes." }),
+      el("p", { class: "note", text: "Two things erase them: a Private tab, and clearing your browser data. Use a normal tab. If you are stopping for more than a few days, open the question map and save a copy to your phone." }),
+      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "حوالي ساعة وربع. إجاباتك بتتحفظ على الموبايل أول بأول، تقدر تقفل وترجع تكمّل. وفي الآخر بضغطة واحدة كل إجاباتك توصل للباشمهندس." }),
+      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "حاجتين بس بيمسحوا إجاباتك: التبويب الخاص (Private)، ومسح بيانات المتصفح. استخدم تبويب عادي، ولو هتسيب الواجب كام يوم افتح خريطة الأسئلة واحفظ نسخة على الموبايل." }),
+      openCopy, pick, fileMsg));
   requestAnimationFrame(() => startNet(canvas));
   return { node, actions: null };
 }
@@ -1071,6 +1089,10 @@ function openMap() {
   const close = () => { scrim.remove(); drawer.remove(); $("#mapBtn").focus(); };
   const here = S.view.startsWith("q:") ? Number(S.view.slice(2)) : -1;
   const scrim = el("div", { class: "scrim", onclick: () => close() });
+  /* A copy the student keeps themselves, for the phones that clear a website's storage on their own. */
+  const copyNote = el("p", { class: "note", text: "Keep it in your Files. If this phone ever forgets your answers, open the homework and tap “Open a copy you saved”." });
+  const copyBtn = el("button", { class: "btn ghost wide", type: "button", text: "Save a copy of my answers to this phone" });
+  copyBtn.addEventListener("click", () => { saveNow(); saveBackup(); copyBtn.textContent = "Saved. Check your Files."; });
   const resetBtn = el("button", { class: "linkbtn", type: "button", style: "color:var(--muted);font-weight:400", text: "A different student on this phone? Start over" });
   resetBtn.addEventListener("click", () => {
     if (!resetArmed) { resetArmed = true; resetBtn.textContent = "Tap again to delete the answers on this phone and start over"; setTimeout(() => { resetArmed = false; resetBtn.textContent = "A different student on this phone? Start over"; }, 5000); return; }
@@ -1088,6 +1110,7 @@ function openMap() {
           class: "cell " + screenState(i) + (i === here ? " here" : ""), type: "button", "aria-label": idLabel(SCREENS[i]),
           text: idLabel(SCREENS[i]).split("–")[0], onclick: () => { close(); go("q:" + i); } }))))),
       el("button", { class: "btn primary wide", type: "button", onclick: () => { close(); go(S.sent ? "result" : "finish"); } }, S.sent ? "My result" : "Go to the finish line", el("span", { svg: ICON.arrow })),
+      copyBtn, copyNote,
       resetBtn));
   document.body.append(scrim, drawer);
   drawer.querySelector("button").focus();
@@ -1095,37 +1118,6 @@ function openMap() {
 }
 
 /* ---------- answers found on El Bashmohandes's copy ---------- */
-/* The sheet may hand the time back as a cell value rather than the text that was written, so read it either way. */
-function when(v) { const d = new Date(v); return isNaN(d.getTime()) ? String(v) : fmtDate(d); }
-function offerRestore(found, nm) {
-  const close = () => { scrim.remove(); sheet.remove(); };
-  const scrim = el("div", { class: "scrim" });
-  const keep = el("button", { class: "btn primary wide", type: "button" }, "Carry on from there", el("span", { svg: ICON.arrow }));
-  const anew = el("button", { class: "btn ghost wide", type: "button", text: "No, start from the beginning" });
-  keep.addEventListener("click", () => {
-    let ok = false;
-    try { S = Object.assign(fresh(), JSON.parse(found.state)); ok = true; } catch (e) {}
-    close();
-    if (!ok) return go("round:0");
-    S.name = found.name || nm;
-    save();
-    go(S.sent ? "result" : (S.view && S.view !== "start" ? S.view : "round:0"));
-  });
-  anew.addEventListener("click", () => { close(); go("round:0"); });
-  const n = Number(found.answered) || 0;
-  const sheet = el("div", { class: "drawer", role: "dialog", "aria-modal": "true", "aria-label": "Saved answers found" },
-    el("div", { class: "drawer-in" },
-      el("div", { class: "drawer-hd" }, el("h2", { text: "Your answers are not lost" })),
-      el("p", { text: "El Bashmohandes's copy has " + n + " answered question" + (n === 1 ? "" : "s") +
-                      " under the name " + (found.name || nm) + ", saved " + when(found.savedAt) + "." }),
-      el("p", { class: "note ar", dir: "rtl", lang: "ar",
-                text: "الموبايل مسح إجاباتك، بس النسخة اللي عند الباشمهندس لسه موجودة. تحب تكمّل من مكانك؟" }),
-      keep, anew));
-  document.body.append(scrim, sheet);
-  keep.focus();
-  sheet.addEventListener("keydown", (e) => { if (e.key === "Escape") { close(); go("round:0"); } });
-}
-
 /* ---------- navigation ---------- */
 function viewFor(v) {
   if (!S.name && v !== "start") v = S.view = "start";
@@ -1162,11 +1154,9 @@ document.addEventListener("keydown", (e) => {
 $("#mapBtn").addEventListener("click", openMap);
 render(false);
 
-/* The page can be closed at any moment, so push the last changes out before the phone takes it away. */
-addEventListener("pagehide", () => { saveNow(); if (cloudDirty) cloudPush(true); });
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "hidden") { saveNow(); if (cloudDirty) cloudPush(true); }
-});
+/* The page can be closed at any moment, so write the last keystrokes down before the phone takes it away. */
+addEventListener("pagehide", () => saveNow());
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") saveNow(); });
 /* Ask the browser to keep this site's storage instead of clearing it when it tidies up. */
 try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
 
