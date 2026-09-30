@@ -383,7 +383,49 @@ function fresh() {
 }
 let S = fresh();
 try { const raw = localStorage.getItem(STORE); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
-function save() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} }
+function save() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} cloudSoon(); }
+
+/* ---------- a second copy, on El Bashmohandes's sheet ----------
+   Some phones clear a website's storage on their own: a private tab drops it the moment the tab closes, and
+   Safari on iPhone wipes it after a week without opening the site. So the answers are also pushed to the
+   receiver every half minute, and the start screen can pull them back by the student's name. */
+const CLOUD_GAP = 30000;
+let cloudAt = 0, cloudTimer = null, cloudDirty = false;
+function answeredCount() { return SCREENS.reduce((a, s, i) => a + (hasAnswer(i) ? 1 : 0), 0); }
+function cloudBody() {
+  return JSON.stringify({ kind: "progress", hw: HW.id, homework: HW.title, name: S.name,
+                          answered: answeredCount(), state: JSON.stringify(S) });
+}
+function cloudPush(leaving) {
+  if (!HW.endpoint || !S.name) return;
+  cloudDirty = false; cloudAt = Date.now();
+  const body = cloudBody(), type = "text/plain;charset=utf-8";
+  if (leaving && navigator.sendBeacon) { try { navigator.sendBeacon(HW.endpoint, new Blob([body], { type })); return; } catch (e) {} }
+  fetch(HW.endpoint, { method: "POST", headers: { "Content-Type": type }, body, redirect: "follow", keepalive: true })
+    .catch(() => fetch(HW.endpoint, { method: "POST", mode: "no-cors", headers: { "Content-Type": type }, body }).catch(() => {}));
+}
+function cloudSoon() {
+  if (!HW.endpoint || !S.name || cloudTimer) return;
+  cloudDirty = true;
+  cloudTimer = setTimeout(() => { cloudTimer = null; if (cloudDirty) cloudPush(false); },
+                          Math.max(2000, CLOUD_GAP - (Date.now() - cloudAt)));
+}
+/* Reading back uses a <script> tag, not fetch: it is the one request a browser never blocks for being
+   cross-site, so it works the same in every phone browser. */
+function cloudFind(name) {
+  return new Promise((resolve) => {
+    if (!HW.endpoint) return resolve(null);
+    const cb = "hwcb" + Math.random().toString(36).slice(2, 9);
+    const tag = document.createElement("script");
+    let t = 0;
+    const done = (v) => { clearTimeout(t); try { delete window[cb]; } catch (e) { window[cb] = undefined; } tag.remove(); resolve(v); };
+    t = setTimeout(() => done(null), 6000);
+    window[cb] = (d) => done(d && d.found && d.state ? d : null);
+    tag.onerror = () => done(null);
+    tag.src = HW.endpoint + "?restore=" + encodeURIComponent(name) + "&hw=" + encodeURIComponent(HW.id) + "&cb=" + cb;
+    document.head.append(tag);
+  });
+}
 
 /* ---------- scoring ---------- */
 function norm(s) {
@@ -499,11 +541,22 @@ function viewStart() {
   const input = el("input", { class: "name", id: "studentName", type: "text", autocomplete: "name", maxlength: "60", placeholder: "e.g. Ahmed" });
   input.value = S.name;
   const err = el("p", { class: "err", hidden: true, text: "Write your full name first, so El Bashmohandes knows whose homework this is." });
-  const begin = () => {
+  const startBtn = el("button", { class: "btn primary wide", type: "button", onclick: () => begin() },
+                      "Start the journey", el("span", { svg: ICON.arrow }));
+  const begin = async () => {
     const nm = input.value.trim();
     if (nm.length < 2) { err.hidden = false; input.focus(); return; }
     S.name = nm; S.startedAt = S.startedAt || new Date().toISOString();
     if (!S.submissionId) S.submissionId = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    /* Nothing on this phone: the answers may still be on El Bashmohandes's sheet under this name. */
+    if (answeredCount() === 0 && HW.endpoint) {
+      startBtn.disabled = true;
+      startBtn.replaceChildren(el("span", { class: "spin" }), "Looking for answers you saved before...");
+      const found = await cloudFind(nm);
+      startBtn.disabled = false;
+      startBtn.replaceChildren("Start the journey", el("span", { svg: ICON.arrow }));
+      if (found) return offerRestore(found, nm);
+    }
     go("round:0");
   };
   input.addEventListener("keydown", (e) => { if (e.key === "Enter") begin(); });
@@ -521,10 +574,9 @@ function viewStart() {
           el("span", { class: "ct", text: roundCount(ri) })))))),
     el("section", { class: "join" },
       el("label", { for: "studentName", text: "Your full name" }),
-      input, err,
-      el("button", { class: "btn primary wide", type: "button", onclick: begin }, "Start the journey", el("span", { svg: ICON.arrow })),
-      el("p", { class: "note", text: "About 75 minutes. Your answers save on this phone as you go, so you can stop and come back. When you finish, one tap sends everything to El Bashmohandes." }),
-      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "حوالي ساعة وربع. إجاباتك بتتحفظ على الموبايل أول بأول، تقدر تقفل وترجع تكمّل. وفي الآخر بضغطة واحدة كل إجاباتك توصل للباشمهندس." })));
+      input, err, startBtn,
+      el("p", { class: "note", text: "About 75 minutes. Write the same name every time. Your answers save as you go, on this phone and on El Bashmohandes's copy, so you can close the page and come back even if the phone forgets. When you finish, one tap sends everything to El Bashmohandes." }),
+      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "حوالي ساعة وربع. اكتب نفس الاسم في كل مرة. إجاباتك بتتحفظ أول بأول على الموبايل وعند الباشمهندس، فلو الموبايل مسحها هترجعلك لما تكتب اسمك تاني. وفي الآخر بضغطة واحدة كل إجاباتك توصل للباشمهندس." })));
   requestAnimationFrame(() => startNet(canvas));
   return { node, actions: null };
 }
@@ -1042,6 +1094,36 @@ function openMap() {
   drawer.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
 }
 
+/* ---------- answers found on El Bashmohandes's copy ---------- */
+function offerRestore(found, nm) {
+  const close = () => { scrim.remove(); sheet.remove(); };
+  const scrim = el("div", { class: "scrim" });
+  const keep = el("button", { class: "btn primary wide", type: "button" }, "Carry on from there", el("span", { svg: ICON.arrow }));
+  const anew = el("button", { class: "btn ghost wide", type: "button", text: "No, start from the beginning" });
+  keep.addEventListener("click", () => {
+    let ok = false;
+    try { S = Object.assign(fresh(), JSON.parse(found.state)); ok = true; } catch (e) {}
+    close();
+    if (!ok) return go("round:0");
+    S.name = found.name || nm;
+    save();
+    go(S.sent ? "result" : (S.view && S.view !== "start" ? S.view : "round:0"));
+  });
+  anew.addEventListener("click", () => { close(); go("round:0"); });
+  const n = Number(found.answered) || 0;
+  const sheet = el("div", { class: "drawer", role: "dialog", "aria-modal": "true", "aria-label": "Saved answers found" },
+    el("div", { class: "drawer-in" },
+      el("div", { class: "drawer-hd" }, el("h2", { text: "Your answers are not lost" })),
+      el("p", { text: "El Bashmohandes's copy has " + n + " answered question" + (n === 1 ? "" : "s") +
+                      " under the name " + (found.name || nm) + ", saved " + found.savedAt + "." }),
+      el("p", { class: "note ar", dir: "rtl", lang: "ar",
+                text: "الموبايل مسح إجاباتك، بس النسخة اللي عند الباشمهندس لسه موجودة. تحب تكمّل من مكانك؟" }),
+      keep, anew));
+  document.body.append(scrim, sheet);
+  keep.focus();
+  sheet.addEventListener("keydown", (e) => { if (e.key === "Escape") { close(); go("round:0"); } });
+}
+
 /* ---------- navigation ---------- */
 function viewFor(v) {
   if (!S.name && v !== "start") v = S.view = "start";
@@ -1077,6 +1159,14 @@ document.addEventListener("keydown", (e) => {
 });
 $("#mapBtn").addEventListener("click", openMap);
 render(false);
+
+/* The page can be closed at any moment, so push the last changes out before the phone takes it away. */
+addEventListener("pagehide", () => { saveNow(); if (cloudDirty) cloudPush(true); });
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") { saveNow(); if (cloudDirty) cloudPush(true); }
+});
+/* Ask the browser to keep this site's storage instead of clearing it when it tidies up. */
+try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
 
 </script>
 </body>
