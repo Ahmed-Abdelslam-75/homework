@@ -1,96 +1,325 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>القفل الصغير &middot; شرح الدرس</title>
-<meta name="description" content="شرح درس التشفير والمصادقة خطوة بخطوة، ولو جزء مش واضح فيه زرار بيشرحه بطريقة تانية.">
-<meta name="theme-color" content="#060B20">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23060B20'/%3E%3Crect x='20' y='29' width='24' height='20' rx='4' fill='none' stroke='%2327E1C1' stroke-width='4'/%3E%3Cpath d='M26 29v-6a6 6 0 0 1 12 0v6' fill='none' stroke='%2327E1C1' stroke-width='4'/%3E%3C/svg%3E">
+<title>Lesson 2-1 &middot; Cryptographic Technologies and Authentication</title>
+<meta name="description" content="The Study Companion for Lesson 2-1 on screen, with a button on every part that explains it a different way.">
+<meta name="theme-color" content="#0B1437">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B1437'/%3E%3Crect x='20' y='29' width='24' height='20' rx='4' fill='none' stroke='%2327E1C1' stroke-width='4'/%3E%3Cpath d='M26 29v-6a6 6 0 0 1 12 0v6' fill='none' stroke='%2327E1C1' stroke-width='4'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap">
 <style>
-:root{--bg:#060B20;--card:#0F1836;--card2:#141E42;--line:#22305F;--ink:#E6F0FA;--muted:#93A6C8;
-      --cyan:#27E1C1;--amber:#FFB020;--coral:#FF8A7A}
+:root{--ink:#16213E;--navy:#0B1437;--teal:#0E7C66;--amber:#A2620A;--red:#B3261E;--line:#C7D0E0;
+      --soft:#F5F7FC;--muted:#5E6C8A;--page:#FFFFFF}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Tajawal,"Segoe UI",Arial,sans-serif;
-     font-size:17px;line-height:1.85;-webkit-text-size-adjust:100%}
-.top{position:sticky;top:0;z-index:20;background:rgba(6,11,32,.93);backdrop-filter:blur(8px);
-     border-bottom:1px solid var(--line)}
-.top-in{max-width:760px;margin:0 auto;padding:11px 16px;display:flex;align-items:center;gap:10px}
-.top .nm{font-weight:700;font-size:15.5px}
-.top .ls{color:var(--cyan);font-size:12.5px;font-family:ui-monospace,monospace;letter-spacing:.08em}
-.bar{height:3px;background:var(--line)}
-.bar i{display:block;height:100%;width:0;background:var(--cyan);transition:width .15s linear}
-.wrap{max-width:760px;margin:0 auto;padding:0 16px 56px}
-.hero{padding:30px 0 10px}
-.hero h1{font-size:28px;line-height:1.35;margin:0 0 10px}
-.hero p{color:var(--muted);margin:0 0 16px}
-.hint{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;
-      font-size:15.5px;color:var(--ink)}
-.hint b{color:var(--amber)}
-.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 17px 13px;
-     margin:16px 0}
-.sec > h2{font-size:20px;margin:0 0 10px;display:flex;align-items:baseline;gap:9px;line-height:1.4}
-.sec > h2 .n{flex:0 0 auto;width:27px;height:27px;border-radius:50%;background:var(--cyan);color:#04112B;
-     font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;
-     font-family:ui-monospace,monospace}
-.body p{margin:0 0 11px}
-.body p:last-child{margin-bottom:0}
-.body b{color:var(--cyan);font-weight:700}
-.body ol{margin:0;padding-inline-start:22px}
-.body ol li{margin-bottom:9px}
-.body ol li::marker{color:var(--amber);font-weight:700}
-.en{direction:ltr;text-align:left;font-family:Georgia,"Times New Roman",serif;font-size:16.5px;
-    background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;
-    line-height:1.7}
-.en-note{color:var(--muted);font-size:14px;margin:0 0 8px}
-figure{margin:4px 0 0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:#E9EDF5;color:var(--ink);font-family:Georgia,"Times New Roman",serif;
+     font-size:17px;line-height:1.72}
+.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff}
+.top-in{max-width:720px;margin:0 auto;padding:10px 18px;display:flex;align-items:baseline;gap:10px}
+.top .ls{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#8FE8D8}
+.top .nm{font-size:15px}
+.bar{height:3px;background:#22305F}
+.bar i{display:block;height:100%;width:0;background:#27E1C1;transition:width .15s linear}
+.sheet{max-width:720px;margin:0 auto;background:var(--page);min-height:100vh;
+       padding:0 22px 48px;box-shadow:0 0 28px rgba(11,20,55,.12)}
+.cover{padding:30px 0 6px;border-bottom:3px solid var(--navy);margin-bottom:20px}
+.cover .k{font-family:Cambria,Georgia,serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;
+          color:var(--teal);font-weight:bold}
+.cover h1{font-family:Cambria,Georgia,serif;font-size:27px;line-height:1.25;margin:6px 0 4px;color:var(--navy)}
+.cover .s{color:var(--muted);font-size:15px;margin:0}
+.howto{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:13px 15px;
+       margin:16px 0 4px;direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;
+       font-size:15.5px;line-height:1.85}
+.howto b{color:var(--teal)}
+
+.blk{padding:16px 0 4px;border-bottom:1px solid #E8ECF4}
+.blk:last-of-type{border-bottom:0}
+h2{font-family:Cambria,Georgia,serif;font-size:20px;color:var(--navy);margin:0 0 9px;line-height:1.35}
+.kick{font-size:13.5px;color:var(--muted);font-style:italic;margin:0 0 8px}
+.blk p{margin:0 0 11px}
+.blk p:last-child{margin-bottom:0}
+.blk b{color:var(--navy)}
+ul,ol{margin:0 0 11px;padding-left:22px}
+li{margin-bottom:7px}
+ol.circ{list-style:none;counter-reset:c;padding-left:0}
+ol.circ li{counter-increment:c;padding-left:30px;position:relative}
+ol.circ li::before{content:counter(c);position:absolute;left:0;top:2px;width:20px;height:20px;
+  border-radius:50%;background:var(--navy);color:#fff;font-family:Cambria,serif;font-size:12px;
+  display:flex;align-items:center;justify-content:center}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15.5px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:#EEF2FA;font-family:Cambria,serif;color:var(--navy);font-size:14.5px}
+td.k{font-weight:bold;color:var(--navy);width:30%}
+td .sm{font-weight:normal;color:var(--muted);font-size:13.5px}
+.gq{font-style:italic;color:var(--teal);font-size:18px;border-left:3px solid var(--teal);
+    padding-left:12px;margin:0 0 12px}
+.kf{background:#EFFAF6;border:1px solid #A9DDCC;border-radius:8px;padding:10px 13px;font-size:16px}
+.kf b{color:var(--teal)}
+.q{font-weight:bold;color:var(--navy)}
+.ans{background:var(--soft);border-left:3px solid var(--teal);padding:10px 13px;border-radius:0 8px 8px 0;
+     font-size:16px}
+.note,.cap{color:var(--muted);font-size:14px;font-style:italic}
+p.ar{direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:16px;
+     line-height:1.9;color:var(--ink);background:#F4F6FB;border-radius:8px;padding:10px 13px}
+figure{margin:12px 0}
 figure svg{width:100%;height:auto;display:block}
-.ways{border-top:1px dashed var(--line);margin-top:13px;padding-top:11px}
-.ways .lab{color:var(--muted);font-size:13.5px;margin-bottom:7px}
-.chips{display:flex;flex-wrap:wrap;gap:7px}
-.chip{font:inherit;font-size:14.5px;cursor:pointer;background:transparent;color:var(--muted);
-      border:1px solid var(--line);border-radius:999px;padding:6px 14px;line-height:1.3}
-.chip:hover{border-color:var(--cyan);color:var(--ink)}
-.chip[aria-pressed="true"]{background:var(--cyan);border-color:var(--cyan);color:#04112B;font-weight:700}
-.chip:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
-.end{background:var(--card);border:1px solid var(--cyan);border-radius:16px;padding:18px;margin-top:22px;
-     text-align:center}
-.end h2{margin:0 0 8px;font-size:20px}
-.end p{color:var(--muted);margin:0 0 14px;font-size:15.5px}
-.btn{display:inline-block;text-decoration:none;background:var(--cyan);color:#04112B;font-weight:700;
-     border-radius:999px;padding:11px 22px}
-.foot{color:var(--muted);font-size:13px;text-align:center;margin-top:26px}
-@media (max-width:420px){ body{font-size:16.5px} .hero h1{font-size:24px} .sec > h2{font-size:18.5px} }
+figcaption{text-align:center;color:var(--muted);font-size:14px;font-style:italic;margin-top:6px;
+  direction:rtl;font-family:Tajawal,"Segoe UI",Arial,sans-serif}
+
+.ask{margin:12px 0 2px}
+.ask button{font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:15.5px;font-weight:700;cursor:pointer;
+  background:#FFF6E8;color:var(--amber);border:1.5px solid #E8C89A;border-radius:999px;padding:8px 18px;
+  line-height:1.3}
+.ask button:hover{background:var(--amber);border-color:var(--amber);color:#fff}
+.ask button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.ask .cnt{font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:13.5px;color:var(--muted);
+  margin-inline-start:10px}
+.way{direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:16.5px;
+  line-height:1.95;background:#FFFBF3;border:1px solid #E8C89A;border-radius:10px;padding:13px 16px;
+  margin-top:10px}
+.way p{margin:0 0 10px}
+.way p:last-child{margin-bottom:0}
+.way b{color:var(--amber)}
+.way ol{padding-right:22px;padding-left:0}
+.way figure{margin:2px 0}
+.end{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:24px;
+  text-align:center;direction:rtl;font-family:Tajawal,"Segoe UI",Arial,sans-serif}
+.end h2{margin:0 0 6px}
+.end p{color:var(--muted);font-size:15.5px;margin:0 0 13px}
+.btn{display:inline-block;text-decoration:none;background:var(--teal);color:#fff;font-weight:700;
+  border-radius:999px;padding:11px 24px}
+.foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px}
+@media (max-width:460px){ body{font-size:16px} .sheet{padding:0 15px 40px} .cover h1{font-size:23px}
+  h2{font-size:18.5px} table{font-size:14.5px} th,td{padding:6px 7px} }
 @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .bar i{transition:none} }
 </style>
 </head>
 <body>
 <header class="top">
-  <div class="top-in">
-    <span class="ls">LESSON 2-1</span>
-    <span class="nm">التشفير والمصادقة</span>
-  </div>
+  <div class="top-in"><span class="ls">LESSON 2-1</span><span class="nm">Study Companion</span></div>
   <div class="bar"><i id="prog"></i></div>
 </header>
 
-<main class="wrap">
-  <div class="hero">
-    <h1>القفل الصغير اللي جنب عنوان الموقع</h1>
-    <p>الدرس كامل، مقسّم لاتناشر جزء. اقرا على مهلك.</p>
-    <div class="hint">تحت كل جزء فيه زراير. لو الجزء ده مش واضح، دوس على
-      <b>بمثال</b> أو <b>خطوة بخطوة</b> أو <b>بصورة</b> وهو هيتشرح بطريقة تانية خالص.
-      و<b>بالإنجليزي</b> بيوريك الجملة اللي تكتبها في الامتحان.</div>
+<main class="sheet">
+  <div class="cover">
+    <div class="k">Part A &middot; The Lesson</div>
+    <h1>Cryptographic Technologies and Authentication</h1>
+    <p class="s">Lesson 2-1 &middot; Unit 2 &middot; Cybersecurity</p>
   </div>
 
-  <div id="sections"></div>
+  <div class="howto">نفس كلام الـ <b>Study Companion</b> بالظبط. الجديد هنا إن تحت أي جزء مش واضح فيه زرار
+  <b>مش فاهم؟</b>، تدوس عليه يشرحلك نفس الجزء بطريقة تانية خالص، وتدوس تاني يديك طريقة ثالثة.</div>
+
+  <section class="blk" data-ways="[]">
+<h2>Learning Objectives</h2>
+<ul>
+  <li>Explain how HTTPS secures communication: how the TLS handshake uses public-key cryptography to share a
+  key safely, and how common-key cryptography then protects the data that follows.</li>
+  <li>Describe how authentication, including multi-factor authentication, is used in real services, and
+  explain why security technologies are combined.</li>
+</ul>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;خد السؤال ده بالعربي الأول: &lt;b&gt;إزاي التشفير والمصادقة بيشتغلوا مع بعض عشان يأمّنوا الكلام\n    والخدمات على النت؟&lt;/b&gt;&lt;/p&gt;\n    &lt;p&gt;ولاحظ كلمة &lt;b&gt;مع بعض&lt;/b&gt;. الدرس كله بيثبت حاجة واحدة: مفيش تقنية لوحدها بتعمل الأمان. الأمان\n    &lt;b&gt;تركيبة&lt;/b&gt;.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;فكّر في عملية شرا واحدة من على النت:&lt;/b&gt;&lt;/p&gt;\n    &lt;p&gt;كتبت رقم الكارت. مين يضمن إن محدش قراه في السكة؟ وقبل كده، مين قالك إن ده موقع المحل الحقيقي مش\n    نسخة مقلدة؟ وقبل كده، لما دخلت على حسابك، مين اتأكد إنك إنت؟&lt;/p&gt;\n    &lt;p&gt;تلات أسئلة مختلفة، وكل واحد ليه تقنية مختلفة. ودي الحصة كلها.&lt;/p&gt;&quot;]">
+<h2>Guiding Question</h2>
+<p class="gq">&ldquo;How do cryptographic technologies and authentication work together to keep online
+communication and services secure?&rdquo;</p>
+<p>Every time you log in to a bank app, buy something online, or open a website with a small padlock in the
+address bar, hidden technologies are working to keep your information safe. Messages are scrambled so no one
+else can read them, the website proves that it is genuine, and your identity is checked before you are granted
+access. Without these protections, passwords could be stolen and private data could be read by unauthorized
+people.</p>
+<p class="kf"><b>Key Fact.</b> Secure online communication and services depend on combining cryptography and
+authentication, not on any single technology.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;الهدف من المراحل التلاتة دي كلها حاجة واحدة:&lt;/b&gt; إن المتصفح والسيرفر يوصلوا لنفس المفتاح\n    السري، وهما بيتكلموا قدام واحد سامع كل حاجة.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;المرحلة ①:&lt;/b&gt; السيرفر بيبعت شهادة ومفتاح عام. آخرها: المتصفح معاه المفتاح العام وواثق إنه بتاع\n    الموقع الصح.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;المرحلة ②:&lt;/b&gt; المتصفح بيعمل المفتاح المشترك ويبعته مقفول. آخرها: الاتنين عندهم نفس المفتاح.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;المرحلة ③:&lt;/b&gt; الكلام العادي كله بالمفتاح المشترك، لأنه سريع.&lt;/p&gt;&quot;, &quot;&lt;figure&gt;\n&lt;svg viewBox=\&quot;0 0 520 210\&quot; role=\&quot;img\&quot; aria-label=\&quot;The three stages of the handshake between browser and\n server\&quot;&gt;\n  &lt;defs&gt;&lt;marker id=\&quot;m1\&quot; viewBox=\&quot;0 0 10 10\&quot; refX=\&quot;9\&quot; refY=\&quot;5\&quot; markerWidth=\&quot;6\&quot; markerHeight=\&quot;6\&quot; orient=\&quot;auto\&quot;&gt;\n    &lt;path d=\&quot;M 0 0 L 10 5 L 0 10 z\&quot; fill=\&quot;#0B1437\&quot;/&gt;&lt;/marker&gt;&lt;/defs&gt;\n  &lt;text x=\&quot;56\&quot; y=\&quot;22\&quot; font-size=\&quot;14\&quot; font-weight=\&quot;700\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Browser&lt;/text&gt;\n  &lt;text x=\&quot;462\&quot; y=\&quot;22\&quot; font-size=\&quot;14\&quot; font-weight=\&quot;700\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Server&lt;/text&gt;\n  &lt;line x1=\&quot;56\&quot; y1=\&quot;32\&quot; x2=\&quot;56\&quot; y2=\&quot;200\&quot; stroke=\&quot;#C7D0E0\&quot; stroke-width=\&quot;1.5\&quot;/&gt;\n  &lt;line x1=\&quot;462\&quot; y1=\&quot;32\&quot; x2=\&quot;462\&quot; y2=\&quot;200\&quot; stroke=\&quot;#C7D0E0\&quot; stroke-width=\&quot;1.5\&quot;/&gt;\n  &lt;line x1=\&quot;456\&quot; y1=\&quot;62\&quot; x2=\&quot;66\&quot; y2=\&quot;62\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;2\&quot; marker-end=\&quot;url(#m1)\&quot;/&gt;\n  &lt;text x=\&quot;260\&quot; y=\&quot;54\&quot; font-size=\&quot;13.5\&quot; font-weight=\&quot;700\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;&amp;#9312;\n  certificate + public key&lt;/text&gt;\n  &lt;line x1=\&quot;62\&quot; y1=\&quot;124\&quot; x2=\&quot;452\&quot; y2=\&quot;124\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;2\&quot; marker-end=\&quot;url(#m1)\&quot;/&gt;\n  &lt;text x=\&quot;260\&quot; y=\&quot;116\&quot; font-size=\&quot;13.5\&quot; font-weight=\&quot;700\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;&amp;#9313; the\n  common key, locked with the public key&lt;/text&gt;\n  &lt;line x1=\&quot;62\&quot; y1=\&quot;186\&quot; x2=\&quot;452\&quot; y2=\&quot;186\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;2\&quot; marker-end=\&quot;url(#m1)\&quot;/&gt;\n  &lt;text x=\&quot;260\&quot; y=\&quot;178\&quot; font-size=\&quot;13.5\&quot; font-weight=\&quot;700\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;&amp;#9314; all the\n  data, encrypted with the common key&lt;/text&gt;\n&lt;/svg&gt;&lt;figcaption&gt;التلات مراحل بالترتيب، وكل مرحلة بتضيف حاجة للي قبلها.&lt;/figcaption&gt;&lt;/figure&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;واللي بيتنصت شايف إيه في كل مرحلة؟&lt;/b&gt; ده أسرع طريق تتأكد إنك فاهم:&lt;/p&gt;\n    &lt;ol&gt;\n      &lt;li&gt;بعد ①: شهادة ومفتاح عام. مفيش سر فيهم.&lt;/li&gt;\n      &lt;li&gt;بعد ②: صندوق مقفول مش قادر يفتحه.&lt;/li&gt;\n      &lt;li&gt;في ③: طلاسم.&lt;/li&gt;\n    &lt;/ol&gt;&quot;]">
+<h2>1. How HTTPS Communication Works</h2>
+<p><b>HTTPS</b> (HTTP Secure) is a communication protocol that adds TLS encryption to HTTP. By providing
+encryption, detection of tampering, and verification of the communication partner, it protects users from
+threats such as eavesdropping, tampering, and impersonation. The procedure for establishing a secure
+communication is called the <b>TLS handshake</b>.</p>
+<table>
+  <tr><th>Stage</th><th>What happens</th><th>Cryptographic method</th></tr>
+  <tr><td class="k">&#9312; Connection</td>
+      <td>The web server sends a digital certificate and a public key to the browser. The browser verifies the
+      server's authenticity through a certificate authority (CA).</td><td>Public-key cryptography</td></tr>
+  <tr><td class="k">&#9313; Key exchange</td>
+      <td>The browser creates a common key for communication, encrypts it with the server's public key, and
+      sends it. The server decrypts it with its private key to obtain the common key.</td>
+      <td>Public-key cryptography</td></tr>
+  <tr><td class="k">&#9314; Data communication</td>
+      <td>Data is encrypted and exchanged using the shared common key.</td>
+      <td>Common-key cryptography</td></tr>
+</table>
+<p class="cap">HTTPS Communication Flow: connection, key exchange, then data transfer.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;ليه نوعين مش نوع واحد؟ لأن كل واحد بيحل مشكلة التاني مش قادر يحلها.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;المفتاح المشترك&lt;/b&gt; سريع، بس مكناش نعرف نوصّله. &lt;b&gt;العام والخاص&lt;/b&gt; بيحلوا مشكلة التوصيل، بس\n    بطيئين.&lt;/p&gt;\n    &lt;p&gt;فبنستخدم البطيء &lt;b&gt;مرة واحدة بس&lt;/b&gt;، عشان يوصّل المفتاح، وبعدين السريع يشتغل على طول.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;تخيل عربية نقل بطيئة وموتوسيكل سريع.&lt;/b&gt;&lt;/p&gt;\n    &lt;p&gt;النقل بتستخدمها مرة واحدة عشان توصّل الموتوسيكل لصاحبك. وبعد كده كل التوصيلات بتمشي بالموتوسيكل.&lt;/p&gt;\n    &lt;p&gt;مش منطقي تستخدم النقل في كل توصيلة، ومش ممكن توصّل الموتوسيكل من غيرها.&lt;/p&gt;&quot;]">
+<p>HTTPS combines <b>common-key (symmetric-key) cryptography</b> and <b>public-key cryptography</b> so
+that it can take advantage of the strengths of both. Public-key cryptography is used to <b>share keys
+safely</b>, and common-key cryptography is used to <b>exchange large amounts of data quickly</b>. This division
+of roles makes it possible to achieve both security and communication speed.</p>
+<p class="note">Note from the textbook: the exchange above shows one way a common key can be shared. Current
+versions of TLS use Diffie-Hellman key agreement instead.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;figure&gt;\n&lt;svg viewBox=\&quot;0 0 520 190\&quot; role=\&quot;img\&quot; aria-label=\&quot;A box with two different keys, one that only locks and one\n that only opens\&quot;&gt;\n  &lt;rect x=\&quot;186\&quot; y=\&quot;54\&quot; width=\&quot;148\&quot; height=\&quot;92\&quot; rx=\&quot;8\&quot; fill=\&quot;#F5F7FC\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;2.5\&quot;/&gt;\n  &lt;line x1=\&quot;186\&quot; y1=\&quot;84\&quot; x2=\&quot;334\&quot; y2=\&quot;84\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;2\&quot;/&gt;\n  &lt;rect x=\&quot;246\&quot; y=\&quot;96\&quot; width=\&quot;28\&quot; height=\&quot;22\&quot; rx=\&quot;3\&quot; fill=\&quot;none\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;2.2\&quot;/&gt;\n  &lt;path d=\&quot;M 252 96 v -6 a 8 8 0 0 1 16 0 v 6\&quot; fill=\&quot;none\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;2.2\&quot;/&gt;\n  &lt;circle cx=\&quot;54\&quot; cy=\&quot;70\&quot; r=\&quot;11\&quot; fill=\&quot;none\&quot; stroke=\&quot;#0E7C66\&quot; stroke-width=\&quot;2.5\&quot;/&gt;\n  &lt;line x1=\&quot;65\&quot; y1=\&quot;70\&quot; x2=\&quot;126\&quot; y2=\&quot;70\&quot; stroke=\&quot;#0E7C66\&quot; stroke-width=\&quot;2.5\&quot;/&gt;\n  &lt;line x1=\&quot;112\&quot; y1=\&quot;70\&quot; x2=\&quot;112\&quot; y2=\&quot;82\&quot; stroke=\&quot;#0E7C66\&quot; stroke-width=\&quot;2.5\&quot;/&gt;\n  &lt;line x1=\&quot;122\&quot; y1=\&quot;70\&quot; x2=\&quot;122\&quot; y2=\&quot;82\&quot; stroke=\&quot;#0E7C66\&quot; stroke-width=\&quot;2.5\&quot;/&gt;\n  &lt;text x=\&quot;84\&quot; y=\&quot;110\&quot; font-size=\&quot;14\&quot; font-weight=\&quot;700\&quot; fill=\&quot;#0E7C66\&quot; text-anchor=\&quot;middle\&quot;&gt;public key&lt;/text&gt;\n  &lt;text x=\&quot;84\&quot; y=\&quot;130\&quot; font-size=\&quot;13.5\&quot; fill=\&quot;#5E6C8A\&quot; text-anchor=\&quot;middle\&quot;&gt;locks only&lt;/text&gt;\n  &lt;circle cx=\&quot;466\&quot; cy=\&quot;70\&quot; r=\&quot;11\&quot; fill=\&quot;none\&quot; stroke=\&quot;#A2620A\&quot; stroke-width=\&quot;2.5\&quot;/&gt;\n  &lt;line x1=\&quot;455\&quot; y1=\&quot;70\&quot; x2=\&quot;394\&quot; y2=\&quot;70\&quot; stroke=\&quot;#A2620A\&quot; stroke-width=\&quot;2.5\&quot;/&gt;\n  &lt;line x1=\&quot;408\&quot; y1=\&quot;70\&quot; x2=\&quot;408\&quot; y2=\&quot;82\&quot; stroke=\&quot;#A2620A\&quot; stroke-width=\&quot;2.5\&quot;/&gt;\n  &lt;line x1=\&quot;398\&quot; y1=\&quot;70\&quot; x2=\&quot;398\&quot; y2=\&quot;82\&quot; stroke=\&quot;#A2620A\&quot; stroke-width=\&quot;2.5\&quot;/&gt;\n  &lt;text x=\&quot;436\&quot; y=\&quot;110\&quot; font-size=\&quot;14\&quot; font-weight=\&quot;700\&quot; fill=\&quot;#A2620A\&quot; text-anchor=\&quot;middle\&quot;&gt;private key&lt;/text&gt;\n  &lt;text x=\&quot;436\&quot; y=\&quot;130\&quot; font-size=\&quot;13.5\&quot; fill=\&quot;#5E6C8A\&quot; text-anchor=\&quot;middle\&quot;&gt;opens only&lt;/text&gt;\n  &lt;text x=\&quot;260\&quot; y=\&quot;176\&quot; font-size=\&quot;14\&quot; fill=\&quot;#5E6C8A\&quot; text-anchor=\&quot;middle\&quot;&gt;Two different keys, one box.&lt;/text&gt;\n&lt;/svg&gt;&lt;figcaption&gt;قفل واحد، ومفتاحين مختلفين: واحد بيقفل بس، وواحد بيفتح بس.&lt;/figcaption&gt;&lt;/figure&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;الحتة اللي لازم تقف عندها:&lt;/b&gt; لما المتصفح يقفل الصندوق، &lt;b&gt;هو نفسه مش قادر يفتحه&lt;/b&gt;.&lt;/p&gt;\n    &lt;p&gt;هو اللي قفله، وهو مش قادر يفتحه. مفيش حاجة في الدنيا تفتح الصندوق ده غير المفتاح الخاص اللي قاعد\n    جوه السيرفر وعمره ما خرج.&lt;/p&gt;\n    &lt;p&gt;لو فهمت الجملة دي، فهمت الدرس كله.&lt;/p&gt;&quot;, &quot;&lt;ol&gt;\n      &lt;li&gt;السيرفر عنده مفتاحين: عام وخاص.&lt;/li&gt;\n      &lt;li&gt;بيبعت العام لأي حد، والخاص بيفضل عنده.&lt;/li&gt;\n      &lt;li&gt;المتصفح بيعمل مفتاح جديد (المشترك).&lt;/li&gt;\n      &lt;li&gt;بيحطه في صندوق ويقفله بالمفتاح العام.&lt;/li&gt;\n      &lt;li&gt;السيرفر بس هو اللي يفتحه، بمفتاحه الخاص.&lt;/li&gt;\n      &lt;li&gt;دلوقتي الاتنين عندهم نفس المفتاح، وهو عمره ما مشي مكشوف.&lt;/li&gt;\n    &lt;/ol&gt;&quot;]">
+<p class="kick">A public key locks; a different private key unlocks.</p>
+<h2>Going Deeper</h2>
+<p>Picture a box with an unusual lock. It comes with two different keys: one can only lock it, the other
+can only open it. The website keeps the opening key, called the <b>private key</b>, and never sends it
+anywhere. It hands out copies of the locking key, called the <b>public key</b>, to every visitor, and this is
+safe, because locking is all that key can do.</p>
+<p>Now the problem of sending a secret across the internet becomes simple. Your browser makes up a fresh key
+for this conversation, puts it in the box, locks it with the website's public key, and sends the box. Anyone
+watching sees a locked box they cannot open. Only the website, holding the private key, opens it. From that
+moment both sides share one key that nobody else knows, and the rest of the conversation uses that key, because
+locking and unlocking with one shared key is far faster for large amounts of data.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;التوقيع بيرد على سؤال تاني خالص: &lt;b&gt;هل حد غيّر في الكلام وهو ماشي؟&lt;/b&gt;&lt;/p&gt;\n    &lt;p&gt;التشفير بيمنع الناس تقرا، لكنه &lt;b&gt;مش&lt;/b&gt; بيمنع حد يغيّر. والتوقيع بيكشف التغيير.&lt;/p&gt;\n    &lt;p&gt;و&lt;b&gt;عدم الإنكار&lt;/b&gt; معناه إن اللي بعت مش هيقدر ينكر بعد كده إنه هو اللي بعت.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;زي الشمع الأحمر على الجواب زمان.&lt;/b&gt;&lt;/p&gt;\n    &lt;p&gt;الشمع مش بيمنع حد يفتح الجواب. هو بس بيخلي الفتح &lt;b&gt;يبان&lt;/b&gt;. لو حد فتح وغيّر، الشمع بيتكسر وإنت\n    بتعرف.&lt;/p&gt;\n    &lt;p&gt;وعشان الختم ده بتاعك إنت وحدك، مش هتعرف تقول بعدين «مش أنا اللي بعته».&lt;/p&gt;&quot;]">
+<p>In encryption the public key locks and the private key unlocks. In a <b>digital signature</b> the
+direction reverses: the private key signs, and the public key verifies. A digital signature detects tampering
+and impersonation of the sender, and provides <b>non-repudiation</b>, meaning the sender cannot later deny
+having sent the data.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;القفل بيحل مشكلة، والشهادة بتحل مشكلة تانية خالص.&lt;/b&gt;&lt;/p&gt;\n    &lt;p&gt;القفل بيحل مشكلة &lt;b&gt;التوصيل&lt;/b&gt;: إزاي أبعت سر في طريق مكشوف.&lt;/p&gt;\n    &lt;p&gt;الشهادة بتحل مشكلة &lt;b&gt;الهوية&lt;/b&gt;: إزاي أعرف إن ده الموقع الحقيقي مش حد لابس شخصيته.&lt;/p&gt;\n    &lt;p&gt;من غير الشهادة، ممكن تكون بتشفّر كلامك بإتقان شديد، &lt;b&gt;لحرامي&lt;/b&gt;.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;حد خبط عليك وقالك: أنا من شركة الكهربا.&lt;/b&gt;&lt;/p&gt;\n    &lt;p&gt;تصدقه؟ هتطلب الكارنيه. والكارنيه مش قفل ومش بيمنعه يدخل، هو بس بيثبت إنه &lt;b&gt;مين&lt;/b&gt;.&lt;/p&gt;\n    &lt;p&gt;والشهادة الرقمية هي الكارنيه ده، وجهة إصدار الشهادات هي الجهة اللي طبعت الكارنيه والكل بيثق\n    فيها.&lt;/p&gt;&quot;]">
+<p class="kick">A certificate authority vouches that a site is genuine.</p>
+<h2>Going Deeper</h2>
+<p>One question is worth asking before you accept that any of this is safe: what if an attacker builds a
+copy of your bank's website and sends you their own public key? You would lock your secret and hand it straight
+to them. That is what the <b>digital certificate</b> is for. The certificate comes from a <b>certificate
+authority</b>, a trusted third party that has checked who the site really belongs to, and the browser verifies
+it before anything else happens.</p>
+<p>It is the difference between a stranger telling you their name and a stranger showing an identity card
+issued by an authority you already trust. When that check fails, the browser stops and shows a warning, and
+that warning is the one thing in this lesson you should never click past.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;العلامة دي معناها حاجتين بس:&lt;/b&gt; إن الكلام بينك وبين الموقع متشفّر، وإن الموقع أثبت\n    إنه هو.&lt;/p&gt;\n    &lt;p&gt;ومعناهاش إن اللي ورا الموقع ناس أمينة. أي موقع نصب يقدر يجيب العلامة دي.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;العلامة بتحمي الطريق، مش النية.&lt;/b&gt; وده بالظبط سبب إن جوجل شالت القفل: الناس كانت بتفهمه غلط.&lt;/p&gt;&quot;]">
+<h2>Egyptian Example</h2>
+<p>Open any Egyptian banking app or a government service on the Digital Egypt platform and look at the
+left of the address bar. Older browsers show a padlock there; Chrome replaced it in 2023 with a small tune
+icon, because too many people read the padlock as &ldquo;this site is trustworthy&rdquo; rather than
+&ldquo;this connection is protected&rdquo;. Tap it and it still says the connection is secure.</p>
+<p>Behind that, this exact sequence just happened: the server proved its identity with a certificate, your
+device and the server agreed on a shared key, and everything after that moved encrypted. The padlock is not
+decoration, it is the visible end of the TLS handshake.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;تلات أنواع إثبات وبس: &lt;b&gt;حاجة تعرفها&lt;/b&gt;، و&lt;b&gt;حاجة معاك&lt;/b&gt;، و&lt;b&gt;حاجة فيك&lt;/b&gt;.&lt;/p&gt;\n    &lt;p&gt;والمصادقة متعددة العوامل معناها تجمع اتنين أو أكتر &lt;b&gt;من أنواع مختلفة&lt;/b&gt;.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;فخ الامتحان:&lt;/b&gt; باسورد + سؤال سري &lt;b&gt;مش&lt;/b&gt; multi-factor، لأن الاتنين «حاجة تعرفها». ده عامل\n    واحد مرتين.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;ماكينة الصراف:&lt;/b&gt; عشان تسحب فلوس لازم الكارت (حاجة معاك) والرقم السري (حاجة تعرفها).&lt;/p&gt;\n    &lt;p&gt;سرق الكارت بس؟ مش هيعرف الرقم. عرف الرقم بس؟ مش معاه الكارت.&lt;/p&gt;\n    &lt;p&gt;لازم الاتنين، ودول من نوعين مختلفين. دي بالظبط multi-factor، وإنت بتستخدمها من زمان.&lt;/p&gt;&quot;]">
+<p class="kick">Strong login combines two or more different factors.</p>
+<h2>2. Use of Authentication in Real Services</h2>
+<p>Many services adopt <b>multi-factor authentication</b>, in which two or more of the three factors of
+authentication are combined:</p>
+<table>
+  <tr><th>Factor</th><th>What it means</th><th>Examples</th></tr>
+  <tr><td class="k">Knowledge</td><td>Something you know</td><td>A password, a PIN, a secret question</td></tr>
+  <tr><td class="k">Possession</td><td>Something you have</td><td>A phone that receives a code, a smart
+      card</td></tr>
+  <tr><td class="k">Biometric</td><td>Something you are</td><td>A fingerprint, a face, a voice</td></tr>
+</table>
+<p>When only one factor is used, an unauthorized party can gain access if that factor is broken. By combining
+multiple factors, even if one is broken, another can still prevent access. For example, if only a password
+(knowledge) is used, an unauthorized login is possible once the password is leaked. However, if a notification
+to a smartphone (possession) is also required, an attacker cannot log in without the device, even if the
+password is leaked.</p>
+  </section>
+  <section class="blk" data-ways="[]">
+<p>The following examples of multi-factor authentication are used in various services.</p>
+<table>
+  <tr><th>Service</th><th>Examples of authentication used</th></tr>
+  <tr><td class="k">Online banking</td><td>Password (knowledge) + one-time password (possession)</td></tr>
+  <tr><td class="k">SNS login</td><td>Password (knowledge) + SMS authentication (possession)</td></tr>
+  <tr><td class="k">Online shopping</td>
+      <td>Password (knowledge) + one-time code from 3-D Secure (possession)</td></tr>
+  <tr><td class="k">Company laptop login</td>
+      <td>Smart card (possession) + fingerprint authentication (biometric)</td></tr>
+</table>
+  </section>
+  <section class="blk" data-ways="[]">
+<p class="kick">FROM THE TEXTBOOK</p>
+<h2>Pause &amp; Think</h2>
+<p class="q">If a password is leaked, why can a second factor sent to a phone still keep the account
+safe?</p>
+<p class="ans"><b>Model answer.</b> Because the two factors are different in kind. A password is knowledge,
+something you know, while the code sent to the phone is possession, something you have. An attacker who has
+stolen or guessed the password still does not hold the device, so the second check fails and the login is
+blocked. Breaking one factor is no longer enough on its own. This is also why two passwords, or a password and
+a secret question, do not count: both are knowledge, so one leak can expose both.</p>
+<p class="ar">بالعربي: العاملين من نوعين مختلفين، حاجة تعرفها وحاجة معاك. اللي سرق الباسورد لسه مش ماسك
+موبايلك، فمش هيعدي. وعشان كده باسوردين مش بيتحسبوا مصادقة متعددة، لأنهم نفس النوع.</p>
+  </section>
+  <section class="blk" data-ways="[]">
+<h2>Egyptian Example</h2>
+<p>The one-time code you receive when you log in to a bank app or send money with InstaPay is a
+possession factor, and the 3-D Secure code that arrives before an online card payment goes through is the same
+idea. In both cases the password or card number alone is deliberately not enough, because the service assumes
+it might one day leak.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;بدل ما تحفظ أربع تقنيات، احفظ &lt;b&gt;أربع أسئلة&lt;/b&gt;. كل تقنية بترد على سؤال واحد بس:&lt;/p&gt;\n    &lt;ol&gt;\n      &lt;li&gt;حد بيقرا كلامي؟ ← &lt;b&gt;التشفير&lt;/b&gt;&lt;/li&gt;\n      &lt;li&gt;أنا بتكلم مع مين أصلًا؟ ← &lt;b&gt;الشهادة الرقمية&lt;/b&gt;&lt;/li&gt;\n      &lt;li&gt;ده صاحب الحساب فعلًا؟ ← &lt;b&gt;المصادقة متعددة العوامل&lt;/b&gt;&lt;/li&gt;\n      &lt;li&gt;حد غيّر في الكلام؟ ← &lt;b&gt;التوقيع الرقمي&lt;/b&gt;&lt;/li&gt;\n    &lt;/ol&gt;&quot;, &quot;&lt;figure&gt;\n&lt;svg viewBox=\&quot;0 0 520 196\&quot; role=\&quot;img\&quot; aria-label=\&quot;Four questions, each answered by a different technology\&quot;&gt;\n  &lt;rect x=\&quot;10\&quot; y=\&quot;8\&quot; width=\&quot;238\&quot; height=\&quot;78\&quot; rx=\&quot;8\&quot; fill=\&quot;none\&quot; stroke=\&quot;#0E7C66\&quot; stroke-width=\&quot;1.8\&quot;/&gt;&lt;text x=\&quot;129\&quot; y=\&quot;38\&quot; font-size=\&quot;13.5\&quot; fill=\&quot;#B3261E\&quot; text-anchor=\&quot;middle\&quot; font-style=\&quot;italic\&quot;&gt;Is anyone reading this?&lt;/text&gt;&lt;text x=\&quot;129\&quot; y=\&quot;64\&quot; font-size=\&quot;14.5\&quot; font-weight=\&quot;700\&quot; fill=\&quot;#0E7C66\&quot; text-anchor=\&quot;middle\&quot;&gt;Encryption&lt;/text&gt;&lt;rect x=\&quot;272\&quot; y=\&quot;8\&quot; width=\&quot;238\&quot; height=\&quot;78\&quot; rx=\&quot;8\&quot; fill=\&quot;none\&quot; stroke=\&quot;#0E7C66\&quot; stroke-width=\&quot;1.8\&quot;/&gt;&lt;text x=\&quot;391\&quot; y=\&quot;38\&quot; font-size=\&quot;13.5\&quot; fill=\&quot;#B3261E\&quot; text-anchor=\&quot;middle\&quot; font-style=\&quot;italic\&quot;&gt;Is this really who they claim to be?&lt;/text&gt;&lt;text x=\&quot;391\&quot; y=\&quot;64\&quot; font-size=\&quot;14.5\&quot; font-weight=\&quot;700\&quot; fill=\&quot;#0E7C66\&quot; text-anchor=\&quot;middle\&quot;&gt;Digital certificate&lt;/text&gt;&lt;rect x=\&quot;10\&quot; y=\&quot;100\&quot; width=\&quot;238\&quot; height=\&quot;78\&quot; rx=\&quot;8\&quot; fill=\&quot;none\&quot; stroke=\&quot;#0E7C66\&quot; stroke-width=\&quot;1.8\&quot;/&gt;&lt;text x=\&quot;129\&quot; y=\&quot;130\&quot; font-size=\&quot;13.5\&quot; fill=\&quot;#B3261E\&quot; text-anchor=\&quot;middle\&quot; font-style=\&quot;italic\&quot;&gt;Is this really the account holder?&lt;/text&gt;&lt;text x=\&quot;129\&quot; y=\&quot;156\&quot; font-size=\&quot;14.5\&quot; font-weight=\&quot;700\&quot; fill=\&quot;#0E7C66\&quot; text-anchor=\&quot;middle\&quot;&gt;Multi-factor authentication&lt;/text&gt;&lt;rect x=\&quot;272\&quot; y=\&quot;100\&quot; width=\&quot;238\&quot; height=\&quot;78\&quot; rx=\&quot;8\&quot; fill=\&quot;none\&quot; stroke=\&quot;#0E7C66\&quot; stroke-width=\&quot;1.8\&quot;/&gt;&lt;text x=\&quot;391\&quot; y=\&quot;130\&quot; font-size=\&quot;13.5\&quot; fill=\&quot;#B3261E\&quot; text-anchor=\&quot;middle\&quot; font-style=\&quot;italic\&quot;&gt;Has anything been changed?&lt;/text&gt;&lt;text x=\&quot;391\&quot; y=\&quot;156\&quot; font-size=\&quot;14.5\&quot; font-weight=\&quot;700\&quot; fill=\&quot;#0E7C66\&quot; text-anchor=\&quot;middle\&quot;&gt;Digital signature&lt;/text&gt;\n&lt;/svg&gt;&lt;figcaption&gt;كل تقنية بترد على سؤال مختلف، في نفس عملية الشرا.&lt;/figcaption&gt;&lt;/figure&gt;&quot;]">
+<h2>3. Combinations of Security Technologies</h2>
+<p>Safe communication and services are achieved not by a single technology, but by <b>combining multiple
+security technologies</b>.</p>
+<table>
+  <tr><th>Technology</th><th>Effect</th></tr>
+  <tr><td class="k">Encryption<br><span class="sm">(common-key, public-key)</span></td>
+      <td>Prevents communication content from being read by third parties</td></tr>
+  <tr><td class="k">Digital signature</td>
+      <td>Detects data tampering or impersonation of the sender, and makes it impossible for the sender to deny
+      having sent the data afterward (non-repudiation)</td></tr>
+  <tr><td class="k">Digital certificate</td><td>Verifies that the communication partner is authentic</td></tr>
+  <tr><td class="k">Multi-factor authentication</td><td>Prevents unauthorized logins</td></tr>
+</table>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;شيل واحدة وشوف إيه اللي هيحصل:&lt;/b&gt;&lt;/p&gt;\n    &lt;p&gt;من غير &lt;b&gt;تشفير&lt;/b&gt;: رقم الكارت يتقرا في السكة.&lt;br&gt;\n    من غير &lt;b&gt;شهادة&lt;/b&gt;: ممكن تكون بتشفّر كلامك بإتقان، لموقع مزيف.&lt;br&gt;\n    من غير &lt;b&gt;مصادقة متعددة&lt;/b&gt;: باسورد مسروب يكفي حد يدخل بحسابك.&lt;br&gt;\n    من غير &lt;b&gt;توقيع&lt;/b&gt;: حد يغيّر في الطلب ومحدش يعرف.&lt;/p&gt;\n    &lt;p&gt;عشان كده الأمان &lt;b&gt;تركيبة&lt;/b&gt;، مش حاجة واحدة قوية.&lt;/p&gt;&quot;]">
+<p>For example, when purchasing a product through online shopping, these technologies are combined and
+used as follows:</p>
+<ol class="circ">
+  <li>When you access the site, HTTPS communication begins, and <b>encryption</b> prevents communication
+  content from being read by third parties.</li>
+  <li>The browser checks the <b>digital certificate</b> to confirm that the destination is the genuine shopping
+  site.</li>
+  <li>For account login, <b>multi-factor authentication</b> combining a password and SMS authentication
+  prevents unauthorized logins.</li>
+  <li>When sending order details, a <b>digital signature</b> can also be used so that tampering during
+  communication can be detected.</li>
+</ol>
+<p>By combining multiple technologies in this way, various threats such as eavesdropping, tampering,
+impersonation, and unauthorized login can be addressed simultaneously.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;دي أهم جملة في الدرس للامتحان:&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;لما ييجي سؤال «أنهي تقنية تحل ده؟»، ما تفكرش في التقنيات. سمّي التهديد الأول، والتقنية هتبان\n    لوحدها.&lt;/b&gt;&lt;/p&gt;\n    &lt;p&gt;حاجة داخلة ومحدش عارف مين بعتها؟ هوية ← شهادة. حد سامع؟ قراءة ← تشفير. حد دخل بحسابك؟ دخول ←\n    مصادقة. حاجة اتغيّرت؟ تلاعب ← توقيع.&lt;/p&gt;&quot;]">
+<h2>Going Deeper</h2>
+<p>Notice that none of these four technologies is a smaller version of another. Encryption does nothing
+to tell you who you are talking to. A certificate does nothing to hide what you send. Multi-factor
+authentication would not notice an order being altered in transit, and a signature would not stop someone
+logging in with your stolen password.</p>
+<p>Each one answers a different question: <i>is anyone reading this</i>, <i>is this really who they claim to
+be</i>, <i>is this really the account holder</i>, and <i>has anything been changed on the way</i>. That is why
+the lesson's key fact says security comes from combining technologies. When you are asked which technology
+solves a problem, <b>name the threat first</b>, then pick the tool that answers that exact threat.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;المصطلحات دي بتتسأل &lt;b&gt;بالاسم وبالإنجليزي&lt;/b&gt;. يعني لو كتبت الشرح صح من غير الكلمة، الدرجة\n    بتروح.&lt;/p&gt;\n    &lt;p&gt;غطّي عمود المعنى بإيدك، واقرا المصطلح، وقول معناه بصوت عالي بالإنجليزي. لو مش عارف، افتح وشوف،\n    وارجع تاني من الأول.&lt;/p&gt;\n    &lt;p&gt;تمنية مصطلحات بس. قابلة للحفظ في عشر دقايق.&lt;/p&gt;&quot;]">
+<h2>Key Terms</h2>
+<table>
+  <tr><th>Term</th><th>Meaning</th></tr>
+  <tr><td class="k">HTTPS</td><td>HTTP with TLS encryption added: encryption, tamper detection, and partner
+      verification.</td></tr>
+  <tr><td class="k">TLS handshake</td><td>The procedure for establishing a secure communication.</td></tr>
+  <tr><td class="k">common-key cryptography</td><td>One shared key locks and unlocks. Exchanges data
+      quickly.</td></tr>
+  <tr><td class="k">public-key cryptography</td><td>A public key locks, a private key unlocks. Shares a key
+      safely.</td></tr>
+  <tr><td class="k">digital certificate</td><td>Proves a site is genuine, vouched for by a certificate
+      authority.</td></tr>
+  <tr><td class="k">digital signature</td><td>Detects tampering and impersonation, and gives
+      non-repudiation.</td></tr>
+  <tr><td class="k">non-repudiation</td><td>The sender cannot deny having sent the data afterwards.</td></tr>
+  <tr><td class="k">multi-factor authentication</td><td>Combining two or more of knowledge, possession, and
+      biometric.</td></tr>
+</table>
+  </section>
 
   <div class="end">
     <h2>خلصت الدرس</h2>
-    <p>دلوقتي جرّب الواجب، وهو قصير.</p>
+    <p>باقي الـ PDF فيه الأسئلة والتمارين بإجاباتها. والواجب قصير.</p>
     <a class="btn" href="../../hw3/">افتح الواجب</a>
   </div>
 
@@ -98,73 +327,51 @@ figure svg{width:100%;height:auto;display:block}
 </main>
 
 <script>
-const SECTIONS = [{"id": "road", "n": "1", "title": "ليه فيه مشكلة من الأساس؟", "main": "لما تكتب رقم الكارت في موقع، الكلام بتاعك <b>مش<\/b> بيمشي من جهازك للموقع على طول. بيتقسم لحزم صغيرة، وكل حزمة بتعدي على أجهزة كتير مش بتاعتك، ممكن تكون في دول تانية خالص.<p>وأي جهاز في السكة دي يقدر يقرا اللي بيعدي عليه. فالسؤال مش «إزاي نمنعهم يسمعوا»، ده مستحيل. السؤال الحقيقي: <b>إزاي نخليهم يسمعوا حاجة متنفعهمش<\/b>.<\/p>", "example": "تخيل إنك عايز تبعت جواب من القاهرة لأسوان، والطريق الوحيد ساعي بريد عنده عادة وحشة: بيفتح كل جواب ويقراه قبل ما يوصّله.<p>مش هتقدر تمنعه يفتح، ده الطريق الوحيد. اللي تقدر تعمله إنك تكتب الجواب <b>بشفرة<\/b> هو مش فاهمها. يفتح ويقرا ويلاقي طلاسم، ويقفل ويمشي.<\/p>", "steps": ["بتكتب رقم الكارت في الموقع.", "الكلام بيتقسم لحزم صغيرة قبل ما يتبعت.", "كل حزمة بتعدي على راوترات ومحطات كتير مش بتاعتك.", "أي جهاز في الطريق يقدر يشوف اللي بيعدي عليه.", "عشان كده لازم الكلام يتشفّر <b>قبل<\/b> ما يخرج من جهازك."], "english": "Data sent over the Internet passes through many devices that belong to neither side, so anyone on the route can capture it.", "figure": "<svg viewBox=\"0 20 560 210\" role=\"img\" aria-label=\"جهازك على الشمال والموقع على اليمين وبينهم أجهزة كتير وواحد بيتنصت\" preserveAspectRatio=\"xMidYMid meet\">\n  <rect x=\"14\" y=\"54\" width=\"110\" height=\"68\" rx=\"8\" fill=\"none\" stroke=\"#E6F0FA\" stroke-width=\"2.5\"/>\n  <text x=\"69\" y=\"146\" fill=\"#E6F0FA\" font-size=\"17\" font-weight=\"700\" text-anchor=\"middle\">جهازك<\/text>\n  <rect x=\"436\" y=\"44\" width=\"92\" height=\"88\" rx=\"8\" fill=\"none\" stroke=\"#E6F0FA\" stroke-width=\"2.5\"/>\n  <line x1=\"452\" y1=\"68\" x2=\"512\" y2=\"68\" stroke=\"#E6F0FA\" stroke-width=\"2\"/>\n  <line x1=\"452\" y1=\"90\" x2=\"512\" y2=\"90\" stroke=\"#E6F0FA\" stroke-width=\"2\"/>\n  <line x1=\"452\" y1=\"112\" x2=\"512\" y2=\"112\" stroke=\"#E6F0FA\" stroke-width=\"2\"/>\n  <text x=\"482\" y=\"156\" fill=\"#E6F0FA\" font-size=\"17\" font-weight=\"700\" text-anchor=\"middle\">الموقع<\/text>\n  <line x1=\"132\" y1=\"88\" x2=\"428\" y2=\"88\" stroke=\"#27E1C1\" stroke-width=\"3\"/>\n  <g fill=\"#FFB020\">\n    <circle cx=\"190\" cy=\"88\" r=\"7\"/><circle cx=\"250\" cy=\"88\" r=\"7\"/><circle cx=\"310\" cy=\"88\" r=\"7\"/>\n    <circle cx=\"370\" cy=\"88\" r=\"7\"/>\n  <\/g>\n  <text x=\"280\" y=\"42\" fill=\"#FFB020\" font-size=\"15\" text-anchor=\"middle\">أجهزة مش بتاعتك<\/text>\n  <circle cx=\"280\" cy=\"176\" r=\"15\" fill=\"none\" stroke=\"#FF8A7A\" stroke-width=\"2.5\"/>\n  <path d=\"M 263 170 a 8 8 0 0 1 0 14\" fill=\"none\" stroke=\"#FF8A7A\" stroke-width=\"2.5\"/>\n  <path d=\"M 297 170 a 8 8 0 0 0 0 14\" fill=\"none\" stroke=\"#FF8A7A\" stroke-width=\"2.5\"/>\n  <line x1=\"280\" y1=\"191\" x2=\"280\" y2=\"196\" stroke=\"#FF8A7A\" stroke-width=\"2.5\"/>\n  <line x1=\"280\" y1=\"130\" x2=\"280\" y2=\"158\" stroke=\"#FF8A7A\" stroke-width=\"2\" stroke-dasharray=\"5 4\"/>\n  <text x=\"280\" y=\"216\" fill=\"#FF8A7A\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">أي حد في السكة\n  يقدر يقرا<\/text>\n<\/svg>"}, {"id": "https", "n": "2", "title": "يعني إيه HTTPS؟", "main": "<b>HTTPS<\/b> مش برنامج وﻻ موقع. ده <b>اتفاق على طريقة الكلام<\/b> بين جهازك والموقع، والاتفاق ده اسمه <b>بروتوكول<\/b> (protocol).<p>هو الـ HTTP العادي، مضاف عليه طبقة تشفير اسمها <b>TLS<\/b>. والإضافة دي بتدي تلات حاجات مع بعض: الكلام مايتقراش، وأي تعديل فيه يتكشف، وتتأكد إنك بتكلم مين.<\/p>", "example": "اتنين عايزين يتكلموا. قبل ما يبدأوا بيتفقوا: هنتكلم عربي، وهنبدأ بالسلام عليكم، ولو حد قال كلمة السر دي يبقى هو، وهنكتب بشفرة متفق عليها.<p>الاتفاق ده كله هو <b>البروتوكول<\/b>. مفيش جهاز اسمه HTTPS، فيه قواعد اسمها HTTPS.<\/p>", "steps": ["HTTP لوحده: الكلام بيمشي مكشوف.", "بنضيف عليه TLS، وهي طبقة بتشفّر.", "الناتج اسمه HTTPS.", "وبيدي تلاتة مع بعض: تشفير، وكشف التلاعب، والتأكد من الطرف التاني."], "english": "HTTPS is HTTP with TLS encryption added: encryption, tamper detection, and partner verification."}, {"id": "goal", "n": "3", "title": "الهدف اللي المراحل التلاتة اتعملت عشانه", "main": "عشان نشفّر، لازم الطرفين يكون عندهم <b>نفس المفتاح<\/b>. أنا بقفل بيه وإنت بتفتح بيه.<p>طب أنا في القاهرة والسيرفر في مكان تاني، وعمرنا ما اتقابلنا. <b>أوصّله المفتاح إزاي؟<\/b> لو بعته على النت، اللي بيتنصت أخده، وخلاص التشفير بقى بلا قيمة.<\/p><p>ولو قلت أشفّر المفتاح قبل ما أبعته، هشفّره بإيه؟ بمفتاح تاني. وأوصّل التاني ده إزاي؟ <b>دايرة مقفولة.<\/b> المراحل التلاتة اللي جاية اتعملت عشان تكسر الدايرة دي.<\/p>", "example": "إنت عايز تبعت خزنة لحد، بس الخزنة مقفولة ومفتاحها معاك. تبعت المفتاح مع نفس الساعي اللي بيفتح الجوابات؟ يبقى بعتله الخزنة والمفتاح مع بعض.<p>المشكلة مش في الخزنة. المشكلة في <b>توصيل المفتاح<\/b>.<\/p>", "steps": ["التشفير محتاج الطرفين يكون عندهم نفس السر.", "الطريق بينهم مكشوف.", "لو بعتنا السر في الطريق، اتسرق.", "ولو شفّرناه، هنحتاج سر تاني نوصّله، ونفس المشكلة بترجع.", "فمحتاجين طريقة توصّل السر من غير ما السر نفسه يمشي مكشوف."], "english": "Both sides need the same secret key, but the Internet is a public path, so the key cannot simply be sent."}, {"id": "stage1", "n": "4", "title": "المرحلة ①: الاتصال", "main": "السيرفر بيبعتلك حاجتين: <b>شهادة رقمية<\/b> (digital certificate) و<b>مفتاح عام<\/b> (public key).<p>والمفتاح العام ده حاجة غريبة: هو <b>بيقفل بس، ومش بيفتح<\/b>. زي كالون مفتوح. أي حد يقدر يقفله بإيده، بس مفيش حاجة تفتحه غير مفتاح صغير واحد قاعد جوه السيرفر واسمه <b>المفتاح الخاص<\/b> (private key)، وعمره ما بيخرج.<\/p><p>وعشان كده مفيش خطر إن المفتاح العام يتبعت في العلن. لو اللي بيتنصت خده، هيعمل بيه إيه؟ يقفل؟ طب يفتح؟ مش هيعرف.<\/p><p><b>آخر المرحلة دي:<\/b> المتصفح بقى معاه المفتاح العام، وواثق إنه بتاع الموقع الصح. واللي بيتنصت شايف شهادة ومفتاح عام، ومفيش سر فيهم.<\/p>", "example": "صاحب محل في أسوان بعتلك في الجواب <b>كالون مفتوح<\/b>، مش مفتاح. ومعاه ورقة مكتوب فيها: «الكالون ده بيتقفل بإيدك، بس مفيش حاجة تفتحه غير مفتاح صغير في درج مكتبي ومش هيخرج منه.»<p>الساعي شاف الكالون، وصوّره، وعمل منه نسخ. ويعمل بيهم إيه؟ <b>وﻻ حاجة.<\/b> الكالون المفتوح ملوش قيمة لحد غير صاحب المفتاح.<\/p>", "steps": ["السيرفر عنده مفتاحين: عام وخاص.", "بيبعت العام لأي حد يطلبه، ومعاه الشهادة.", "العام بيقفل بس.", "الخاص هو الوحيد اللي بيفتح، وبيفضل جوه السيرفر.", "آخر المرحلة: المتصفح معاه العام، واللي بيتنصت معاه نسخة ملهاش لازمة."], "english": "The server sends its digital certificate and its public key. The public key only locks; the private key, which never leaves the server, is the only thing that unlocks.", "figure": "<svg viewBox=\"0 10 560 180\" role=\"img\" aria-label=\"السيرفر بيبعت الشهادة والمفتاح العام للمتصفح\" preserveAspectRatio=\"xMidYMid meet\">\n  <text x=\"60\" y=\"30\" fill=\"#93A6C8\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">المتصفح<\/text>\n  <text x=\"500\" y=\"30\" fill=\"#93A6C8\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">السيرفر<\/text>\n  <line x1=\"490\" y1=\"74\" x2=\"80\" y2=\"74\" stroke=\"#27E1C1\" stroke-width=\"3\"\n        marker-end=\"url(#a1)\"/>\n  <defs><marker id=\"a1\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\"\n    orient=\"auto\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#27E1C1\"/><\/marker><\/defs>\n  <rect x=\"222\" y=\"92\" width=\"52\" height=\"62\" rx=\"5\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2.5\"/>\n  <line x1=\"234\" y1=\"116\" x2=\"262\" y2=\"116\" stroke=\"#27E1C1\" stroke-width=\"2\"/>\n  <line x1=\"234\" y1=\"130\" x2=\"254\" y2=\"130\" stroke=\"#27E1C1\" stroke-width=\"2\"/>\n  <circle cx=\"262\" cy=\"142\" r=\"7\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2\"/>\n  <text x=\"248\" y=\"176\" fill=\"#27E1C1\" font-size=\"14\" text-anchor=\"middle\">الشهادة<\/text>\n  <rect x=\"300\" y=\"110\" width=\"34\" height=\"26\" rx=\"4\" fill=\"none\" stroke=\"#FFB020\" stroke-width=\"2.5\"/>\n  <path d=\"M 322 110 v -7 a 11 11 0 0 1 22 0 v 7\" fill=\"none\" stroke=\"#FFB020\" stroke-width=\"2.5\"/>\n  <text x=\"317\" y=\"176\" fill=\"#FFB020\" font-size=\"14\" text-anchor=\"middle\">المفتاح العام<\/text>\n  <text x=\"285\" y=\"54\" fill=\"#E6F0FA\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">القفل مفتوح: بيقفل\n  بس<\/text>\n<\/svg>"}, {"id": "stage2", "n": "5", "title": "المرحلة ②: تبادل المفاتيح", "main": "دلوقتي <b>المتصفح<\/b> هو اللي بيعمل مفتاح جديد، اسمه <b>المفتاح المشترك<\/b> (common key). بيحطه في صندوق، ويقفل الصندوق بالقفل المفتوح اللي وصله.<p>ومن اللحظة دي، <b>حتى المتصفح نفسه مش قادر يفتح الصندوق<\/b>. هو اللي قفله وهو مش قادر يفتحه. مفيش حاجة في الدنيا تفتحه غير المفتاح الخاص اللي جوه السيرفر، واللي عمره ما خرج.<\/p><p><b>آخر المرحلة دي:<\/b> الاتنين بقى عندهم نفس المفتاح المشترك، وهو عمره ما مشي مكشوف على الطريق ولا مرة. واللي بيتنصت شايف صندوق مقفول مش قادر يفتحه.<\/p>", "example": "حطيت ورقة فيها رقم جديد في العلبة، ودخّلت الكالون المفتوح، و<b>طقّيته<\/b>.<p>جرّب تفتحها إنت. مش هتقدر. إنت اللي قفلتها وإنت كمان مش قادر تفتحها. العلبة دي بقى ليها مالك واحد بس: الدرج اللي في أسوان.<\/p>", "steps": ["المتصفح بيخترع مفتاح جديد، وده المفتاح المشترك.", "بيحطه في صندوق.", "بيقفل الصندوق بالمفتاح العام اللي وصله من السيرفر.", "الصندوق بيمشي في الطريق مقفول.", "السيرفر بيفتحه بمفتاحه الخاص وياخد المفتاح المشترك.", "دلوقتي الاتنين عندهم نفس المفتاح."], "english": "The browser creates the common key, encrypts it with the server's public key, and sends it. Only the server's private key can open it.", "figure": "<svg viewBox=\"0 10 560 180\" role=\"img\" aria-label=\"المتصفح بيبعت المفتاح المشترك جوه صندوق مقفول\" preserveAspectRatio=\"xMidYMid meet\">\n  <text x=\"60\" y=\"30\" fill=\"#93A6C8\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">المتصفح<\/text>\n  <text x=\"500\" y=\"30\" fill=\"#93A6C8\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">السيرفر<\/text>\n  <line x1=\"80\" y1=\"74\" x2=\"490\" y2=\"74\" stroke=\"#FFB020\" stroke-width=\"3\" marker-end=\"url(#a2)\"/>\n  <defs><marker id=\"a2\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\"\n    orient=\"auto\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#FFB020\"/><\/marker><\/defs>\n  <rect x=\"244\" y=\"96\" width=\"76\" height=\"56\" rx=\"6\" fill=\"none\" stroke=\"#FFB020\" stroke-width=\"2.5\"/>\n  <line x1=\"244\" y1=\"114\" x2=\"320\" y2=\"114\" stroke=\"#FFB020\" stroke-width=\"2\"/>\n  <rect x=\"270\" y=\"120\" width=\"24\" height=\"19\" rx=\"3\" fill=\"none\" stroke=\"#FFB020\" stroke-width=\"2.2\"/>\n  <path d=\"M 286 120 v -5 a 8 8 0 0 1 16 0 v 5\" fill=\"none\" stroke=\"#FFB020\" stroke-width=\"2.2\"/>\n  <text x=\"282\" y=\"176\" fill=\"#FFB020\" font-size=\"14\" text-anchor=\"middle\">جواه المفتاح المشترك<\/text>\n  <text x=\"285\" y=\"54\" fill=\"#E6F0FA\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">صندوق مقفول،\n  محدش يفتحه غير المفتاح الخاص<\/text>\n<\/svg>"}, {"id": "stage3", "n": "6", "title": "المرحلة ③: نقل البيانات", "main": "من دلوقتي ورايح، أي حاجة بتتبعت، رقم الكارت والعنوان والباسورد والصفحات، كلها بتتشفّر بالمفتاح المشترك.<p>وليه المشترك بالذات؟ لأنه <b>سريع<\/b>، وبيقفل ويفتح بمفتاح واحد. <b>آخر المرحلة دي:<\/b> اللي بيتنصت شايف طلاسم.<\/p>", "example": "إنت وصاحب المحل بقى عندكم نفس الشفرة. من هنا ورايح بتتكاتبوا بيها عادي كل يوم، والساعي بيفتح الجوابات ويلاقي حروف مالهاش معنى، ويقفلها ويمشي.", "steps": ["الاتنين عندهم المفتاح المشترك.", "كل حاجة بتتبعت بتتشفّر بيه.", "وكل حاجة بتتستقبل بتتفك بيه.", "اللي بيتنصت شايف طلاسم."], "english": "All the data is then encrypted with the one shared common key, which is fast."}, {"id": "why2", "n": "7", "title": "ليه نوعين تشفير مش نوع واحد؟", "main": "<b>المفتاح المشترك<\/b>: مفتاح واحد بيقفل ويفتح، و<b>سريع<\/b>. مشكلته إننا مكناش نعرف نوصّله.<p><b>المفتاح العام والخاص<\/b>: مفتاحين مختلفين، واحد بيقفل وواحد بيفتح، و<b>بطيء<\/b> لأن حساباته تقيلة. ميزته إنه بيحل مشكلة التوصيل.<\/p><p>فإحنا بنستخدم البطيء <b>مرة واحدة بس<\/b>، في الحاجة الوحيدة اللي مكناش نقدر نعملها من غيره: توصيل المفتاح. وبعد كده السريع هو اللي شغال على طول.<\/p>", "example": "تخيل عربية نقل تقيلة وبطيئة، وموتوسيكل سريع.<p>النقل بتستخدمها مرة واحدة عشان توصّل الموتوسيكل لحد صاحبك. وبعد كده كل التوصيلات بتمشي بالموتوسيكل. مش منطقي تستخدم النقل في كل توصيلة.<\/p>", "steps": ["المشترك سريع بس مش عارفين نوصّله.", "العام والخاص بطيئين بس بيحلوا مشكلة التوصيل.", "فبنستخدم البطيء مرة واحدة، عشان يوصّل المشترك.", "وبعدين المشترك السريع ينقل الكلام كله."], "english": "Common-key cryptography exchanges data quickly. Public-key cryptography shares a key safely. The slow one is used once, to deliver the key for the fast one.", "figure": "<svg viewBox=\"0 10 560 200\" role=\"img\" aria-label=\"مقارنة بين المفتاح المشترك والمفتاحين العام والخاص\" preserveAspectRatio=\"xMidYMid meet\">\n  <rect x=\"12\" y=\"20\" width=\"258\" height=\"148\" rx=\"10\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2\"/>\n  <text x=\"141\" y=\"50\" fill=\"#27E1C1\" font-size=\"17\" font-weight=\"700\" text-anchor=\"middle\">المفتاح\n  المشترك<\/text>\n  <text x=\"141\" y=\"80\" fill=\"#E6F0FA\" font-size=\"15\" text-anchor=\"middle\">مفتاح واحد<\/text>\n  <text x=\"141\" y=\"106\" fill=\"#E6F0FA\" font-size=\"15\" text-anchor=\"middle\">بيقفل ويفتح<\/text>\n  <text x=\"141\" y=\"140\" fill=\"#FFB020\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\">سريع<\/text>\n  <rect x=\"290\" y=\"20\" width=\"258\" height=\"148\" rx=\"10\" fill=\"none\" stroke=\"#FFB020\" stroke-width=\"2\"/>\n  <text x=\"419\" y=\"50\" fill=\"#FFB020\" font-size=\"17\" font-weight=\"700\" text-anchor=\"middle\">العام\n  والخاص<\/text>\n  <text x=\"419\" y=\"80\" fill=\"#E6F0FA\" font-size=\"15\" text-anchor=\"middle\">مفتاحين مختلفين<\/text>\n  <text x=\"419\" y=\"106\" fill=\"#E6F0FA\" font-size=\"15\" text-anchor=\"middle\">واحد يقفل وواحد يفتح<\/text>\n  <text x=\"419\" y=\"140\" fill=\"#FF8A7A\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\">بطيء<\/text>\n  <text x=\"280\" y=\"196\" fill=\"#93A6C8\" font-size=\"15\" text-anchor=\"middle\">البطيء بيشتغل مرة واحدة بس،\n  عشان يوصّل مفتاح السريع<\/text>\n<\/svg>"}, {"id": "cert", "n": "8", "title": "الشهادة الرقمية: مين قال إن ده الموقع الصح؟", "main": "سؤال مهم: لو حد وقف في النص وبعتلك <b>القفل بتاعه هو<\/b> وقالك «أنا البنك»؟ هتقفل صندوقك بقفله، وهو يفتحه عادي.<p>عشان كده القفل مابييجيش لوحده. بييجي معاه <b>شهادة رقمية<\/b>: ورقة من جهة تالتة الكل بيثق فيها، اسمها <b>جهة إصدار الشهادات<\/b> (certificate authority)، بتقول إن القفل ده فعلًا بتاع الموقع ده.<\/p><p>يعني: <b>القفل بيحل مشكلة التوصيل، والشهادة بتحل مشكلة الهوية.<\/b> مشكلتين مختلفتين.<\/p>", "example": "حد خبط عليك وقالك «أنا من شركة الكهربا». تصدقه؟ هتطلب الكارنيه.<p>الكارنيه مش بيمنعه يدخل، وهو مش قفل. هو بس بيثبت إنه <b>مين<\/b>. والشهادة الرقمية هي الكارنيه ده بالظبط.<\/p>", "steps": ["المفتاح العام لوحده مش بيثبت هوية.", "أي حد يقدر يعمل مفتاح عام ويقول أنا البنك.", "فالمتصفح بيطلب شهادة مع المفتاح.", "الشهادة مختومة من جهة موثوقة.", "المتصفح بيتأكد منها قبل ما يكمل."], "english": "A digital certificate proves a site is genuine, vouched for by a certificate authority."}, {"id": "sign", "n": "9", "title": "التوقيع الرقمي وعدم الإنكار", "main": "<b>التوقيع الرقمي<\/b> (digital signature) بيرد على سؤال تاني خالص: <b>هل حد غيّر في الكلام وهو ماشي؟<\/b><p>التشفير بيمنع الناس تقرا. لكنه مش بيمنع حد يغيّر. التوقيع هو اللي بيكشف التغيير، وبيكشف كمان لو حد ادّعى إنه شخص تاني.<\/p><p>وبيدي كمان حاجة اسمها <b>عدم الإنكار<\/b> (non-repudiation): اللي بعت مش هيقدر ينكر بعد كده إنه هو اللي بعت.<\/p>", "example": "بعتّ طلب شراء بقطعة واحدة، وحد في السكة غيّرها لعشرة. التشفير مكانش هيمنع ده لو الطلب وصل بشكل سليم.<p>التوقيع زي الشمع الأحمر على الجواب زمان: لو حد فتحه وغيّر فيه، الشمع بيتكسر وإنت بتعرف.<\/p>", "steps": ["التشفير: محدش يقرا.", "التوقيع: محدش يغيّر من غير ما نعرف.", "وكمان: اللي بعت ميقدرش ينكر إنه بعت.", "دول تلات حاجات مختلفة، مش حاجة واحدة."], "english": "A digital signature detects tampering and impersonation, and gives non-repudiation: the sender cannot deny having sent the data."}, {"id": "auth", "n": "10", "title": "المصادقة: إزاي يتأكد إنك إنت؟", "main": "<b>المصادقة<\/b> (authentication) ليها تلات أنواع إثبات، وبس:<p><b>حاجة تعرفها<\/b> (knowledge): باسورد، رقم سري، سؤال سري.<br><b>حاجة معاك<\/b> (possession): موبايل بيجيله كود، كارت البنك، توكن.<br><b>حاجة فيك<\/b> (biometric): بصمة، وش، عين.<\/p><p>و<b>المصادقة متعددة العوامل<\/b> (multi-factor authentication) معناها إنك تجمع <b>اتنين أو أكتر من أنواع مختلفة<\/b>.<\/p><p><b>فخ الامتحان:<\/b> باسورد + سؤال سري <b>مش<\/b> multi-factor، لأن الاتنين «حاجة تعرفها». ده عامل واحد مرتين.<\/p>", "example": "عشان تسحب فلوس من ماكينة: لازم <b>الكارت<\/b> (حاجة معاك) و<b>الرقم السري<\/b> (حاجة تعرفها).<p>لو حد سرق الكارت بس، مش هيعرف. ولو عرف الرقم بس، مش هيعرف. لازم الاتنين، ودول من نوعين مختلفين. دي بالظبط multi-factor.<\/p>", "steps": ["حاجة تعرفها: باسورد.", "حاجة معاك: موبايل أو كارت.", "حاجة فيك: بصمة أو وش.", "اجمع اتنين من أنواع <b>مختلفة<\/b> يبقى multi-factor.", "اجمع اتنين من نفس النوع، يبقى عامل واحد مرتين، ومش multi-factor."], "english": "Multi-factor authentication combines two or more of knowledge, possession, and biometric."}, {"id": "four", "n": "11", "title": "الخلاصة: أربع أسئلة، أربع تقنيات", "main": "الأربع تقنيات دول <b>مش نسخ من بعض<\/b>. كل واحدة بترد على سؤال واحد، ومش بترد على التلاتة التانيين.<p>ولما ييجي سؤال في الامتحان «أنهي تقنية تحل ده؟»، ما تفكرش في التقنيات. <b>سمّي التهديد الأول<\/b>، والتقنية هتبان لوحدها.<\/p>", "example": "<b>شيل واحدة وشوف إيه اللي هيحصل:<\/b><p>من غير <b>تشفير<\/b>: رقم الكارت يتقرا في السكة.<br>من غير <b>شهادة<\/b>: ممكن تكون بتشفّر كلامك بإتقان، <b>لموقع مزيف<\/b>.<br>من غير <b>مصادقة متعددة<\/b>: باسورد مسروب يكفي حد يدخل بحسابك.<br>من غير <b>توقيع<\/b>: حد يغيّر في الطلب ومحدش يعرف.<\/p><p>عشان كده الأمان <b>تركيبة<\/b> مش حاجة واحدة.<\/p>", "steps": ["حد بيقرا؟ ← التشفير.", "ده مين أصلًا؟ ← الشهادة الرقمية.", "ده صاحب الحساب فعلًا؟ ← المصادقة متعددة العوامل.", "فيه حاجة اتغيّرت؟ ← التوقيع الرقمي."], "english": "Encryption prevents reading, a digital certificate verifies the partner, multi-factor authentication prevents unauthorized logins, and a digital signature detects tampering and gives non-repudiation.", "figure": "<svg viewBox=\"0 0 560 192\" role=\"img\" aria-label=\"أربع أسئلة وأربع تقنيات\" preserveAspectRatio=\"xMidYMid meet\"><rect x=\"14\" y=\"14\" width=\"252\" height=\"74\" rx=\"9\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2\"/><text x=\"140\" y=\"42\" fill=\"#FF8A7A\" font-size=\"15\" text-anchor=\"middle\">حد بيقرا؟<\/text><text x=\"140\" y=\"68\" fill=\"#27E1C1\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\">التشفير<\/text><rect x=\"294\" y=\"14\" width=\"252\" height=\"74\" rx=\"9\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2\"/><text x=\"420\" y=\"42\" fill=\"#FF8A7A\" font-size=\"15\" text-anchor=\"middle\">ده مين أصلًا؟<\/text><text x=\"420\" y=\"68\" fill=\"#27E1C1\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\">الشهادة الرقمية<\/text><rect x=\"14\" y=\"102\" width=\"252\" height=\"74\" rx=\"9\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2\"/><text x=\"140\" y=\"130\" fill=\"#FF8A7A\" font-size=\"15\" text-anchor=\"middle\">ده صاحب الحساب؟<\/text><text x=\"140\" y=\"156\" fill=\"#27E1C1\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\">المصادقة متعددة العوامل<\/text><rect x=\"294\" y=\"102\" width=\"252\" height=\"74\" rx=\"9\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2\"/><text x=\"420\" y=\"130\" fill=\"#FF8A7A\" font-size=\"15\" text-anchor=\"middle\">حاجة اتغيّرت؟<\/text><text x=\"420\" y=\"156\" fill=\"#27E1C1\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\">التوقيع الرقمي<\/text><\/svg>"}, {"id": "lock", "n": "12", "title": "وأخيرًا: العلامة اللي جنب العنوان", "main": "في المتصفح جنب عنوان الموقع فيه علامة. زمان كانت قفل صغير، ودلوقتي في جوجل كروم بقت أيقونة شكلها زراير تحكم. تدوس عليها تلاقي مكتوب <span dir=\"ltr\">Connection is secure<\/span>.<p>العلامة دي معناها حاجتين بس: إن <b>الكلام بينك وبين الموقع متشفّر<\/b>، وإن <b>الموقع أثبت إنه هو<\/b>.<p>ومعناهاش إن اللي ورا الموقع ناس أمينة. أي موقع نصب يقدر يجيب العلامة دي. <b>العلامة بتحمي الطريق، مش النية.<\/b><\/p>", "example": "جوجل شالت القفل من كروم سنة 2023 وحطت مكانه الأيقونة الجديدة. والسبب اللي قالته: إن ناس كتير كانت فاهمة إن القفل معناه «الموقع ده موثوق».<p>يعني العلامة اتغيرت <b>عشان الناس كانت بتفهمها غلط<\/b>.<\/p>", "steps": ["العلامة بتقول: الاتصال متشفّر.", "وبتقول: الموقع قدّم شهادة سليمة للعنوان ده.", "وما بتقولش: الموقع أمين.", "وما بتقولش: البضاعة كويسة أو الفلوس هترجع."], "english": "The padlock means the connection is encrypted and the site proved its identity. It says nothing about whether the people behind the site are honest."}];
+const KEY = "learn-2-1-open";
+let open = {};
+try { open = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { open = {}; }
+function remember() { try { localStorage.setItem(KEY, JSON.stringify(open)); } catch (e) {} }
 
-const KEY = "learn-2-1-views";
-let saved = {};
-try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { saved = {}; }
-function remember() { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {} }
+document.querySelectorAll(".blk").forEach((blk, i) => {
+  const ways = JSON.parse(blk.dataset.ways || "[]");
+  if (!ways.length) return;
 
-const LABEL = { main:"الشرح", example:"بمثال", steps:"خطوة بخطوة", figure:"بصورة", english:"بالإنجليزي" };
-const ORDER = ["main", "example", "steps", "figure", "english"];
+  const wrap = document.createElement("div");
+  wrap.className = "ask";
+  const btn = document.createElement("button");
+  btn.type = "button";
+  const cnt = document.createElement("span");
+  cnt.className = "cnt";
+  const panel = document.createElement("div");
+  panel.hidden = true;
+  wrap.append(btn, cnt, panel);
+  blk.append(wrap);
 
-function bodyHTML(s, mode) {
-  if (mode === "steps") return "<ol>" + s.steps.map(x => "<li>" + x + "</li>").join("") + "</ol>";
-  if (mode === "figure") return "<figure>" + s.figure + "</figure>";
-  if (mode === "english") return '<p class="en-note">ده اللي تكتبه في الامتحان، بكلام الكتاب نفسه:</p>' +
-                                  '<div class="en">' + s.english + "</div>";
-  if (mode === "example") return s.example;
-  return s.main;
-}
-
-function section(s) {
-  const el = document.createElement("section");
-  el.className = "sec";
-  el.id = s.id;
-  const modes = ORDER.filter(m => s[m] || m === "main");
-  let mode = saved[s.id] && modes.indexOf(saved[s.id]) >= 0 ? saved[s.id] : "main";
-
-  const h = document.createElement("h2");
-  h.innerHTML = '<span class="n">' + s.n + "</span><span>" + s.title + "</span>";
-  const body = document.createElement("div");
-  body.className = "body";
-
-  const ways = document.createElement("div");
-  ways.className = "ways";
-  const lab = document.createElement("div");
-  lab.className = "lab";
-  lab.textContent = "مش واضحة؟ طرق تانية لنفس الجزء:";
-  const chips = document.createElement("div");
-  chips.className = "chips";
-
-  const buttons = modes.map(m => {
-    const b = document.createElement("button");
-    b.className = "chip";
-    b.type = "button";
-    b.textContent = LABEL[m];
-    b.addEventListener("click", () => {
-      mode = m;
-      saved[s.id] = m;
-      remember();
-      paint();
-    });
-    chips.append(b);
-    return b;
-  });
+  let at = typeof open[i] === "number" ? open[i] : -1;   // -1 means closed
 
   function paint() {
-    body.innerHTML = bodyHTML(s, mode);
-    buttons.forEach((b, i) => b.setAttribute("aria-pressed", modes[i] === mode ? "true" : "false"));
+    if (at < 0) {
+      panel.hidden = true;
+      panel.innerHTML = "";
+      btn.textContent = "مش فاهم؟";
+      cnt.textContent = "";
+      return;
+    }
+    panel.hidden = false;
+    panel.className = "way";
+    panel.innerHTML = ways[at];
+    btn.textContent = at + 1 < ways.length ? "اشرحها بطريقة تانية" : "إخفاء";
+    cnt.textContent = ways.length > 1 ? "طريقة " + (at + 1) + " من " + ways.length : "";
   }
+
+  btn.addEventListener("click", () => {
+    at = at + 1 < ways.length ? at + 1 : -1;
+    open[i] = at;
+    remember();
+    paint();
+  });
   paint();
-
-  ways.append(lab, chips);
-  el.append(h, body, ways);
-  return el;
-}
-
-const host = document.getElementById("sections");
-SECTIONS.forEach(s => host.append(section(s)));
+});
 
 const prog = document.getElementById("prog");
 function scrolled() {
@@ -175,7 +382,6 @@ function scrolled() {
 addEventListener("scroll", scrolled, { passive: true });
 addEventListener("resize", scrolled);
 scrolled();
-
 </script>
 </body>
 </html>
