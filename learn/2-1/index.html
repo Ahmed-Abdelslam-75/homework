@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>القفل الصغير &middot; شرح الدرس</title>
+<meta name="description" content="شرح درس التشفير والمصادقة خطوة بخطوة، ولو جزء مش واضح فيه زرار بيشرحه بطريقة تانية.">
+<meta name="theme-color" content="#060B20">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23060B20'/%3E%3Crect x='20' y='29' width='24' height='20' rx='4' fill='none' stroke='%2327E1C1' stroke-width='4'/%3E%3Cpath d='M26 29v-6a6 6 0 0 1 12 0v6' fill='none' stroke='%2327E1C1' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#060B20;--card:#0F1836;--card2:#141E42;--line:#22305F;--ink:#E6F0FA;--muted:#93A6C8;
+      --cyan:#27E1C1;--amber:#FFB020;--coral:#FF8A7A}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tajawal,"Segoe UI",Arial,sans-serif;
+     font-size:17px;line-height:1.85;-webkit-text-size-adjust:100%}
+.top{position:sticky;top:0;z-index:20;background:rgba(6,11,32,.93);backdrop-filter:blur(8px);
+     border-bottom:1px solid var(--line)}
+.top-in{max-width:760px;margin:0 auto;padding:11px 16px;display:flex;align-items:center;gap:10px}
+.top .nm{font-weight:700;font-size:15.5px}
+.top .ls{color:var(--cyan);font-size:12.5px;font-family:ui-monospace,monospace;letter-spacing:.08em}
+.bar{height:3px;background:var(--line)}
+.bar i{display:block;height:100%;width:0;background:var(--cyan);transition:width .15s linear}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 56px}
+.hero{padding:30px 0 10px}
+.hero h1{font-size:28px;line-height:1.35;margin:0 0 10px}
+.hero p{color:var(--muted);margin:0 0 16px}
+.hint{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;
+      font-size:15.5px;color:var(--ink)}
+.hint b{color:var(--amber)}
+.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 17px 13px;
+     margin:16px 0}
+.sec > h2{font-size:20px;margin:0 0 10px;display:flex;align-items:baseline;gap:9px;line-height:1.4}
+.sec > h2 .n{flex:0 0 auto;width:27px;height:27px;border-radius:50%;background:var(--cyan);color:#04112B;
+     font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;
+     font-family:ui-monospace,monospace}
+.body p{margin:0 0 11px}
+.body p:last-child{margin-bottom:0}
+.body b{color:var(--cyan);font-weight:700}
+.body ol{margin:0;padding-inline-start:22px}
+.body ol li{margin-bottom:9px}
+.body ol li::marker{color:var(--amber);font-weight:700}
+.en{direction:ltr;text-align:left;font-family:Georgia,"Times New Roman",serif;font-size:16.5px;
+    background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;
+    line-height:1.7}
+.en-note{color:var(--muted);font-size:14px;margin:0 0 8px}
+figure{margin:4px 0 0}
+figure svg{width:100%;height:auto;display:block}
+.ways{border-top:1px dashed var(--line);margin-top:13px;padding-top:11px}
+.ways .lab{color:var(--muted);font-size:13.5px;margin-bottom:7px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font:inherit;font-size:14.5px;cursor:pointer;background:transparent;color:var(--muted);
+      border:1px solid var(--line);border-radius:999px;padding:6px 14px;line-height:1.3}
+.chip:hover{border-color:var(--cyan);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--cyan);border-color:var(--cyan);color:#04112B;font-weight:700}
+.chip:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.end{background:var(--card);border:1px solid var(--cyan);border-radius:16px;padding:18px;margin-top:22px;
+     text-align:center}
+.end h2{margin:0 0 8px;font-size:20px}
+.end p{color:var(--muted);margin:0 0 14px;font-size:15.5px}
+.btn{display:inline-block;text-decoration:none;background:var(--cyan);color:#04112B;font-weight:700;
+     border-radius:999px;padding:11px 22px}
+.foot{color:var(--muted);font-size:13px;text-align:center;margin-top:26px}
+@media (max-width:420px){ body{font-size:16.5px} .hero h1{font-size:24px} .sec > h2{font-size:18.5px} }
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .bar i{transition:none} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <span class="ls">LESSON 2-1</span>
+    <span class="nm">التشفير والمصادقة</span>
+  </div>
+  <div class="bar"><i id="prog"></i></div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <h1>القفل الصغير اللي جنب عنوان الموقع</h1>
+    <p>الدرس كامل، مقسّم لاتناشر جزء. اقرا على مهلك.</p>
+    <div class="hint">تحت كل جزء فيه زراير. لو الجزء ده مش واضح، دوس على
+      <b>بمثال</b> أو <b>خطوة بخطوة</b> أو <b>بصورة</b> وهو هيتشرح بطريقة تانية خالص.
+      و<b>بالإنجليزي</b> بيوريك الجملة اللي تكتبها في الامتحان.</div>
+  </div>
+
+  <div id="sections"></div>
+
+  <div class="end">
+    <h2>خلصت الدرس</h2>
+    <p>دلوقتي جرّب الواجب، وهو قصير.</p>
+    <a class="btn" href="../../hw3/">افتح الواجب</a>
+  </div>
+
+  <p class="foot">Programming and Artificial Intelligence &middot; Egyptian Baccalaureate &middot; Year 2</p>
+</main>
+
+<script>
+const SECTIONS = [{"id": "road", "n": "1", "title": "ليه فيه مشكلة من الأساس؟", "main": "لما تكتب رقم الكارت في موقع، الكلام بتاعك <b>مش<\/b> بيمشي من جهازك للموقع على طول. بيتقسم لحزم صغيرة، وكل حزمة بتعدي على أجهزة كتير مش بتاعتك، ممكن تكون في دول تانية خالص.<p>وأي جهاز في السكة دي يقدر يقرا اللي بيعدي عليه. فالسؤال مش «إزاي نمنعهم يسمعوا»، ده مستحيل. السؤال الحقيقي: <b>إزاي نخليهم يسمعوا حاجة متنفعهمش<\/b>.<\/p>", "example": "تخيل إنك عايز تبعت جواب من القاهرة لأسوان، والطريق الوحيد ساعي بريد عنده عادة وحشة: بيفتح كل جواب ويقراه قبل ما يوصّله.<p>مش هتقدر تمنعه يفتح، ده الطريق الوحيد. اللي تقدر تعمله إنك تكتب الجواب <b>بشفرة<\/b> هو مش فاهمها. يفتح ويقرا ويلاقي طلاسم، ويقفل ويمشي.<\/p>", "steps": ["بتكتب رقم الكارت في الموقع.", "الكلام بيتقسم لحزم صغيرة قبل ما يتبعت.", "كل حزمة بتعدي على راوترات ومحطات كتير مش بتاعتك.", "أي جهاز في الطريق يقدر يشوف اللي بيعدي عليه.", "عشان كده لازم الكلام يتشفّر <b>قبل<\/b> ما يخرج من جهازك."], "english": "Data sent over the Internet passes through many devices that belong to neither side, so anyone on the route can capture it.", "figure": "<svg viewBox=\"0 20 560 210\" role=\"img\" aria-label=\"جهازك على الشمال والموقع على اليمين وبينهم أجهزة كتير وواحد بيتنصت\" preserveAspectRatio=\"xMidYMid meet\">\n  <rect x=\"14\" y=\"54\" width=\"110\" height=\"68\" rx=\"8\" fill=\"none\" stroke=\"#E6F0FA\" stroke-width=\"2.5\"/>\n  <text x=\"69\" y=\"146\" fill=\"#E6F0FA\" font-size=\"17\" font-weight=\"700\" text-anchor=\"middle\">جهازك<\/text>\n  <rect x=\"436\" y=\"44\" width=\"92\" height=\"88\" rx=\"8\" fill=\"none\" stroke=\"#E6F0FA\" stroke-width=\"2.5\"/>\n  <line x1=\"452\" y1=\"68\" x2=\"512\" y2=\"68\" stroke=\"#E6F0FA\" stroke-width=\"2\"/>\n  <line x1=\"452\" y1=\"90\" x2=\"512\" y2=\"90\" stroke=\"#E6F0FA\" stroke-width=\"2\"/>\n  <line x1=\"452\" y1=\"112\" x2=\"512\" y2=\"112\" stroke=\"#E6F0FA\" stroke-width=\"2\"/>\n  <text x=\"482\" y=\"156\" fill=\"#E6F0FA\" font-size=\"17\" font-weight=\"700\" text-anchor=\"middle\">الموقع<\/text>\n  <line x1=\"132\" y1=\"88\" x2=\"428\" y2=\"88\" stroke=\"#27E1C1\" stroke-width=\"3\"/>\n  <g fill=\"#FFB020\">\n    <circle cx=\"190\" cy=\"88\" r=\"7\"/><circle cx=\"250\" cy=\"88\" r=\"7\"/><circle cx=\"310\" cy=\"88\" r=\"7\"/>\n    <circle cx=\"370\" cy=\"88\" r=\"7\"/>\n  <\/g>\n  <text x=\"280\" y=\"42\" fill=\"#FFB020\" font-size=\"15\" text-anchor=\"middle\">أجهزة مش بتاعتك<\/text>\n  <circle cx=\"280\" cy=\"176\" r=\"15\" fill=\"none\" stroke=\"#FF8A7A\" stroke-width=\"2.5\"/>\n  <path d=\"M 263 170 a 8 8 0 0 1 0 14\" fill=\"none\" stroke=\"#FF8A7A\" stroke-width=\"2.5\"/>\n  <path d=\"M 297 170 a 8 8 0 0 0 0 14\" fill=\"none\" stroke=\"#FF8A7A\" stroke-width=\"2.5\"/>\n  <line x1=\"280\" y1=\"191\" x2=\"280\" y2=\"196\" stroke=\"#FF8A7A\" stroke-width=\"2.5\"/>\n  <line x1=\"280\" y1=\"130\" x2=\"280\" y2=\"158\" stroke=\"#FF8A7A\" stroke-width=\"2\" stroke-dasharray=\"5 4\"/>\n  <text x=\"280\" y=\"216\" fill=\"#FF8A7A\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">أي حد في السكة\n  يقدر يقرا<\/text>\n<\/svg>"}, {"id": "https", "n": "2", "title": "يعني إيه HTTPS؟", "main": "<b>HTTPS<\/b> مش برنامج وﻻ موقع. ده <b>اتفاق على طريقة الكلام<\/b> بين جهازك والموقع، والاتفاق ده اسمه <b>بروتوكول<\/b> (protocol).<p>هو الـ HTTP العادي، مضاف عليه طبقة تشفير اسمها <b>TLS<\/b>. والإضافة دي بتدي تلات حاجات مع بعض: الكلام مايتقراش، وأي تعديل فيه يتكشف، وتتأكد إنك بتكلم مين.<\/p>", "example": "اتنين عايزين يتكلموا. قبل ما يبدأوا بيتفقوا: هنتكلم عربي، وهنبدأ بالسلام عليكم، ولو حد قال كلمة السر دي يبقى هو، وهنكتب بشفرة متفق عليها.<p>الاتفاق ده كله هو <b>البروتوكول<\/b>. مفيش جهاز اسمه HTTPS، فيه قواعد اسمها HTTPS.<\/p>", "steps": ["HTTP لوحده: الكلام بيمشي مكشوف.", "بنضيف عليه TLS، وهي طبقة بتشفّر.", "الناتج اسمه HTTPS.", "وبيدي تلاتة مع بعض: تشفير، وكشف التلاعب، والتأكد من الطرف التاني."], "english": "HTTPS is HTTP with TLS encryption added: encryption, tamper detection, and partner verification."}, {"id": "goal", "n": "3", "title": "الهدف اللي المراحل التلاتة اتعملت عشانه", "main": "عشان نشفّر، لازم الطرفين يكون عندهم <b>نفس المفتاح<\/b>. أنا بقفل بيه وإنت بتفتح بيه.<p>طب أنا في القاهرة والسيرفر في مكان تاني، وعمرنا ما اتقابلنا. <b>أوصّله المفتاح إزاي؟<\/b> لو بعته على النت، اللي بيتنصت أخده، وخلاص التشفير بقى بلا قيمة.<\/p><p>ولو قلت أشفّر المفتاح قبل ما أبعته، هشفّره بإيه؟ بمفتاح تاني. وأوصّل التاني ده إزاي؟ <b>دايرة مقفولة.<\/b> المراحل التلاتة اللي جاية اتعملت عشان تكسر الدايرة دي.<\/p>", "example": "إنت عايز تبعت خزنة لحد، بس الخزنة مقفولة ومفتاحها معاك. تبعت المفتاح مع نفس الساعي اللي بيفتح الجوابات؟ يبقى بعتله الخزنة والمفتاح مع بعض.<p>المشكلة مش في الخزنة. المشكلة في <b>توصيل المفتاح<\/b>.<\/p>", "steps": ["التشفير محتاج الطرفين يكون عندهم نفس السر.", "الطريق بينهم مكشوف.", "لو بعتنا السر في الطريق، اتسرق.", "ولو شفّرناه، هنحتاج سر تاني نوصّله، ونفس المشكلة بترجع.", "فمحتاجين طريقة توصّل السر من غير ما السر نفسه يمشي مكشوف."], "english": "Both sides need the same secret key, but the Internet is a public path, so the key cannot simply be sent."}, {"id": "stage1", "n": "4", "title": "المرحلة ①: الاتصال", "main": "السيرفر بيبعتلك حاجتين: <b>شهادة رقمية<\/b> (digital certificate) و<b>مفتاح عام<\/b> (public key).<p>والمفتاح العام ده حاجة غريبة: هو <b>بيقفل بس، ومش بيفتح<\/b>. زي كالون مفتوح. أي حد يقدر يقفله بإيده، بس مفيش حاجة تفتحه غير مفتاح صغير واحد قاعد جوه السيرفر واسمه <b>المفتاح الخاص<\/b> (private key)، وعمره ما بيخرج.<\/p><p>وعشان كده مفيش خطر إن المفتاح العام يتبعت في العلن. لو اللي بيتنصت خده، هيعمل بيه إيه؟ يقفل؟ طب يفتح؟ مش هيعرف.<\/p><p><b>آخر المرحلة دي:<\/b> المتصفح بقى معاه المفتاح العام، وواثق إنه بتاع الموقع الصح. واللي بيتنصت شايف شهادة ومفتاح عام، ومفيش سر فيهم.<\/p>", "example": "صاحب محل في أسوان بعتلك في الجواب <b>كالون مفتوح<\/b>، مش مفتاح. ومعاه ورقة مكتوب فيها: «الكالون ده بيتقفل بإيدك، بس مفيش حاجة تفتحه غير مفتاح صغير في درج مكتبي ومش هيخرج منه.»<p>الساعي شاف الكالون، وصوّره، وعمل منه نسخ. ويعمل بيهم إيه؟ <b>وﻻ حاجة.<\/b> الكالون المفتوح ملوش قيمة لحد غير صاحب المفتاح.<\/p>", "steps": ["السيرفر عنده مفتاحين: عام وخاص.", "بيبعت العام لأي حد يطلبه، ومعاه الشهادة.", "العام بيقفل بس.", "الخاص هو الوحيد اللي بيفتح، وبيفضل جوه السيرفر.", "آخر المرحلة: المتصفح معاه العام، واللي بيتنصت معاه نسخة ملهاش لازمة."], "english": "The server sends its digital certificate and its public key. The public key only locks; the private key, which never leaves the server, is the only thing that unlocks.", "figure": "<svg viewBox=\"0 10 560 180\" role=\"img\" aria-label=\"السيرفر بيبعت الشهادة والمفتاح العام للمتصفح\" preserveAspectRatio=\"xMidYMid meet\">\n  <text x=\"60\" y=\"30\" fill=\"#93A6C8\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">المتصفح<\/text>\n  <text x=\"500\" y=\"30\" fill=\"#93A6C8\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">السيرفر<\/text>\n  <line x1=\"490\" y1=\"74\" x2=\"80\" y2=\"74\" stroke=\"#27E1C1\" stroke-width=\"3\"\n        marker-end=\"url(#a1)\"/>\n  <defs><marker id=\"a1\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\"\n    orient=\"auto\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#27E1C1\"/><\/marker><\/defs>\n  <rect x=\"222\" y=\"92\" width=\"52\" height=\"62\" rx=\"5\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2.5\"/>\n  <line x1=\"234\" y1=\"116\" x2=\"262\" y2=\"116\" stroke=\"#27E1C1\" stroke-width=\"2\"/>\n  <line x1=\"234\" y1=\"130\" x2=\"254\" y2=\"130\" stroke=\"#27E1C1\" stroke-width=\"2\"/>\n  <circle cx=\"262\" cy=\"142\" r=\"7\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2\"/>\n  <text x=\"248\" y=\"176\" fill=\"#27E1C1\" font-size=\"14\" text-anchor=\"middle\">الشهادة<\/text>\n  <rect x=\"300\" y=\"110\" width=\"34\" height=\"26\" rx=\"4\" fill=\"none\" stroke=\"#FFB020\" stroke-width=\"2.5\"/>\n  <path d=\"M 322 110 v -7 a 11 11 0 0 1 22 0 v 7\" fill=\"none\" stroke=\"#FFB020\" stroke-width=\"2.5\"/>\n  <text x=\"317\" y=\"176\" fill=\"#FFB020\" font-size=\"14\" text-anchor=\"middle\">المفتاح العام<\/text>\n  <text x=\"285\" y=\"54\" fill=\"#E6F0FA\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">القفل مفتوح: بيقفل\n  بس<\/text>\n<\/svg>"}, {"id": "stage2", "n": "5", "title": "المرحلة ②: تبادل المفاتيح", "main": "دلوقتي <b>المتصفح<\/b> هو اللي بيعمل مفتاح جديد، اسمه <b>المفتاح المشترك<\/b> (common key). بيحطه في صندوق، ويقفل الصندوق بالقفل المفتوح اللي وصله.<p>ومن اللحظة دي، <b>حتى المتصفح نفسه مش قادر يفتح الصندوق<\/b>. هو اللي قفله وهو مش قادر يفتحه. مفيش حاجة في الدنيا تفتحه غير المفتاح الخاص اللي جوه السيرفر، واللي عمره ما خرج.<\/p><p><b>آخر المرحلة دي:<\/b> الاتنين بقى عندهم نفس المفتاح المشترك، وهو عمره ما مشي مكشوف على الطريق ولا مرة. واللي بيتنصت شايف صندوق مقفول مش قادر يفتحه.<\/p>", "example": "حطيت ورقة فيها رقم جديد في العلبة، ودخّلت الكالون المفتوح، و<b>طقّيته<\/b>.<p>جرّب تفتحها إنت. مش هتقدر. إنت اللي قفلتها وإنت كمان مش قادر تفتحها. العلبة دي بقى ليها مالك واحد بس: الدرج اللي في أسوان.<\/p>", "steps": ["المتصفح بيخترع مفتاح جديد، وده المفتاح المشترك.", "بيحطه في صندوق.", "بيقفل الصندوق بالمفتاح العام اللي وصله من السيرفر.", "الصندوق بيمشي في الطريق مقفول.", "السيرفر بيفتحه بمفتاحه الخاص وياخد المفتاح المشترك.", "دلوقتي الاتنين عندهم نفس المفتاح."], "english": "The browser creates the common key, encrypts it with the server's public key, and sends it. Only the server's private key can open it.", "figure": "<svg viewBox=\"0 10 560 180\" role=\"img\" aria-label=\"المتصفح بيبعت المفتاح المشترك جوه صندوق مقفول\" preserveAspectRatio=\"xMidYMid meet\">\n  <text x=\"60\" y=\"30\" fill=\"#93A6C8\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">المتصفح<\/text>\n  <text x=\"500\" y=\"30\" fill=\"#93A6C8\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">السيرفر<\/text>\n  <line x1=\"80\" y1=\"74\" x2=\"490\" y2=\"74\" stroke=\"#FFB020\" stroke-width=\"3\" marker-end=\"url(#a2)\"/>\n  <defs><marker id=\"a2\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\"\n    orient=\"auto\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#FFB020\"/><\/marker><\/defs>\n  <rect x=\"244\" y=\"96\" width=\"76\" height=\"56\" rx=\"6\" fill=\"none\" stroke=\"#FFB020\" stroke-width=\"2.5\"/>\n  <line x1=\"244\" y1=\"114\" x2=\"320\" y2=\"114\" stroke=\"#FFB020\" stroke-width=\"2\"/>\n  <rect x=\"270\" y=\"120\" width=\"24\" height=\"19\" rx=\"3\" fill=\"none\" stroke=\"#FFB020\" stroke-width=\"2.2\"/>\n  <path d=\"M 286 120 v -5 a 8 8 0 0 1 16 0 v 5\" fill=\"none\" stroke=\"#FFB020\" stroke-width=\"2.2\"/>\n  <text x=\"282\" y=\"176\" fill=\"#FFB020\" font-size=\"14\" text-anchor=\"middle\">جواه المفتاح المشترك<\/text>\n  <text x=\"285\" y=\"54\" fill=\"#E6F0FA\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">صندوق مقفول،\n  محدش يفتحه غير المفتاح الخاص<\/text>\n<\/svg>"}, {"id": "stage3", "n": "6", "title": "المرحلة ③: نقل البيانات", "main": "من دلوقتي ورايح، أي حاجة بتتبعت، رقم الكارت والعنوان والباسورد والصفحات، كلها بتتشفّر بالمفتاح المشترك.<p>وليه المشترك بالذات؟ لأنه <b>سريع<\/b>، وبيقفل ويفتح بمفتاح واحد. <b>آخر المرحلة دي:<\/b> اللي بيتنصت شايف طلاسم.<\/p>", "example": "إنت وصاحب المحل بقى عندكم نفس الشفرة. من هنا ورايح بتتكاتبوا بيها عادي كل يوم، والساعي بيفتح الجوابات ويلاقي حروف مالهاش معنى، ويقفلها ويمشي.", "steps": ["الاتنين عندهم المفتاح المشترك.", "كل حاجة بتتبعت بتتشفّر بيه.", "وكل حاجة بتتستقبل بتتفك بيه.", "اللي بيتنصت شايف طلاسم."], "english": "All the data is then encrypted with the one shared common key, which is fast."}, {"id": "why2", "n": "7", "title": "ليه نوعين تشفير مش نوع واحد؟", "main": "<b>المفتاح المشترك<\/b>: مفتاح واحد بيقفل ويفتح، و<b>سريع<\/b>. مشكلته إننا مكناش نعرف نوصّله.<p><b>المفتاح العام والخاص<\/b>: مفتاحين مختلفين، واحد بيقفل وواحد بيفتح، و<b>بطيء<\/b> لأن حساباته تقيلة. ميزته إنه بيحل مشكلة التوصيل.<\/p><p>فإحنا بنستخدم البطيء <b>مرة واحدة بس<\/b>، في الحاجة الوحيدة اللي مكناش نقدر نعملها من غيره: توصيل المفتاح. وبعد كده السريع هو اللي شغال على طول.<\/p>", "example": "تخيل عربية نقل تقيلة وبطيئة، وموتوسيكل سريع.<p>النقل بتستخدمها مرة واحدة عشان توصّل الموتوسيكل لحد صاحبك. وبعد كده كل التوصيلات بتمشي بالموتوسيكل. مش منطقي تستخدم النقل في كل توصيلة.<\/p>", "steps": ["المشترك سريع بس مش عارفين نوصّله.", "العام والخاص بطيئين بس بيحلوا مشكلة التوصيل.", "فبنستخدم البطيء مرة واحدة، عشان يوصّل المشترك.", "وبعدين المشترك السريع ينقل الكلام كله."], "english": "Common-key cryptography exchanges data quickly. Public-key cryptography shares a key safely. The slow one is used once, to deliver the key for the fast one.", "figure": "<svg viewBox=\"0 10 560 200\" role=\"img\" aria-label=\"مقارنة بين المفتاح المشترك والمفتاحين العام والخاص\" preserveAspectRatio=\"xMidYMid meet\">\n  <rect x=\"12\" y=\"20\" width=\"258\" height=\"148\" rx=\"10\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2\"/>\n  <text x=\"141\" y=\"50\" fill=\"#27E1C1\" font-size=\"17\" font-weight=\"700\" text-anchor=\"middle\">المفتاح\n  المشترك<\/text>\n  <text x=\"141\" y=\"80\" fill=\"#E6F0FA\" font-size=\"15\" text-anchor=\"middle\">مفتاح واحد<\/text>\n  <text x=\"141\" y=\"106\" fill=\"#E6F0FA\" font-size=\"15\" text-anchor=\"middle\">بيقفل ويفتح<\/text>\n  <text x=\"141\" y=\"140\" fill=\"#FFB020\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\">سريع<\/text>\n  <rect x=\"290\" y=\"20\" width=\"258\" height=\"148\" rx=\"10\" fill=\"none\" stroke=\"#FFB020\" stroke-width=\"2\"/>\n  <text x=\"419\" y=\"50\" fill=\"#FFB020\" font-size=\"17\" font-weight=\"700\" text-anchor=\"middle\">العام\n  والخاص<\/text>\n  <text x=\"419\" y=\"80\" fill=\"#E6F0FA\" font-size=\"15\" text-anchor=\"middle\">مفتاحين مختلفين<\/text>\n  <text x=\"419\" y=\"106\" fill=\"#E6F0FA\" font-size=\"15\" text-anchor=\"middle\">واحد يقفل وواحد يفتح<\/text>\n  <text x=\"419\" y=\"140\" fill=\"#FF8A7A\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\">بطيء<\/text>\n  <text x=\"280\" y=\"196\" fill=\"#93A6C8\" font-size=\"15\" text-anchor=\"middle\">البطيء بيشتغل مرة واحدة بس،\n  عشان يوصّل مفتاح السريع<\/text>\n<\/svg>"}, {"id": "cert", "n": "8", "title": "الشهادة الرقمية: مين قال إن ده الموقع الصح؟", "main": "سؤال مهم: لو حد وقف في النص وبعتلك <b>القفل بتاعه هو<\/b> وقالك «أنا البنك»؟ هتقفل صندوقك بقفله، وهو يفتحه عادي.<p>عشان كده القفل مابييجيش لوحده. بييجي معاه <b>شهادة رقمية<\/b>: ورقة من جهة تالتة الكل بيثق فيها، اسمها <b>جهة إصدار الشهادات<\/b> (certificate authority)، بتقول إن القفل ده فعلًا بتاع الموقع ده.<\/p><p>يعني: <b>القفل بيحل مشكلة التوصيل، والشهادة بتحل مشكلة الهوية.<\/b> مشكلتين مختلفتين.<\/p>", "example": "حد خبط عليك وقالك «أنا من شركة الكهربا». تصدقه؟ هتطلب الكارنيه.<p>الكارنيه مش بيمنعه يدخل، وهو مش قفل. هو بس بيثبت إنه <b>مين<\/b>. والشهادة الرقمية هي الكارنيه ده بالظبط.<\/p>", "steps": ["المفتاح العام لوحده مش بيثبت هوية.", "أي حد يقدر يعمل مفتاح عام ويقول أنا البنك.", "فالمتصفح بيطلب شهادة مع المفتاح.", "الشهادة مختومة من جهة موثوقة.", "المتصفح بيتأكد منها قبل ما يكمل."], "english": "A digital certificate proves a site is genuine, vouched for by a certificate authority."}, {"id": "sign", "n": "9", "title": "التوقيع الرقمي وعدم الإنكار", "main": "<b>التوقيع الرقمي<\/b> (digital signature) بيرد على سؤال تاني خالص: <b>هل حد غيّر في الكلام وهو ماشي؟<\/b><p>التشفير بيمنع الناس تقرا. لكنه مش بيمنع حد يغيّر. التوقيع هو اللي بيكشف التغيير، وبيكشف كمان لو حد ادّعى إنه شخص تاني.<\/p><p>وبيدي كمان حاجة اسمها <b>عدم الإنكار<\/b> (non-repudiation): اللي بعت مش هيقدر ينكر بعد كده إنه هو اللي بعت.<\/p>", "example": "بعتّ طلب شراء بقطعة واحدة، وحد في السكة غيّرها لعشرة. التشفير مكانش هيمنع ده لو الطلب وصل بشكل سليم.<p>التوقيع زي الشمع الأحمر على الجواب زمان: لو حد فتحه وغيّر فيه، الشمع بيتكسر وإنت بتعرف.<\/p>", "steps": ["التشفير: محدش يقرا.", "التوقيع: محدش يغيّر من غير ما نعرف.", "وكمان: اللي بعت ميقدرش ينكر إنه بعت.", "دول تلات حاجات مختلفة، مش حاجة واحدة."], "english": "A digital signature detects tampering and impersonation, and gives non-repudiation: the sender cannot deny having sent the data."}, {"id": "auth", "n": "10", "title": "المصادقة: إزاي يتأكد إنك إنت؟", "main": "<b>المصادقة<\/b> (authentication) ليها تلات أنواع إثبات، وبس:<p><b>حاجة تعرفها<\/b> (knowledge): باسورد، رقم سري، سؤال سري.<br><b>حاجة معاك<\/b> (possession): موبايل بيجيله كود، كارت البنك، توكن.<br><b>حاجة فيك<\/b> (biometric): بصمة، وش، عين.<\/p><p>و<b>المصادقة متعددة العوامل<\/b> (multi-factor authentication) معناها إنك تجمع <b>اتنين أو أكتر من أنواع مختلفة<\/b>.<\/p><p><b>فخ الامتحان:<\/b> باسورد + سؤال سري <b>مش<\/b> multi-factor، لأن الاتنين «حاجة تعرفها». ده عامل واحد مرتين.<\/p>", "example": "عشان تسحب فلوس من ماكينة: لازم <b>الكارت<\/b> (حاجة معاك) و<b>الرقم السري<\/b> (حاجة تعرفها).<p>لو حد سرق الكارت بس، مش هيعرف. ولو عرف الرقم بس، مش هيعرف. لازم الاتنين، ودول من نوعين مختلفين. دي بالظبط multi-factor.<\/p>", "steps": ["حاجة تعرفها: باسورد.", "حاجة معاك: موبايل أو كارت.", "حاجة فيك: بصمة أو وش.", "اجمع اتنين من أنواع <b>مختلفة<\/b> يبقى multi-factor.", "اجمع اتنين من نفس النوع، يبقى عامل واحد مرتين، ومش multi-factor."], "english": "Multi-factor authentication combines two or more of knowledge, possession, and biometric."}, {"id": "four", "n": "11", "title": "الخلاصة: أربع أسئلة، أربع تقنيات", "main": "الأربع تقنيات دول <b>مش نسخ من بعض<\/b>. كل واحدة بترد على سؤال واحد، ومش بترد على التلاتة التانيين.<p>ولما ييجي سؤال في الامتحان «أنهي تقنية تحل ده؟»، ما تفكرش في التقنيات. <b>سمّي التهديد الأول<\/b>، والتقنية هتبان لوحدها.<\/p>", "example": "<b>شيل واحدة وشوف إيه اللي هيحصل:<\/b><p>من غير <b>تشفير<\/b>: رقم الكارت يتقرا في السكة.<br>من غير <b>شهادة<\/b>: ممكن تكون بتشفّر كلامك بإتقان، <b>لموقع مزيف<\/b>.<br>من غير <b>مصادقة متعددة<\/b>: باسورد مسروب يكفي حد يدخل بحسابك.<br>من غير <b>توقيع<\/b>: حد يغيّر في الطلب ومحدش يعرف.<\/p><p>عشان كده الأمان <b>تركيبة<\/b> مش حاجة واحدة.<\/p>", "steps": ["حد بيقرا؟ ← التشفير.", "ده مين أصلًا؟ ← الشهادة الرقمية.", "ده صاحب الحساب فعلًا؟ ← المصادقة متعددة العوامل.", "فيه حاجة اتغيّرت؟ ← التوقيع الرقمي."], "english": "Encryption prevents reading, a digital certificate verifies the partner, multi-factor authentication prevents unauthorized logins, and a digital signature detects tampering and gives non-repudiation.", "figure": "<svg viewBox=\"0 0 560 192\" role=\"img\" aria-label=\"أربع أسئلة وأربع تقنيات\" preserveAspectRatio=\"xMidYMid meet\"><rect x=\"14\" y=\"14\" width=\"252\" height=\"74\" rx=\"9\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2\"/><text x=\"140\" y=\"42\" fill=\"#FF8A7A\" font-size=\"15\" text-anchor=\"middle\">حد بيقرا؟<\/text><text x=\"140\" y=\"68\" fill=\"#27E1C1\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\">التشفير<\/text><rect x=\"294\" y=\"14\" width=\"252\" height=\"74\" rx=\"9\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2\"/><text x=\"420\" y=\"42\" fill=\"#FF8A7A\" font-size=\"15\" text-anchor=\"middle\">ده مين أصلًا؟<\/text><text x=\"420\" y=\"68\" fill=\"#27E1C1\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\">الشهادة الرقمية<\/text><rect x=\"14\" y=\"102\" width=\"252\" height=\"74\" rx=\"9\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2\"/><text x=\"140\" y=\"130\" fill=\"#FF8A7A\" font-size=\"15\" text-anchor=\"middle\">ده صاحب الحساب؟<\/text><text x=\"140\" y=\"156\" fill=\"#27E1C1\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\">المصادقة متعددة العوامل<\/text><rect x=\"294\" y=\"102\" width=\"252\" height=\"74\" rx=\"9\" fill=\"none\" stroke=\"#27E1C1\" stroke-width=\"2\"/><text x=\"420\" y=\"130\" fill=\"#FF8A7A\" font-size=\"15\" text-anchor=\"middle\">حاجة اتغيّرت؟<\/text><text x=\"420\" y=\"156\" fill=\"#27E1C1\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\">التوقيع الرقمي<\/text><\/svg>"}, {"id": "lock", "n": "12", "title": "وأخيرًا: العلامة اللي جنب العنوان", "main": "في المتصفح جنب عنوان الموقع فيه علامة. زمان كانت قفل صغير، ودلوقتي في جوجل كروم بقت أيقونة شكلها زراير تحكم. تدوس عليها تلاقي مكتوب <span dir=\"ltr\">Connection is secure<\/span>.<p>العلامة دي معناها حاجتين بس: إن <b>الكلام بينك وبين الموقع متشفّر<\/b>، وإن <b>الموقع أثبت إنه هو<\/b>.<p>ومعناهاش إن اللي ورا الموقع ناس أمينة. أي موقع نصب يقدر يجيب العلامة دي. <b>العلامة بتحمي الطريق، مش النية.<\/b><\/p>", "example": "جوجل شالت القفل من كروم سنة 2023 وحطت مكانه الأيقونة الجديدة. والسبب اللي قالته: إن ناس كتير كانت فاهمة إن القفل معناه «الموقع ده موثوق».<p>يعني العلامة اتغيرت <b>عشان الناس كانت بتفهمها غلط<\/b>.<\/p>", "steps": ["العلامة بتقول: الاتصال متشفّر.", "وبتقول: الموقع قدّم شهادة سليمة للعنوان ده.", "وما بتقولش: الموقع أمين.", "وما بتقولش: البضاعة كويسة أو الفلوس هترجع."], "english": "The padlock means the connection is encrypted and the site proved its identity. It says nothing about whether the people behind the site are honest."}];
+
+const KEY = "learn-2-1-views";
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { saved = {}; }
+function remember() { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {} }
+
+const LABEL = { main:"الشرح", example:"بمثال", steps:"خطوة بخطوة", figure:"بصورة", english:"بالإنجليزي" };
+const ORDER = ["main", "example", "steps", "figure", "english"];
+
+function bodyHTML(s, mode) {
+  if (mode === "steps") return "<ol>" + s.steps.map(x => "<li>" + x + "</li>").join("") + "</ol>";
+  if (mode === "figure") return "<figure>" + s.figure + "</figure>";
+  if (mode === "english") return '<p class="en-note">ده اللي تكتبه في الامتحان، بكلام الكتاب نفسه:</p>' +
+                                  '<div class="en">' + s.english + "</div>";
+  if (mode === "example") return s.example;
+  return s.main;
+}
+
+function section(s) {
+  const el = document.createElement("section");
+  el.className = "sec";
+  el.id = s.id;
+  const modes = ORDER.filter(m => s[m] || m === "main");
+  let mode = saved[s.id] && modes.indexOf(saved[s.id]) >= 0 ? saved[s.id] : "main";
+
+  const h = document.createElement("h2");
+  h.innerHTML = '<span class="n">' + s.n + "</span><span>" + s.title + "</span>";
+  const body = document.createElement("div");
+  body.className = "body";
+
+  const ways = document.createElement("div");
+  ways.className = "ways";
+  const lab = document.createElement("div");
+  lab.className = "lab";
+  lab.textContent = "مش واضحة؟ طرق تانية لنفس الجزء:";
+  const chips = document.createElement("div");
+  chips.className = "chips";
+
+  const buttons = modes.map(m => {
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.type = "button";
+    b.textContent = LABEL[m];
+    b.addEventListener("click", () => {
+      mode = m;
+      saved[s.id] = m;
+      remember();
+      paint();
+    });
+    chips.append(b);
+    return b;
+  });
+
+  function paint() {
+    body.innerHTML = bodyHTML(s, mode);
+    buttons.forEach((b, i) => b.setAttribute("aria-pressed", modes[i] === mode ? "true" : "false"));
+  }
+  paint();
+
+  ways.append(lab, chips);
+  el.append(h, body, ways);
+  return el;
+}
+
+const host = document.getElementById("sections");
+SECTIONS.forEach(s => host.append(section(s)));
+
+const prog = document.getElementById("prog");
+function scrolled() {
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  prog.style.width = (max > 0 ? Math.min(100, (h.scrollTop / max) * 100) : 0) + "%";
+}
+addEventListener("scroll", scrolled, { passive: true });
+addEventListener("resize", scrolled);
+scrolled();
+
+</script>
+</body>
+</html>
