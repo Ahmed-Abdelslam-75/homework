@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lesson 2-3 &middot; Incident Response and Risk Management</title>
+<meta name="description" content="The Study Companion for Lesson 2-3 on screen, with a button on every part that explains it a different way.">
+<meta name="theme-color" content="#0B1437">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B1437'/%3E%3Crect x='20' y='29' width='24' height='20' rx='4' fill='none' stroke='%2327E1C1' stroke-width='4'/%3E%3Cpath d='M26 29v-6a6 6 0 0 1 12 0v6' fill='none' stroke='%2327E1C1' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap">
+<style>
+:root{--ink:#16213E;--navy:#0B1437;--teal:#0E7C66;--amber:#A2620A;--red:#B3261E;--line:#C7D0E0;
+      --soft:#F5F7FC;--muted:#5E6C8A;--page:#FFFFFF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:#E9EDF5;color:var(--ink);font-family:Georgia,"Times New Roman",serif;
+     font-size:17px;line-height:1.72}
+.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff}
+.top-in{max-width:720px;margin:0 auto;padding:10px 18px;display:flex;align-items:baseline;gap:10px}
+.top .ls{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#8FE8D8}
+.top .nm{font-size:15px}
+.bar{height:3px;background:#22305F}
+.bar i{display:block;height:100%;width:0;background:#27E1C1;transition:width .15s linear}
+.sheet{max-width:720px;margin:0 auto;background:var(--page);min-height:100vh;
+       padding:0 22px 48px;box-shadow:0 0 28px rgba(11,20,55,.12)}
+.cover{padding:30px 0 6px;border-bottom:3px solid var(--navy);margin-bottom:20px}
+.cover .k{font-family:Cambria,Georgia,serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;
+          color:var(--teal);font-weight:bold}
+.cover h1{font-family:Cambria,Georgia,serif;font-size:27px;line-height:1.25;margin:6px 0 4px;color:var(--navy)}
+.cover .s{color:var(--muted);font-size:15px;margin:0}
+.howto{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:13px 15px;
+       margin:16px 0 4px;direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;
+       font-size:15.5px;line-height:1.85}
+.howto b{color:var(--teal)}
+
+.blk{padding:16px 0 4px;border-bottom:1px solid #E8ECF4}
+.blk:last-of-type{border-bottom:0}
+h2{font-family:Cambria,Georgia,serif;font-size:20px;color:var(--navy);margin:0 0 9px;line-height:1.35}
+.kick{font-size:13.5px;color:var(--muted);font-style:italic;margin:0 0 8px}
+.blk p{margin:0 0 11px}
+.blk p:last-child{margin-bottom:0}
+.blk b{color:var(--navy)}
+ul,ol{margin:0 0 11px;padding-left:22px}
+li{margin-bottom:7px}
+ol.circ{list-style:none;counter-reset:c;padding-left:0}
+ol.circ li{counter-increment:c;padding-left:30px;position:relative}
+ol.circ li::before{content:counter(c);position:absolute;left:0;top:2px;width:20px;height:20px;
+  border-radius:50%;background:var(--navy);color:#fff;font-family:Cambria,serif;font-size:12px;
+  display:flex;align-items:center;justify-content:center}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15.5px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:#EEF2FA;font-family:Cambria,serif;color:var(--navy);font-size:14.5px}
+td.k{font-weight:bold;color:var(--navy);width:30%}
+td .sm{font-weight:normal;color:var(--muted);font-size:13.5px}
+.formula{text-align:center;background:#FDF6EC;border:1.5px solid #A2620A;border-radius:8px;
+  padding:8px 10px;margin:10px 0;font-family:Cambria,Georgia,serif;font-size:17px;font-weight:bold;
+  color:#A2620A}
+.gq{font-style:italic;color:var(--teal);font-size:18px;border-left:3px solid var(--teal);
+    padding-left:12px;margin:0 0 12px}
+.kf{background:#EFFAF6;border:1px solid #A9DDCC;border-radius:8px;padding:10px 13px;font-size:16px}
+.kf b{color:var(--teal)}
+.q{font-weight:bold;color:var(--navy)}
+.ans{background:var(--soft);border-left:3px solid var(--teal);padding:10px 13px;border-radius:0 8px 8px 0;
+     font-size:16px}
+.note,.cap{color:var(--muted);font-size:14px;font-style:italic}
+p.ar{direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:16px;
+     line-height:1.9;color:var(--ink);background:#F4F6FB;border-radius:8px;padding:10px 13px}
+figure{margin:12px 0}
+figure svg{width:100%;height:auto;display:block}
+figcaption{text-align:center;color:var(--muted);font-size:14px;font-style:italic;margin-top:6px;
+  direction:rtl;font-family:Tajawal,"Segoe UI",Arial,sans-serif}
+
+.ask{margin:12px 0 2px}
+.ask button{font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:15.5px;font-weight:700;cursor:pointer;
+  background:#FFF6E8;color:var(--amber);border:1.5px solid #E8C89A;border-radius:999px;padding:8px 18px;
+  line-height:1.3}
+.ask button:hover{background:var(--amber);border-color:var(--amber);color:#fff}
+.ask button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.ask .cnt{font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:13.5px;color:var(--muted);
+  margin-inline-start:10px}
+.way{direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:16.5px;
+  line-height:1.95;background:#FFFBF3;border:1px solid #E8C89A;border-radius:10px;padding:13px 16px;
+  margin-top:10px}
+.way p{margin:0 0 10px}
+.way p:last-child{margin-bottom:0}
+.way b{color:var(--amber)}
+.way ol{padding-right:22px;padding-left:0}
+.way figure{margin:2px 0}
+.end{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:24px;
+  text-align:center;direction:rtl;font-family:Tajawal,"Segoe UI",Arial,sans-serif}
+.end h2{margin:0 0 6px}
+.end p{color:var(--muted);font-size:15.5px;margin:0 0 13px}
+.btn{display:inline-block;text-decoration:none;background:var(--teal);color:#fff;font-weight:700;
+  border-radius:999px;padding:11px 24px}
+.foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px}
+@media (max-width:460px){ body{font-size:16px} .sheet{padding:0 15px 40px} .cover h1{font-size:23px}
+  h2{font-size:18.5px} table{font-size:14.5px} th,td{padding:6px 7px} }
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .bar i{transition:none} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in"><span class="ls">LESSON 2-3</span><span class="nm">Study Companion</span></div>
+  <div class="bar"><i id="prog"></i></div>
+</header>
+
+<main class="sheet">
+  <div class="cover">
+    <div class="k">Part A &middot; The Lesson</div>
+    <h1>Incident Response and Risk Management</h1>
+    <p class="s">Lesson 2-3 &middot; Unit 2 &middot; Cybersecurity</p>
+  </div>
+
+  <div class="howto">نفس كلام الـ <b>Study Companion</b> بالظبط. الجديد هنا إن تحت أي جزء مش واضح فيه زرار
+  <b>مش فاهم؟</b>، تدوس عليه يشرحلك نفس الجزء بطريقة تانية خالص، وتدوس تاني يديك طريقة ثالثة.</div>
+
+  <section class="blk" data-ways="[&quot;&lt;p&gt;الهدفين دول حاجتين مختلفتين تمامًا:&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;الأول ترتيب.&lt;/b&gt; تعرف الست مراحل وتعرف ليه الترتيب ده بالذات.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;التاني حساب.&lt;/b&gt; تعرف تحسب حجم الخطر وترتب المخاطر.&lt;/p&gt;\n    &lt;p&gt;نص الدرس الأول عن الترتيب، ونصه التاني عن الحساب.&lt;/p&gt;&quot;]">
+<h2>Learning Objectives</h2>
+<ul>
+  <li>Explain what a security incident is and describe the stages of incident response in the correct
+  order.</li>
+  <li>Apply the idea of risk assessment by prioritizing risks according to their impact and likelihood.</li>
+</ul>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;الدرسين اللي فاتوا كانوا عن &lt;b&gt;المنع&lt;/b&gt;: التشفير والشهادة والفايروول والطبقات.&lt;/p&gt;\n    &lt;p&gt;الدرس ده بيبدأ من جملة أصعب: &lt;b&gt;كل ده اتعمل، والهجمة نجحت برضه&lt;/b&gt;. دلوقتي نعمل إيه؟&lt;/p&gt;\n    &lt;p&gt;والإجابة مش فكرة جديدة، الإجابة &lt;b&gt;ترتيب&lt;/b&gt;. نفس الأفكار اللي في دماغك، بس بترتيب معيّن.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;جرّب بنفسك:&lt;/b&gt; لو قالولك دلوقتي إن فيه اختراق في مدرستك، هتعمل إيه أول حاجة؟&lt;/p&gt;\n    &lt;p&gt;غالبًا هتقول: نقفل النت، نرجّع النسخة الاحتياطية، نشوف مين عمل كده، نشيل الفيروس.&lt;/p&gt;\n    &lt;p&gt;كله صح. والمشكلة إن لو عملتهم بترتيب غلط، التعب كله هيضيع. وده بالظبط اللي الدرس هيعلمهولك.&lt;/p&gt;&quot;]">
+<h2>Guiding Question</h2>
+<p class="gq">When a security incident happens, how should an organization respond in order, and how
+does it decide which risks to address first?</p>
+<p>Even a well-protected system can be attacked. When a security incident happens, whether data is leaked,
+files are tampered with, or a service is knocked offline, a rushed and unplanned reaction only makes the damage
+worse. Organizations follow a clear, ordered response so that damage is contained, the cause is removed, and
+the same problem does not return. They also decide in advance which risks to guard against first, because no
+team can fix everything at once.</p>
+  </section>
+  <section class="blk" data-ways="[]">
+<h2>Going Deeper: how this lesson differs from the two before it</h2>
+<p>Lesson 2-1 was about protecting one connection. Lesson 2-2 was about designing a network so that one
+breach is not the end. This lesson starts from a harder admission: <b>the attack succeeded anyway</b>. Every
+measure in 2-2 can be in place and an incident can still happen, because people click things and software has
+flaws.</p>
+<p>So the question changes from "how do we stop it" to "what do we do now, and in what order". Notice that the
+first of the six stages, preparation, happens <b>before</b> any incident. The response begins long before the
+attack does.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;الكلمة اللي شايلة التعريف كله هي &lt;b&gt;actual&lt;/b&gt;، يعني ضرر &lt;b&gt;حصل فعلًا&lt;/b&gt;.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;جرب:&lt;/b&gt; لابتوب موظف من غير باسورد اتنسي في تاكسي، ولسه محصلش حاجة. دي حادثة؟&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;لأ.&lt;/b&gt; دي &lt;b&gt;خطر&lt;/b&gt; (risk)، لأن مفيش ضرر حصل. لو اللي لقاه فتحه وسحب بيانات، ساعتها بقت حادثة.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;وتاني:&lt;/b&gt; موقع واقع من ساعتين بسبب هجوم؟ &lt;b&gt;دي حادثة&lt;/b&gt;، والخدمة فعلًا مش شغالة.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;قاعدة سريعة للامتحان:&lt;/b&gt;&lt;/p&gt;\n    &lt;p&gt;لو السؤال فيه كلمة &lt;b&gt;حصل&lt;/b&gt; أو &lt;b&gt;تم&lt;/b&gt; ← حادثة (incident).&lt;/p&gt;\n    &lt;p&gt;لو فيه كلمة &lt;b&gt;ممكن&lt;/b&gt; أو &lt;b&gt;محتمل&lt;/b&gt; ← خطر (risk).&lt;/p&gt;\n    &lt;p&gt;والثغرة نفسها &lt;b&gt;مش&lt;/b&gt; حادثة. الثغرة باب مفتوح، والحادثة إن حد دخل منه وأخد حاجة.&lt;/p&gt;&quot;]">
+<p class="kick">Contain first: isolate the infected machine.</p>
+<h2>1. What is a Security Incident</h2>
+<p>A <b>security incident</b> is a situation in which actual damage occurs due to an information
+security problem.</p>
+<p>The word that carries the definition is <b>actual</b>. A weakness that nobody has used is not an incident.
+An incident is damage that has already happened.</p>
+<table>
+  <tr><th style="width:28%">Type</th><th>Description</th></tr>
+  <tr><td class="k">Information leak</td><td>Personal information or confidential information is leaked to the
+    outside.</td></tr>
+  <tr><td class="k">Data tampering</td><td>Data within a system is altered without authorization.</td></tr>
+  <tr><td class="k">Service outage</td><td>A service becomes unavailable due to attacks on the server, and
+    similar causes.</td></tr>
+</table>
+  </section>
+  <section class="blk" data-ways="[]">
+<h2>Egyptian Example</h2>
+<p>A school's student records system is locked by ransomware on a Sunday morning, and staff cannot sign
+in. Real damage has occurred, so this is an incident. If the school had instead discovered that its password
+policy was weak, with nothing yet gone wrong, that would be a <b>risk</b>, which is the second half of this
+lesson.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;figure&gt;\n&lt;svg viewBox=\&quot;0 0 540 118\&quot; role=\&quot;img\&quot; aria-label=\&quot;The six stages of incident response in order\&quot;&gt;\n  &lt;defs&gt;&lt;marker id=\&quot;s1\&quot; viewBox=\&quot;0 0 10 10\&quot; refX=\&quot;9\&quot; refY=\&quot;5\&quot; markerWidth=\&quot;5\&quot; markerHeight=\&quot;5\&quot; orient=\&quot;auto\&quot;&gt;\n    &lt;path d=\&quot;M 0 0 L 10 5 L 0 10 z\&quot; fill=\&quot;#0B1437\&quot;/&gt;&lt;/marker&gt;&lt;/defs&gt;\n  &lt;rect x=\&quot;4\&quot; y=\&quot;18\&quot; width=\&quot;76\&quot; height=\&quot;62\&quot; rx=\&quot;6\&quot; fill=\&quot;#F5F7FC\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;1.6\&quot;/&gt;&lt;circle cx=\&quot;42\&quot; cy=\&quot;36\&quot; r=\&quot;10\&quot; fill=\&quot;#0B1437\&quot;/&gt;&lt;text x=\&quot;42\&quot; y=\&quot;40\&quot; font-size=\&quot;11\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#fff\&quot; text-anchor=\&quot;middle\&quot;&gt;1&lt;/text&gt;&lt;text x=\&quot;42\&quot; y=\&quot;60\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Prepare&lt;/text&gt;&lt;text x=\&quot;42\&quot; y=\&quot;74\&quot; font-size=\&quot;9\&quot; fill=\&quot;#5E6C8A\&quot; text-anchor=\&quot;middle\&quot;&gt;before anything&lt;/text&gt;&lt;rect x=\&quot;94\&quot; y=\&quot;18\&quot; width=\&quot;76\&quot; height=\&quot;62\&quot; rx=\&quot;6\&quot; fill=\&quot;#F5F7FC\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;1.6\&quot;/&gt;&lt;circle cx=\&quot;132\&quot; cy=\&quot;36\&quot; r=\&quot;10\&quot; fill=\&quot;#0B1437\&quot;/&gt;&lt;text x=\&quot;132\&quot; y=\&quot;40\&quot; font-size=\&quot;11\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#fff\&quot; text-anchor=\&quot;middle\&quot;&gt;2&lt;/text&gt;&lt;text x=\&quot;132\&quot; y=\&quot;60\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Detect&lt;/text&gt;&lt;text x=\&quot;132\&quot; y=\&quot;74\&quot; font-size=\&quot;9\&quot; fill=\&quot;#5E6C8A\&quot; text-anchor=\&quot;middle\&quot;&gt;find it&lt;/text&gt;&lt;rect x=\&quot;184\&quot; y=\&quot;18\&quot; width=\&quot;76\&quot; height=\&quot;62\&quot; rx=\&quot;6\&quot; fill=\&quot;#F5F7FC\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;1.6\&quot;/&gt;&lt;circle cx=\&quot;222\&quot; cy=\&quot;36\&quot; r=\&quot;10\&quot; fill=\&quot;#0B1437\&quot;/&gt;&lt;text x=\&quot;222\&quot; y=\&quot;40\&quot; font-size=\&quot;11\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#fff\&quot; text-anchor=\&quot;middle\&quot;&gt;3&lt;/text&gt;&lt;text x=\&quot;222\&quot; y=\&quot;60\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Contain&lt;/text&gt;&lt;text x=\&quot;222\&quot; y=\&quot;74\&quot; font-size=\&quot;9\&quot; fill=\&quot;#5E6C8A\&quot; text-anchor=\&quot;middle\&quot;&gt;stop the spread&lt;/text&gt;&lt;rect x=\&quot;274\&quot; y=\&quot;18\&quot; width=\&quot;76\&quot; height=\&quot;62\&quot; rx=\&quot;6\&quot; fill=\&quot;#F5F7FC\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;1.6\&quot;/&gt;&lt;circle cx=\&quot;312\&quot; cy=\&quot;36\&quot; r=\&quot;10\&quot; fill=\&quot;#0B1437\&quot;/&gt;&lt;text x=\&quot;312\&quot; y=\&quot;40\&quot; font-size=\&quot;11\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#fff\&quot; text-anchor=\&quot;middle\&quot;&gt;4&lt;/text&gt;&lt;text x=\&quot;312\&quot; y=\&quot;60\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Eradicate&lt;/text&gt;&lt;text x=\&quot;312\&quot; y=\&quot;74\&quot; font-size=\&quot;9\&quot; fill=\&quot;#5E6C8A\&quot; text-anchor=\&quot;middle\&quot;&gt;remove the cause&lt;/text&gt;&lt;rect x=\&quot;364\&quot; y=\&quot;18\&quot; width=\&quot;76\&quot; height=\&quot;62\&quot; rx=\&quot;6\&quot; fill=\&quot;#F5F7FC\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;1.6\&quot;/&gt;&lt;circle cx=\&quot;402\&quot; cy=\&quot;36\&quot; r=\&quot;10\&quot; fill=\&quot;#0B1437\&quot;/&gt;&lt;text x=\&quot;402\&quot; y=\&quot;40\&quot; font-size=\&quot;11\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#fff\&quot; text-anchor=\&quot;middle\&quot;&gt;5&lt;/text&gt;&lt;text x=\&quot;402\&quot; y=\&quot;60\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Recover&lt;/text&gt;&lt;text x=\&quot;402\&quot; y=\&quot;74\&quot; font-size=\&quot;9\&quot; fill=\&quot;#5E6C8A\&quot; text-anchor=\&quot;middle\&quot;&gt;restore&lt;/text&gt;&lt;rect x=\&quot;454\&quot; y=\&quot;18\&quot; width=\&quot;76\&quot; height=\&quot;62\&quot; rx=\&quot;6\&quot; fill=\&quot;#F5F7FC\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;1.6\&quot;/&gt;&lt;circle cx=\&quot;492\&quot; cy=\&quot;36\&quot; r=\&quot;10\&quot; fill=\&quot;#0B1437\&quot;/&gt;&lt;text x=\&quot;492\&quot; y=\&quot;40\&quot; font-size=\&quot;11\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#fff\&quot; text-anchor=\&quot;middle\&quot;&gt;6&lt;/text&gt;&lt;text x=\&quot;492\&quot; y=\&quot;60\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Prevent&lt;/text&gt;&lt;text x=\&quot;492\&quot; y=\&quot;74\&quot; font-size=\&quot;9\&quot; fill=\&quot;#5E6C8A\&quot; text-anchor=\&quot;middle\&quot;&gt;stop a repeat&lt;/text&gt;\n&lt;/svg&gt;&lt;line x1=\&quot;82\&quot; y1=\&quot;49\&quot; x2=\&quot;92\&quot; y2=\&quot;49\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;1.6\&quot; marker-end=\&quot;url(#s1)\&quot;/&gt;&lt;line x1=\&quot;172\&quot; y1=\&quot;49\&quot; x2=\&quot;182\&quot; y2=\&quot;49\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;1.6\&quot; marker-end=\&quot;url(#s1)\&quot;/&gt;&lt;line x1=\&quot;262\&quot; y1=\&quot;49\&quot; x2=\&quot;272\&quot; y2=\&quot;49\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;1.6\&quot; marker-end=\&quot;url(#s1)\&quot;/&gt;&lt;line x1=\&quot;352\&quot; y1=\&quot;49\&quot; x2=\&quot;362\&quot; y2=\&quot;49\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;1.6\&quot; marker-end=\&quot;url(#s1)\&quot;/&gt;&lt;line x1=\&quot;442\&quot; y1=\&quot;49\&quot; x2=\&quot;452\&quot; y2=\&quot;49\&quot; stroke=\&quot;#0B1437\&quot; stroke-width=\&quot;1.6\&quot; marker-end=\&quot;url(#s1)\&quot;/&gt;&lt;figcaption&gt;الستة بالترتيب. لاحظ إن الأولى بتحصل قبل أي حادثة.&lt;/figcaption&gt;&lt;/figure&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;حاجة غريبة في الجدول ده:&lt;/b&gt; المرحلة الأولى بتحصل &lt;b&gt;قبل الحادثة أصلًا&lt;/b&gt;.&lt;/p&gt;\n    &lt;p&gt;يعني الاستجابة بتبدأ قبل الهجمة بشهور. لو مفيش إجراءات متفق عليها ومفيش نسخة احتياطية متجربة،\n    إنت بتبدأ من الصفر وإنت تحت ضغط.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;اسأل نفسك:&lt;/b&gt; لو حصل اختراق في مدرستك دلوقتي، &lt;b&gt;مين&lt;/b&gt; اللي ليه حق يقول نفصل السيرفر؟\n    لو مفيش إجابة، يبقى المرحلة الأولى مش متعملة.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;الطلبة بيلخبطوا بين الحصر والإزالة&lt;/b&gt;، وممكن الاتنين يكونوا على نفس الجهاز:&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;الحصر:&lt;/b&gt; تفصل الجهاز المصاب عن الشبكة. الهدف: الضرر ما ينتشرش.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;الإزالة:&lt;/b&gt; تشيل الفيروس من الجهاز. الهدف: السبب يختفي.&lt;/p&gt;\n    &lt;p&gt;نفس الجهاز، وهدفين مختلفين. &lt;b&gt;الفرق في الهدف مش في المكان.&lt;/b&gt;&lt;/p&gt;&quot;]">
+<h2>2. The Flow of Incident Response</h2>
+<p>When a security incident occurs, the response proceeds through six stages, in this order.</p>
+<table>
+  <tr><th style="width:32%">Stage</th><th>What happens in it</th></tr>
+  <tr><td class="k">&#9312; Preparation</td><td>Establish response procedures and structures in advance, in
+    preparation for incidents.</td></tr>
+  <tr><td class="k">&#9313; Detection</td><td>Discover and confirm that an incident has occurred.</td></tr>
+  <tr><td class="k">&#9314; Containment</td><td>Limit the scope of impact so that damage does not spread
+    further.</td></tr>
+  <tr><td class="k">&#9315; Eradication</td><td>Remove the cause of the incident, for example remove the
+    malware.</td></tr>
+  <tr><td class="k">&#9316; Recovery</td><td>Return systems and services to their normal state.</td></tr>
+  <tr><td class="k">&#9317; Prevention of recurrence</td><td>Analyze the cause and take measures so that the
+    same incident does not occur again.</td></tr>
+</table>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;table&gt;\n  &lt;tr&gt;&lt;th style=\&quot;width:42%\&quot;&gt;If you do this&lt;/th&gt;&lt;th&gt;What happens&lt;/th&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;Recover before you eradicate&lt;/td&gt;&lt;td&gt;The malware is still there, so the same incident\n    returns and the recovery is wasted.&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;Eradicate before you contain&lt;/td&gt;&lt;td&gt;The damage keeps spreading to other machines while\n    you work.&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;Skip prevention of recurrence&lt;/td&gt;&lt;td&gt;You handled this incident and learned nothing from\n    it.&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;&lt;p&gt;الجدول ده هو بالظبط إجابة سؤال الست درجات في الامتحان.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;الجملة اللي الدرس كله عليها:&lt;/b&gt; كل مرحلة بتفترض إن اللي قبلها اتعملت.&lt;/p&gt;\n    &lt;p&gt;يعني مينفعش تبدأ من النص. لو قفزت مرحلة، المرحلة اللي بعدها بتشتغل على أرض مش جاهزة،\n    والشغل بيضيع.&lt;/p&gt;&quot;]">
+<p>It is important to proceed through the six stages <b>in order</b>. For example, if recovery is
+performed without identifying and removing the cause, the same incident may occur again.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;الجملة المفتاح: &lt;b&gt;الحصر بيجمّد حجم الحادثة&lt;/b&gt;.&lt;/p&gt;\n    &lt;p&gt;شيل فيروس من جهاز ممكن ياخد نص ساعة. وفي النص ساعة دي، لو العدوى مااتحصرتش، بتفضل بتنتشر لأجهزة\n    تانية.&lt;/p&gt;\n    &lt;p&gt;يعني &lt;b&gt;المشكلة اللي بتحلها بتكبر وإنت بتحلها&lt;/b&gt;. الحصر بيوقف الكبر ده، والإزالة بعدين بتتعامل مع\n    مشكلة واقفة.&lt;/p&gt;&quot;]">
+<p class="kick">FROM THE TEXTBOOK</p>
+<h2>Pause &amp; Think</h2>
+<p class="q">Why must containment come before eradication in the six-stage response?</p>
+<p class="ans"><b>Answer.</b> Because containment stops the damage from growing, and eradication does not.
+Removing malware from one machine can take time, and while that work is going on, an infection that has not
+been contained is still spreading to other machines, so the problem you are solving keeps getting bigger than
+the solution. Containment is the stage that <b>freezes the size of the incident</b>; eradication then deals
+with a fixed problem instead of a growing one.</p>
+  </section>
+  <section class="blk" data-ways="[]">
+<h2>Going Deeper: the fire, and why the order is not a preference</h2>
+<p>Think of a fire in one room. Containment is shutting that door. Eradication is putting the fire out.
+Recovery is repainting the room. Prevention of recurrence is finding out that the wiring was faulty and
+replacing it.</p>
+<p>Now take the stages out of order. Repaint before you put the fire out and you have wasted the paint. Put the
+fire out without shutting the door first and the rest of the house is burning while you work. Skip the wiring
+and you will be back in the same room next month. <b>Each stage assumes the one before it is already done</b>,
+which is exactly why the exam asks you to explain the order rather than to list it.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;figure&gt;\n&lt;svg viewBox=\&quot;0 0 420 180\&quot; role=\&quot;img\&quot; aria-label=\&quot;A risk matrix of impact against likelihood\&quot;&gt;\n  &lt;text x=\&quot;14\&quot; y=\&quot;96\&quot; font-size=\&quot;11\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot;\n    transform=\&quot;rotate(-90 14 96)\&quot; text-anchor=\&quot;middle\&quot;&gt;Impact&lt;/text&gt;\n  &lt;text x=\&quot;232\&quot; y=\&quot;174\&quot; font-size=\&quot;11\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot;\n    text-anchor=\&quot;middle\&quot;&gt;Likelihood&lt;/text&gt;\n  &lt;rect x=\&quot;76\&quot; y=\&quot;20\&quot; width=\&quot;104\&quot; height=\&quot;44\&quot; fill=\&quot;#E6EBF5\&quot; stroke=\&quot;#C7D0E0\&quot;/&gt;&lt;text x=\&quot;128\&quot; y=\&quot;48\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Medium&lt;/text&gt;&lt;rect x=\&quot;180\&quot; y=\&quot;20\&quot; width=\&quot;104\&quot; height=\&quot;44\&quot; fill=\&quot;#CBD5E8\&quot; stroke=\&quot;#C7D0E0\&quot;/&gt;&lt;text x=\&quot;232\&quot; y=\&quot;48\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;High&lt;/text&gt;&lt;rect x=\&quot;284\&quot; y=\&quot;20\&quot; width=\&quot;104\&quot; height=\&quot;44\&quot; fill=\&quot;#0B1437\&quot; stroke=\&quot;#C7D0E0\&quot;/&gt;&lt;text x=\&quot;336\&quot; y=\&quot;48\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#FFFFFF\&quot; text-anchor=\&quot;middle\&quot;&gt;Critical&lt;/text&gt;&lt;rect x=\&quot;76\&quot; y=\&quot;66\&quot; width=\&quot;104\&quot; height=\&quot;44\&quot; fill=\&quot;#F6F8FC\&quot; stroke=\&quot;#C7D0E0\&quot;/&gt;&lt;text x=\&quot;128\&quot; y=\&quot;94\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Low&lt;/text&gt;&lt;rect x=\&quot;180\&quot; y=\&quot;66\&quot; width=\&quot;104\&quot; height=\&quot;44\&quot; fill=\&quot;#E6EBF5\&quot; stroke=\&quot;#C7D0E0\&quot;/&gt;&lt;text x=\&quot;232\&quot; y=\&quot;94\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Medium&lt;/text&gt;&lt;rect x=\&quot;284\&quot; y=\&quot;66\&quot; width=\&quot;104\&quot; height=\&quot;44\&quot; fill=\&quot;#CBD5E8\&quot; stroke=\&quot;#C7D0E0\&quot;/&gt;&lt;text x=\&quot;336\&quot; y=\&quot;94\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;High&lt;/text&gt;&lt;rect x=\&quot;76\&quot; y=\&quot;112\&quot; width=\&quot;104\&quot; height=\&quot;44\&quot; fill=\&quot;#F6F8FC\&quot; stroke=\&quot;#C7D0E0\&quot;/&gt;&lt;text x=\&quot;128\&quot; y=\&quot;140\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#5E6C8A\&quot; text-anchor=\&quot;middle\&quot;&gt;Very low&lt;/text&gt;&lt;rect x=\&quot;180\&quot; y=\&quot;112\&quot; width=\&quot;104\&quot; height=\&quot;44\&quot; fill=\&quot;#F6F8FC\&quot; stroke=\&quot;#C7D0E0\&quot;/&gt;&lt;text x=\&quot;232\&quot; y=\&quot;140\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Low&lt;/text&gt;&lt;rect x=\&quot;284\&quot; y=\&quot;112\&quot; width=\&quot;104\&quot; height=\&quot;44\&quot; fill=\&quot;#E6EBF5\&quot; stroke=\&quot;#C7D0E0\&quot;/&gt;&lt;text x=\&quot;336\&quot; y=\&quot;140\&quot; font-size=\&quot;10.5\&quot; font-family=\&quot;Cambria,serif\&quot; font-weight=\&quot;bold\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Medium&lt;/text&gt;\n  &lt;text x=\&quot;76\&quot; y=\&quot;40\&quot; font-size=\&quot;10.5\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;end\&quot;&gt;High&lt;/text&gt;\n  &lt;text x=\&quot;76\&quot; y=\&quot;86\&quot; font-size=\&quot;10.5\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;end\&quot;&gt;Medium&lt;/text&gt;\n  &lt;text x=\&quot;76\&quot; y=\&quot;132\&quot; font-size=\&quot;10.5\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;end\&quot;&gt;Low&lt;/text&gt;\n  &lt;text x=\&quot;128\&quot; y=\&quot;156\&quot; font-size=\&quot;10.5\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Low&lt;/text&gt;\n  &lt;text x=\&quot;232\&quot; y=\&quot;156\&quot; font-size=\&quot;10.5\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;Medium&lt;/text&gt;\n  &lt;text x=\&quot;336\&quot; y=\&quot;156\&quot; font-size=\&quot;10.5\&quot; fill=\&quot;#0B1437\&quot; text-anchor=\&quot;middle\&quot;&gt;High&lt;/text&gt;\n&lt;/svg&gt;&lt;figcaption&gt;الركن اللي فوق على اليمين هو اللي بيتعالج الأول.&lt;/figcaption&gt;&lt;/figure&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;اتمرّن على الحساب:&lt;/b&gt; أربع مخاطر، كل واحد له أثر واحتمال من 1 لـ 3.&lt;/p&gt;\n    &lt;p&gt;a: أثر 3، احتمال 3 ← &lt;b&gt;9&lt;/b&gt;&lt;br&gt;\n    b: أثر 1، احتمال 3 ← &lt;b&gt;3&lt;/b&gt;&lt;br&gt;\n    c: أثر 3، احتمال 2 ← &lt;b&gt;6&lt;/b&gt;&lt;br&gt;\n    d: أثر 1، احتمال 1 ← &lt;b&gt;1&lt;/b&gt;&lt;/p&gt;\n    &lt;p&gt;الترتيب: &lt;b&gt;a، c، b، d&lt;/b&gt;. ولاحظ b و c: لو رتبت بالاحتمال لوحده هتحط b فوق c، وده غلط.&lt;/p&gt;&quot;]">
+<p class="kick">Rank risks by impact and likelihood; fix the worst first.</p>
+<h2>3. The Concept of Risk Assessment</h2>
+<p>A <b>risk</b> is the possibility of an information security problem occurring in the future, and its
+impact. Notice the difference from an incident: an incident has already happened, a risk has not happened
+yet.</p>
+<p>The size of a risk is determined by two factors multiplied together:</p>
+<p class="formula">Risk size = Impact &times; Likelihood</p>
+<table>
+  <tr><th style="width:26%">Factor</th><th>What it asks</th></tr>
+  <tr><td class="k">Impact</td><td>How much damage occurs if the risk actually materializes.</td></tr>
+  <tr><td class="k">Likelihood</td><td>How high the probability is that the risk will actually
+    materialize.</td></tr>
+</table>
+<p>Risks with both high impact and high likelihood should be addressed first. Since it is difficult to address
+all risks at the same time, it is important to set priorities and take measures systematically.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;جرّب الفرق بنفسك:&lt;/b&gt;&lt;/p&gt;\n    &lt;p&gt;خطر هيدمر كل حاجة بس مستحيل تقريبًا: أثر 3، احتمال 1.&lt;br&gt;\n    ومصيبة صغيرة بتحصل كل يوم: أثر 1، احتمال 3.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;بالضرب:&lt;/b&gt; الاتنين 3. الصورة واضحة، ومحدش منهم أولوية على التاني.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;بالجمع:&lt;/b&gt; الاتنين 4، زي خطر 2 و2 بالظبط. والصورة ضاعت.&lt;/p&gt;\n    &lt;p&gt;عشان كده بنضرب.&lt;/p&gt;&quot;]">
+<h2>Going Deeper: why it is multiplied and not added</h2>
+<p>Multiplying is what makes one small factor cancel a large one. A risk that would destroy the whole
+system but is almost impossible (impact 3, likelihood 1) scores 3. A nuisance that happens constantly (impact
+1, likelihood 3) also scores 3. Add them instead and both would score 4, the same as a risk scoring 2 and 2,
+which hides the shape of the problem.</p>
+<p>This is also why <b>impact alone is not enough</b>, which the textbook tests directly. A student who ranks
+by damage only will put the dramatic, almost impossible risk at the top and leave the everyday one
+unhandled.</p>
+  </section>
+  <section class="blk" data-ways="[]">
+<h2>Egyptian Example</h2>
+<p>A school weighs two risks. Another ransomware attack: impact large, likelihood high, because the
+first one already succeeded and nothing has changed. A brief power cut: impact small, because the work is saved
+and the building has a generator, and likelihood moderate. The ransomware is handled first, not because a power
+cut is unimportant, but because its two numbers are both high.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;المصطلحات دي بتتسأل &lt;b&gt;بالاسم وبالإنجليزي&lt;/b&gt;، يعني لو كتبت الشرح صح من غير الكلمة الدرجة\n    بتروح.&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;طريقة الحفظ:&lt;/b&gt; غطّي عمود المعنى بإيدك، اقرا المصطلح، وقول معناه بصوت عالي بالإنجليزي.\n    لو مش عارف، افتح وشوف، وارجع من الأول.&lt;/p&gt;\n    &lt;p&gt;ستة بس. قابلين للحفظ في عشر دقايق.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;أكتر اتنين بيتلخبطوا:&lt;/b&gt;&lt;/p&gt;\n    &lt;p&gt;&lt;b&gt;containment&lt;/b&gt; بيتعامل مع &lt;b&gt;انتشار&lt;/b&gt; الضرر.&lt;br&gt;\n    &lt;b&gt;eradication&lt;/b&gt; بيتعامل مع &lt;b&gt;سبب&lt;/b&gt; الضرر.&lt;/p&gt;\n    &lt;p&gt;ولو جالك سؤال «ده أنهي مرحلة؟»، اسأل نفسك: ده بيوقف الانتشار ولا بيشيل السبب؟&lt;/p&gt;&quot;]">
+<h2>Key Terms</h2>
+<table>
+  <tr><th style="width:32%">Term</th><th>Meaning</th></tr>
+  <tr><td class="k">security incident</td><td>A situation in which actual damage occurs due to an information
+    security problem.</td></tr>
+  <tr><td class="k">containment</td><td>Limit the spread of damage.</td></tr>
+  <tr><td class="k">eradication</td><td>Remove the cause.</td></tr>
+  <tr><td class="k">impact</td><td>How much damage if a risk occurs.</td></tr>
+  <tr><td class="k">likelihood</td><td>How probable the risk is.</td></tr>
+  <tr><td class="k">risk</td><td>The possibility of a problem occurring in the future, and its impact. Its size
+    is impact times likelihood.</td></tr>
+</table>
+  </section>
+
+  <div class="end">
+    <h2>خلصت الدرس</h2>
+    <p>باقي الـ PDF فيه الأسئلة والتمارين بإجاباتها، وزيادة عليها Part C.</p>
+    <a class="btn" href="../../">كل الواجبات</a>
+  </div>
+
+  <p class="foot">Programming and Artificial Intelligence &middot; Egyptian Baccalaureate &middot; Year 2</p>
+</main>
+
+<script>
+const KEY = "learn-2-3-open";
+let open = {};
+try { open = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { open = {}; }
+function remember() { try { localStorage.setItem(KEY, JSON.stringify(open)); } catch (e) {} }
+
+document.querySelectorAll(".blk").forEach((blk, i) => {
+  const ways = JSON.parse(blk.dataset.ways || "[]");
+  if (!ways.length) return;
+
+  const wrap = document.createElement("div");
+  wrap.className = "ask";
+  const btn = document.createElement("button");
+  btn.type = "button";
+  const cnt = document.createElement("span");
+  cnt.className = "cnt";
+  const panel = document.createElement("div");
+  panel.hidden = true;
+  wrap.append(btn, cnt, panel);
+  blk.append(wrap);
+
+  let at = typeof open[i] === "number" ? open[i] : -1;   // -1 means closed
+
+  function paint() {
+    if (at < 0) {
+      panel.hidden = true;
+      panel.innerHTML = "";
+      btn.textContent = "مش فاهم؟";
+      cnt.textContent = "";
+      return;
+    }
+    panel.hidden = false;
+    panel.className = "way";
+    panel.innerHTML = ways[at];
+    btn.textContent = at + 1 < ways.length ? "اشرحها بطريقة تانية" : "إخفاء";
+    cnt.textContent = ways.length > 1 ? "طريقة " + (at + 1) + " من " + ways.length : "";
+  }
+
+  btn.addEventListener("click", () => {
+    at = at + 1 < ways.length ? at + 1 : -1;
+    open[i] = at;
+    remember();
+    paint();
+  });
+  paint();
+});
+
+const prog = document.getElementById("prog");
+function scrolled() {
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  prog.style.width = (max > 0 ? Math.min(100, (h.scrollTop / max) * 100) : 0) + "%";
+}
+addEventListener("scroll", scrolled, { passive: true });
+addEventListener("resize", scrolled);
+scrolled();
+</script>
+</body>
+</html>
