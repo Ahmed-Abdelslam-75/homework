@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lesson 3-1 &middot; The Overall Structure of Web Applications</title>
+<meta name="description" content="The Study Companion for Lesson 3-1 on screen, with a button on every part that explains it a different way.">
+<meta name="theme-color" content="#0B1437">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B1437'/%3E%3Crect x='16' y='16' width='32' height='9' rx='3' fill='%2327E1C1'/%3E%3Crect x='16' y='29' width='32' height='9' rx='3' fill='%2327E1C1' opacity='.72'/%3E%3Crect x='16' y='42' width='32' height='9' rx='3' fill='%2327E1C1' opacity='.44'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap">
+<style>
+:root{--ink:#16213E;--navy:#0B1437;--teal:#0E7C66;--amber:#A2620A;--red:#B3261E;--line:#C7D0E0;
+      --soft:#F5F7FC;--muted:#5E6C8A;--page:#FFFFFF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:#E9EDF5;color:var(--ink);font-family:Georgia,"Times New Roman",serif;
+     font-size:17px;line-height:1.72}
+.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff}
+.top-in{max-width:720px;margin:0 auto;padding:10px 18px;display:flex;align-items:baseline;gap:10px}
+.top .ls{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#8FE8D8}
+.top .nm{font-size:15px}
+.bar{height:3px;background:#22305F}
+.bar i{display:block;height:100%;width:0;background:#27E1C1;transition:width .15s linear}
+.sheet{max-width:720px;margin:0 auto;background:var(--page);min-height:100vh;
+       padding:0 22px 48px;box-shadow:0 0 28px rgba(11,20,55,.12)}
+.cover{padding:30px 0 6px;border-bottom:3px solid var(--navy);margin-bottom:20px}
+.cover .k{font-family:Cambria,Georgia,serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;
+          color:var(--teal);font-weight:bold}
+.cover h1{font-family:Cambria,Georgia,serif;font-size:27px;line-height:1.25;margin:6px 0 4px;color:var(--navy)}
+.cover .s{color:var(--muted);font-size:15px;margin:0}
+.howto{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:13px 15px;
+       margin:16px 0 4px;direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;
+       font-size:15.5px;line-height:1.85}
+.howto b{color:var(--teal)}
+
+.blk{padding:16px 0 4px;border-bottom:1px solid #E8ECF4}
+.blk:last-of-type{border-bottom:0}
+h2{font-family:Cambria,Georgia,serif;font-size:20px;color:var(--navy);margin:0 0 9px;line-height:1.35}
+.kick{font-size:13.5px;color:var(--muted);font-style:italic;margin:0 0 8px}
+.blk p{margin:0 0 11px}
+.blk p:last-child{margin-bottom:0}
+.blk b{color:var(--navy)}
+ul,ol{margin:0 0 11px;padding-left:22px}
+li{margin-bottom:7px}
+ol.circ{list-style:none;counter-reset:c;padding-left:0}
+ol.circ li{counter-increment:c;padding-left:30px;position:relative}
+ol.circ li::before{content:counter(c);position:absolute;left:0;top:2px;width:20px;height:20px;
+  border-radius:50%;background:var(--navy);color:#fff;font-family:Cambria,serif;font-size:12px;
+  display:flex;align-items:center;justify-content:center}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15.5px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:#EEF2FA;font-family:Cambria,serif;color:var(--navy);font-size:14.5px}
+td.k{font-weight:bold;color:var(--navy);width:30%}
+td .sm{font-weight:normal;color:var(--muted);font-size:13.5px}
+.formula{text-align:center;background:#FDF6EC;border:1.5px solid #A2620A;border-radius:8px;
+  padding:8px 10px;margin:10px 0;font-family:Cambria,Georgia,serif;font-size:17px;font-weight:bold;
+  color:#A2620A}
+.gq{font-style:italic;color:var(--teal);font-size:18px;border-left:3px solid var(--teal);
+    padding-left:12px;margin:0 0 12px}
+.kf{background:#EFFAF6;border:1px solid #A9DDCC;border-radius:8px;padding:10px 13px;font-size:16px}
+.kf b{color:var(--teal)}
+.q{font-weight:bold;color:var(--navy)}
+.ans{background:var(--soft);border-left:3px solid var(--teal);padding:10px 13px;border-radius:0 8px 8px 0;
+     font-size:16px}
+.note,.cap{color:var(--muted);font-size:14px;font-style:italic}
+p.ar{direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:16px;
+     line-height:1.9;color:var(--ink);background:#F4F6FB;border-radius:8px;padding:10px 13px}
+figure{margin:12px 0}
+figure svg{width:100%;height:auto;display:block}
+figcaption{text-align:center;color:var(--muted);font-size:14px;font-style:italic;margin-top:6px;
+  direction:rtl;font-family:Tajawal,"Segoe UI",Arial,sans-serif}
+
+.qbox{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:13px 0}
+.qbox.new{border-color:#A9DDCC;background:#FCFEFD}
+.tag{display:inline-block;font-family:ui-monospace,monospace;font-size:10.5px;font-weight:bold;
+  letter-spacing:.08em;padding:2px 9px;border-radius:999px;margin:0 0 8px;background:#EEF2FA;
+  color:var(--navy)}
+.tag.new{background:#E8F8F3;color:var(--teal)}
+.qbox p{margin:0 0 9px}
+.qbox p:last-child{margin-bottom:0}
+.ask{margin:12px 0 2px}
+.ask button{font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:15.5px;font-weight:700;cursor:pointer;
+  background:#FFF6E8;color:var(--amber);border:1.5px solid #E8C89A;border-radius:999px;padding:8px 18px;
+  line-height:1.3}
+.ask button:hover{background:var(--amber);border-color:var(--amber);color:#fff}
+.ask button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.ask .cnt{font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:13.5px;color:var(--muted);
+  margin-inline-start:10px}
+.way{direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:16.5px;
+  line-height:1.95;background:#FFFBF3;border:1px solid #E8C89A;border-radius:10px;padding:13px 16px;
+  margin-top:10px}
+.way p{margin:0 0 10px}
+.way p:last-child{margin-bottom:0}
+.way b{color:var(--amber)}
+.way ol{padding-right:22px;padding-left:0}
+.way figure{margin:2px 0}
+.end{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:24px;
+  text-align:center;direction:rtl;font-family:Tajawal,"Segoe UI",Arial,sans-serif}
+.end h2{margin:0 0 6px}
+.end p{color:var(--muted);font-size:15.5px;margin:0 0 13px}
+.btn{display:inline-block;text-decoration:none;background:var(--teal);color:#fff;font-weight:700;
+  border-radius:999px;padding:11px 24px}
+.foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px}
+@media (max-width:460px){ body{font-size:16px} .sheet{padding:0 15px 40px} .cover h1{font-size:23px}
+  h2{font-size:18.5px} table{font-size:14.5px} th,td{padding:6px 7px} }
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .bar i{transition:none} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in"><span class="ls">LESSON 3-1</span><span class="nm">Study Companion</span></div>
+  <div class="bar"><i id="prog"></i></div>
+</header>
+
+<main class="sheet">
+  <div class="cover">
+    <div class="k">Part A &middot; The Lesson</div>
+    <h1>The Overall Structure of Web Applications</h1>
+    <p class="s">Lesson 3-1 &middot; Unit 3 &middot; Web Applications</p>
+  </div>
+
+  <div class="howto">نفس كلام الـ <b>Study Companion</b> بالظبط. الجديد هنا إن تحت أي جزء مش واضح فيه زرار
+  <b>مش فاهم؟</b>، تدوس عليه يشرحلك نفس الجزء بطريقة تانية خالص، وتدوس تاني يديك طريقة ثالثة.</div>
+
+  <section class="blk" data-ways="[&quot;&lt;p&gt;الوحدة اللي فاتت كانت عن &lt;b&gt;حماية&lt;/b&gt; النظام. الوحدة دي عن النظام نفسه من جوه.&lt;/p&gt;\n&lt;p&gt;ابدأ من حاجة في إيدك: افتح أي موقع استخدمته النهاردة. إنت &lt;b&gt;شفت&lt;/b&gt; منه إيه بالظبط؟ شاشة، وزراير،\nوصندوق بحث. وخلاص.&lt;/p&gt;\n&lt;p&gt;اللي شفته ده &lt;b&gt;مش البرنامج&lt;/b&gt;. ده &lt;b&gt;شباك&lt;/b&gt; على برنامج قاعد في مكان تاني خالص. والدرس ده عن اللي\nورا الشباك.&lt;/p&gt;\n&lt;p&gt;ولاحظ الفرق: لما تنزّل تطبيق على الموبايل، البرنامج بيبقى &lt;b&gt;على موبايلك&lt;/b&gt;، وعشان كده بياخد مساحة\nوكل تحديث محتاج تنزيل. إنما الموقع، البرنامج بتاعه &lt;b&gt;على السيرفر&lt;/b&gt;، وإنت بس بتفتح عليه شباك.&lt;/p&gt;&quot;]">
+<p class="kick">Textbook pages 55 to 61</p>
+<h2>Lesson 3-1: The Overall Structure of Web Applications</h2>
+<p class="gq">How is a web application structured, and how do its three tiers work together to
+respond to what a user does?</p>
+<p>Every time you search on YouTube, buy on Amazon, or open Gmail, you are using a <b>web application</b>, a
+program you use through your browser, with nothing to install. Behind the simple screen, three tiers work
+together: the page you interact with, the hidden server that processes the request, and the database that
+holds all the data. Understanding these three tiers explains how almost every online service is built.</p>
+<p class="kf"><b>Key Fact.</b> A web application is built from three tiers, frontend, backend and database,
+that cooperate to turn a user's action into a result.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;قارن طريقتين لاستخدام نفس الخدمة:&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;تطبيق الموبايل:&lt;/b&gt; لازم تنزّله، وبياخد مساحة على جهازك، وله نسخة لكل نوع موبايل، وكل تعديل محتاج\nتنزيل جديد.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;الـ web application:&lt;/b&gt; بتكتب العنوان وخلاص. فيه &lt;b&gt;نسخة واحدة&lt;/b&gt;، على السيرفر، ولما تتعدل، كل\nالناس عندها الجديد أول ما تفتح، من غير ما يعملوا حاجة.&lt;/p&gt;\n&lt;p&gt;والفرق ده بالذات، إن &lt;b&gt;البرنامج عايش على السيرفر مش على جهازك&lt;/b&gt;، هو اللي بيخلي باقي الدرس ضروري.\nلأنه لو البرنامج في مكان تاني، يبقى الشاشة اللي قدامك والبرنامج بقوا &lt;b&gt;حاجتين منفصلين لازم يتكلموا مع\nبعض&lt;/b&gt;. والدرس كله بيشرح إزاي بيتكلموا.&lt;/p&gt;&quot;, &quot;&lt;p&gt;مثال مصري: لما تفتح نتيجتك على موقع الوزارة، أو تحجز قطر على موقع السكة الحديد، أو تدفع\nفاتورة من صفحة على النت، دي كلها &lt;b&gt;web applications&lt;/b&gt;. بتكتب العنوان، وما بتنزّلش حاجة.&lt;/p&gt;\n&lt;p&gt;ونفس الخدمات دي غالبًا ليها تطبيق موبايل كمان. والتطبيق والموقع بيكلموا &lt;b&gt;نفس الباك إند ونفس قاعدة\nالبيانات&lt;/b&gt;. اللي بيتغير هو &lt;b&gt;الشاشة اللي قدامك بس&lt;/b&gt;.&lt;/p&gt;&quot;]">
+<h2>1. What is a Web Application?</h2>
+<p>A <b>web application</b> is an application used through a web browser. It can be used as long as
+you have a browser, without needing to install dedicated software.</p>
+<p>For example: YouTube, Amazon, Gmail, Google Maps.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;تخيل إنك في مطعم.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;الجرسون&lt;/b&gt; هو الوحيد اللي بتشوفه: بيوريك المنيو، وياخد طلبك، ويرجعلك بالأكل. وهو &lt;b&gt;مش\nبيطبخ&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;المطبخ&lt;/b&gt; بيقرر ويطبخ، وعمره ما بيخرج لطاولتك.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;المخزن&lt;/b&gt; فيه المكونات. بيدي للمطبخ لما يطلب، وبيستلم البضاعة الجديدة. وهو مش بيطبخ ومش بيكلم\nالزبون.&lt;/p&gt;\n&lt;p&gt;فرونت إند، باك إند، قاعدة بيانات.&lt;/p&gt;\n&lt;p&gt;ولاحظ حاجة الصورة بتقولها على طول: &lt;b&gt;إنت عمرك ما بتكلم المخزن&lt;/b&gt;. أي حاجة عايزها منه، الطلب بيعدي\nعلى الجرسون للمطبخ ويرجع. ودي بالظبط الأسهم اللي في الرسمة فوق.&lt;/p&gt;&quot;, &quot;&lt;p&gt;أسرع طريقة تحفظ بيها التلاتة: &lt;b&gt;ما تحفظش الأسماء، احفظ الأفعال&lt;/b&gt;. لأن الامتحان بيسأل\nعلى الفعل مش على الاسم.&lt;/p&gt;\n&lt;table&gt;\n  &lt;tr&gt;&lt;th&gt;الطبقة&lt;/th&gt;&lt;th&gt;بتشوفها؟&lt;/th&gt;&lt;th&gt;شغلانتها بفعلين&lt;/th&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Frontend&lt;/b&gt;&lt;/td&gt;&lt;td&gt;آه، دي الشاشة&lt;/td&gt;&lt;td&gt;&lt;b&gt;بيعرض ويستقبل&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Backend&lt;/b&gt;&lt;/td&gt;&lt;td&gt;لأ خالص&lt;/td&gt;&lt;td&gt;&lt;b&gt;بيعالج ويقرر&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Database&lt;/b&gt;&lt;/td&gt;&lt;td&gt;لأ خالص&lt;/td&gt;&lt;td&gt;&lt;b&gt;بتخزن وبتجيب&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;\n&lt;p&gt;ولو جالك وصف في الامتحان، دوّر على &lt;b&gt;الفعل&lt;/b&gt; اللي فيه: كلمة «screen» أو «page» يبقى فرونت إند،\nوكلمة «processing» أو «checking» أو «deciding» يبقى باك إند، وكلمة «storage» يبقى قاعدة بيانات.&lt;/p&gt;&quot;, &quot;&lt;p&gt;بص على الرسمة تاني، وركّز في حاجة واحدة: &lt;b&gt;مفيش سهم بين الفرونت إند وقاعدة البيانات&lt;/b&gt;.\nالخط الأحمر المتقطع ده مرسوم ومشطوب عشان يفكّرك إنه &lt;b&gt;مش موجود&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;وده مش نسيان في الرسمة، ده &lt;b&gt;تصميم&lt;/b&gt;. كل حاجة بين الشاشة والبيانات لازم تعدي على الباك إند، وعشان\nكده الباك إند قاعد في النص.&lt;/p&gt;\n&lt;p&gt;وأكتر جملة غلط في الدرس ده هي: «الفرونت إند بيجيب البيانات من قاعدة البيانات». لأ. &lt;b&gt;الفرونت إند\nعمره ما كلم قاعدة البيانات&lt;/b&gt;، هو بيكلم الباك إند بس.&lt;/p&gt;&quot;]">
+<h2>2. The Three Tiers of a Web Application</h2>
+<p>A web application is broadly composed of the following three tiers.</p>
+<table>
+  <tr><th style="width:17%">Tier</th><th>Role</th><th style="width:30%">Examples</th></tr>
+  <tr><td class="k">Frontend</td>
+      <td>The screen component that users see directly. It runs on the browser and accepts user input.</td>
+      <td>Search screen, product listing pages, input forms.</td></tr>
+  <tr><td class="k">Backend</td>
+      <td>The server-side processing that users do not see. It processes data and makes decisions.</td>
+      <td>Searching for products that match search criteria, login authentication.</td></tr>
+  <tr><td class="k">Database</td>
+      <td>A system that organizes, stores, and manages data. It retrieves data when needed and records new
+      data.</td>
+      <td>Product information, user information, order history.</td></tr>
+</table>
+<svg viewBox="0 0 540 186" role="img" aria-label="Frontend, backend and database, with requests going one
+ way and answers coming back, and no direct link between the frontend and the database">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0B1437"/></marker>
+    <marker id="al" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0E7C66"/></marker>
+  </defs>
+  <rect x="6" y="14" width="140" height="76" rx="8" fill="#F5F7FC" stroke="#0B1437" stroke-width="1.8"/><text x="76" y="44" font-size="14" font-family="Cambria,Georgia,serif" font-weight="bold" fill="#0B1437" text-anchor="middle">Frontend</text><text x="76" y="64" font-size="10" fill="#5E6C8A" text-anchor="middle">display and</text><text x="76" y="79" font-size="10" fill="#5E6C8A" text-anchor="middle">interaction</text><rect x="200" y="14" width="140" height="76" rx="8" fill="#EFFAF6" stroke="#0E7C66" stroke-width="1.8"/><text x="270" y="44" font-size="14" font-family="Cambria,Georgia,serif" font-weight="bold" fill="#0E7C66" text-anchor="middle">Backend</text><text x="270" y="64" font-size="10" fill="#5E6C8A" text-anchor="middle">processing and</text><text x="270" y="79" font-size="10" fill="#5E6C8A" text-anchor="middle">control</text><rect x="394" y="14" width="140" height="76" rx="8" fill="#FDF6EC" stroke="#A2620A" stroke-width="1.8"/><text x="464" y="44" font-size="14" font-family="Cambria,Georgia,serif" font-weight="bold" fill="#A2620A" text-anchor="middle">Database</text><text x="464" y="64" font-size="10" fill="#5E6C8A" text-anchor="middle">storage and</text><text x="464" y="79" font-size="10" fill="#5E6C8A" text-anchor="middle">management</text>
+  <text x="173" y="31" font-size="10" fill="#0B1437" text-anchor="middle">Request</text>
+  <line x1="150" y1="40" x2="196" y2="40" stroke="#0B1437" stroke-width="1.8" marker-end="url(#ar)"/>
+  <text x="367" y="31" font-size="10" fill="#0B1437" text-anchor="middle">Query</text>
+  <line x1="344" y1="40" x2="390" y2="40" stroke="#0B1437" stroke-width="1.8" marker-end="url(#ar)"/>
+  <line x1="196" y1="62" x2="150" y2="62" stroke="#0E7C66" stroke-width="1.8" marker-end="url(#al)"/>
+  <text x="173" y="78" font-size="10" fill="#0E7C66" text-anchor="middle">Response</text>
+  <line x1="390" y1="62" x2="344" y2="62" stroke="#0E7C66" stroke-width="1.8" marker-end="url(#al)"/>
+  <text x="367" y="78" font-size="10" fill="#0E7C66" text-anchor="middle">Data</text>
+  <path d="M 76 94 C 76 150, 464 150, 464 94" fill="none" stroke="#B3261E" stroke-width="1.8"
+        stroke-dasharray="6 5"/>
+  <circle cx="270" cy="134" r="11" fill="#fff" stroke="#B3261E" stroke-width="1.8"/>
+  <path d="M 265 129 L 275 139 M 275 129 L 265 139" stroke="#B3261E" stroke-width="1.8"/>
+  <text x="270" y="166" font-size="11" fill="#B3261E" text-anchor="middle"
+        font-family="Cambria,Georgia,serif">no step ever joins these two</text>
+</svg><p class="cap">Three-Tier Web Application Architecture.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;اقرا الست خطوات على إنها &lt;b&gt;رحلة رايح وجاي&lt;/b&gt;، مش قايمة محفوظة.&lt;/p&gt;\n&lt;p&gt;من &lt;b&gt;1 لـ 3 نازلة&lt;/b&gt;: من المستخدم ناحية البيانات. ومن &lt;b&gt;4 لـ 6 طالعة&lt;/b&gt;: من البيانات ناحية\nالمستخدم. ونص الرحلة بالظبط هو خطوة 3 و 4، لما الباك إند يسأل وقاعدة البيانات ترد.&lt;/p&gt;\n&lt;p&gt;وفيه حاجتين تستاهلوا تتلاحظوا:&lt;/p&gt;\n&lt;p&gt;الأولى: &lt;b&gt;الفرونت إند عمره ما بيكلم قاعدة البيانات&lt;/b&gt;. دوّر في الست خطوات، مفيش خطوة بتجمعهم.&lt;/p&gt;\n&lt;p&gt;التانية: &lt;b&gt;الباك إند بيظهر مرتين&lt;/b&gt;، مرة وهو بيسأل (خطوة 3) ومرة وهو بينظّم الإجابة (خطوة 5).\nوعشان كده شغلته اسمها «معالجة وتحكم»، مش عرض ولا تخزين.&lt;/p&gt;&quot;, &quot;&lt;p&gt;امشي على مثال حقيقي بإيدك. إنت بتدور على «سماعة» في موقع تسوق:&lt;/p&gt;\n&lt;ol&gt;\n  &lt;li&gt;كتبت كلمة «سماعة» في الصندوق. &lt;b&gt;الفرونت إند&lt;/b&gt; أخد الكلمة دي، لأن الصندوق على الشاشة.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;الفرونت إند&lt;/b&gt; بعت الكلمة للباك إند. هو ما دورش بنفسه، هو بس نقل.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;الباك إند&lt;/b&gt; راح لقاعدة البيانات وقال لها: هاتيلي كل المنتجات اللي فيها الكلمة دي.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;قاعدة البيانات&lt;/b&gt; دوّرت في سجلاتها ورجّعت المنتجات المطابقة.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;الباك إند&lt;/b&gt; رتّب النتايج (الأرخص الأول مثلًا) وبعتها للفرونت إند.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;الفرونت إند&lt;/b&gt; عرضها على شاشتك.&lt;/li&gt;\n&lt;/ol&gt;\n&lt;p&gt;السؤال اللي بيكشف الفهم: &lt;b&gt;مين اللي دوّر فعلًا؟&lt;/b&gt; الباك إند &lt;b&gt;سأل&lt;/b&gt;، لكن اللي &lt;b&gt;دوّر&lt;/b&gt; في\nالسجلات هي &lt;b&gt;قاعدة البيانات&lt;/b&gt;. ودي أكتر نقطة بتتسأل في الدرس.&lt;/p&gt;&quot;]">
+<h2>3. The Flow of How the Three Tiers Cooperate</h2>
+<p>When a user operates a web application, the three tiers cooperate to perform the processing that
+makes it work. For example, searching for a product on an online shopping site:</p>
+<ol class="circ">
+  <li>The <b>frontend</b> receives the search keywords entered by the user.</li>
+  <li>The <b>frontend</b> sends the search keywords to the backend.</li>
+  <li>The <b>backend</b> searches the database for products that match the criteria.</li>
+  <li>The <b>database</b> returns the data of matching products to the backend.</li>
+  <li>The <b>backend</b> organizes the search results and returns them to the frontend.</li>
+  <li>The <b>frontend</b> displays the search results on the user's screen.</li>
+</ol>
+<svg viewBox="0 0 540 122" role="img" aria-label="The six steps of a product search, from the frontend down
+ to the database and back up again">
+  <rect x="4" y="16" width="82" height="76" rx="6" fill="#fff" stroke="#0B1437" stroke-width="1.6"/><circle cx="45" cy="34" r="10" fill="#0B1437"/><text x="45" y="38" font-size="11" font-family="Cambria,serif" font-weight="bold" fill="#fff" text-anchor="middle">1</text><text x="45" y="58" font-size="10" font-family="Cambria,serif" font-weight="bold" fill="#0B1437" text-anchor="middle">Frontend</text><text x="45" y="72" font-size="8.5" fill="#5E6C8A" text-anchor="middle">takes the</text><text x="45" y="84" font-size="8.5" fill="#5E6C8A" text-anchor="middle">keywords</text><rect x="94" y="16" width="82" height="76" rx="6" fill="#fff" stroke="#0B1437" stroke-width="1.6"/><circle cx="135" cy="34" r="10" fill="#0B1437"/><text x="135" y="38" font-size="11" font-family="Cambria,serif" font-weight="bold" fill="#fff" text-anchor="middle">2</text><text x="135" y="58" font-size="10" font-family="Cambria,serif" font-weight="bold" fill="#0B1437" text-anchor="middle">Frontend</text><text x="135" y="72" font-size="8.5" fill="#5E6C8A" text-anchor="middle">sends them to</text><text x="135" y="84" font-size="8.5" fill="#5E6C8A" text-anchor="middle">the backend</text><rect x="184" y="16" width="82" height="76" rx="6" fill="#fff" stroke="#0E7C66" stroke-width="1.6"/><circle cx="225" cy="34" r="10" fill="#0E7C66"/><text x="225" y="38" font-size="11" font-family="Cambria,serif" font-weight="bold" fill="#fff" text-anchor="middle">3</text><text x="225" y="58" font-size="10" font-family="Cambria,serif" font-weight="bold" fill="#0E7C66" text-anchor="middle">Backend</text><text x="225" y="72" font-size="8.5" fill="#5E6C8A" text-anchor="middle">searches the</text><text x="225" y="84" font-size="8.5" fill="#5E6C8A" text-anchor="middle">database</text><rect x="274" y="16" width="82" height="76" rx="6" fill="#fff" stroke="#A2620A" stroke-width="1.6"/><circle cx="315" cy="34" r="10" fill="#A2620A"/><text x="315" y="38" font-size="11" font-family="Cambria,serif" font-weight="bold" fill="#fff" text-anchor="middle">4</text><text x="315" y="58" font-size="10" font-family="Cambria,serif" font-weight="bold" fill="#A2620A" text-anchor="middle">Database</text><text x="315" y="72" font-size="8.5" fill="#5E6C8A" text-anchor="middle">returns the</text><text x="315" y="84" font-size="8.5" fill="#5E6C8A" text-anchor="middle">matching data</text><rect x="364" y="16" width="82" height="76" rx="6" fill="#fff" stroke="#0E7C66" stroke-width="1.6"/><circle cx="405" cy="34" r="10" fill="#0E7C66"/><text x="405" y="38" font-size="11" font-family="Cambria,serif" font-weight="bold" fill="#fff" text-anchor="middle">5</text><text x="405" y="58" font-size="10" font-family="Cambria,serif" font-weight="bold" fill="#0E7C66" text-anchor="middle">Backend</text><text x="405" y="72" font-size="8.5" fill="#5E6C8A" text-anchor="middle">organizes</text><text x="405" y="84" font-size="8.5" fill="#5E6C8A" text-anchor="middle">the results</text><rect x="454" y="16" width="82" height="76" rx="6" fill="#fff" stroke="#0B1437" stroke-width="1.6"/><circle cx="495" cy="34" r="10" fill="#0B1437"/><text x="495" y="38" font-size="11" font-family="Cambria,serif" font-weight="bold" fill="#fff" text-anchor="middle">6</text><text x="495" y="58" font-size="10" font-family="Cambria,serif" font-weight="bold" fill="#0B1437" text-anchor="middle">Frontend</text><text x="495" y="72" font-size="8.5" fill="#5E6C8A" text-anchor="middle">displays them</text><text x="495" y="84" font-size="8.5" fill="#5E6C8A" text-anchor="middle">on the screen</text>
+</svg><p class="cap">How the Three Layers Work Together, for a product search.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;أكتر إجابة غلط هنا: «الباك إند هو اللي لقى الإجابة».&lt;/p&gt;\n&lt;p&gt;خلي بالك من الفرق ده، لأنه هو السؤال كله:&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;الباك إند سأل. قاعدة البيانات دوّرت.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;زي ما تقول لواحد «شوفلي رقم فلان في الدفتر». إنت اللي &lt;b&gt;طلبت&lt;/b&gt;، بس هو اللي &lt;b&gt;فتح الدفتر ودوّر&lt;/b&gt;.\nواللي لقى الرقم هو الدفتر مش إنت.&lt;/p&gt;\n&lt;p&gt;والباك إند عمل حاجتين بس: نقل الكلمات نازل، ونظّم النتايج طالع. هو &lt;b&gt;ما عرضش الصندوق&lt;/b&gt; (ده شغل\nالفرونت إند) و&lt;b&gt;ما خزّنش البيانات&lt;/b&gt; (ده شغل قاعدة البيانات).&lt;/p&gt;&quot;]">
+<div class="qbox new"><span class="tag new">PAUSE &amp; THINK</span>
+<p class="q">When you type in a search box and see results, which tier collected your input, and which tier
+found the answer?</p>
+<div class="ans"><b>Answer.</b> The <b>frontend</b> collected the input: the search box is on the screen in
+your browser, and taking what the user types is its job. The <b>database</b> found the answer, because that
+is where the records are kept and searched. The <b>backend</b> is between them: it carried the keywords down
+and organized the results on the way back, but it neither displayed the box nor held the data.</div>
+</div>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;القاعدة في جملة واحدة: &lt;b&gt;اللي لسه شغال بيقول لك مين السليم&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;الصفحة ما فتحتش أصلًا؟&lt;/b&gt; يبقى الشاشة نفسها ما وصلتش. المشكلة في الفرونت إند.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;الصفحة فتحت بس النتايج فاضية؟&lt;/b&gt; يبقى الفرونت إند &lt;b&gt;شغال&lt;/b&gt; (هو رسم الصفحة)، والمشكلة في\nالباك إند أو قاعدة البيانات: يا إما الباك إند ما سألش، يا إما قاعدة البيانات ما ردتش.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;كل حاجة شغالة بس طلباتك القديمة مش ظاهرة؟&lt;/b&gt; يبقى العرض شغال والمعالجة شغالة، والناقص هو\n&lt;b&gt;السجلات&lt;/b&gt;. المشكلة في قاعدة البيانات.&lt;/p&gt;\n&lt;p&gt;ودي بالظبط اللي سؤال «Think as an Engineer» في الكتاب بيطلبها، فاتمرن عليها قبل الامتحان.&lt;/p&gt;&quot;]">
+<h2>The tiers also tell you what has broken</h2>
+<p>Because each tier has one job, a fault points at a tier. The textbook does not draw this, but its
+own Think as an Engineer question asks for it, so it is worth having in advance.</p>
+<svg viewBox="0 0 540 150" role="img" aria-label="Three symptoms of a broken web application, each pointing
+ to the tier that has most likely failed">
+  <defs><marker id="fa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#0B1437"/></marker></defs>
+  <text x="6" y="12" font-size="10" font-family="Cambria,serif" font-weight="bold" fill="#0B1437">What the
+    user sees</text>
+  <text x="352" y="12" font-size="10" font-family="Cambria,serif" font-weight="bold" fill="#0B1437">The tier
+    that has most likely failed</text>
+  <rect x="6" y="20" width="300" height="34" rx="6" fill="#F5F7FC" stroke="#C7D0E0" stroke-width="1.4"/><text x="18" y="41" font-size="10.5" fill="#16213E">The page does not open at all.</text><line x1="312" y1="37" x2="346" y2="37" stroke="#0B1437" stroke-width="1.6" marker-end="url(#fa)"/><rect x="352" y="20" width="182" height="34" rx="6" fill="#EFFAF6" stroke="#0E7C66" stroke-width="1.6"/><text x="364" y="35" font-size="10.5" font-family="Cambria,serif" font-weight="bold" fill="#0E7C66">Frontend</text><text x="364" y="48" font-size="9" fill="#5E6C8A">The screen itself never arrived.</text><rect x="6" y="62" width="300" height="34" rx="6" fill="#F5F7FC" stroke="#C7D0E0" stroke-width="1.4"/><text x="18" y="83" font-size="10.5" fill="#16213E">The page opens, but the results are empty.</text><line x1="312" y1="79" x2="346" y2="79" stroke="#0B1437" stroke-width="1.6" marker-end="url(#fa)"/><rect x="352" y="62" width="182" height="34" rx="6" fill="#EFFAF6" stroke="#0E7C66" stroke-width="1.6"/><text x="364" y="77" font-size="10.5" font-family="Cambria,serif" font-weight="bold" fill="#0E7C66">Backend or database</text><text x="364" y="90" font-size="9" fill="#5E6C8A">The screen works; the answer never came.</text><rect x="6" y="104" width="300" height="34" rx="6" fill="#F5F7FC" stroke="#C7D0E0" stroke-width="1.4"/><text x="18" y="125" font-size="10.5" fill="#16213E">Everything works, but your past orders are gone.</text><line x1="312" y1="121" x2="346" y2="121" stroke="#0B1437" stroke-width="1.6" marker-end="url(#fa)"/><rect x="352" y="104" width="182" height="34" rx="6" fill="#EFFAF6" stroke="#0E7C66" stroke-width="1.6"/><text x="364" y="119" font-size="10.5" font-family="Cambria,serif" font-weight="bold" fill="#0E7C66">Database</text><text x="364" y="132" font-size="9" fill="#5E6C8A">The processing ran; the records are the gap.</text>
+</svg><p class="cap">Work from the symptom back to the tier. Whatever still works tells you
+which tiers are fine.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;الجدول ده بيقول حاجة واحدة مهمة: &lt;b&gt;الأدوار ما بتتغيرش&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;الفرونت إند دايمًا بيعرض ويستقبل. الباك إند دايمًا بيعالج ويقرر. وقاعدة البيانات دايمًا بتخزن\nوبتجيب. اللي بيتغير هو &lt;b&gt;المحتوى&lt;/b&gt; بس.&lt;/p&gt;\n&lt;p&gt;خد مثال التوصيل: &lt;b&gt;الفرونت إند&lt;/b&gt; هو قايمة المطاعم والسلة اللي على شاشتك. &lt;b&gt;الباك إند&lt;/b&gt; بيقرر\nأنهي مطاعم فاتحة وقريبة منك، وبيبعت الطلب للفرع الصح. &lt;b&gt;قاعدة البيانات&lt;/b&gt; فيها المنيوهات وعنوانك وكل\nطلب عملته قبل كده.&lt;/p&gt;\n&lt;p&gt;غيّر الخدمة لتطبيق مشاوير، التلات أدوار هيفضلوا في مكانهم بالظبط. اللي هيتحرك هو المحتوى بس.&lt;/p&gt;\n&lt;p&gt;وعشان كده النموذج ده بيتعلم &lt;b&gt;مرة واحدة&lt;/b&gt; وبيشتغل مع أي موقع.&lt;/p&gt;&quot;]">
+<h2>4. Familiar Web Application Configurations</h2>
+<p>All familiar web applications also operate on this three-tier architecture.</p>
+<table>
+  <tr><th style="width:16%">Service</th><th>Frontend<br><span class="sm">display and interaction</span></th>
+      <th>Backend<br><span class="sm">processing and control</span></th>
+      <th>Database<br><span class="sm">storage and management</span></th></tr>
+  <tr><td class="k">Video sharing site</td>
+      <td>Display of video playback and search screens; reception of user operations</td>
+      <td>Selection of recommended videos; aggregation of view counts</td>
+      <td>Storage of video data, user information, and viewing history</td></tr>
+  <tr><td class="k">SNS</td>
+      <td>Display of timelines and post screens; sending of input content</td>
+      <td>Determining the audience for posts; control of push notifications</td>
+      <td>Storage of post data, follow relationships, and messages</td></tr>
+  <tr><td class="k">E-commerce site</td>
+      <td>Display of product listings and cart screens; reception of order operations</td>
+      <td>Stock checking; execution of payment systems</td>
+      <td>Storage of product information, order history, and customer information</td></tr>
+</table>
+<div class="qbox new"><span class="tag new">PAUSE &amp; THINK</span>
+<p class="q">In the table, every service uses the same three tiers. What changes from one service to the
+next?</p>
+<div class="ans"><b>Answer.</b> The <b>roles do not change at all</b>: the frontend always displays and
+collects, the backend always processes and decides, the database always stores and retrieves. What changes is
+only the <b>content</b> of each role, because the services do different things. One backend picks recommended
+videos, another decides who may see a post, another checks stock and takes payment, but all three are the
+same kind of work: processing and control.<br><br>That is why the three-tier model is worth learning once. It
+is not a description of one website; it is the shape of almost all of them.</div>
+</div>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;خمس كلمات بس، وكل واحدة في جملة:&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;web application&lt;/b&gt;: برنامج بتستخدمه من المتصفح، من غير ما تنزّل حاجة.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;frontend&lt;/b&gt;: الشاشة اللي بتشوفها وبتتعامل معاها.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;backend&lt;/b&gt;: المعالجة المخفية على السيرفر.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;database&lt;/b&gt;: المكان اللي البيانات بتتخزن وبتتدار فيه.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;three-tier architecture&lt;/b&gt;: التلاتة دول مع بعض وهما بيتعاونوا.&lt;/p&gt;\n&lt;p&gt;ولو الامتحان طلب منك تعريف، اكتب الجملة دي بالظبط. الكلمات دي هي اللي الدرجة معلقة عليها، وأي\nصياغة من عندك ممكن ما تتحسبش.&lt;/p&gt;&quot;]">
+<h2>Key Terms</h2>
+<table>
+  <tr><th style="width:30%">Term</th><th>Meaning</th></tr>
+  <tr><td class="k">web application</td>
+      <td>An application used through a web browser, with no dedicated software to install.</td></tr>
+  <tr><td class="k">frontend</td><td>The screen users see and interact with.</td></tr>
+  <tr><td class="k">backend</td><td>The hidden server-side processing.</td></tr>
+  <tr><td class="k">database</td><td>Where data is stored and managed.</td></tr>
+  <tr><td class="k">three-tier architecture</td><td>Frontend plus backend plus database, cooperating.</td></tr>
+</table>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;التلات عبارات الغلط في التمرين ده كلهم غلط بنفس الطريقة: &lt;b&gt;بيدّوا شغل طبقة لطبقة\nتانية&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;B غلط&lt;/b&gt; لأنه حط الباك إند على المتصفح. الباك إند على &lt;b&gt;السيرفر&lt;/b&gt;، وده أصلًا معنى كلمة\n«server-side». اللي على المتصفح هو الفرونت إند.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;D غلط&lt;/b&gt; لأنه قال الفرونت إند يشتغل لوحده. الفرونت إند &lt;b&gt;مفيهوش بيانات ومفيهوش معالجة&lt;/b&gt;، هو\nشاشة بس. يعرض إيه لوحده؟&lt;/p&gt;\n&lt;p&gt;وفي سؤال المطابقة، اقرا الوصف واسأل نفسك: الوصف ده فيه أنهي فعل؟ &lt;b&gt;عرض واستقبال&lt;/b&gt;، ولا &lt;b&gt;معالجة\nوقرار&lt;/b&gt;، ولا &lt;b&gt;تخزين وإحضار&lt;/b&gt;؟ الطبقة هتبان لوحدها.&lt;/p&gt;&quot;]">
+<h2>Worked Example</h2>
+<div class="qbox"><span class="tag book">FROM THE TEXTBOOK</span>
+<p class="q">(1) Mark each statement with &#9675; if true or &times; if false.</p>
+<table>
+  <tr><td style="width:8%"><b>A</b></td><td>The frontend is the screen component that users see
+      directly.</td></tr>
+  <tr><td><b>B</b></td><td>The backend is the part that runs on the browser.</td></tr>
+  <tr><td><b>C</b></td><td>A database is a system that organizes, stores, and manages data.</td></tr>
+  <tr><td><b>D</b></td><td>A web application operates with the frontend alone.</td></tr>
+</table>
+<div class="ans"><b>Solution.</b>
+<b>A &#9675;</b> The frontend is the screen component that users see directly.<br>
+<b>B &times;</b> The backend runs on the server, not on the browser.<br>
+<b>C &#9675;</b> That is the correct definition of a database.<br>
+<b>D &times;</b> A web application operates with three tiers: frontend, backend and database.</div>
+</div>
+<div class="qbox"><span class="tag book">FROM THE TEXTBOOK</span>
+<p class="q">(2) Match each description with the most appropriate term.</p>
+<table>
+  <tr><td style="width:8%"><b>a</b></td><td>The part responsible for server-side processing that users do not
+      see</td></tr>
+  <tr><td><b>b</b></td><td>The screen component that users interact with directly</td></tr>
+  <tr><td><b>c</b></td><td>A system that organizes, stores, and manages data</td></tr>
+</table>
+<p><b>Choices:</b> A Frontend &middot; B Backend &middot; C Database</p>
+<div class="ans"><b>Solution.</b> a = <b>B</b> (backend), b = <b>A</b> (frontend), c = <b>C</b>
+(database).</div>
+</div>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;ستة درجات يعني &lt;b&gt;ست نقط&lt;/b&gt;. ما تكتبش برجراف سايح، اكتب النقط دي بالترتيب:&lt;/p&gt;\n&lt;ol&gt;\n  &lt;li&gt;&lt;b&gt;الفرونت إند&lt;/b&gt; بيعرض الفورم وياخد الصورة والكلام من المستخدم.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;ويبعتهم&lt;/b&gt; للباك إند.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;الباك إند&lt;/b&gt; بيتأكد إن المستخدم داخل بحسابه ومسموح له، ويقرر مين يشوف البوست.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;ويبعت&lt;/b&gt; البيانات لقاعدة البيانات عشان تتخزن.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;قاعدة البيانات&lt;/b&gt; بتخزن الصورة والكلام والوقت وصاحب البوست، وبترجّعهم لما تتطلب.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;الرد بيرجع&lt;/b&gt; للفرونت إند، واللي بيعرض البوست على الشاشة.&lt;/li&gt;\n&lt;/ol&gt;\n&lt;p&gt;والقاعدة اللي بتجيب الدرجة: اكتب كل طبقة ومعاها &lt;b&gt;فعلها&lt;/b&gt;، مش اسمها بس. «الفرونت إند بيعرض\nالفورم» بتاخد درجة. «الفرونت إند مهم» ما بتاخدش.&lt;/p&gt;&quot;]">
+<h2>Exam-Style Question</h2>
+<div class="qbox"><span class="tag book">FROM THE TEXTBOOK</span>
+<p class="q">Explain how the three tiers of a web application cooperate when a user posts a photo on a social
+media app. [6]</p>
+<p class="note">Refer to: the role of the frontend, backend, and database.</p>
+<div class="ans"><b>Model answer.</b> The <b>frontend</b> is the screen in the browser, so it shows the post
+form, lets the user choose the photo and type the caption, and sends what the user entered to the backend.
+The <b>backend</b> is the server-side processing the user does not see, so it receives the photo and the
+caption, checks that the user is signed in and allowed to post, decides who the post should be shown to, and
+passes the data to the database to be saved. The <b>database</b> organizes, stores and manages the data, so
+it records the photo, the caption, the time and the author, and returns the stored post when it is asked for.
+Finally the backend confirms to the frontend that the post was saved, and the frontend displays it on the
+screen. The three tiers cooperate, each doing only its own job: showing and collecting, processing and
+deciding, storing and retrieving.</div>
+</div>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;في سؤال 2 (2) الكلمات نفسها بتدي الإجابة. بص على الكلمة المفتاحية في كل بند:&lt;/p&gt;\n&lt;p&gt;فيها &lt;b&gt;page&lt;/b&gt; أو &lt;b&gt;screen&lt;/b&gt;؟ يبقى &lt;b&gt;فرونت إند&lt;/b&gt;. (بند a و d)&lt;/p&gt;\n&lt;p&gt;فيها &lt;b&gt;processing&lt;/b&gt; أو &lt;b&gt;checking&lt;/b&gt;؟ يبقى &lt;b&gt;باك إند&lt;/b&gt;. (بند b و e)&lt;/p&gt;\n&lt;p&gt;فيها &lt;b&gt;storage&lt;/b&gt;؟ يبقى &lt;b&gt;قاعدة بيانات&lt;/b&gt;. (بند c و f)&lt;/p&gt;\n&lt;p&gt;ودي مش صدفة. الكتاب بيكتب الأسئلة بأفعال الطبقات، فلو إنت حافظ الأفعال التلاتة، نص أسئلة الوحدة\nبتتحل من غير تفكير.&lt;/p&gt;&quot;]">
+<h2>Try</h2>
+<div class="qbox"><span class="tag book">FROM THE TEXTBOOK</span>
+<p class="q">2 (1). When searching for a product on an online shopping site, which tier searches through the
+data for products that match the keywords?</p>
+<p>A Frontend &middot; B Backend &middot; C Database</p>
+<div class="ans"><b>Answer: C, the database.</b> The backend <i>asks</i> for the matching products, but the
+searching through the stored records happens in the database. Step 3 of the flow is the backend searching the
+database; step 4 is the database returning the data.</div>
+</div>
+<div class="qbox"><span class="tag book">FROM THE TEXTBOOK</span>
+<p class="q">2 (2). For each item, say which tier of an e-commerce site it belongs to.</p>
+<p>A Frontend &middot; B Backend &middot; C Database</p>
+<table>
+  <tr><td style="width:8%"><b>a</b></td><td>Product listing page</td>
+      <td style="width:8%"><b>d</b></td><td>Cart screen</td></tr>
+  <tr><td><b>b</b></td><td>Stock checking processing</td><td><b>e</b></td><td>Payment processing</td></tr>
+  <tr><td><b>c</b></td><td>Storage of customer information</td><td><b>f</b></td>
+      <td>Storage of order history</td></tr>
+</table>
+<div class="ans"><b>Answers.</b> a = <b>A</b>, b = <b>B</b>, c = <b>C</b>, d = <b>A</b>, e = <b>B</b>,
+f = <b>C</b>.</div>
+</div>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;لو هتفتكر جملة واحدة من الدرس ده، خليها دي:&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;الفرونت إند بيعرض ويستقبل، والباك إند بيعالج ويقرر، وقاعدة البيانات بتخزن وبتجيب.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;وجملة تانية تحميك من أكتر غلط: &lt;b&gt;الفرونت إند عمره ما بيكلم قاعدة البيانات&lt;/b&gt;، كل حاجة بتعدي على\nالباك إند.&lt;/p&gt;\n&lt;p&gt;الجملتين دول بيجاوبوا تقريبًا أي سؤال في الدرس.&lt;/p&gt;&quot;]">
+<h2>Lesson Question, Answered</h2>
+<p>The lesson asked how a web application is structured and how its three tiers work together. A web
+application is used through a browser with nothing to install, and it is built from three tiers with separate
+jobs: the <b>frontend</b> displays and collects, the <b>backend</b> processes and decides, and the
+<b>database</b> stores and retrieves. They cooperate in one direction and back: the frontend passes what the
+user did to the backend, the backend asks the database, the database returns the data, and the answer travels
+back up to the screen. The frontend never speaks to the database directly. Because the roles stay the same
+and only the content changes, this one shape explains almost every online service.</p>
+  </section>
+
+  <div class="end">
+    <h2>خلصت الدرس</h2>
+    <p>باقي الـ PDF فيه الأسئلة والتمارين بإجاباتها، وزيادة عليها Part C.</p>
+    <a class="btn" href="../../">كل الواجبات</a>
+  </div>
+
+  <p class="foot">Programming and Artificial Intelligence &middot; Egyptian Baccalaureate &middot; Year 2</p>
+</main>
+
+<script>
+const KEY = "learn-3-1-open";
+let open = {};
+try { open = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { open = {}; }
+function remember() { try { localStorage.setItem(KEY, JSON.stringify(open)); } catch (e) {} }
+
+document.querySelectorAll(".blk").forEach((blk, i) => {
+  const ways = JSON.parse(blk.dataset.ways || "[]");
+  if (!ways.length) return;
+
+  const wrap = document.createElement("div");
+  wrap.className = "ask";
+  const btn = document.createElement("button");
+  btn.type = "button";
+  const cnt = document.createElement("span");
+  cnt.className = "cnt";
+  const panel = document.createElement("div");
+  panel.hidden = true;
+  wrap.append(btn, cnt, panel);
+  blk.append(wrap);
+
+  let at = typeof open[i] === "number" ? open[i] : -1;   // -1 means closed
+
+  function paint() {
+    if (at < 0) {
+      panel.hidden = true;
+      panel.innerHTML = "";
+      btn.textContent = "مش فاهم؟";
+      cnt.textContent = "";
+      return;
+    }
+    panel.hidden = false;
+    panel.className = "way";
+    panel.innerHTML = ways[at];
+    btn.textContent = at + 1 < ways.length ? "اشرحها بطريقة تانية" : "إخفاء";
+    cnt.textContent = ways.length > 1 ? "طريقة " + (at + 1) + " من " + ways.length : "";
+  }
+
+  btn.addEventListener("click", () => {
+    at = at + 1 < ways.length ? at + 1 : -1;
+    open[i] = at;
+    remember();
+    paint();
+  });
+  paint();
+});
+
+const prog = document.getElementById("prog");
+function scrolled() {
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  prog.style.width = (max > 0 ? Math.min(100, (h.scrollTop / max) * 100) : 0) + "%";
+}
+addEventListener("scroll", scrolled, { passive: true });
+addEventListener("resize", scrolled);
+scrolled();
+</script>
+</body>
+</html>
