@@ -1,0 +1,1165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Behind the Screen &middot; Homework 6</title>
+<meta name="description" content="Six short rounds on the three tiers of a web application. Homework 6 for Programming and AI.">
+<meta name="theme-color" content="#060B20">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Behind the Screen &middot; Homework 6">
+<meta property="og:description" content="Six short rounds behind one web page, from the search box down to the data and back. Answer, check, and see which level you reach.">
+<meta property="og:image" content="https://ahmed-abdelslam-75.github.io/homework/hw6/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23060B20'/%3E%3Cg stroke='%2327E1C1' stroke-width='3'%3E%3Cpath d='M16 20L32 32L48 20M16 44L32 32L48 44M16 20L16 44'/%3E%3C/g%3E%3Cg fill='%23060B20' stroke='%2327E1C1' stroke-width='3'%3E%3Ccircle cx='16' cy='20' r='5'/%3E%3Ccircle cx='16' cy='44' r='5'/%3E%3Ccircle cx='48' cy='20' r='5'/%3E%3Ccircle cx='48' cy='44' r='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='6' fill='%23FFB020'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&family=Tajawal:wght@400;500;700&family=Unbounded:wght@500;600;700;800&display=swap">
+<style>
+[hidden]{display:none!important}
+:root{
+  --night:#060B20; --navy:#0B1437; --panel:#111B45; --panel-2:#16235A; --panel-3:#1C2B6B;
+  --line:rgba(127,147,184,.22); --line-2:rgba(127,147,184,.38);
+  --ice:#E6F0FA; --ice-2:#B7C6DD; --muted:#7F93B8;
+  --cyan:#27E1C1; --cyan-2:#8FF3E2; --cyan-t:rgba(39,225,193,.12);
+  --amber:#FFB020; --amber-t:rgba(255,176,32,.13);
+  --coral:#FF6B6B; --coral-t:rgba(255,107,107,.13);
+  --display:"Unbounded","Arial Black",Impact,system-ui,sans-serif;
+  --sans:"Atkinson Hyperlegible",Arial,"Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",Consolas,"Courier New",monospace;
+  --arabic:"Tajawal","Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;
+  --r:18px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--night);-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;color:var(--ice);font-family:var(--sans);font-size:17px;line-height:1.5;
+  background:
+    radial-gradient(900px 520px at 8% -8%,rgba(39,225,193,.13),transparent 62%),
+    radial-gradient(800px 560px at 108% 104%,rgba(255,176,32,.09),transparent 60%),
+    var(--night);
+  background-attachment:fixed;padding-inline:16px;padding-block:0 120px}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(rgba(183,198,221,.10) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 70%);mask-image:linear-gradient(180deg,#000 0%,transparent 70%)}
+.app{position:relative;z-index:1;max-width:680px;margin-inline:auto}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--cyan-2);outline-offset:3px;border-radius:8px}
+.ar{font-family:var(--arabic);direction:rtl;text-align:right;letter-spacing:0;line-height:1.8}
+.mono{font-family:var(--mono)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.icon{width:1em;height:1em;flex:none;display:inline-block;vertical-align:-.125em}
+
+/* ---------- HUD ---------- */
+.hud{position:sticky;top:0;z-index:20;margin-inline:-16px;padding:10px 16px 12px;
+  background:rgba(6,11,32,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hud-in{max-width:680px;margin-inline:auto;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"map tl stats";gap:14px;align-items:center}
+.map-btn{grid-area:map;width:42px;height:42px;border-radius:12px;border:1px solid var(--line-2);background:var(--panel);display:grid;place-items:center;font-size:20px;color:var(--ice)}
+.map-btn:hover{border-color:var(--cyan)}
+.stats{grid-area:stats;display:flex;gap:6px}
+.stat{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:13px;font-weight:700;padding:6px 9px;border-radius:999px;background:var(--panel);border:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap}
+.stat.ok{color:var(--cyan)}
+.stat.streak{color:var(--amber)}
+.stat.streak.hot{background:var(--amber-t);border-color:rgba(255,176,32,.5)}
+.tl{grid-area:tl;position:relative;display:grid;grid-template-columns:repeat(6,1fr);padding-top:2px}
+.tl-track{position:absolute;left:calc(100%/12);right:calc(100%/12);top:8px;height:2px;background:var(--line-2);border-radius:2px}
+.tl-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,var(--cyan),var(--cyan-2));border-radius:2px;box-shadow:0 0 12px rgba(39,225,193,.6);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.era{position:relative;display:grid;justify-items:center;gap:4px;background:none;border:0;padding:0;color:var(--muted)}
+.era .dot{width:14px;height:14px;border-radius:50%;background:var(--night);border:2px solid var(--line-2);transition:all .3s}
+.era .lab{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+.era.done .dot{background:var(--cyan);border-color:var(--cyan)}
+.era.now .dot{background:var(--amber);border-color:var(--amber);box-shadow:0 0 0 5px rgba(255,176,32,.18);animation:pulse 2s infinite}
+.era.now .lab{color:var(--ice)}
+@keyframes pulse{50%{box-shadow:0 0 0 9px rgba(255,176,32,0)}}
+@media (max-width:520px){
+  .hud-in{grid-template-columns:auto 1fr;grid-template-areas:"map stats" "tl tl";row-gap:10px}
+  .stats{justify-self:end}
+}
+
+/* ---------- views ---------- */
+.view{padding-top:22px;animation:enter .45s cubic-bezier(.2,.8,.2,1) both}
+@keyframes enter{from{opacity:.001;transform:translateY(14px)}to{opacity:1;transform:none}}
+.kicker{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.grad{background:linear-gradient(95deg,var(--cyan) 0%,var(--cyan-2) 45%,var(--ice) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---------- start ---------- */
+.hero{position:relative;margin-top:18px;border-radius:26px;overflow:hidden;border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(22,35,90,.85),rgba(11,20,55,.92))}
+.net{display:block;width:100%;height:230px}
+.hero-body{position:relative;padding:4px 24px 26px;display:grid;gap:14px;margin-top:-54px}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(36px,10vw,62px);line-height:1;letter-spacing:-.025em}
+.hero .lead{color:var(--ice-2);font-size:18px;max-width:34rem}
+.rounds{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px}
+.rcard{padding:12px;border-radius:14px;background:rgba(6,11,32,.45);border:1px solid var(--line);display:grid;gap:2px}
+.rcard .yr{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--amber)}
+.rcard .nm{font-family:var(--display);font-size:13px;font-weight:600;line-height:1.2}
+.rcard .ct{font-family:var(--mono);font-size:11px;color:var(--muted)}
+@media (max-width:420px){.rounds{grid-template-columns:repeat(2,1fr)}}
+.join{margin-top:18px;padding:22px;border-radius:22px;background:var(--panel);border:1px solid var(--line);display:grid;gap:12px}
+.join label{font-family:var(--display);font-size:15px;font-weight:600}
+.name{width:100%;padding:16px 18px;border-radius:14px;border:2px solid var(--line-2);background:var(--night);font-size:20px;font-weight:700;color:var(--ice)}
+.name::placeholder{color:#4F618A;font-weight:400}
+.name:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 4px rgba(39,225,193,.15)}
+.err{color:var(--coral);font-weight:700;font-size:15px}
+.note{color:var(--muted);font-size:14.5px}
+.note.ar{font-size:15px}
+
+/* ---------- round intro ---------- */
+.round{min-height:62vh;display:grid;align-content:center;justify-items:center;text-align:center;gap:14px;position:relative;padding-block:30px}
+.rings{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:-1}
+.rings span{position:absolute;width:220px;height:220px;border-radius:50%;border:1px solid rgba(39,225,193,.25);animation:ring 3.6s cubic-bezier(.2,.6,.3,1) infinite}
+.rings span:nth-child(2){animation-delay:1.2s}
+.rings span:nth-child(3){animation-delay:2.4s}
+@keyframes ring{from{transform:scale(.4);opacity:1}to{transform:scale(2.4);opacity:0}}
+.round .decade{font-family:var(--display);font-weight:800;font-size:clamp(52px,17vw,104px);line-height:.95;letter-spacing:-.03em}
+.round .era-name{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+.round h2{font-family:var(--display);font-size:clamp(24px,6vw,32px);font-weight:700;margin-top:6px}
+.round .how{color:var(--ice-2);max-width:28rem}
+.round .count{font-family:var(--mono);font-size:13px;color:var(--muted)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:16px;padding:16px 22px;font-family:var(--display);font-size:15px;font-weight:700;letter-spacing:.01em;text-decoration:none;transition:transform .12s,box-shadow .2s,opacity .2s}
+.btn:active{transform:scale(.97)}
+.btn.primary{color:#04112B;background:linear-gradient(135deg,var(--cyan-2),var(--cyan) 55%,#1BC3A7);box-shadow:0 8px 28px rgba(39,225,193,.32),inset 0 1px 0 rgba(255,255,255,.5)}
+.btn.primary:hover{box-shadow:0 10px 34px rgba(39,225,193,.45),inset 0 1px 0 rgba(255,255,255,.5)}
+.btn.amber{color:#1D1302;background:linear-gradient(135deg,#FFD27A,var(--amber));box-shadow:0 8px 28px rgba(255,176,32,.3)}
+.btn.ghost{color:var(--ice);background:var(--panel);border:1px solid var(--line-2)}
+.btn[disabled]{opacity:.38;box-shadow:none;cursor:not-allowed}
+.btn.wide{width:100%}
+
+/* ---------- question screen ---------- */
+.meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.chip-type{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--cyan-t);color:var(--cyan)}
+.chip-type.essay{background:var(--amber-t);color:var(--amber)}
+.qnum{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ice-2)}
+.qpos{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.stem{margin-top:16px;font-size:clamp(20px,5.2vw,24px);line-height:1.38;font-weight:700;letter-spacing:-.005em}
+.instr{margin-top:8px;color:var(--ice-2);font-size:16px}
+.body{margin-top:20px;display:grid;gap:10px}
+
+.opt{position:relative;display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:14px 16px;border-radius:16px;border:1.5px solid var(--line);background:var(--panel);color:var(--ice);font-size:17px;line-height:1.4;transition:border-color .15s,background .15s,transform .12s}
+.opt:hover:not([disabled]){border-color:var(--line-2);background:var(--panel-2)}
+.opt:active:not([disabled]){transform:scale(.985)}
+.opt .key{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-family:var(--mono);font-size:14px;font-weight:700;background:var(--night);border:1px solid var(--line-2);transition:all .15s}
+.opt[aria-checked="true"]{border-color:var(--cyan);background:var(--cyan-t)}
+.opt[aria-checked="true"] .key{background:var(--cyan);color:#04112B;border-color:var(--cyan)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--cyan);background:rgba(39,225,193,.16)}
+.opt.right .key{background:var(--cyan);color:#04112B;border-color:var(--cyan)}
+.opt.wrong{border-color:var(--coral);background:var(--coral-t);animation:shake .42s}
+.opt.wrong .key{background:var(--coral);color:#2A0606;border-color:var(--coral)}
+.opt.dim{opacity:.5}
+@keyframes shake{20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.opt.right.pop{animation:pop .5s cubic-bezier(.2,.8,.2,1.4)}
+@keyframes pop{40%{transform:scale(1.03)}}
+
+.tf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tf .opt{flex-direction:column;justify-content:center;gap:6px;padding:22px 10px;min-height:150px}
+.tf .glyph{font-family:var(--display);font-size:58px;line-height:1;font-weight:500}
+.tf .word{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ice-2)}
+
+/* match */
+.mrow{border-radius:16px;border:1.5px solid var(--line);background:var(--panel);padding:14px 16px;display:grid;gap:10px}
+.mrow .mt{display:flex;gap:12px;align-items:flex-start}
+.mrow .n{flex:none;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--muted);padding-top:3px}
+.picks{display:flex;flex-wrap:wrap;gap:8px}
+.pick{padding:9px 13px;border-radius:999px;border:1.5px solid var(--line-2);background:var(--night);color:var(--ice-2);font-size:15px;font-weight:700;transition:all .15s}
+.pick:hover:not([disabled]){border-color:var(--cyan);color:var(--ice)}
+.pick[aria-checked="true"]{background:var(--cyan);border-color:var(--cyan);color:#04112B}
+.pick[disabled]{cursor:default}
+.pick.right{background:var(--cyan);border-color:var(--cyan);color:#04112B}
+.pick.wrong{background:var(--coral);border-color:var(--coral);color:#2A0606}
+.pick.dim{opacity:.35}
+.mrow.good{border-color:rgba(39,225,193,.6)}
+.mrow.bad{border-color:rgba(255,107,107,.6)}
+
+/* order */
+.ends{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:8px}
+.orow{display:flex;align-items:center;gap:12px;padding:10px 10px 10px 14px;border-radius:16px;border:1.5px solid var(--line);background:var(--panel);transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .2s}
+.orow .pos{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:13px;background:var(--night);border:1px solid var(--line-2)}
+.orow .ot{flex:1;font-weight:700}
+.orow .mv{display:flex;gap:6px}
+.orow .mv button{width:42px;height:42px;border-radius:12px;border:1px solid var(--line-2);background:var(--night);display:grid;place-items:center;font-size:18px;color:var(--ice)}
+.orow .mv button:hover:not([disabled]){border-color:var(--cyan)}
+.orow .mv button[disabled]{opacity:.25;cursor:default}
+.orow.moved{border-color:var(--cyan)}
+.orow.good{border-color:rgba(39,225,193,.7);background:rgba(39,225,193,.1)}
+.orow.bad{border-color:rgba(255,107,107,.7);background:var(--coral-t)}
+.orow .fix{font-size:14px;color:var(--ice-2);font-weight:400}
+
+/* fill */
+.bank{position:sticky;top:112px;z-index:5;padding:12px;border-radius:16px;background:rgba(17,27,69,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px dashed var(--line-2);display:grid;gap:8px}
+@media (min-width:521px){.bank{top:78px}}
+.bank .picks{gap:6px}
+.bank .pick.used{opacity:.4}
+.frow{padding:14px 16px;border-radius:16px;border:1.5px solid var(--line);background:var(--panel);display:flex;gap:12px;align-items:flex-start}
+.frow .n{flex:none;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--muted);padding-top:9px}
+.frow .s{line-height:2.4;font-size:17px}
+.blank{display:inline-block;width:8.5em;max-width:100%;padding:4px 10px;border:0;border-bottom:2.5px solid var(--cyan);border-radius:10px 10px 4px 4px;background:var(--night);color:var(--cyan-2);font-weight:700;text-align:center;font-size:17px}
+.blank:focus{outline:none;box-shadow:0 0 0 3px rgba(39,225,193,.25)}
+.blank.right{border-bottom-color:var(--cyan);background:rgba(39,225,193,.16);color:var(--ice)}
+.blank.wrong{border-bottom-color:var(--coral);background:var(--coral-t);color:var(--ice);text-decoration:line-through;text-decoration-color:var(--coral)}
+.fix-inline{display:inline-block;margin-left:6px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--cyan);line-height:1.4}
+
+/* essay */
+.marks{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber);padding:5px 10px;border-radius:999px;border:1px solid rgba(255,176,32,.45)}
+.refer{padding:14px 16px;border-radius:16px;background:var(--amber-t);border:1px solid rgba(255,176,32,.28);display:grid;gap:10px}
+.refer .t{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--amber)}
+.tick{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:8px 10px;border-radius:10px;border:0;background:rgba(6,11,32,.35);color:var(--ice);font-size:16px}
+.tick .box{flex:none;width:22px;height:22px;border-radius:7px;border:2px solid var(--amber);display:grid;place-items:center;font-size:13px;color:#1D1302}
+.tick[aria-checked="true"] .box{background:var(--amber)}
+.tick[aria-checked="true"] .lb{color:var(--ice-2);text-decoration:line-through;text-decoration-color:rgba(255,176,32,.7)}
+.essay{width:100%;min-height:22rem;padding:18px;border-radius:18px;border:1.5px solid var(--line-2);background:var(--night);color:var(--ice);font-size:18px;line-height:1.65;resize:vertical}
+.essay:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 4px rgba(255,176,32,.14)}
+.essay[readonly]{opacity:.85}
+.wc{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.wc .bar{flex:1;height:6px;border-radius:6px;background:var(--panel-2);overflow:hidden}
+.wc .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),#FFD27A);border-radius:6px;transition:width .3s}
+.wc .saved{color:var(--cyan)}
+.model{padding:16px;border-radius:16px;border:1px solid rgba(39,225,193,.35);background:var(--cyan-t);display:grid;gap:8px}
+.model .t{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cyan)}
+.model .h{font-size:14.5px;color:var(--ice-2)}
+
+/* feedback */
+.fb{margin-top:18px;padding:16px 18px;border-radius:18px;display:grid;gap:8px;animation:enter .35s cubic-bezier(.2,.8,.2,1) both}
+.fb.good{background:linear-gradient(135deg,rgba(39,225,193,.18),rgba(39,225,193,.06));border:1px solid rgba(39,225,193,.45)}
+.fb.bad{background:linear-gradient(135deg,rgba(255,107,107,.16),rgba(255,107,107,.05));border:1px solid rgba(255,107,107,.45)}
+.fb.part{background:linear-gradient(135deg,rgba(255,176,32,.16),rgba(255,176,32,.05));border:1px solid rgba(255,176,32,.45)}
+.fb .hd{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:18px;font-weight:700}
+.fb.good .hd{color:var(--cyan)}
+.fb.bad .hd{color:var(--coral)}
+.fb.part .hd{color:var(--amber)}
+.fb .ic{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:16px;color:#04112B}
+.fb.good .ic{background:var(--cyan)}
+.fb.bad .ic{background:var(--coral)}
+.fb.part .ic{background:var(--amber)}
+.fb .ans{font-weight:700}
+.fb .ar{color:var(--ice-2);font-size:15.5px}
+
+/* sticky action bar */
+.actions{position:fixed;left:0;right:0;bottom:0;z-index:15;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(6,11,32,0),rgba(6,11,32,.92) 30%)}
+.actions-in{max-width:680px;margin-inline:auto;display:flex;gap:10px}
+.actions-in .btn.primary,.actions-in .btn.amber{flex:1}
+
+/* map drawer */
+.scrim{position:fixed;inset:0;z-index:30;background:rgba(3,6,18,.66);animation:fade .2s both}
+@keyframes fade{from{opacity:0}}
+.drawer{position:fixed;left:0;right:0;bottom:0;z-index:31;max-height:86vh;overflow:auto;padding:18px 16px 28px;border-radius:24px 24px 0 0;background:var(--navy);border-top:1px solid var(--line-2);animation:up .3s cubic-bezier(.2,.8,.2,1) both}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.drawer-in{max-width:680px;margin-inline:auto;display:grid;gap:18px}
+.drawer-hd{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.drawer-hd h2{font-family:var(--display);font-size:20px}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--ice-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:4px;display:inline-block}
+.mapgrp{display:grid;gap:8px}
+.mapgrp .t{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px}
+.cell{height:40px;border-radius:10px;border:1.5px solid var(--line-2);background:transparent;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ice-2)}
+.cell.seen{background:var(--panel-2);color:var(--ice)}
+.cell.good{background:var(--cyan);border-color:var(--cyan);color:#04112B}
+.cell.bad{background:var(--coral);border-color:var(--coral);color:#2A0606}
+.cell.part{background:var(--amber);border-color:var(--amber);color:#1D1302}
+.cell.essay{border-color:var(--amber);color:var(--amber)}
+.cell.here{box-shadow:0 0 0 3px var(--ice)}
+
+/* finish + result */
+.panel{margin-top:18px;padding:22px;border-radius:22px;background:var(--panel);border:1px solid var(--line);display:grid;gap:14px}
+.big-title{font-family:var(--display);font-weight:800;font-size:clamp(30px,8vw,44px);line-height:1.05;letter-spacing:-.02em}
+.checklist{display:grid;gap:8px}
+.ck{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--night);border:1px solid var(--line)}
+.ck .d{flex:none;width:12px;height:12px;border-radius:50%}
+.ck .x{flex:1}
+.ck .v{font-family:var(--mono);font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+.linkbtn{background:none;border:0;padding:0;color:var(--cyan);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.status{display:flex;align-items:center;gap:10px;font-weight:700;min-height:1.5em}
+.status.bad{color:var(--coral)}
+.status.good{color:var(--cyan)}
+.spin{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--line-2);border-top-color:var(--cyan);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.result{text-align:center;justify-items:center;padding-block:34px 26px;background:radial-gradient(420px 260px at 50% 0%,rgba(39,225,193,.16),transparent 70%),var(--panel)}
+.ring{position:relative;width:210px;height:210px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .num{position:absolute;inset:0;display:grid;place-content:center;gap:2px}
+.ring .sc{font-family:var(--display);font-weight:800;font-size:46px;line-height:1;font-variant-numeric:tabular-nums}
+.ring .of{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.level{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber)}
+.bars{display:grid;gap:10px;width:100%;text-align:left}
+.brow{display:grid;grid-template-columns:minmax(6.5rem,9rem) 1fr auto;gap:12px;align-items:center;font-size:14.5px}
+.brow .tr{height:10px;border-radius:10px;background:var(--night);overflow:hidden}
+.brow .tr i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,var(--cyan),var(--cyan-2));width:0;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.brow .v{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40}
+.foot{margin-top:34px;text-align:center;color:var(--muted);font-size:13px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+.view.still{animation:none}
+.opt.still{animation:none}
+</style>
+</head>
+<body>
+<header class="hud" id="hud" hidden>
+  <div class="hud-in">
+    <button class="map-btn" id="mapBtn" type="button" aria-label="Open the question map"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg></button>
+    <nav class="tl" id="tl" aria-label="Rounds"></nav>
+    <div class="stats">
+      <span class="stat ok" id="statOk" title="Correct answers so far"></span>
+      <span class="stat streak" id="statStreak"></span>
+    </div>
+  </div>
+</header>
+<main class="app">
+  <div id="view"></div>
+  <p class="foot">Programming and Artificial Intelligence · Egyptian Baccalaureate · Year 2</p>
+</main>
+<div class="actions" id="actions" hidden><div class="actions-in" id="actionsIn"></div></div>
+<noscript><p style="padding:24px;color:#E6F0FA">This homework needs JavaScript. Please open the link in Chrome or Safari.</p></noscript>
+<script>
+const HW = {"id": "hw6", "title": "Homework 6: Behind the Screen", "sheet": "Homework 6", "salt": "frontend-backend-database-in-that-order", "endpoint": "https://script.google.com/macros/s/AKfycbwlkc3-gi4B4E7s3xEKEeDWZsyU8OstLs-Rr2UFe1bbHEDYSTV_1KKZ4ljDQ6nc1MUt/exec", "screens": [{"type": "mcq", "round": 0, "ids": ["Q1"], "q": "A web application is usually built from:", "options": ["Three layers", "Two layers", "One layer", "Several layers"]}, {"type": "mcq", "round": 0, "ids": ["Q2"], "q": "The layer responsible for displaying screens and collecting user data and actions is:", "options": ["Backend", "Database", "Frontend", "Processing server"]}, {"type": "mcq", "round": 0, "ids": ["Q3"], "q": "In a video-sharing website, collecting the number of views and selecting recommended videos belongs to:", "options": ["Frontend", "Backend", "Database", "Communication network"]}, {"type": "mcq", "round": 0, "ids": ["Q4"], "q": "Storing post data, follower relationships, and messages in a social networking service is the function of:", "options": ["Processing server", "Database", "Frontend", "Backend"]}, {"type": "mcq", "round": 0, "ids": ["Q5"], "q": "Sending payment requests and handling their results in an E-commerce website is a shared task of processing and control in:", "options": ["Frontend", "Database", "Backend", "User browser"]}, {"type": "mcq", "round": 0, "ids": ["Q6"], "q": "The main role of the database layer in web applications is:", "options": ["Receiving user actions", "Storing and retrieving data", "Processing calculations", "Displaying screens and interfaces"]}, {"type": "mcq", "round": 0, "ids": ["Q7"], "q": "In a video-sharing website, viewing history and user information are stored in:", "options": ["Search screens", "Backend", "Frontend", "Database layer"]}, {"type": "mcq", "round": 0, "ids": ["Q8"], "q": "Controlling push notifications and determining the target audience for posts are performed through:", "options": ["Backend", "Frontend", "Database", "Timeline"]}, {"type": "mcq", "round": 0, "ids": ["Q9"], "q": "Which of the following represents the role of the frontend in a web application?", "options": ["Processing requests", "Displaying content and receiving user input", "Storing data", "Verifying login information"]}, {"type": "mcq", "round": 0, "ids": ["Q10"], "q": "When searching for a product in an online store, which layer sends the request to the database?", "options": ["Frontend", "Backend", "Database itself", "Browser"]}, {"type": "mcq", "round": 0, "ids": ["Q11"], "q": "Which of the following is an example of data stored in an e-commerce website's database?", "options": ["Search screen", "Order log", "Verify login", "User interface"]}, {"type": "mcq", "round": 0, "ids": ["Q12"], "q": "Which of the following is an example of a web application?", "options": ["A video player program installed on a device", "An online map website", "A desktop calculator application", "An image editing program"]}, {"type": "mcq", "round": 0, "ids": ["Q13"], "q": "Which of the following represents a function of the backend in a web application?", "options": ["Displaying product pages", "Displaying the search box to the user", "Verifying login information", "Storing order history"]}, {"type": "mcq", "round": 0, "ids": ["Q14"], "q": "Which statement about the three tiers is correct?", "options": ["The frontend sends requests directly to the database", "Everything between the frontend and the database passes through the backend", "The database decides what the user may see", "The backend draws the screen"]}, {"type": "mcq", "round": 0, "ids": ["Q15"], "q": "A page opens normally, but the list of results is empty. Which tier is clearly working?", "options": ["The frontend", "The backend", "The database", "None of them"]}, {"type": "mcq", "round": 0, "ids": ["Q16"], "q": "In the six-step flow of a product search, what happens at step 4?", "options": ["The frontend sends the keywords to the backend", "The database returns the matching product data to the backend", "The backend organizes the results", "The frontend displays the results"]}, {"type": "mcq", "round": 0, "ids": ["Q17"], "q": "Why can a web application be updated without the user installing anything?", "options": ["Because the browser rewrites the program", "Because there is one copy on the server, and everyone opens that copy", "Because the database copies itself to each device", "Because the frontend is stored on the phone"]}, {"type": "tf", "round": 1, "ids": ["Q18"], "q": "A web application needs dedicated software to be installed before it can be used."}, {"type": "tf", "round": 1, "ids": ["Q19"], "q": "The backend runs on the browser."}, {"type": "tf", "round": 1, "ids": ["Q20"], "q": "A database is a system that organizes, stores, and manages data."}, {"type": "tf", "round": 1, "ids": ["Q21"], "q": "A web application can work with the frontend alone."}, {"type": "tf", "round": 1, "ids": ["Q22"], "q": "In the six-step flow, the frontend sends the search keywords to the backend."}, {"type": "tf", "round": 1, "ids": ["Q23"], "q": "The roles of the three tiers change from one service to another."}, {"type": "tf", "round": 1, "ids": ["Q24"], "q": "There is no step in which the frontend speaks directly to the database."}, {"type": "tf", "round": 1, "ids": ["Q25"], "q": "The backend appears twice in the six-step flow."}, {"type": "match", "round": 2, "ids": ["Q26", "Q27", "Q28"], "note": "Match each description to the tier it belongs to. Each answer is used once.", "choices": ["Frontend", "Backend", "Database"], "rows": ["The screen component that users see and interact with directly.", "The server-side processing that users do not see.", "A system that organizes, stores, and manages data."]}, {"type": "match", "round": 2, "ids": ["Q29", "Q30", "Q31"], "note": "A web application is broken. Match each thing the user sees to the tier that has most likely failed. Each answer is used once.", "choices": ["The frontend", "The backend or the database", "The database"], "rows": ["The page does not open at all.", "The page opens, but the list of results is empty.", "Everything works, but your own past orders are missing."]}, {"type": "match", "round": 2, "ids": ["Q32", "Q33", "Q34", "Q35", "Q36"], "note": "Match each term to its meaning. Each answer is used once.", "choices": ["An application used through a web browser, with nothing to install", "The screen users see and interact with", "The hidden server-side processing", "Where data is stored and managed", "Frontend plus backend plus database, cooperating"], "rows": ["web application", "frontend", "backend", "database", "three-tier architecture"]}, {"type": "order", "round": 3, "ids": ["Q37", "Q38", "Q39", "Q40", "Q41", "Q42"], "note": "A user searches for a product on an online shopping site. Put the six steps in the order the textbook gives.", "top": "First", "bottom": "Last", "items": ["The backend searches the database for products that match", "The frontend receives the search keywords entered by the user", "The backend organizes the results and returns them to the frontend", "The frontend sends the search keywords to the backend", "The frontend displays the search results on the screen", "The database returns the data of matching products to the backend"]}, {"type": "order", "round": 3, "ids": ["Q43", "Q44", "Q45", "Q46"], "note": "A user posts a photo on a social media app. Put the four actions in order.", "top": "Happens first", "bottom": "Happens last", "items": ["The backend checks the user is allowed to post and decides who may see it", "The frontend displays the saved post on the screen", "The frontend shows the post form and takes the photo and the caption", "The database stores the photo, the caption, the time and the author"]}, {"type": "fill", "round": 4, "ids": ["Q47", "Q48", "Q49", "Q50", "Q51"], "note": "Type the missing word, or tap a word from the bank. Not every word is used.", "bank": ["frontend", "backend", "database", "browser", "server", "three-tier"], "rows": [{"before": "An application used through a web browser, with nothing to install, is called a web", "after": "."}, {"before": "The screen component that users see directly is the", "after": "."}, {"before": "The server-side processing that users do not see is the", "after": "."}, {"before": "The system that organizes, stores and manages data is the", "after": "."}, {"before": "Frontend plus backend plus database together is called the", "after": "architecture."}]}, {"type": "fill", "round": 4, "ids": ["Q52", "Q53", "Q54", "Q55", "Q56"], "note": "Type the missing word, or tap a word from the bank. Not every word is used.", "bank": ["displays", "processes", "stores", "backend", "database", "frontend", "content"], "rows": [{"before": "The frontend displays and", "after": "what the user enters."}, {"before": "The backend", "after": "data and makes decisions."}, {"before": "The database", "after": "and retrieves the data."}, {"before": "Everything that passes between the frontend and the database goes through the", "after": "."}, {"before": "From one service to another the roles stay the same, and only the", "after": "changes."}]}, {"type": "essay", "round": 5, "ids": ["E1"], "q": "Trace the steps of a product search request in an online store across the three-layer architecture, and explain the role of each layer. [Assessment book page 50, Model A]", "marks": 3, "refer": ["all six steps in order", "the role of each layer"]}, {"type": "essay", "round": 5, "ids": ["E2"], "q": "Compare the role of the frontend and the backend in a social networking application. [Assessment book page 48, homework]", "marks": 3, "refer": ["what each one does here", "a sentence that names the difference"]}, {"type": "essay", "round": 5, "ids": ["E3"], "q": "Identify the cooperation steps when sending an email. [Assessment book page 52, Model C]", "marks": 3, "refer": ["which tier does each step", "the journey down and back"]}, {"type": "essay", "round": 5, "ids": ["E4"], "q": "A booking page opens normally, but no free time slots appear on the screen. Explain which tier is clearly working and which has probably failed, and give your reasoning.", "marks": 3, "refer": ["which tier is clearly working", "the reasoning that identifies the failure"]}, {"type": "essay", "round": 5, "ids": ["E5"], "q": "A video site and an online shop look completely different. Explain why they are both described by the same three-tier model.", "marks": 3, "refer": ["what stays the same", "what changes"]}], "rounds": [{"era": "The screen", "tag": "Screen", "eraName": "What you are actually looking at", "title": "Quick picks", "how": "Choose one answer, then tap Check. Once checked, it is locked in."}, {"era": "Behind it", "tag": "Hidden", "eraName": "What you cannot see", "title": "○ or ×", "how": "Is the statement true (○) or false (×)?"}, {"era": "Who does what", "tag": "Roles", "eraName": "Each job to its tier", "title": "Match it", "how": "Give every description its answer, then check the whole set."}, {"era": "The journey", "tag": "Order", "eraName": "Down to the data and back", "title": "Put it in order", "how": "Move each card up or down until the order is right, then check."}, {"era": "The words", "tag": "Words", "eraName": "The terms you need", "title": "Fill the gap", "how": "Type the missing word, or tap one from the word bank."}, {"era": "Your verdict", "tag": "You", "eraName": "Your own judgment", "title": "Explain it", "how": "Write full answers in English, like in the exam, in your own words and without any AI help. El Bashmohandes marks these."}], "minutes": 45, "arTime": "تلت ساعة", "kicker": "Homework 6 · Programming and AI", "h1": ["Behind ", "the ", "screen"], "lead": "Six short rounds behind one web page: what a web application is, which tier does which job, and the six steps from your search box down to the data and back. Many of the questions are the ministry assessment book's own. Answer, check, and see which level you reach."};
+const KEYBLOB = "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SQ4GBQcTFRdPDxgSDx1eQhIXBBcLFw0FDxBBEAQHF0QMGEgHRkEjRQ4GRAYaBxwICwdFCBZCD0EMBQBOF0gWFx0CB0EHCg0dBkhUBgQMWU8bF0UdCB4WTgANC0RODQ8XDgsaREICQREAAQlTF0IFCxdUBw8RDQ0TBw4XCBZPHREJCwdZEUERDgYBCUABDxAEBkEFDEkMAV5UHwkdQQpSBQsdEhoKHFQGBgFOCRJDGBEBB0ZEABoFQhUSDkgaTl0VEQwRQxteRAcHElINAQANTgVfB0ETGQoNAV4XCBoGQgAdAQ0KAUMAGg4YA08mDAQGRhscTgMNF0RZCgRDHw0cAUhJFR0EEEEeCkkMAg0dG0EDQh0GDEUeAxMdAB0LCURCDAIGR0UMAU4FFAcEQggHRUQaTkMbHEEVDQsXFwYADwIbBxsLTgtLQg4NDkUZAU8XCAAEQgMGEQ0dBkhUGwkVXQpSCwNSBx4CAQcRTgVBDkEMDUUaDEgJT1YcP01TR0EMHV4bBhJWF08JRjRDREhPTEdIX0YBQkMyWUdURA9XTEVDTkFRNB5LVA1WW0xFD0NSRjRGREhPTEdIX0YBQkMyXkdURA9XTEVDTkFRNBtLVA1WW0xFD0NSRjRFREhPTEdIX0YBQkMyU0dURA9XTEVDTkFRNBRLVA1WW0xFD0NSRjRDVlBVTlZWQ1UPTkFBOlRfRhdEQ0dMU0NfRQ84Xx9WUkFWHkJDRklSRCNeXVZfTkYeT1BBR0VMNRxQQ05BQFJeVA9FTg8lWVRWF09QV0hDRF5PTCVUWEYXQkNQRlRMSA1GMEVWQFtTRx5EXw9YSEMlHFdQXkVQVV9eTFhFTDUcW0NZS0ddSRxGTVRDM1NDRxdJTB5ZWUNYDU0jVlRQXFJNXVlUTEgNQDBRWUdURA9XTEVDTkFRNB9aTBdUSlJZHE1eREcjVEZNVFRHXUkcQE1DSTRcUQ9eQVZST1BRSQ1LPx9CSltUD1xfVUdeRlA+XENHVEQPUUxSSUlORnxWWVZbQkNASBxLQg1WOVNND1VSRlZfV1BDTlY0XVQPWEFBWEhfRgFEQyVSU0NJRQ9aQxxWREFWfFxARl9SREFCX1ZJTkZ8UVJBUUVMVwBVQ1hBQDBAUQ9TTg9HRVBWAU9QNVZHREhPTEdIX0YBQkMyWFNMXg1GUllQQE1TR3xaWQ9OSENHAF5QSEVQN0FXTE5FTFcAU0NPS0c/VxRGW1RDUUxCRwFJTHxAWENODU1BSVRQSlJNP0BUTF4NQFJOWkdCRA81VUZDWEFRVgBYTAFUSjBAHk1IREdBS0NNQlRHP1AZQFtDSVZDVQ9IQVYwVlRRXw1LXQBFSk1UDz5GUkdIRlBcQ0VHQkQPM1VUSV9ORh5JUFZNQkMiURVLVA1WW0xFD0NSRjRGX1BVTlZWQ1UPTkFBOlBeRhdEQ0dMU0NfRQ84WxxWUkFWHkJDRklSRCNaXFZfTkYeT1BBR0VMNRhXQ05BQFJeVA9FTg8lXVVWF09QV0hDRF5PTCVQW0YXQkNQRlRMSA1GMEFXQFtTRx5EXw9YSEMxHE1IREdBS0NNQlRHK1YPWEFBWEhfRgFEQzFSQFtTRx5EXw9YSEMxGU1IREdBS0NNQlRHK1EPWEFBWEhfRlAZ";
+/* ===== Part A: data, state, scoring ===== */
+const ROUNDS = (typeof HW !== "undefined" && HW.rounds) ? HW.rounds : [
+  { era: "1940s–60s", tag: "40s", eraName: "Birth of the computer", title: "Quick picks", how: "Choose one answer, then tap Check. Once checked, it is locked in." },
+  { era: "1970s–80s", tag: "70s", eraName: "Personal computers", title: "○ or ×", how: "Is the statement true (○) or false (×)?" },
+  { era: "1990s", tag: "90s", eraName: "The Internet", title: "Match it", how: "Give every situation its answer, then check the whole set." },
+  { era: "2000s", tag: "00s", eraName: "Smartphones", title: "Put it in order", how: "Move each card up or down until the order is right, then check." },
+  { era: "2010s", tag: "10s", eraName: "The cloud", title: "Fill the gap", how: "Type the missing word, or tap one from the word bank." },
+  { era: "Now", tag: "Now", eraName: "Generative AI", title: "Explain it", how: "Write full answers in English, like in the exam, in your own words and without any AI help. El Bashmohandes marks these." }
+];
+const TYPE_LABEL = { mcq: "Quick pick", tf: "True or false", match: "Match it", order: "In order", fill: "Fill the gap", essay: "Explain it" };
+
+const $ = (s, r) => (r || document).querySelector(s);
+function el(tag, attrs, ...kids) {
+  const n = document.createElement(tag);
+  if (attrs) for (const k in attrs) {
+    const v = attrs[k];
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "class") n.className = v;
+    else if (k === "text") n.textContent = v;
+    else if (k === "svg") n.innerHTML = v;
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v === true ? "" : v);
+  }
+  for (const c of kids.flat(Infinity)) if (c !== null && c !== undefined && c !== false) n.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return n;
+}
+const ICON = {
+  check: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  cross: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  half: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 12h12"/></svg>',
+  grid: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg>',
+  bolt: '<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 2L4 14h6.5L9.5 22 20 9.5h-6.8z"/></svg>',
+  up: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>',
+  down: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  send: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M3 11.5L21 3l-6.5 18-3.5-7.5z"/><path d="M11 13.5L21 3"/></svg>',
+  arrow: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  back: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
+};
+
+/* answer key, scrambled so it is not readable in the page source */
+const KEY = (function () {
+  const raw = atob(KEYBLOB), pass = HW.salt, bytes = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i) ^ pass.charCodeAt(i % pass.length);
+  return JSON.parse(new TextDecoder().decode(bytes));
+})();
+
+const SCREENS = HW.screens;
+const AUTO_TOTAL = SCREENS.filter((s) => s.type !== "essay").reduce((a, s) => a + s.ids.length, 0);
+const ESSAY_MARKS = SCREENS.filter((s) => s.type === "essay").reduce((a, s) => a + s.marks, 0);
+
+/* ---------- state, kept on this device ---------- */
+const STORE = "hw-" + HW.id + "-v2";
+function fresh() {
+  return { name: "", view: "start", answers: {}, ticks: {}, checked: {}, visited: {}, streak: 0, best: 0,
+           startedAt: null, sent: null, submissionId: null };
+}
+let S = fresh();
+try { const raw = localStorage.getItem(STORE); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
+function save() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} }
+
+/* ---------- is this browser actually keeping anything? ----------
+   A private tab on an iPhone throws the answers away the moment the tab closes, and Safari clears a site it
+   has not seen for a week. The page cannot stop either one, so it checks that writing works, asks to keep the
+   storage, and lets the student carry a copy of their own. */
+const STORE_OK = (function () {
+  try {
+    const probe = STORE + "-probe";
+    localStorage.setItem(probe, "1");
+    const ok = localStorage.getItem(probe) === "1";
+    localStorage.removeItem(probe);
+    return ok;
+  } catch (e) { return false; }
+})();
+function answeredCount() { return SCREENS.reduce((a, s, i) => a + (hasAnswer(i) ? 1 : 0), 0); }
+
+/* A copy the student keeps in their own Files, which nothing on the phone clears. */
+function backupBlob() {
+  return new Blob([JSON.stringify({ app: "homework", hw: HW.id, name: S.name, savedAt: new Date().toISOString(),
+                                    answered: answeredCount(), state: S }, null, 1)], { type: "application/json" });
+}
+function saveBackup() {
+  const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-");
+  const url = URL.createObjectURL(backupBlob());
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = (HW.id + "-" + (S.name || "answers") + "-" + stamp + ".json").replace(/\s+/g, "-");
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+function readBackup(file) {
+  return new Promise((resolve) => {
+    const r = new FileReader();
+    r.onerror = () => resolve(null);
+    r.onload = () => {
+      try {
+        const d = JSON.parse(String(r.result));
+        resolve(d && d.state && d.hw === HW.id ? d : null);
+      } catch (e) { resolve(null); }
+    };
+    r.readAsText(file);
+  });
+}
+
+/* ---------- scoring ---------- */
+function norm(s) {
+  return String(s || "").toLowerCase().replace(/[‘’`´]/g, "'").replace(/[^a-z0-9.,'\/ ]/g, " ")
+    .replace(/\s+/g, " ").trim().replace(/[.,]+$/, "").trim();
+}
+function orderOf(i) {
+  const s = SCREENS[i];
+  const cur = S.answers["order-" + i];
+  return Array.isArray(cur) && cur.length === s.items.length ? cur : s.items.map((_, k) => k);
+}
+/* one entry per point: {id, ok, given, correct} */
+function itemResults(i) {
+  const s = SCREENS[i], k = KEY.screens[i], A = S.answers;
+  if (s.type === "mcq") {
+    const v = A[s.ids[0]];
+    return [{ id: s.ids[0], ok: v === k.answer, given: typeof v === "number" ? "ABCD"[v] + ". " + s.options[v] : "no answer", correct: "ABCD"[k.answer] + ". " + s.options[k.answer] }];
+  }
+  if (s.type === "tf") {
+    const v = A[s.ids[0]];
+    const t = (b) => (b ? "True" : "False");
+    return [{ id: s.ids[0], ok: v === k.answer, given: typeof v === "boolean" ? t(v) : "no answer", correct: t(k.answer) }];
+  }
+  if (s.type === "match") return s.ids.map((id, r) => {
+    const v = A[id];
+    return { id, ok: v === k.answers[r], given: typeof v === "number" ? s.choices[v] : "no answer", correct: s.choices[k.answers[r]] };
+  });
+  if (s.type === "order") {
+    const cur = orderOf(i);
+    return s.ids.map((id, p) => ({ id, ok: cur[p] === k.correct[p], given: s.items[cur[p]], correct: s.items[k.correct[p]] }));
+  }
+  if (s.type === "fill") return s.ids.map((id, r) => {
+    const v = String(A[id] || "").trim();
+    return { id, ok: k.accept[r].map(norm).includes(norm(v)), given: v || "no answer", correct: k.show[r] };
+  });
+  return [];
+}
+function screenScore(i) { const r = itemResults(i); return { got: r.filter((x) => x.ok).length, of: r.length }; }
+function hasAnswer(i) {
+  const s = SCREENS[i], A = S.answers;
+  if (s.type === "mcq" || s.type === "tf") return A[s.ids[0]] !== undefined;
+  if (s.type === "order") return !!S.visited[i];
+  if (s.type === "essay") return String(A[s.ids[0]] || "").trim().length > 0;
+  return s.ids.some((id) => A[id] !== undefined && String(A[id]).trim() !== "");
+}
+function screenState(i) {
+  const s = SCREENS[i];
+  if (s.type === "essay") return hasAnswer(i) ? "essay" : "";
+  if (S.checked[i]) { const sc = screenScore(i); return sc.got === sc.of ? "good" : sc.got === 0 ? "bad" : "part"; }
+  return hasAnswer(i) ? "seen" : "";
+}
+function totals() {
+  let got = 0;
+  const rounds = ROUNDS.map((r, ri) => ({ title: r.title, got: 0, of: 0 }));
+  SCREENS.forEach((s, i) => {
+    if (s.type === "essay") return;
+    const sc = screenScore(i);
+    rounds[s.round].of += sc.of;
+    if (S.checked[i]) { rounds[s.round].got += sc.got; got += sc.got; }
+  });
+  return { got, of: AUTO_TOTAL, rounds: rounds.filter((r) => r.of > 0) };
+}
+function checkedCorrect() {
+  let n = 0;
+  SCREENS.forEach((s, i) => { if (S.checked[i] && s.type !== "essay") n += screenScore(i).got; });
+  return n;
+}
+
+/* ---------- HUD ---------- */
+function currentRound() {
+  if (S.view.startsWith("round:")) return Number(S.view.slice(6));
+  if (S.view.startsWith("q:")) return SCREENS[Number(S.view.slice(2))].round;
+  if (S.view === "finish" || S.view === "result") return ROUNDS.length;
+  return -1;
+}
+function renderHud() {
+  const hud = $("#hud");
+  hud.hidden = S.view === "start";
+  if (hud.hidden) return;
+  const cr = currentRound();
+  $("#tl").replaceChildren(
+    el("div", { class: "tl-track" }, el("div", { class: "tl-fill", style: "width:" + Math.max(0, Math.min(100, (cr / (ROUNDS.length - 1)) * 100)) + "%" })),
+    ...ROUNDS.map((r, ri) => el("button", {
+      class: "era" + (ri < cr ? " done" : ri === cr ? " now" : ""), type: "button", title: r.era + ": " + r.title,
+      "aria-label": "Round " + (ri + 1) + ", " + r.title, onclick: () => go("round:" + ri)
+    }, el("span", { class: "dot" }), el("span", { class: "lab", text: r.tag }))));
+  $("#statOk").replaceChildren(el("span", { svg: ICON.check }), String(checkedCorrect()));
+  const st = $("#statStreak");
+  st.replaceChildren(el("span", { svg: ICON.bolt }), String(S.streak));
+  st.classList.toggle("hot", S.streak >= 3);
+  st.title = "Streak: " + S.streak + " in a row (best " + S.best + ")";
+}
+
+/* ===== Part B: views ===== */
+let lastBlank = null;
+let justChecked = -1;
+
+function roundScreens(r) { return SCREENS.map((s, i) => i).filter((i) => SCREENS[i].round === r); }
+function idLabel(s) { return s.ids.length === 1 ? s.ids[0] : s.ids[0] + "–" + s.ids[s.ids.length - 1]; }
+function locked(i) { return !!S.sent || (!!S.checked[i] && SCREENS[i].type !== "essay"); }
+function countWords(t) { t = String(t || "").trim(); return t ? t.split(/\s+/).length : 0; }
+
+/* ---------- start ---------- */
+function roundCount(r) {
+  const ids = roundScreens(r);
+  const s0 = SCREENS[ids[0]];
+  if (s0.type === "essay") return ids.length + " essays";
+  if (s0.type === "mcq" || s0.type === "tf") return ids.length + " questions";
+  return ids.length + (ids.length === 1 ? " set · " : " sets · ") + ids.reduce((a, i) => a + SCREENS[i].ids.length, 0) + " pts";
+}
+function viewStart() {
+  const canvas = el("canvas", { class: "net", "aria-hidden": "true" });
+  const input = el("input", { class: "name", id: "studentName", type: "text", autocomplete: "name", maxlength: "60", placeholder: "e.g. Ahmed" });
+  input.value = S.name;
+  const err = el("p", { class: "err", hidden: true, text: "Write your full name first, so El Bashmohandes knows whose homework this is." });
+  const startBtn = el("button", { class: "btn primary wide", type: "button", onclick: () => begin() },
+                      "Start the journey", el("span", { svg: ICON.arrow }));
+  const begin = () => {
+    const nm = input.value.trim();
+    if (nm.length < 2) { err.hidden = false; input.focus(); return; }
+    S.name = nm; S.startedAt = S.startedAt || new Date().toISOString();
+    if (!S.submissionId) S.submissionId = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    go("round:0");
+  };
+
+  /* Opening a copy the student saved on their own phone. */
+  const fileMsg = el("p", { class: "err", hidden: true });
+  const pick = el("input", { type: "file", accept: "application/json,.json", hidden: true });
+  pick.addEventListener("change", async () => {
+    const f = pick.files && pick.files[0];
+    pick.value = "";
+    if (!f) return;
+    const d = await readBackup(f);
+    if (!d) {
+      fileMsg.hidden = false;
+      fileMsg.textContent = "That file is not a copy of this homework. Look for one ending in .json.";
+      return;
+    }
+    S = Object.assign(fresh(), d.state);
+    if (!S.name) S.name = input.value.trim();
+    save();
+    go(S.sent ? "result" : (S.view && S.view !== "start" ? S.view : "round:0"));
+  });
+  const openCopy = el("button", { class: "linkbtn", type: "button", style: "color:var(--muted);font-weight:400",
+                                  text: "Lost your answers? Open a copy you saved", onclick: () => pick.click() });
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") begin(); });
+  const node = el("div", { class: "view" },
+    el("section", { class: "hero" },
+      canvas,
+      el("div", { class: "hero-body" },
+        el("p", { class: "kicker", text: HW.kicker || "Homework 1 · Programming and AI" }),
+        el("h1", null, (HW.h1 || [])[0] || "From ENIAC ", el("br"), (HW.h1 || [])[1] || "to ",
+           el("span", { class: "grad", text: (HW.h1 || [])[2] || "ChatGPT" })),
+        el("p", { class: "lead", text: HW.lead || "Six rounds, one journey through the history of computing. Answer, check, build a streak, and see which level you reach." }),
+        el("div", { class: "rounds" }, ROUNDS.map((r, ri) => el("div", { class: "rcard" },
+          el("span", { class: "yr", text: "Round " + (ri + 1) + " · " + r.tag }),
+          el("span", { class: "nm", text: r.title }),
+          el("span", { class: "ct", text: roundCount(ri) })))))),
+    el("section", { class: "join" },
+      el("label", { for: "studentName", text: "Your full name" }),
+      input, err, startBtn,
+      STORE_OK ? null : el("p", { class: "err" }, "This browser is not saving anything you type. If this tab is Private, close it and open the link in a normal tab, or everything you write will be lost."),
+      STORE_OK ? null : el("p", { class: "err ar", dir: "rtl", lang: "ar" }, "المتصفح ده مش بيحفظ حاجة. لو التبويب خاص (Private) اقفله وافتح اللينك في تبويب عادي، وإلا كل اللي هتكتبه هيضيع."),
+      el("p", { class: "note", text: "About " + (HW.minutes || 75) + " minutes. Your answers save on this phone as you go, so you can close the page and come back. When you finish, one tap sends everything to El Bashmohandes." }),
+      el("p", { class: "note", text: "Two things erase them: a Private tab, and clearing your browser data. Use a normal tab. If you are stopping for more than a few days, open the question map and save a copy to your phone." }),
+      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "حوالي " + (HW.arTime || "ساعة وربع") + ". إجاباتك بتتحفظ على الموبايل أول بأول، تقدر تقفل وترجع تكمّل. وفي الآخر بضغطة واحدة كل إجاباتك توصل للباشمهندس." }),
+      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "حاجتين بس بيمسحوا إجاباتك: التبويب الخاص (Private)، ومسح بيانات المتصفح. استخدم تبويب عادي، ولو هتسيب الواجب كام يوم افتح خريطة الأسئلة واحفظ نسخة على الموبايل." }),
+      openCopy, pick, fileMsg));
+  requestAnimationFrame(() => startNet(canvas));
+  return { node, actions: null };
+}
+
+/* animated neural network: the knowledge is in the lines */
+function startNet(c) {
+  const ctx = c.getContext("2d"); if (!ctx) return;
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W, H, nodes, edges, pulses = [];
+  const layers = [3, 5, 6, 4, 2];
+  function build() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = c.clientWidth; H = c.clientHeight; c.width = W * dpr; c.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    nodes = []; edges = [];
+    layers.forEach((n, li) => {
+      const x = W * (0.1 + 0.8 * li / (layers.length - 1));
+      for (let k = 0; k < n; k++) nodes.push({ x, y: H * 0.14 + (H * 0.6) * ((k + 0.5) / n), li, glow: 0 });
+    });
+    nodes.forEach((a) => nodes.forEach((b) => { if (b.li === a.li + 1) edges.push({ a, b, w: Math.pow(Math.random(), 2.2) }); }));
+  }
+  build();
+  let t0 = performance.now(), last = 0;
+  function frame(t) {
+    if (!c.isConnected) return;
+    if (c.clientWidth !== W) build();
+    const dt = Math.min(50, t - (last || t)); last = t;
+    ctx.clearRect(0, 0, W, H);
+    edges.forEach((e) => {
+      ctx.strokeStyle = "rgba(143,243,226," + (0.05 + e.w * 0.35) + ")";
+      ctx.lineWidth = 0.6 + e.w * 3.2;
+      ctx.beginPath(); ctx.moveTo(e.a.x, e.a.y); ctx.lineTo(e.b.x, e.b.y); ctx.stroke();
+    });
+    if (!reduce && Math.random() < 0.22) {
+      const starts = edges.filter((e) => e.a.li === 0 || Math.random() < 0.08);
+      const e = starts[Math.floor(Math.random() * starts.length)];
+      if (e && e.w > 0.25) pulses.push({ e, p: 0 });
+    }
+    pulses = pulses.filter((p) => {
+      p.p += dt / (700 - p.e.w * 300);
+      if (p.p >= 1) {
+        p.e.b.glow = 1;
+        const nxt = edges.filter((x) => x.a === p.e.b && x.w > 0.3);
+        if (nxt.length && Math.random() < 0.8) pulses.push({ e: nxt[Math.floor(Math.random() * nxt.length)], p: 0 });
+        return false;
+      }
+      const x = p.e.a.x + (p.e.b.x - p.e.a.x) * p.p, y = p.e.a.y + (p.e.b.y - p.e.a.y) * p.p;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, 9);
+      g.addColorStop(0, "rgba(255,210,122,.95)"); g.addColorStop(1, "rgba(255,176,32,0)");
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 9, 0, Math.PI * 2); ctx.fill();
+      return true;
+    });
+    nodes.forEach((n) => {
+      n.glow = Math.max(0, n.glow - dt / 600);
+      ctx.fillStyle = "#060B20"; ctx.strokeStyle = n.glow > 0 ? "rgba(255,176,32," + (0.5 + n.glow / 2) + ")" : "rgba(39,225,193,.85)";
+      ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(n.x, n.y, 6 + n.glow * 2.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    });
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- round intro ---------- */
+function viewRound(r) {
+  const R = ROUNDS[r];
+  const first = roundScreens(r)[0];
+  const node = el("div", { class: "view" },
+    el("section", { class: "round" },
+      el("div", { class: "rings", "aria-hidden": "true" }, el("span"), el("span"), el("span")),
+      el("p", { class: "kicker", text: "Round " + (r + 1) + " of " + ROUNDS.length }),
+      el("p", { class: "decade grad", text: R.era }),
+      el("p", { class: "era-name", text: R.eraName }),
+      el("h2", { text: R.title }),
+      el("p", { class: "how", text: R.how }),
+      el("p", { class: "count", text: roundCount(r) })));
+  const actions = [
+    r > 0 ? el("button", { class: "btn ghost", type: "button", "aria-label": "Back", onclick: () => go("q:" + (first - 1)), svg: ICON.back }) : null,
+    el("button", { class: "btn primary", type: "button", onclick: () => go("q:" + first) }, S.checked[first] || S.sent ? "Open round" : "Let's go", el("span", { svg: ICON.arrow }))
+  ];
+  return { node, actions };
+}
+
+/* ---------- question screens ---------- */
+function viewScreen(i) {
+  const s = SCREENS[i], lock = locked(i), rs = roundScreens(s.round);
+  S.visited[i] = true;
+  const checkBtn = el("button", { class: "btn primary", type: "button", id: "checkBtn" });
+  const refreshCheck = () => { if (!lock && s.type !== "essay") checkBtn.disabled = !readyToCheck(i); };
+
+  let body, stem = s.type === "mcq" || s.type === "tf" || s.type === "essay" ? s.q : s.note;
+  if (s.type === "mcq") body = bodyChoice(i, s.options.map((o, k) => ({ v: k, key: "ABCD"[k], label: o })), lock, refreshCheck, false);
+  else if (s.type === "tf") body = bodyChoice(i, [{ v: true, glyph: "○", label: "True" }, { v: false, glyph: "×", label: "False" }], lock, refreshCheck, true);
+  else if (s.type === "match") body = bodyMatch(i, lock, refreshCheck);
+  else if (s.type === "order") body = bodyOrder(i, lock);
+  else if (s.type === "fill") body = bodyFill(i, lock, refreshCheck);
+  else body = bodyEssay(i);
+
+  const node = el("div", { class: "view" + (justChecked === i ? " still" : "") },
+    el("div", { class: "meta" },
+      el("span", { class: "chip-type" + (s.type === "essay" ? " essay" : ""), text: TYPE_LABEL[s.type] }),
+      el("span", { class: "qnum", text: idLabel(s) }),
+      s.type === "essay" ? el("span", { class: "marks", text: "[" + s.marks + " marks]" }) : null,
+      el("span", { class: "qpos", text: "Round " + (s.round + 1) + " · " + (rs.indexOf(i) + 1) + " / " + rs.length })),
+    el("h2", { class: "stem", id: "stem", text: stem }),
+    body,
+    S.checked[i] && s.type !== "essay" ? feedback(i) : null);
+
+  const back = i > 0 ? el("button", { class: "btn ghost", type: "button", "aria-label": "Previous", onclick: () => go(SCREENS[i - 1].round !== s.round && !S.sent ? "round:" + s.round : "q:" + (i - 1)), svg: ICON.back }) : null;
+  const next = () => {
+    if (i + 1 >= SCREENS.length) return go(S.sent ? "result" : "finish");
+    const nr = SCREENS[i + 1].round;
+    go(nr !== s.round && !S.sent ? "round:" + nr : "q:" + (i + 1));
+  };
+  let main;
+  if (lock || s.type === "essay") {
+    main = el("button", { class: "btn " + (s.type === "essay" && !S.sent ? "amber" : "primary"), type: "button", onclick: () => { saveNow(); next(); } },
+      s.type === "essay" && !S.sent ? "Save and continue" : i + 1 >= SCREENS.length ? (S.sent ? "Back to my result" : "Finish") : "Next", el("span", { svg: ICON.arrow }));
+  } else {
+    checkBtn.append("Check", el("span", { svg: ICON.check }));
+    checkBtn.addEventListener("click", () => doCheck(i));
+    refreshCheck();
+    main = checkBtn;
+  }
+  return { node, actions: [back, main] };
+}
+
+function readyToCheck(i) {
+  const s = SCREENS[i], A = S.answers;
+  if (s.type === "mcq" || s.type === "tf") return A[s.ids[0]] !== undefined;
+  if (s.type === "match") return s.ids.every((id) => typeof A[id] === "number");
+  if (s.type === "fill") return s.ids.every((id) => String(A[id] || "").trim() !== "");
+  return true;
+}
+
+function doCheck(i) {
+  S.checked[i] = true;
+  const sc = screenScore(i);
+  if (sc.got === sc.of) { S.streak++; S.best = Math.max(S.best, S.streak); } else S.streak = 0;
+  justChecked = i;
+  save(); render(false);
+  const fb = $(".fb");
+  if (fb) fb.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+  justChecked = -1;
+}
+
+function bodyChoice(i, opts, lock, refresh, isTf) {
+  const s = SCREENS[i], id = s.ids[0], k = KEY.screens[i], chosen = S.answers[id];
+  const wrap = el("div", { class: isTf ? "body tf" : "body", role: "radiogroup", "aria-labelledby": "stem" });
+  opts.forEach((o) => {
+    let cls = "opt";
+    if (S.checked[i]) {
+      if (o.v === k.answer) cls += " right" + (justChecked === i && chosen === o.v ? " pop" : "");
+      else if (o.v === chosen) cls += justChecked === i ? " wrong" : " wrong still";
+      else cls += " dim";
+    }
+    const b = el("button", { class: cls, type: "button", role: "radio", "aria-checked": chosen === o.v ? "true" : "false", disabled: lock,
+      onclick: () => {
+        if (locked(i)) return;
+        S.answers[id] = o.v; save();
+        wrap.querySelectorAll(".opt").forEach((x) => x.setAttribute("aria-checked", x === b ? "true" : "false"));
+        refresh();
+      } },
+      isTf ? [el("span", { class: "glyph", "aria-hidden": "true", text: o.glyph }), el("span", { class: "word", text: o.label })]
+           : [el("span", { class: "key", text: o.key }), el("span", { text: o.label })]);
+    wrap.append(b);
+  });
+  return wrap;
+}
+
+function bodyMatch(i, lock, refresh) {
+  const s = SCREENS[i], k = KEY.screens[i];
+  return el("div", { class: "body" }, s.rows.map((text, r) => {
+    const id = s.ids[r], chosen = S.answers[id];
+    let rowCls = "mrow";
+    if (S.checked[i]) rowCls += chosen === k.answers[r] ? " good" : " bad";
+    const picks = el("div", { class: "picks", role: "radiogroup", "aria-label": id });
+    s.choices.forEach((c, ci) => {
+      let cls = "pick";
+      if (S.checked[i]) cls += ci === k.answers[r] ? " right" : ci === chosen ? " wrong" : " dim";
+      const b = el("button", { class: cls, type: "button", role: "radio", "aria-checked": chosen === ci ? "true" : "false", disabled: lock, text: c,
+        onclick: () => {
+          if (locked(i)) return;
+          S.answers[id] = ci; save();
+          picks.querySelectorAll(".pick").forEach((x) => x.setAttribute("aria-checked", x === b ? "true" : "false"));
+          refresh();
+        } });
+      picks.append(b);
+    });
+    return el("div", { class: rowCls }, el("div", { class: "mt" }, el("span", { class: "n", text: id }), el("span", { text: text })), picks);
+  }));
+}
+
+function bodyOrder(i, lock) {
+  const s = SCREENS[i], k = KEY.screens[i];
+  const wrap = el("div", { class: "body" });
+  const draw = (moved) => {
+    const cur = orderOf(i);
+    wrap.replaceChildren(
+      el("p", { class: "ends" }, el("span", { svg: ICON.up }), s.top),
+      ...cur.map((item, p) => {
+        let cls = "orow" + (moved === p ? " moved" : "");
+        const ok = cur[p] === k.correct[p];
+        if (S.checked[i]) cls += ok ? " good" : " bad";
+        const move = (d) => {
+          if (locked(i)) return;
+          const arr = orderOf(i).slice(); const q = p + d;
+          [arr[p], arr[q]] = [arr[q], arr[p]];
+          S.answers["order-" + i] = arr; S.visited[i] = true; save(); draw(q);
+        };
+        return el("div", { class: cls },
+          el("span", { class: "pos", text: String(p + 1) }),
+          el("span", { class: "ot" }, s.items[item],
+            S.checked[i] && !ok ? el("span", { class: "fix", text: " → should be: " + s.items[k.correct[p]] }) : null),
+          lock ? null : el("span", { class: "mv" },
+            el("button", { type: "button", "aria-label": "Move " + s.items[item] + " up", disabled: p === 0, onclick: () => move(-1), svg: ICON.up }),
+            el("button", { type: "button", "aria-label": "Move " + s.items[item] + " down", disabled: p === cur.length - 1, onclick: () => move(1), svg: ICON.down })));
+      }),
+      el("p", { class: "ends" }, el("span", { svg: ICON.down }), s.bottom));
+  };
+  draw(-1);
+  return wrap;
+}
+
+function bodyFill(i, lock, refresh) {
+  const s = SCREENS[i], k = KEY.screens[i];
+  const inputs = [];
+  const chips = [];
+  const markUsed = () => chips.forEach((c) => c.classList.toggle("used", inputs.some((inp) => norm(inp.value) === norm(c.textContent))));
+  const bank = el("div", { class: "bank" }, el("p", { class: "kicker", text: "Word bank" }),
+    el("div", { class: "picks" }, s.bank.map((w) => {
+      const c = el("button", { class: "pick", type: "button", disabled: lock, text: w, onclick: () => {
+        if (locked(i)) return;
+        let target = lastBlank && inputs.includes(lastBlank) && !lastBlank.value.trim() ? lastBlank : inputs.find((x) => !x.value.trim()) || lastBlank || inputs[0];
+        target.value = w; S.answers[target.dataset.id] = w; save();
+        const nextEmpty = inputs.find((x) => !x.value.trim());
+        lastBlank = nextEmpty || null;
+        markUsed(); refresh();
+      } });
+      chips.push(c); return c;
+    })));
+  const rows = s.rows.map((row, r) => {
+    const id = s.ids[r];
+    const inp = el("input", { class: "blank", type: "text", autocomplete: "off", autocapitalize: "off", spellcheck: "false", "data-id": id, readonly: lock, "aria-label": id + " blank" });
+    inp.value = S.answers[id] || "";
+    const ok = S.checked[i] && k.accept[r].map(norm).includes(norm(inp.value));
+    if (S.checked[i]) inp.classList.add(ok ? "right" : "wrong");
+    inp.addEventListener("focus", () => { lastBlank = inp; });
+    inp.addEventListener("input", () => { if (locked(i)) return; S.answers[id] = inp.value; save(); markUsed(); refresh(); });
+    inputs.push(inp);
+    return el("div", { class: "frow" }, el("span", { class: "n", text: id }),
+      el("p", { class: "s" }, row.before + " ", inp, S.checked[i] && !ok ? el("span", { class: "fix-inline", text: "→ " + k.show[r] }) : null, " " + row.after));
+  });
+  markUsed();
+  return el("div", { class: "body" }, bank, rows);
+}
+
+let essayTimer = null;
+function saveNow() { if (essayTimer) { clearTimeout(essayTimer); essayTimer = null; } save(); }
+function bodyEssay(i) {
+  const s = SCREENS[i], id = s.ids[0], k = KEY.screens[i];
+  const target = s.marks * 20;
+  const ticks = S.ticks[id] || [];
+  const ta = el("textarea", { class: "essay", id: "essay-" + id, "aria-labelledby": "stem", placeholder: "Write your answer here, in full sentences...", readonly: !!S.sent });
+  ta.value = S.answers[id] || "";
+  const fillBar = el("i");
+  const words = el("span");
+  const saved = el("span", { class: "saved" });
+  const upd = () => {
+    const n = countWords(ta.value);
+    words.textContent = n + " words";
+    fillBar.style.width = Math.min(100, (n / target) * 100) + "%";
+  };
+  ta.addEventListener("input", () => {
+    if (S.sent) return;
+    S.answers[id] = ta.value; upd(); saved.textContent = "";
+    clearTimeout(essayTimer);
+    essayTimer = setTimeout(() => { save(); saved.textContent = "Saved"; renderHud(); }, 500);
+  });
+  upd();
+  return el("div", { class: "body" },
+    el("div", { class: "refer" },
+      el("p", { class: "t", text: "In your answer, refer to:" }),
+      s.refer.map((r, ri) => {
+        const b = el("button", { class: "tick", type: "button", role: "checkbox", "aria-checked": ticks[ri] ? "true" : "false", disabled: !!S.sent,
+          onclick: () => { const t = (S.ticks[id] = S.ticks[id] || []); t[ri] = !t[ri]; b.setAttribute("aria-checked", t[ri] ? "true" : "false"); save(); } },
+          el("span", { class: "box", svg: ICON.check }), el("span", { class: "lb", text: r }));
+        return b;
+      })),
+    ta,
+    el("div", { class: "wc" }, words, el("span", { class: "bar", title: "Aim for about " + target + " words" }, fillBar), el("span", { text: "aim " + target }), saved),
+    S.sent ? el("div", { class: "model" },
+      el("p", { class: "t", text: "Example of a strong answer" }),
+      el("p", { text: k.model }),
+      el("p", { class: "h", text: "One good answer, not the only one. Compare your reasoning with it, and check you covered every point." })) : null);
+}
+
+function feedback(i) {
+  const s = SCREENS[i], k = KEY.screens[i], sc = screenScore(i);
+  const kind = sc.got === sc.of ? "good" : sc.got === 0 ? "bad" : "part";
+  const icon = kind === "good" ? ICON.check : kind === "bad" ? ICON.cross : ICON.half;
+  let head;
+  if (s.ids.length === 1) head = kind === "good" ? (S.streak >= 3 && justChecked === i ? "Correct! " + S.streak + " in a row" : "Correct!") : "Not quite";
+  else head = kind === "good" ? "All " + sc.of + " correct!" : sc.got + " of " + sc.of + " correct";
+  const parts = [el("p", { class: "hd" }, el("span", { class: "ic", svg: icon }), head)];
+  if (s.type === "mcq" || s.type === "tf") {
+    if (kind !== "good") parts.push(el("p", { class: "ans", text: "Answer: " + itemResults(i)[0].correct }));
+    parts.push(el("p", { text: k.why }), el("p", { class: "ar", dir: "rtl", lang: "ar", text: k.ar }));
+  } else if (kind !== "good") {
+    parts.push(el("p", { text: "The correct answers are marked above. Read them once more before you move on." }));
+  }
+  return el("div", { class: "fb " + kind, role: "status" }, parts);
+}
+
+/* ===== Part C: finish, send, result, map, boot ===== */
+function fmtDate(d) {
+  try { return new Date(d).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }); }
+  catch (e) { return String(d); }
+}
+function essayIdx() { return SCREENS.map((s, i) => i).filter((i) => SCREENS[i].type === "essay"); }
+
+/* ---------- finish ---------- */
+function viewFinish() {
+  if (S.sent) return viewResult();
+  const status = el("p", { class: "status", role: "status", "aria-live": "polite" });
+  const sendBtn = el("button", { class: "btn primary wide", type: "button" }, "Send to El Bashmohandes", el("span", { svg: ICON.send }));
+  sendBtn.addEventListener("click", () => doSend(sendBtn, status));
+
+  const pending = SCREENS.map((s, i) => i).filter((i) => SCREENS[i].type === "essay" ? !hasAnswer(i) : !S.checked[i]);
+  const rows = ROUNDS.map((r, ri) => {
+    const ids = roundScreens(ri);
+    const isEssay = SCREENS[ids[0]].type === "essay";
+    const done = ids.filter((i) => isEssay ? hasAnswer(i) : S.checked[i]).length;
+    const full = done === ids.length;
+    return el("div", { class: "ck" },
+      el("span", { class: "d", style: "background:" + (full ? "var(--cyan)" : done ? "var(--amber)" : "var(--line-2)") }),
+      el("span", { class: "x", text: "Round " + (ri + 1) + " · " + r.title }),
+      el("span", { class: "v", text: done + " / " + ids.length + (isEssay ? " written" : " checked") }));
+  });
+  const node = el("div", { class: "view" },
+    el("section", { class: "panel" },
+      el("p", { class: "kicker", text: "Finish line" }),
+      el("h1", { class: "big-title" }, "Ready to ", el("span", { class: "grad", text: "send?" })),
+      el("div", { class: "checklist" }, rows),
+      pending.length ? el("div", { style: "display:grid;gap:10px" },
+        el("p", { text: "Still open (" + pending.length + "). Tap one to go back to it:" }),
+        el("div", { class: "cells" }, pending.map((i) => el("button", { class: "cell " + screenState(i), type: "button", text: idLabel(SCREENS[i]).split("–")[0], onclick: () => go("q:" + i) }))),
+        el("p", { class: "note", text: "If you send now, unchecked answers are locked and marked exactly as they are, and empty essays are sent empty." }))
+        : el("p", { style: "color:var(--cyan);font-weight:700", text: "Every round is complete. Nice work." }),
+      el("p", { class: "note", text: "Sending as " + S.name + ". After sending you cannot change any answer." }),
+      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "بعد ما تبعت، إجاباتك هتتقفل ومش هتقدر تغيّر فيها حاجة." }),
+      sendBtn, status));
+  const back = el("button", { class: "btn ghost", type: "button", "aria-label": "Back to the last question", onclick: () => go("q:" + (SCREENS.length - 1)), svg: ICON.back });
+  return { node, actions: [back] };
+}
+
+function buildPayload() {
+  const now = new Date();
+  const results = [];
+  SCREENS.forEach((s, i) => { if (s.type !== "essay") itemResults(i).forEach((r) => results.push(r)); });
+  const t = totals();
+  const pct = Math.round((t.got / t.of) * 100);
+  const mistakes = results.filter((r) => !r.ok).map((r) => ({ id: r.id, lesson: KEY.lessons[r.id], given: r.given, correct: r.correct }));
+  const essays = essayIdx().map((i) => {
+    const s = SCREENS[i], id = s.ids[0], a = String(S.answers[id] || "").trim();
+    return { id, lesson: KEY.lessons[id], marks: s.marks, question: s.q, answer: a, words: countWords(a) };
+  });
+  const minutes = S.startedAt ? Math.round((now - new Date(S.startedAt)) / 60000) : "";
+  const columns = [
+    ["Submitted at", fmtDate(now)], ["Student", S.name], ["Score", t.got], ["Out of", t.of], ["Percent", pct + "%"],
+    ["Essay mark /" + ESSAY_MARKS + " (you fill)", ""], ["Mistakes", mistakes.length], ["Minutes since starting", minutes], ["Best streak", S.best]
+  ];
+  t.rounds.forEach((r) => columns.push([r.title, r.got + "/" + r.of]));
+  results.forEach((r) => columns.push([r.id + " [" + KEY.lessons[r.id] + "]", (r.ok ? "✓ " : "✗ ") + r.given + (r.ok ? "" : "  →  " + r.correct)]));
+  essays.forEach((e) => columns.push([e.id + " [" + e.lesson + "] /" + e.marks, e.answer || "(no answer)"]));
+  columns.push(["Submission ID", S.submissionId]);
+  return { homework: HW.title, sheet: HW.sheet, submissionId: S.submissionId, name: S.name, submittedAt: now.toISOString(),
+           minutes, score: t.got, outOf: t.of, percent: pct, essayMarks: ESSAY_MARKS, bestStreak: S.best,
+           rounds: t.rounds, mistakes, essays, columns };
+}
+
+async function doSend(btn, status) {
+  if (!HW.endpoint) {
+    status.className = "status bad";
+    status.textContent = "Sending is not switched on yet. Tell El Bashmohandes, and keep this page: your answers are saved.";
+    return;
+  }
+  SCREENS.forEach((s, i) => { if (s.type !== "essay") S.checked[i] = true; });
+  save();
+  const payload = JSON.stringify(buildPayload());
+  btn.disabled = true;
+  status.className = "status";
+  status.replaceChildren(el("span", { class: "spin" }), "Sending to El Bashmohandes...");
+  let confirmed = false, reached = false, refused = false;
+  try {
+    const res = await fetch(HW.endpoint, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: payload, redirect: "follow" });
+    let data = null;
+    try { data = await res.json(); } catch (e) { data = null; }
+    if (data && data.ok) { confirmed = true; reached = true; }
+    else if (data && data.ok === false) refused = true;
+    else reached = res.ok;
+  } catch (e) {
+    /* the answer could not be read (network or browser rule): send once more without reading it.
+       The receiver ignores a second copy with the same submission ID. */
+    try { await fetch(HW.endpoint, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: payload }); reached = true; }
+    catch (e2) { reached = false; }
+  }
+  if (refused) {
+    btn.disabled = false;
+    status.className = "status bad";
+    status.textContent = "Your homework reached El Bashmohandes's sheet but could not be saved. Tap Send again, and if it happens twice, tell El Bashmohandes.";
+    return;
+  }
+  if (!reached) {
+    btn.disabled = false;
+    status.className = "status bad";
+    status.textContent = "Could not send. Check your internet connection and tap Send again. Your answers are safe on this phone.";
+    return;
+  }
+  S.sent = { at: new Date().toISOString(), confirmed };
+  save();
+  go("result");
+  burst();
+}
+
+/* ---------- result ---------- */
+function levelFor(p) {
+  if (p >= 90) return ["Generative AI level", "The smallest, most specialized circle. Outstanding work."];
+  if (p >= 75) return ["Deep learning level", "Nearly at the top. Review your red questions and you are there."];
+  if (p >= 50) return ["Machine learning level", "You are learning from the data. Go over your mistakes to level up."];
+  return ["AI level", "Every model gets better with more training. Review the answers, then try the ideas again."];
+}
+function viewResult() {
+  const t = totals();
+  const pct = Math.round((t.got / t.of) * 100);
+  const [lvl, msg] = levelFor(pct);
+  const C = 2 * Math.PI * 88;
+  const svgNS = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(svgNS, "svg");
+  svg.setAttribute("viewBox", "0 0 210 210");
+  svg.setAttribute("aria-hidden", "true");
+  svg.innerHTML = '<defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FF3E2"/><stop offset="1" stop-color="#27E1C1"/></linearGradient></defs>' +
+    '<circle cx="105" cy="105" r="88" fill="none" stroke="#16235A" stroke-width="16"/>' +
+    '<circle id="ringArc" cx="105" cy="105" r="88" fill="none" stroke="url(#rg)" stroke-width="16" stroke-linecap="round" stroke-dasharray="' + C + '" stroke-dashoffset="' + C + '" style="transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)"/>';
+  const sc = el("span", { class: "sc", text: "0" });
+  const bars = t.rounds.map((r) => {
+    const fill = el("i");
+    requestAnimationFrame(() => requestAnimationFrame(() => { fill.style.width = Math.round((r.got / r.of) * 100) + "%"; }));
+    return el("div", { class: "brow" }, el("span", { text: r.title }), el("span", { class: "tr" }, fill), el("span", { class: "v", text: r.got + "/" + r.of }));
+  });
+  const node = el("div", { class: "view" },
+    el("section", { class: "panel result" },
+      el("p", { class: "kicker", style: "color:var(--cyan)" }, el("span", { svg: ICON.check }), " Sent to El Bashmohandes · " + fmtDate(S.sent.at)),
+      el("div", { class: "ring" }, svg, el("div", { class: "num" }, sc, el("span", { class: "of", text: "out of " + t.of + " · " + pct + "%" }))),
+      el("p", { class: "level", text: "You reached" }),
+      el("h1", { class: "big-title grad", text: lvl }),
+      el("p", { style: "color:var(--ice-2);max-width:26rem", text: msg }),
+      el("div", { class: "bars" }, bars,
+        el("div", { class: "brow" }, el("span", { text: "Explain it" }), el("span", { class: "note", text: "El Bashmohandes marks these" }), el("span", { class: "v", text: "/" + ESSAY_MARKS }))),
+      el("p", { class: "note", text: "Best streak: " + S.best + " in a row." }),
+      el("button", { class: "btn primary wide", type: "button", onclick: () => go("q:0") }, "Review my answers", el("span", { svg: ICON.arrow })),
+      el("p", { class: "note ar", dir: "rtl", lang: "ar", text: "إجاباتك وصلت للباشمهندس. راجع الأسئلة اللي غلطت فيها، وشوف مثال الإجابة القوية تحت كل سؤال مقالي." })));
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const a = document.getElementById("ringArc"); if (a) a.setAttribute("stroke-dashoffset", String(C * (1 - t.got / t.of)));
+    const t0 = performance.now();
+    const step = (now) => { const p = Math.min(1, (now - t0) / 1300); sc.textContent = String(Math.round(t.got * (1 - Math.pow(1 - p, 3)))); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }));
+  return { node, actions: null };
+}
+
+/* ---------- confetti ---------- */
+function burst() {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const c = el("canvas", { id: "confetti", "aria-hidden": "true" });
+  document.body.append(c);
+  const ctx = c.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 2);
+  const W = innerWidth, H = innerHeight; c.width = W * dpr; c.height = H * dpr; ctx.scale(dpr, dpr);
+  const cols = ["#27E1C1", "#8FF3E2", "#FFB020", "#FFD27A", "#E6F0FA", "#FF6B6B"];
+  const ps = Array.from({ length: 160 }, () => ({ x: W / 2 + (Math.random() - .5) * 80, y: H * .38, vx: (Math.random() - .5) * 13, vy: -Math.random() * 15 - 4,
+    s: 5 + Math.random() * 7, r: Math.random() * 6, vr: (Math.random() - .5) * .3, c: cols[Math.floor(Math.random() * cols.length)] }));
+  const t0 = performance.now();
+  (function f(now) {
+    const el2 = now - t0; ctx.clearRect(0, 0, W, H);
+    ps.forEach((p) => { p.vy += .38; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.globalAlpha = Math.max(0, 1 - el2 / 3200); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); ctx.restore(); });
+    if (el2 < 3200) requestAnimationFrame(f); else c.remove();
+  })(t0);
+}
+
+/* ---------- question map ---------- */
+let resetArmed = false;
+function openMap() {
+  const close = () => { scrim.remove(); drawer.remove(); $("#mapBtn").focus(); };
+  const here = S.view.startsWith("q:") ? Number(S.view.slice(2)) : -1;
+  const scrim = el("div", { class: "scrim", onclick: () => close() });
+  /* A copy the student keeps themselves, for the phones that clear a website's storage on their own. */
+  const copyNote = el("p", { class: "note", text: "Keep it in your Files. If this phone ever forgets your answers, open the homework and tap “Open a copy you saved”." });
+  const copyBtn = el("button", { class: "btn ghost wide", type: "button", text: "Save a copy of my answers to this phone" });
+  copyBtn.addEventListener("click", () => { saveNow(); saveBackup(); copyBtn.textContent = "Saved. Check your Files."; });
+  const resetBtn = el("button", { class: "linkbtn", type: "button", style: "color:var(--muted);font-weight:400", text: "A different student on this phone? Start over" });
+  resetBtn.addEventListener("click", () => {
+    if (!resetArmed) { resetArmed = true; resetBtn.textContent = "Tap again to delete the answers on this phone and start over"; setTimeout(() => { resetArmed = false; resetBtn.textContent = "A different student on this phone? Start over"; }, 5000); return; }
+    resetArmed = false; try { localStorage.removeItem(STORE); } catch (e) {}
+    S = fresh(); close(); go("start");
+  });
+  const legend = [["Not started", "transparent;border:1.5px solid var(--line-2)"], ["Answered", "var(--panel-2)"], ["Correct", "var(--cyan)"], ["Partly", "var(--amber)"], ["Wrong", "var(--coral)"], ["Essay written", "transparent;border:1.5px solid var(--amber)"]];
+  const drawer = el("div", { class: "drawer", role: "dialog", "aria-modal": "true", "aria-label": "Question map" },
+    el("div", { class: "drawer-in" },
+      el("div", { class: "drawer-hd" }, el("h2", { text: "Question map" }), el("button", { class: "btn ghost", type: "button", style: "padding:10px 14px", onclick: () => close(), text: "Close" })),
+      el("div", { class: "legend" }, legend.map(([n, bg]) => el("span", null, el("i", { style: "background:" + bg }), n))),
+      ROUNDS.map((r, ri) => el("div", { class: "mapgrp" },
+        el("p", { class: "t", text: "Round " + (ri + 1) + " · " + r.title }),
+        el("div", { class: "cells" }, roundScreens(ri).map((i) => el("button", {
+          class: "cell " + screenState(i) + (i === here ? " here" : ""), type: "button", "aria-label": idLabel(SCREENS[i]),
+          text: idLabel(SCREENS[i]).split("–")[0], onclick: () => { close(); go("q:" + i); } }))))),
+      el("button", { class: "btn primary wide", type: "button", onclick: () => { close(); go(S.sent ? "result" : "finish"); } }, S.sent ? "My result" : "Go to the finish line", el("span", { svg: ICON.arrow })),
+      copyBtn, copyNote,
+      resetBtn));
+  document.body.append(scrim, drawer);
+  drawer.querySelector("button").focus();
+  drawer.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+}
+
+/* ---------- answers found on El Bashmohandes's copy ---------- */
+/* ---------- navigation ---------- */
+function viewFor(v) {
+  if (!S.name && v !== "start") v = S.view = "start";
+  if (v === "start") return viewStart();
+  if (v.startsWith("round:")) return viewRound(Number(v.slice(6)));
+  if (v.startsWith("q:")) return viewScreen(Math.max(0, Math.min(SCREENS.length - 1, Number(v.slice(2)))));
+  if (v === "result" && S.sent) return viewResult();
+  return viewFinish();
+}
+function render(scrollTop) {
+  const v = viewFor(S.view);
+  $("#view").replaceChildren(v.node);
+  const bar = $("#actions");
+  const acts = (v.actions || []).filter(Boolean);
+  bar.hidden = acts.length === 0;
+  $("#actionsIn").replaceChildren(...acts);
+  renderHud();
+  if (scrollTop) window.scrollTo(0, 0);
+}
+function go(view) { saveNow(); S.view = view; save(); render(true); }
+
+document.addEventListener("keydown", (e) => {
+  const tag = (e.target.tagName || "").toLowerCase();
+  if (tag === "textarea" || tag === "input" || document.querySelector(".drawer")) return;
+  if (!S.view.startsWith("q:")) return;
+  const i = Number(S.view.slice(2)), s = SCREENS[i];
+  if ((s.type === "mcq" && /^[a-d]$/i.test(e.key)) || (s.type === "tf" && /^[tf]$/i.test(e.key))) {
+    const idx = s.type === "mcq" ? "abcd".indexOf(e.key.toLowerCase()) : e.key.toLowerCase() === "t" ? 0 : 1;
+    const b = document.querySelectorAll("#view .opt")[idx]; if (b && !b.disabled) b.click();
+  } else if (e.key === "Enter") {
+    const main = document.querySelector("#actionsIn .btn:last-child"); if (main && !main.disabled) { e.preventDefault(); main.click(); }
+  }
+});
+$("#mapBtn").addEventListener("click", openMap);
+render(false);
+
+/* The page can be closed at any moment, so write the last keystrokes down before the phone takes it away. */
+addEventListener("pagehide", () => saveNow());
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") saveNow(); });
+/* Ask the browser to keep this site's storage instead of clearing it when it tidies up. */
+try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
+
+</script>
+</body>
+</html>
