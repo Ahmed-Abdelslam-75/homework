@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>تجربة تصميم: دوائر</title>
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Manrope:wght@500;600;800&display=swap">
+<style>
+:root{--bg:#000;--card:#131316;--line:#2A2A30;--txt:#F5F5F7;--dim:#8E8E96;
+      --r1:#FF375F;--r2:#A6FF00;--r3:#00D3F2}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:Manrope,system-ui,sans-serif;
+  overflow:hidden;display:flex;flex-direction:column}
+.ar{font-family:Cairo,sans-serif}
+.en{direction:ltr;text-align:left;unicode-bidi:isolate}
+
+.top{flex:none;max-width:560px;width:100%;margin:0 auto;padding:16px 18px 8px}
+.date{font-family:Cairo,sans-serif;font-size:13px;color:var(--dim)}
+.deck{display:flex;align-items:center;gap:18px;margin-top:6px}
+.ringwrap{width:116px;height:116px;flex:none;position:relative}
+.ringwrap svg{transform:rotate(-90deg)}
+.ringwrap .mid{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ringwrap .mid b{font-size:25px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.ringwrap .mid span{font-family:Cairo,sans-serif;font-size:11px;color:var(--dim)}
+.legend{display:grid;gap:9px;flex:1;min-width:0}
+.lg{display:flex;align-items:center;gap:9px;font-size:14px}
+.lg i{width:11px;height:11px;border-radius:50%;flex:none}
+.lg b{font-weight:800;font-variant-numeric:tabular-nums}
+.lg span{font-family:Cairo,sans-serif;color:var(--dim);font-size:12.5px}
+
+.wrap{flex:1;min-height:0;overflow-y:auto;max-width:560px;width:100%;margin:0 auto;padding:6px 18px 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px 18px}
+.kick{font-family:Cairo,sans-serif;font-size:12px;color:var(--dim);letter-spacing:.02em}
+.q{font-size:clamp(19px,5vw,23px);font-weight:600;line-height:1.35;margin-top:6px}
+.opts{margin-top:16px;display:grid;gap:9px}
+.o{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:16px;
+  background:#1B1B20;color:var(--txt);font:inherit;font-size:16.5px;font-weight:500;padding:15px 16px;
+  cursor:pointer;transition:.14s;text-align:start;direction:ltr}
+.o .k{width:28px;height:28px;flex:none;border-radius:9px;background:#26262C;display:grid;place-items:center;
+  font-size:13px;font-weight:800;color:var(--dim)}
+.o:hover{border-color:#4A4A55}
+.o.right{border-color:var(--r2);background:rgba(166,255,0,.10)} .o.right .k{background:var(--r2);color:#132000}
+.o.wrong{border-color:var(--r1);background:rgba(255,55,95,.10)} .o.wrong .k{background:var(--r1);color:#2B0511}
+.typerow{margin-top:16px;display:flex;gap:9px}
+.typerow input{flex:1;border:1px solid var(--line);border-radius:16px;background:#1B1B20;color:var(--txt);
+  padding:15px;font:inherit;font-size:16.5px;direction:ltr}
+.typerow input:focus{outline:none;border-color:var(--r3)}
+.typerow button{border:0;border-radius:16px;background:var(--r3);color:#00242B;font:inherit;font-weight:800;
+  padding:0 20px;cursor:pointer}
+
+.fb{margin-top:14px;border-radius:16px;padding:14px 16px;display:none;background:#1B1B20;border:1px solid var(--line)}
+.fb.on{display:block;animation:in .25s both}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.fb .h{font-weight:800;font-size:17px;display:flex;align-items:center;gap:9px}
+.fb.good .h{color:var(--r2)} .fb.bad .h{color:var(--r1)}
+.fb .w{margin-top:5px;font-size:15.5px;line-height:1.5;color:#D6D6DC;direction:ltr;text-align:left}
+.fb .x{font-family:Cairo,sans-serif;font-size:14.5px;color:var(--dim);line-height:1.9;margin-top:3px}
+.next{margin-top:12px;width:100%;border:0;border-radius:16px;background:var(--txt);color:#000;font:inherit;
+  font-size:16.5px;font-weight:800;padding:15px;cursor:pointer;display:none}
+.next.on{display:block}
+.streak{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-family:Cairo,sans-serif;
+  font-size:13px;color:var(--dim)}
+
+.switch{flex:none;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;
+  padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:#0A0A0C;
+  font-family:Cairo,sans-serif;font-size:12.5px}
+.switch a{color:#fff;text-decoration:none;border:1px solid #2A2A30;border-radius:999px;padding:4px 10px}
+.switch a.on{background:#fff;color:#000}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="date" id="today"></div>
+  <div class="deck">
+    <div class="ringwrap">
+      <svg width="116" height="116">
+        <circle cx="58" cy="58" r="50" fill="none" stroke="#2A2A30" stroke-width="11"/>
+        <circle cx="58" cy="58" r="37" fill="none" stroke="#2A2A30" stroke-width="11"/>
+        <circle cx="58" cy="58" r="24" fill="none" stroke="#2A2A30" stroke-width="11"/>
+        <circle id="o1" cx="58" cy="58" r="50" fill="none" stroke="#FF375F" stroke-width="11"
+                stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314"
+                style="transition:stroke-dashoffset .7s cubic-bezier(.2,.9,.3,1)"/>
+        <circle id="o2" cx="58" cy="58" r="37" fill="none" stroke="#A6FF00" stroke-width="11"
+                stroke-linecap="round" stroke-dasharray="232" stroke-dashoffset="232"
+                style="transition:stroke-dashoffset .7s cubic-bezier(.2,.9,.3,1)"/>
+        <circle id="o3" cx="58" cy="58" r="24" fill="none" stroke="#00D3F2" stroke-width="11"
+                stroke-linecap="round" stroke-dasharray="151" stroke-dashoffset="151"
+                style="transition:stroke-dashoffset .7s cubic-bezier(.2,.9,.3,1)"/>
+      </svg>
+      <div class="mid"><b id="pct">0%</b><span>من الواجب</span></div>
+    </div>
+    <div class="legend">
+      <div class="lg"><i style="background:var(--r1)"></i><b id="l1">0 / 4</b><span>اتحلت</span></div>
+      <div class="lg"><i style="background:var(--r2)"></i><b id="l2">0</b><span>صح</span></div>
+      <div class="lg"><i style="background:var(--r3)"></i><b id="l3">0</b><span>أطول سلسلة</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="card">
+    <div class="kick" id="kick"></div>
+    <div class="q en" id="q"></div>
+    <div id="body"></div>
+    <div class="fb" id="fb"><div class="h" id="fh"></div><div class="w" id="fw"></div><div class="x" id="fx"></div></div>
+    <button class="next" id="next"></button>
+    <div class="streak" id="st"></div>
+  </div>
+</div>
+
+<nav class="switch" id="nav"></nav>
+
+<script>
+const Q = [
+  {q:"Which status code means the server itself failed?", o:["200","404","500","302"], a:2,
+   why:"500 is the server's own failure: the address existed, but the server broke while handling it.",
+   ar:"500 عطل في السيرفر نفسه، و404 معناها العنوان مش موجود."},
+  {q:"Semantic HTML changes the way the page looks on the screen.", o:["True","False"], a:1,
+   why:"It changes the meaning of the elements, not the appearance. Appearance is CSS.",
+   ar:"بيغير المعنى مش الشكل. الصفحة شكلها زي ما هو بالظبط."},
+  {q:"Which of these is NOT a benefit of semantic HTML?",
+   o:["Screen readers understand the structure","Search engines understand the content",
+      "The display speed necessarily becomes faster","It reaches users with visual impairments"], a:2,
+   why:"Semantic HTML is about meaning, not speed. Watch the word necessarily.",
+   ar:"الوسوم بتدي معنى، مش سرعة."},
+  {q:"HTTP and HTTPS are two examples of a ______ .", type:true,
+   accept:["protocol","communication protocol"], show:"protocol",
+   why:"A protocol is the agreed set of rules for the exchange.",
+   ar:"البروتوكول هو القواعد المتفق عليها بين الطرفين."}
+];
+const C = {o1:314, o2:232, o3:151};
+const el = id => document.getElementById(id);
+let at = 0, right = 0, streak = 0, best = 0;
+
+el("today").textContent = new Date().toLocaleDateString("ar-EG", {weekday:"long", day:"numeric", month:"long"});
+
+function rings(){
+  const doneN = at, pct = Math.round(doneN / Q.length * 100);
+  el("pct").textContent = pct + "%";
+  el("o1").style.strokeDashoffset = C.o1 * (1 - doneN / Q.length);
+  el("o2").style.strokeDashoffset = C.o2 * (1 - right / Q.length);
+  el("o3").style.strokeDashoffset = C.o3 * (1 - best / Q.length);
+  el("l1").textContent = doneN + " / " + Q.length;
+  el("l2").textContent = right;
+  el("l3").textContent = best;
+}
+
+function render(){
+  const q = Q[at];
+  el("kick").textContent = "سؤال " + (at + 1) + " من " + Q.length;
+  el("q").textContent = q.q;
+  el("fb").className = "fb";
+  el("next").className = "next";
+  el("st").textContent = streak >= 2 ? "\u{1F525} " + streak + " صح ورا بعض" : "";
+  const body = el("body");
+  body.innerHTML = "";
+  if (q.type){
+    const row = document.createElement("div");
+    row.className = "typerow";
+    row.innerHTML = '<input id="tin" placeholder="type the word" autocomplete="off"><button id="tgo">OK</button>';
+    body.appendChild(row);
+    row.querySelector("#tgo").onclick = () => { const v = row.querySelector("#tin").value.trim(); if (v) answer(v, null); };
+  } else {
+    const wrap = document.createElement("div");
+    wrap.className = "opts";
+    q.o.forEach((o, k) => {
+      const b = document.createElement("button");
+      b.className = "o";
+      b.innerHTML = '<span class="k">' + "ABCD"[k] + "</span><span>" + o + "</span>";
+      b.onclick = () => answer(k, b);
+      wrap.appendChild(b);
+    });
+    body.appendChild(wrap);
+  }
+}
+
+function answer(v, node){
+  const q = Q[at];
+  const ok = q.type ? q.accept.some(a => a === String(v).toLowerCase()) : v === q.a;
+  if (node){
+    node.classList.add(ok ? "right" : "wrong");
+    if (!ok) el("body").querySelectorAll(".o")[q.a].classList.add("right");
+  }
+  el("body").querySelectorAll("button,input").forEach(b => b.disabled = true);
+  if (ok){ right++; streak++; best = Math.max(best, streak); } else streak = 0;
+  at++;
+  rings();
+  el("fb").className = "fb on " + (ok ? "good" : "bad");
+  el("fh").innerHTML = (ok ? "&#10003; صح" : "&#10007; غلط") + (ok || !q.type ? "" : " &middot; " + q.show);
+  el("fw").textContent = q.why;
+  el("fx").textContent = q.ar;
+  el("next").className = "next on";
+  el("next").textContent = at === Q.length ? "الملخص" : "اللي بعده";
+  el("next").onclick = () => { if (at === Q.length) return finish(); render(); };
+  el("st").textContent = streak >= 2 ? "\u{1F525} " + streak + " صح ورا بعض" : "";
+}
+
+function finish(){
+  el("kick").textContent = "ملخص الواجب";
+  el("q").textContent = right + " / " + Q.length + " correct";
+  el("body").innerHTML = '<div style="font-family:Cairo,sans-serif;direction:rtl;color:#8E8E96;line-height:1.9;margin-top:10px">' +
+    "ده شكل التصميم ده: الدواير فوق بتقفل وإنت بتحل، وشايف نسبتك وسلسلتك طول الوقت.</div>";
+  el("fb").className = "fb";
+  el("next").className = "next on";
+  el("next").textContent = "من الأول";
+  el("next").onclick = () => location.reload();
+}
+
+const NAV = [["chat.html","محادثة"],["paper.html","ورقة"],["cards.html","كروت"],["map.html","خريطة"],
+             ["story.html","ستوري"],["show.html","مسابقة"],["notebook.html","كشكول"],["rings.html","دوائر"],
+             ["index.html","الكل"]];
+el("nav").innerHTML = NAV.map(([h, t]) =>
+  '<a href="' + h + '"' + (h === "rings.html" ? ' class="on"' : "") + ">" + t + "</a>").join("");
+
+rings();
+render();
+</script>
+</body>
+</html>

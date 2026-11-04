@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>تجربة تصميم: كشكول</title>
+<meta name="theme-color" content="#CFC6B4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Caveat:wght@500;600;700&family=Kalam:wght@400;700&display=swap">
+<style>
+:root{--paper:#FDFBF2;--grid:#CFE0EE;--marg:#E9A0A0;--ink:#1B2A4A;--pen:#D1372F;--ok:#1E8A5B}
+*{box-sizing:border-box}
+body{margin:0;background:#BDB5A4;color:var(--ink);font-family:Kalam,"Comic Sans MS",cursive;font-size:19px;
+  line-height:1.9;padding:14px 10px 70px}
+.ar{font-family:Cairo,sans-serif}
+.en{direction:ltr;text-align:left;unicode-bidi:isolate}
+
+.book{max-width:620px;margin:0 auto;background:var(--paper);border-radius:4px;position:relative;
+  box-shadow:0 14px 34px rgba(0,0,0,.28);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:26px 26px;padding:30px 70px 40px 26px}
+.book::before{content:"";position:absolute;top:0;bottom:0;inset-inline-start:52px;width:2px;background:var(--marg)}
+.rings{position:absolute;top:0;bottom:0;inset-inline-start:14px;width:24px;display:flex;flex-direction:column;
+  justify-content:space-around;align-items:center;padding:30px 0}
+.rings i{width:13px;height:13px;border-radius:50%;background:#C9BFAC;box-shadow:inset 0 2px 3px rgba(0,0,0,.35)}
+
+.title{font-family:Caveat,cursive;font-size:36px;color:var(--ink);line-height:1.1;margin:0}
+.date{font-family:Caveat,cursive;font-size:22px;color:#6E7B96;margin:0 0 18px}
+.q{position:relative;margin:0 0 26px;padding-bottom:12px}
+.q .n{font-family:Caveat,cursive;font-size:27px;color:var(--pen);margin-inline-end:8px}
+.q .st{display:inline;font-size:19px}
+.opts{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:2px}
+.opts li{position:relative}
+.pick{background:none;border:0;font:inherit;font-size:19px;color:var(--ink);cursor:pointer;text-align:start;
+  padding:4px 12px;border-radius:40% 60% 55% 45% / 60% 40% 60% 40%;direction:ltr}
+.pick:hover{background:rgba(27,42,74,.06)}
+.pick .let{font-family:Caveat,cursive;font-size:24px;margin-inline-end:7px;color:#6E7B96}
+.pick.chosen{box-shadow:inset 0 0 0 2.5px var(--ink);color:var(--ink)}
+.pick.good{box-shadow:inset 0 0 0 2.5px var(--ok);color:var(--ok)}
+.pick.bad{box-shadow:inset 0 0 0 2.5px var(--pen);color:var(--pen);text-decoration:line-through}
+.wr{display:inline-block;min-width:7em;border-bottom:2px dotted #8C9AB5;font:inherit;font-size:19px;
+  background:transparent;color:var(--ink);text-align:center;direction:ltr}
+.wr:focus{outline:none;border-bottom-color:var(--ink)}
+
+.red{position:absolute;inset-inline-start:-58px;top:-2px;width:46px;text-align:center;
+  font-family:Caveat,cursive;color:var(--pen);font-size:34px;line-height:1;opacity:0;transform:rotate(-12deg);
+  transition:opacity .25s}
+.red.on{opacity:1}
+.note{margin-top:6px;font-family:Caveat,cursive;font-size:22px;color:var(--pen);line-height:1.35;display:none}
+.note.on{display:block}
+.note .ar{font-family:Cairo,sans-serif;font-size:15px;color:#8A7F6E;display:block;line-height:1.8}
+
+.total{margin-top:30px;border-top:2px dashed #C6CFDD;padding-top:16px;font-family:Caveat,cursive;
+  font-size:30px;color:var(--pen);display:none}
+.total.on{display:block}
+.total span{font-family:Cairo,sans-serif;font-size:15px;color:#6E7B96;display:block;line-height:1.9}
+
+.switch{position:fixed;left:0;right:0;bottom:0;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;
+  padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(27,42,74,.93);
+  font-family:Cairo,sans-serif;font-size:12.5px}
+.switch a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 10px}
+.switch a.on{background:#fff;color:#1B2A4A}
+</style>
+</head>
+<body>
+
+<div class="book">
+  <div class="rings"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <h1 class="title">Unit 3 &middot; homework</h1>
+  <p class="date">الوحدة التالتة &middot; أربع أسئلة</p>
+  <div id="list"></div>
+  <div class="total" id="total"></div>
+</div>
+
+<nav class="switch" id="nav"></nav>
+
+<script>
+const Q = [
+  {q:"Which status code means the server itself failed?", o:["200","404","500","302"], a:2,
+   note:"500 = the server broke, not a missing address.",
+   ar:"500 عطل في السيرفر نفسه، و404 معناها العنوان مش موجود."},
+  {q:"Semantic HTML changes the way the page looks on the screen.", o:["True","False"], a:1,
+   note:"Meaning, not appearance. Looks are CSS.",
+   ar:"بيغير المعنى مش الشكل. الشكل شغل الـ CSS."},
+  {q:"Which of these is NOT a benefit of semantic HTML?",
+   o:["Screen readers understand the structure","Search engines understand the content",
+      "The display speed necessarily becomes faster","It reaches users with visual impairments"], a:2,
+   note:"Meaning, not speed. Watch 'necessarily'.",
+   ar:"الوسوم بتدي معنى، مش سرعة."},
+  {q:"HTTP and HTTPS are two examples of a ______ .", type:true,
+   accept:["protocol","communication protocol"], show:"protocol",
+   note:"A protocol = the agreed rules.",
+   ar:"البروتوكول هو القواعد المتفق عليها بين الطرفين."}
+];
+
+const list = document.getElementById("list");
+let done = 0, score = 0;
+
+Q.forEach((q, i) => {
+  const box = document.createElement("div");
+  box.className = "q";
+  box.innerHTML = '<span class="n">' + (i + 1) + '.</span><span class="st en">' + q.q + "</span>" +
+                  '<span class="red" id="r' + i + '"></span>' +
+                  '<div class="note" id="n' + i + '"></div>';
+  if (q.type){
+    const inp = document.createElement("input");
+    inp.className = "wr";
+    inp.placeholder = "....";
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") mark(i, inp.value.trim(), null); });
+    inp.addEventListener("blur", () => { if (inp.value.trim()) mark(i, inp.value.trim(), null); });
+    box.querySelector(".st").after(inp);
+  } else {
+    const ul = document.createElement("ul");
+    ul.className = "opts";
+    q.o.forEach((o, k) => {
+      const li = document.createElement("li");
+      const b = document.createElement("button");
+      b.className = "pick";
+      b.innerHTML = '<span class="let">' + "abcd"[k] + ")</span>" + o;
+      b.onclick = () => mark(i, k, b);
+      li.appendChild(b);
+      ul.appendChild(li);
+    });
+    box.appendChild(ul);
+  }
+  list.appendChild(box);
+});
+
+function mark(i, v, node){
+  const q = Q[i];
+  const box = list.children[i];
+  if (box.dataset.done) return;
+  box.dataset.done = "1";
+  const right = q.type ? q.accept.some(a => a === String(v).toLowerCase()) : v === q.a;
+  if (right) score++;
+  if (node){
+    node.classList.add(right ? "good" : "bad");
+    if (!right) box.querySelectorAll(".pick")[q.a].classList.add("good");
+    box.querySelectorAll(".pick").forEach(b => b.disabled = true);
+  } else {
+    const inp = box.querySelector(".wr");
+    inp.readOnly = true;
+    inp.style.color = right ? "#1E8A5B" : "#D1372F";
+  }
+  const red = document.getElementById("r" + i);
+  red.textContent = right ? "✓" : "✗";
+  red.classList.add("on");
+  const note = document.getElementById("n" + i);
+  note.innerHTML = (right ? "" : (q.type ? "→ " + q.show + ". " : "")) + q.note +
+                   '<span class="ar">' + q.ar + "</span>";
+  note.classList.add("on");
+  done++;
+  if (done === Q.length){
+    const t = document.getElementById("total");
+    t.innerHTML = score + " / " + Q.length +
+      "<span>ده شكل التصميم ده: كشكول بتحل فيه، والقلم الأحمر بيصحح على الهامش وإنت ماشي.</span>";
+    t.classList.add("on");
+  }
+}
+
+const NAV = [["chat.html","محادثة"],["paper.html","ورقة"],["cards.html","كروت"],["map.html","خريطة"],
+             ["story.html","ستوري"],["show.html","مسابقة"],["notebook.html","كشكول"],["rings.html","دوائر"],
+             ["index.html","الكل"]];
+document.getElementById("nav").innerHTML = NAV.map(([h, t]) =>
+  '<a href="' + h + '"' + (h === "notebook.html" ? ' class="on"' : "") + ">" + t + "</a>").join("");
+</script>
+</body>
+</html>

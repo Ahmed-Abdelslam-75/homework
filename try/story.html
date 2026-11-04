@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>تجربة تصميم: ستوري</title>
+<meta name="theme-color" content="#120B1F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Outfit:wght@400;500;600;700&display=swap">
+<style>
+:root{--ink:#120B1F;--go:#22E39B;--no:#FF5E7A}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--ink);color:#fff;font-family:Outfit,system-ui,sans-serif;
+  overflow:hidden;display:flex;flex-direction:column}
+.ar{font-family:Cairo,sans-serif}
+.en{direction:ltr;text-align:left;unicode-bidi:isolate}
+
+.screen{flex:1;position:relative;display:flex;flex-direction:column;padding:10px 16px 0;
+  transition:background .5s}
+.screen.s0{background:linear-gradient(165deg,#5B2BD6,#2A1152 70%)}
+.screen.s1{background:linear-gradient(165deg,#0E8F7A,#07323C 70%)}
+.screen.s2{background:linear-gradient(165deg,#C2456B,#49102C 70%)}
+.screen.s3{background:linear-gradient(165deg,#C97B16,#43230A 70%)}
+
+.segs{display:flex;gap:4px;flex:none}
+.seg{flex:1;height:3.5px;border-radius:3px;background:rgba(255,255,255,.3);overflow:hidden}
+.seg i{display:block;height:100%;width:0;background:#fff;border-radius:3px;transition:width .4s}
+.seg.done i{width:100%}
+
+.who{flex:none;display:flex;align-items:center;gap:10px;padding:12px 2px}
+.who .av{width:34px;height:34px;border-radius:50%;background:#fff;color:var(--ink);display:grid;
+  place-items:center;font-weight:700;font-size:14px}
+.who b{font-size:14.5px;font-weight:600}
+.who span{font-family:Cairo,sans-serif;font-size:12px;color:rgba(255,255,255,.7);margin-inline-start:auto}
+
+.mid{flex:1;display:flex;flex-direction:column;justify-content:center;gap:22px;padding-bottom:14px}
+.tagline{font-family:Cairo,sans-serif;font-size:13px;color:rgba(255,255,255,.72)}
+.qt{font-size:clamp(23px,6.4vw,31px);font-weight:600;line-height:1.3;letter-spacing:-.01em}
+.opts{display:grid;gap:10px}
+.o{border:1.5px solid rgba(255,255,255,.45);background:rgba(255,255,255,.12);color:#fff;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:999px;padding:15px 20px;
+  font:inherit;font-size:17px;font-weight:500;text-align:start;cursor:pointer;transition:.15s;direction:ltr}
+.o:hover{background:rgba(255,255,255,.2)}
+.o:active{transform:scale(.985)}
+.o.right{background:var(--go);border-color:var(--go);color:#06281D;font-weight:700}
+.o.wrong{background:var(--no);border-color:var(--no);color:#2B050E;font-weight:700}
+.typerow{display:flex;gap:9px}
+.typerow input{flex:1;border:1.5px solid rgba(255,255,255,.45);background:rgba(255,255,255,.12);
+  border-radius:999px;padding:15px 20px;font:inherit;font-size:17px;color:#fff;direction:ltr}
+.typerow input::placeholder{color:rgba(255,255,255,.6)}
+.typerow input:focus{outline:none;border-color:#fff}
+.typerow button{border:0;border-radius:999px;background:#fff;color:var(--ink);font:inherit;font-weight:700;
+  padding:0 22px;cursor:pointer}
+
+.sheetup{position:absolute;left:0;right:0;bottom:0;background:#fff;color:var(--ink);
+  border-radius:26px 26px 0 0;padding:20px 20px calc(18px + env(safe-area-inset-bottom));
+  transform:translateY(102%);transition:transform .4s cubic-bezier(.2,.9,.3,1);box-shadow:0 -12px 40px rgba(0,0,0,.4)}
+.sheetup.up{transform:none}
+.sheetup .v{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:700}
+.sheetup .v .ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:19px}
+.sheetup.good .v{color:#0C8A63} .sheetup.good .ic{background:#0C8A63}
+.sheetup.bad .v{color:#D2304D} .sheetup.bad .ic{background:#D2304D}
+.sheetup .w{margin-top:8px;font-size:16.5px;line-height:1.5;direction:ltr;text-align:left}
+.sheetup .a{font-family:Cairo,sans-serif;font-size:15px;color:#6B6A80;line-height:1.9;margin-top:4px}
+.sheetup .nx{margin-top:14px;width:100%;border:0;border-radius:18px;background:var(--ink);color:#fff;
+  font:inherit;font-size:17px;font-weight:600;padding:15px;cursor:pointer}
+
+.switch{flex:none;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+  background:#0A0611;font-family:Cairo,sans-serif;font-size:12.5px}
+.switch a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.26);border-radius:999px;padding:4px 10px}
+.switch a.on{background:#fff;color:#120B1F}
+</style>
+</head>
+<body>
+
+<div class="screen s0" id="screen">
+  <div class="segs" id="segs"></div>
+  <div class="who">
+    <span class="av">ب</span>
+    <b>El Bashmohandes</b>
+    <span id="count"></span>
+  </div>
+  <div class="mid">
+    <div class="tagline" id="tag"></div>
+    <div class="qt en" id="qt"></div>
+    <div id="body"></div>
+  </div>
+  <div class="sheetup" id="sheet">
+    <div class="v"><span class="ic" id="ic"></span><span id="vt"></span></div>
+    <div class="w" id="why"></div>
+    <div class="a" id="arx"></div>
+    <button class="nx" id="nx"></button>
+  </div>
+</div>
+
+<nav class="switch" id="nav"></nav>
+
+<script>
+const Q = [
+  {tag:"الرسالة اللي رايحة وجاية", q:"Which status code means the server itself failed?",
+   o:["200","404","500","302"], a:2,
+   why:"500 is the server's own failure: the address existed, but the server broke while handling it.",
+   ar:"500 عطل في السيرفر نفسه، و404 معناها العنوان مش موجود."},
+  {tag:"الصفحة اللي قدامك", q:"Semantic HTML changes the way the page looks on the screen.",
+   o:["True","False"], a:1,
+   why:"It changes the meaning of the elements, not the appearance. Appearance is CSS.",
+   ar:"بيغير المعنى مش الشكل. الصفحة شكلها زي ما هو بالظبط."},
+  {tag:"اللي مش بيشوف", q:"Which of these is NOT a benefit of semantic HTML?",
+   o:["Screen readers understand the structure","Search engines understand the content",
+      "The display speed necessarily becomes faster","It reaches users with visual impairments"], a:2,
+   why:"Semantic HTML is about meaning, not speed. Watch the word necessarily.",
+   ar:"الوسوم بتدي معنى، مش سرعة."},
+  {tag:"القواعد", q:"HTTP and HTTPS are two examples of a ______ .", type:true,
+   accept:["protocol","communication protocol"], show:"protocol",
+   why:"A protocol is the agreed set of rules for the exchange.",
+   ar:"البروتوكول هو القواعد المتفق عليها بين الطرفين."}
+];
+
+const el = id => document.getElementById(id);
+let at = 0, score = 0;
+
+el("segs").innerHTML = Q.map(() => '<span class="seg"><i></i></span>').join("");
+
+function render(){
+  const q = Q[at];
+  el("screen").className = "screen s" + at;
+  el("count").textContent = (at + 1) + " من " + Q.length;
+  el("tag").textContent = q.tag;
+  el("qt").textContent = q.q;
+  el("sheet").className = "sheetup";
+  const body = el("body");
+  body.innerHTML = "";
+  if (q.type){
+    const row = document.createElement("div");
+    row.className = "typerow";
+    row.innerHTML = '<input id="tin" placeholder="اكتب الكلمة" autocomplete="off"><button id="tgo">تمام</button>';
+    body.appendChild(row);
+    row.querySelector("#tgo").onclick = () => { const v = row.querySelector("#tin").value.trim(); if (v) answer(v, null); };
+  } else {
+    const wrap = document.createElement("div");
+    wrap.className = "opts";
+    q.o.forEach((o, k) => {
+      const b = document.createElement("button");
+      b.className = "o";
+      b.textContent = o;
+      b.onclick = () => answer(k, b);
+      wrap.appendChild(b);
+    });
+    body.appendChild(wrap);
+  }
+}
+
+function answer(v, node){
+  const q = Q[at];
+  const right = q.type ? q.accept.some(a => a === String(v).toLowerCase()) : v === q.a;
+  if (node){
+    node.classList.add(right ? "right" : "wrong");
+    if (!right) el("body").querySelectorAll(".o")[q.a].classList.add("right");
+  }
+  el("body").querySelectorAll("button,input").forEach(b => b.disabled = true);
+  if (right) score++;
+  el("segs").children[at].classList.add("done");
+  const s = el("sheet");
+  s.className = "sheetup up " + (right ? "good" : "bad");
+  el("ic").innerHTML = right ? "&#10003;" : "&#10007;";
+  el("vt").textContent = right ? "صح" : ("غلط" + (q.type ? "، الإجابة: " + q.show : ""));
+  el("why").textContent = q.why;
+  el("arx").textContent = q.ar;
+  el("nx").textContent = at === Q.length - 1 ? "شوف النتيجة" : "اللي بعده";
+  el("nx").onclick = () => {
+    if (at === Q.length - 1) return finish();
+    at++; render();
+  };
+}
+
+function finish(){
+  el("sheet").className = "sheetup";
+  el("tag").textContent = "خلصت";
+  el("qt").textContent = score + " / " + Q.length;
+  el("body").innerHTML = '<div class="tagline" style="font-size:15px;line-height:1.9">ده شكل التصميم ده: ' +
+    'كل سؤال ستوري بيملى الشاشة، والشرح بيطلع من تحت، والشرايط فوق بتقولك فاضل كام.</div>';
+  el("count").textContent = "";
+}
+
+const NAV = [["chat.html","محادثة"],["paper.html","ورقة"],["cards.html","كروت"],["map.html","خريطة"],
+             ["story.html","ستوري"],["show.html","مسابقة"],["notebook.html","كشكول"],["rings.html","دوائر"],
+             ["index.html","الكل"]];
+el("nav").innerHTML = NAV.map(([h, t]) =>
+  '<a href="' + h + '"' + (h === "story.html" ? ' class="on"' : "") + ">" + t + "</a>").join("");
+
+render();
+</script>
+</body>
+</html>
