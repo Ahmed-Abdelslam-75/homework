@@ -159,9 +159,9 @@ function mark(i, v, node){
   }
 }
 
-const NAV = [["chat.html","محادثة"],["paper.html","ورقة"],["cards.html","كروت"],["map.html","خريطة"],
-             ["story.html","ستوري"],["show.html","مسابقة"],["notebook.html","كشكول"],["rings.html","دوائر"],
-             ["index.html","الكل"]];
+const NAV = [["chat.html","تيرمنال"],["talk.html","حوار"],["paper.html","ورقة"],["cards.html","كروت"],
+             ["map.html","خريطة"],["story.html","ستوري"],["show.html","مسابقة"],["notebook.html","كشكول"],
+             ["rings.html","دوائر"],["index.html","الكل"]];
 document.getElementById("nav").innerHTML = NAV.map(([h, t]) =>
   '<a href="' + h + '"' + (h === "notebook.html" ? ' class="on"' : "") + ">" + t + "</a>").join("");
 </script>

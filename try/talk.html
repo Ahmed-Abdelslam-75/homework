@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>تجربة تصميم: حوار</title>
+<meta name="theme-color" content="#F6F2EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{--paper:#F6F2EA;--sheet:#FFFDF9;--ink:#1C1A17;--soft:#7A736A;--rule:#E0D8CA;
+      --go:#1C6B4B;--no:#B23A2F;--mark:#B98A2E}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif;font-size:19px;line-height:1.75;padding-bottom:74px}
+.ar{font-family:Cairo,sans-serif}
+.en{direction:ltr;text-align:left;unicode-bidi:isolate}
+
+.masthead{max-width:680px;margin:0 auto;padding:30px 22px 16px;border-bottom:1px solid var(--rule)}
+.masthead .k{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--mark)}
+.masthead h1{font-size:31px;font-weight:700;line-height:1.15;margin:8px 0 4px;letter-spacing:-.01em}
+.masthead p{font-family:Cairo,sans-serif;color:var(--soft);font-size:14.5px;margin:0}
+.rail{max-width:680px;margin:0 auto;padding:10px 22px 0;display:flex;gap:7px;align-items:center;
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--soft)}
+.rail i{width:26px;height:3px;border-radius:2px;background:var(--rule);display:block}
+.rail i.on{background:var(--mark)}
+
+.talk{max-width:680px;margin:0 auto;padding:4px 22px 30px}
+.turn{display:grid;grid-template-columns:78px 1fr;gap:14px;padding:18px 0;border-bottom:1px solid var(--rule);
+  animation:in .25s both}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.turn .who{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--soft);padding-top:7px;line-height:1.5}
+.turn .who b{display:block;color:var(--ink);font-weight:600}
+.turn.me .who b{color:var(--mark)}
+.turn .say{font-size:19.5px}
+.turn .say .en,.turn .say .lead{display:block}
+.turn.me .say{font-style:italic;color:#44403A}
+.turn .say .lead{font-weight:600}
+.turn.note{border-bottom:0;padding-top:4px}
+.turn.note .say{font-size:17px;color:#443F38}
+.turn.note .arx{font-family:Cairo,sans-serif;color:var(--soft);font-size:15px;line-height:1.95;margin-top:4px}
+.verdict{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+  display:inline-block;padding:3px 9px;border:1px solid;border-radius:3px;margin-bottom:7px}
+.verdict.y{color:var(--go);border-color:var(--go)}
+.verdict.n{color:var(--no);border-color:var(--no)}
+
+.answers{max-width:680px;margin:0 auto;padding:4px 22px 0;display:grid;gap:1px}
+.ans{text-align:start;background:none;border:0;border-bottom:1px solid var(--rule);
+  font:inherit;font-size:18.5px;color:var(--ink);padding:13px 4px;cursor:pointer;display:flex;gap:12px;
+  align-items:baseline;transition:background .12s}
+.ans:hover{background:#EFE9DD}
+.ans .let{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--mark);flex:none;width:1.4em}
+.ans .tx{direction:ltr;text-align:left}
+.writeline{max-width:680px;margin:0 auto;padding:10px 22px 0;display:flex;gap:10px;align-items:baseline}
+.writeline input{flex:1;border:0;border-bottom:1.6px solid var(--ink);background:transparent;
+  font:inherit;font-size:19px;color:var(--ink);padding:6px 4px;direction:ltr}
+.writeline input:focus{outline:none;border-bottom-color:var(--mark)}
+.writeline button{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:3px;padding:9px 16px;cursor:pointer}
+.go{max-width:680px;margin:14px auto 0;padding:0 22px;display:none}
+.go.on{display:block}
+.go button{font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:3px;padding:12px 20px;cursor:pointer}
+.go button:hover{background:var(--ink);color:var(--paper)}
+
+.switch{position:fixed;left:0;right:0;bottom:0;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;
+  padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(28,26,23,.95);
+  font-family:Cairo,sans-serif;font-size:12.5px}
+.switch a{color:#F6F2EA;text-decoration:none;border:1px solid rgba(246,242,234,.3);border-radius:999px;padding:4px 10px}
+.switch a.on{background:#F6F2EA;color:#1C1A17}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="k">Programming and AI &middot; Unit 3</div>
+  <h1>حوار في الواجب</h1>
+  <p>أربع أسئلة، سؤال ورا التاني، زي حوار مكتوب.</p>
+</div>
+<div class="rail" id="rail"></div>
+
+<div class="talk" id="talk"></div>
+<div class="answers" id="answers"></div>
+<div class="writeline" id="writeline" hidden></div>
+<div class="go" id="go"><button id="gobtn"></button></div>
+
+<nav class="switch" id="nav"></nav>
+
+<script>
+const Q = [
+  {q:"Which status code means the server itself failed?", o:["200","404","500","302"], a:2,
+   why:"500 is the server's own failure: the address existed, but the server broke while handling it.",
+   ar:"500 عطل في السيرفر نفسه، و404 معناها العنوان مش موجود."},
+  {q:"Semantic HTML changes the way the page looks on the screen.", o:["True","False"], a:1,
+   why:"It changes the meaning of the elements, not the appearance. Appearance is CSS.",
+   ar:"بيغير المعنى مش الشكل. الصفحة شكلها زي ما هو بالظبط."},
+  {q:"Which of these is NOT a benefit of semantic HTML?",
+   o:["Screen readers understand the structure","Search engines understand the content",
+      "The display speed necessarily becomes faster","It reaches users with visual impairments"], a:2,
+   why:"Semantic HTML is about meaning, not speed. Watch the word necessarily.",
+   ar:"الوسوم بتدي معنى، مش سرعة."},
+  {q:"HTTP and HTTPS are two examples of a ______ .", type:true,
+   accept:["protocol","communication protocol"], show:"protocol",
+   why:"A protocol is the agreed set of rules for the exchange.",
+   ar:"البروتوكول هو القواعد المتفق عليها بين الطرفين."}
+];
+
+const el = id => document.getElementById(id);
+let at = 0, score = 0;
+
+el("rail").innerHTML = "سؤال <span id='rn'>1</span> من " + Q.length + " " +
+  Q.map(() => "<i></i>").join("");
+
+function rail(){
+  const bars = el("rail").querySelectorAll("i");
+  bars.forEach((b, i) => b.className = i < at ? "on" : "");
+  const n = document.getElementById("rn");
+  if (n) n.textContent = Math.min(at + 1, Q.length);
+}
+
+function turn(who, name, html, cls){
+  const d = document.createElement("div");
+  d.className = "turn " + (cls || "");
+  d.innerHTML = '<div class="who">' + who + "<b>" + name + "</b></div><div class='say'>" + html + "</div>";
+  el("talk").appendChild(d);
+  d.scrollIntoView({behavior:"smooth", block:"center"});
+  return d;
+}
+
+function ask(){
+  if (at >= Q.length) return finish();
+  const q = Q[at];
+  rail();
+  turn("سؤال " + (at + 1), "البشمهندس", '<span class="lead en">' + q.q + "</span>");
+  const ansWrap = el("answers");
+  ansWrap.innerHTML = "";
+  el("writeline").hidden = true;
+  el("go").className = "go";
+  if (q.type){
+    const w = el("writeline");
+    w.hidden = false;
+    w.innerHTML = '<input id="tin" placeholder="اكتب الكلمة" autocomplete="off"><button id="tgo">تمام</button>';
+    const run = () => { const v = w.querySelector("#tin").value.trim(); if (v) answer(v); };
+    w.querySelector("#tgo").onclick = run;
+    w.querySelector("#tin").addEventListener("keydown", e => { if (e.key === "Enter") run(); });
+  } else {
+    q.o.forEach((o, k) => {
+      const b = document.createElement("button");
+      b.className = "ans";
+      b.innerHTML = '<span class="let">' + "ABCD"[k] + '</span><span class="tx">' + o + "</span>";
+      b.onclick = () => answer(k);
+      ansWrap.appendChild(b);
+    });
+  }
+}
+
+function answer(v){
+  const q = Q[at];
+  const right = q.type ? q.accept.some(a => a === String(v).toLowerCase()) : v === q.a;
+  const said = q.type ? v : "ABCD"[v] + " &middot; " + q.o[v];
+  el("answers").innerHTML = "";
+  el("writeline").hidden = true;
+  turn("إجابتك", "إنتي", '<span class="en">' + said + "</span>", "me");
+  if (right) score++;
+  at++;
+  rail();
+  const badge = '<span class="verdict ' + (right ? "y" : "n") + '">' + (right ? "صح" : "غلط") + "</span>";
+  const corr = right ? "" : '<div class="en" style="margin-bottom:6px">' +
+    (q.type ? q.show : "ABCD"[q.a] + " · " + q.o[q.a]) + "</div>";
+  turn("", "التعليق", badge + corr + '<div class="en">' + q.why + '</div><div class="arx">' + q.ar + "</div>",
+       "note");
+  el("go").className = "go on";
+  el("gobtn").textContent = at === Q.length ? "اقفل الحوار" : "السؤال اللي بعده";
+  el("gobtn").onclick = () => { el("go").className = "go"; ask(); };
+}
+
+function finish(){
+  turn("النتيجة", "البشمهندس", "<b>" + score + " / " + Q.length + "</b>" +
+    '<div class="arx" style="font-family:Cairo,sans-serif;color:#7A736A;font-size:15px;line-height:1.95;margin-top:6px">' +
+    "ده شكل التصميم ده: حوار مكتوب زي مقابلة في مجلة، مفيش فقاعات ولا ألوان، الكلام بس والهامش.</div>", "note");
+  el("go").className = "go";
+}
+
+const NAV = [["chat.html","تيرمنال"],["talk.html","حوار"],["paper.html","ورقة"],["cards.html","كروت"],
+             ["map.html","خريطة"],["story.html","ستوري"],["show.html","مسابقة"],["notebook.html","كشكول"],
+             ["rings.html","دوائر"],["index.html","الكل"]];
+el("nav").innerHTML = NAV.map(([h, t]) =>
+  '<a href="' + h + '"' + (h === "talk.html" ? ' class="on"' : "") + ">" + t + "</a>").join("");
+
+ask();
+</script>
+</body>
+</html>
