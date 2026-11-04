@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>From the Tap to the Page &middot; Homework 7</title>
 <meta name="description" content="Six rounds across the whole of web applications: the tiers, the message and the page. Homework 7 for Programming and AI.">
-<meta name="theme-color" content="#060B20">
+<meta name="theme-color" content="#FFF7EC">
 <meta property="og:type" content="website">
 <meta property="og:title" content="From the Tap to the Page &middot; Homework 7">
 <meta property="og:description" content="Six rounds from the tap on your screen to the page that comes back. Answer, check, and see which level you reach.">
@@ -13,10 +13,10 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23060B20'/%3E%3Cg stroke='%2327E1C1' stroke-width='3'%3E%3Cpath d='M16 20L32 32L48 20M16 44L32 32L48 44M16 20L16 44'/%3E%3C/g%3E%3Cg fill='%23060B20' stroke='%2327E1C1' stroke-width='3'%3E%3Ccircle cx='16' cy='20' r='5'/%3E%3Ccircle cx='16' cy='44' r='5'/%3E%3Ccircle cx='48' cy='20' r='5'/%3E%3Ccircle cx='48' cy='44' r='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='6' fill='%23FFB020'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%235B3DF5'/%3E%3Cg stroke='%23FFF7EC' stroke-width='3'%3E%3Cpath d='M16 20L32 32L48 20M16 44L32 32L48 44M16 20L16 44'/%3E%3C/g%3E%3Cg fill='%235B3DF5' stroke='%23FFF7EC' stroke-width='3'%3E%3Ccircle cx='16' cy='20' r='5'/%3E%3Ccircle cx='16' cy='44' r='5'/%3E%3Ccircle cx='48' cy='20' r='5'/%3E%3Ccircle cx='48' cy='44' r='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='6' fill='%23FF3D8A'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&family=Tajawal:wght@400;500;700&family=Unbounded:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Tajawal:wght@400;500;700&family=Unbounded:wght@500;600;700;800&display=swap">
 <style>
 [hidden]{display:none!important}
 :root{
@@ -214,9 +214,9 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .tick .box{flex:none;width:22px;height:22px;border-radius:7px;border:2px solid var(--amber);display:grid;place-items:center;font-size:13px;color:#1D1302}
 .tick[aria-checked="true"] .box{background:var(--amber)}
 .tick[aria-checked="true"] .lb{color:var(--ice-2);text-decoration:line-through;text-decoration-color:rgba(255,176,32,.7)}
-.essay{width:100%;min-height:22rem;padding:18px;border-radius:18px;border:1.5px solid var(--line-2);background:var(--night);color:var(--ice);font-size:18px;line-height:1.65;resize:vertical}
-.essay:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 4px rgba(255,176,32,.14)}
-.essay[readonly]{opacity:.85}
+textarea.essay{width:100%;min-height:22rem;padding:18px;border-radius:18px;border:1.5px solid var(--line-2);background:var(--night);color:var(--ice);font-size:18px;line-height:1.65;resize:vertical}
+textarea.essay:focus{outline:none;border-color:var(--amber);box-shadow:0 0 0 4px rgba(255,176,32,.14)}
+textarea.essay[readonly]{opacity:.85}
 .wc{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
 .wc .bar{flex:1;height:6px;border-radius:6px;background:var(--panel-2);overflow:hidden}
 .wc .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),#FFD27A);border-radius:6px;transition:width .3s}
@@ -301,6 +301,186 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
 
+/* =====================================================================
+   style7.css   =   the Homework 7 skin, and only Homework 7.
+
+   Loaded after style_a.css and style_b.css, so every rule here is an
+   override. The other six homeworks never read this file and keep the
+   navy engine exactly as it is.
+
+   The direction: paper, not night. A warm off-white page, near-black
+   ink, white cards with a solid ink outline and a hard offset shadow,
+   so every card reads as a sticker you could peel off. Green means
+   right, pink is the highlight, violet is the accent that carries the
+   progress. Display type is Fredoka, which is round and playful, where
+   the other homeworks use the blockier Unbounded.
+   ===================================================================== */
+
+:root{
+  --night:#FFF7EC;          /* the page itself */
+  --navy:#FFF1DF;           /* the drawer */
+  --panel:#FFFFFF;          /* every card */
+  --panel-2:#FFF3F8;        /* a card being hovered */
+  --panel-3:#F1ECFF;
+  --line:#191633;           /* borders are solid ink now, not hairlines */
+  --line-2:#191633;
+  --ice:#191633;            /* text */
+  --ice-2:#4C4668;
+  --muted:#857DA3;
+  --cyan:#00B37E;           /* right, and the main button */
+  --cyan-2:#36DCA6;
+  --cyan-t:rgba(0,179,126,.13);
+  --amber:#FF3D8A;          /* the highlight: streaks, marks, round names */
+  --amber-t:rgba(255,61,138,.11);
+  --coral:#FF4747;          /* wrong */
+  --coral-t:rgba(255,71,71,.11);
+  --grape:#5B3DF5;          /* progress and chips */
+  --sticker:4px 4px 0 #191633;
+  --sticker-sm:3px 3px 0 #191633;
+  --display:"Fredoka","Unbounded",system-ui,sans-serif;
+  color-scheme:light;
+}
+
+/* ---------- page ---------- */
+html{background:var(--night)}
+body{background:
+    radial-gradient(900px 520px at 8% -8%,rgba(91,61,245,.10),transparent 62%),
+    radial-gradient(800px 560px at 108% 104%,rgba(255,61,138,.10),transparent 60%),
+    var(--night)}
+body::before{background-image:radial-gradient(rgba(25,22,51,.13) 1px,transparent 1.4px)}
+
+/* ---------- the bar at the top ---------- */
+.hud{background:rgba(255,247,236,.86);border-bottom:2px solid var(--line)}
+.map-btn{border:2px solid var(--line);box-shadow:var(--sticker-sm)}
+.map-btn:hover{border-color:var(--grape);color:var(--grape)}
+.stat{border:2px solid var(--line);font-weight:700}
+.stat.ok{color:#00885F}
+.stat.streak.hot{background:var(--amber-t);border-color:var(--line)}
+.tl-track{background:rgba(25,22,51,.18)}
+.tl-fill{background:linear-gradient(90deg,var(--grape),var(--amber));box-shadow:none}
+.era .dot{background:var(--panel);border:2px solid var(--line)}
+.era.done .dot{background:var(--grape);border-color:var(--line)}
+.era.now .dot{background:var(--amber);border-color:var(--line);box-shadow:0 0 0 5px rgba(255,61,138,.22)}
+@keyframes pulse{50%{box-shadow:0 0 0 9px rgba(255,61,138,0)}}
+
+/* ---------- start screen ---------- */
+.grad{background:linear-gradient(95deg,var(--grape) 0%,#8B5CF6 40%,var(--amber) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero{border:2.5px solid var(--line);background:linear-gradient(180deg,#F3ECFF,#FFFFFF);
+  box-shadow:var(--sticker)}
+.join{border:2.5px solid var(--line);background:var(--panel);box-shadow:var(--sticker)}
+.rcard{background:#FFFDF7;border:2px solid var(--line);box-shadow:var(--sticker-sm)}
+.rcard .yr{color:var(--grape)}
+.name{border:2.5px solid var(--line);background:var(--panel)}
+.name::placeholder{color:#A49CC0;font-weight:400}
+.name:focus{border-color:var(--grape);box-shadow:0 0 0 4px rgba(91,61,245,.18)}
+
+/* ---------- round intro ---------- */
+.rings span{border:2px solid rgba(91,61,245,.22)}
+.round .era-name{color:var(--amber)}
+
+/* ---------- buttons ---------- */
+.btn{border:2.5px solid var(--line)}
+.btn.primary{color:#06281D;background:linear-gradient(135deg,var(--cyan-2),var(--cyan));box-shadow:var(--sticker)}
+.btn.primary:hover{box-shadow:5px 5px 0 var(--line)}
+.btn.amber{color:#FFFFFF;background:linear-gradient(135deg,#FF6BA6,var(--amber));box-shadow:var(--sticker)}
+.btn.ghost{color:var(--ice);background:var(--panel);box-shadow:var(--sticker-sm)}
+.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--line)}
+.btn[disabled]{opacity:.45;box-shadow:var(--sticker-sm)}
+
+/* ---------- questions ---------- */
+.chip-type{background:rgba(91,61,245,.12);color:var(--grape);border:2px solid var(--line)}
+.chip-type.essay{background:var(--amber-t);color:#D81B60}
+.opt{border:2.5px solid var(--line);background:var(--panel);box-shadow:var(--sticker-sm);font-weight:500}
+.opt:hover:not([disabled]){background:var(--panel-2);box-shadow:var(--sticker)}
+.opt:active:not([disabled]){transform:translate(2px,2px);box-shadow:1px 1px 0 var(--line)}
+.opt .key{background:#FFFDF7;border:2px solid var(--line)}
+.opt[aria-checked="true"]{background:#EFEAFF;border-color:var(--line)}
+.opt[aria-checked="true"] .key{background:var(--grape);color:#FFFFFF}
+.opt.right{background:rgba(0,179,126,.16)}
+.opt.right .key{background:var(--cyan);color:#FFFFFF}
+.opt.wrong{background:var(--coral-t)}
+.opt.wrong .key{background:var(--coral);color:#FFFFFF}
+.tf .word{color:var(--ice-2)}
+
+/* match */
+.mrow{border:2.5px solid var(--line);background:var(--panel);box-shadow:var(--sticker-sm)}
+.pick{border:2px solid var(--line);background:#FFFDF7;color:var(--ice)}
+.pick:hover:not([disabled]){border-color:var(--line);background:var(--panel-3);color:var(--ice)}
+.pick[aria-checked="true"]{background:var(--grape);color:#FFFFFF}
+.pick.right{background:var(--cyan);color:#FFFFFF}
+.pick.wrong{background:var(--coral);color:#FFFFFF}
+.mrow.good{background:rgba(0,179,126,.10)}
+.mrow.bad{background:var(--coral-t)}
+
+/* order */
+.ends{color:var(--grape)}
+.orow{border:2.5px solid var(--line);background:var(--panel);box-shadow:var(--sticker-sm)}
+.orow .pos{background:var(--grape);color:#FFFFFF;border:2px solid var(--line)}
+.orow .mv button{background:#FFFDF7;border:2px solid var(--line)}
+.orow .mv button:hover:not([disabled]){background:var(--panel-3)}
+.orow.good{background:rgba(0,179,126,.12)}
+.orow.bad{background:var(--coral-t)}
+
+/* fill */
+.bank{background:rgba(255,255,255,.95);border:2px dashed var(--line)}
+.frow{border:2.5px solid var(--line);background:var(--panel);box-shadow:var(--sticker-sm)}
+.blank{background:#FFFDF7;color:var(--grape);border-bottom:3px solid var(--grape)}
+.blank:focus{box-shadow:0 0 0 3px rgba(91,61,245,.22)}
+.blank.right{background:rgba(0,179,126,.18);border-bottom-color:var(--cyan);color:var(--ice)}
+.blank.wrong{background:var(--coral-t);border-bottom-color:var(--coral);color:var(--ice)}
+.fix-inline{color:#00885F}
+
+/* essay */
+.marks{color:#D81B60;border:2px solid var(--line)}
+.refer{background:var(--amber-t);border:2px solid var(--line)}
+.refer .t{color:#D81B60}
+.tick{background:#FFFDF7;border:2px solid var(--line)}
+.tick .box{border:2px solid var(--line);color:#FFFFFF}
+.tick[aria-checked="true"] .box{background:var(--amber)}
+textarea.essay{border:2.5px solid var(--line);background:var(--panel);box-shadow:var(--sticker-sm)}
+textarea.essay:focus{border-color:var(--grape);box-shadow:0 0 0 4px rgba(91,61,245,.16)}
+.wc .bar{background:#EDE9F7;border:1.5px solid var(--line)}
+.wc .bar i{background:linear-gradient(90deg,var(--grape),var(--amber))}
+.wc .saved{color:#00885F}
+.model{background:var(--cyan-t);border:2px solid var(--line)}
+.model .t{color:#00885F}
+
+/* feedback */
+.fb{border:2.5px solid var(--line);box-shadow:var(--sticker)}
+.fb.good{background:rgba(0,179,126,.16)}
+.fb.bad{background:rgba(255,71,71,.14)}
+.fb.part{background:rgba(255,61,138,.14)}
+.fb.good .hd{color:#00704F}
+.fb.bad .hd{color:#C62828}
+.fb.part .hd{color:#D81B60}
+.fb .ic{color:#FFFFFF;border:2px solid var(--line)}
+
+/* the bar at the bottom */
+.actions{background:linear-gradient(180deg,rgba(255,247,236,0),rgba(255,247,236,.95) 30%)}
+
+/* map drawer */
+.scrim{background:rgba(25,22,51,.55)}
+.drawer{background:var(--navy);border-top:2.5px solid var(--line)}
+.cell{border:2px solid var(--line);background:var(--panel)}
+.cell.seen{background:var(--panel-3)}
+.cell.good{background:var(--cyan);color:#FFFFFF}
+.cell.bad{background:var(--coral);color:#FFFFFF}
+.cell.part{background:var(--amber);color:#FFFFFF}
+.cell.essay{border-color:var(--line);color:#D81B60}
+.cell.here{box-shadow:0 0 0 3px var(--grape)}
+
+/* finish and result */
+.panel{border:2.5px solid var(--line);background:var(--panel);box-shadow:var(--sticker)}
+.ck{background:#FFFDF7;border:2px solid var(--line)}
+.linkbtn{color:var(--grape)}
+.status.good{color:#00885F}
+.spin{border:2.5px solid rgba(25,22,51,.25);border-top-color:var(--grape)}
+.result{background:radial-gradient(420px 260px at 50% 0%,rgba(91,61,245,.14),transparent 70%),var(--panel)}
+.level{color:#D81B60}
+.brow .tr{background:#EDE9F7;border:1.5px solid var(--line)}
+.brow .tr i{background:linear-gradient(90deg,var(--grape),var(--amber))}
+
 .view.still{animation:none}
 .opt.still{animation:none}
 </style>
@@ -321,7 +501,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
   <p class="foot">Programming and Artificial Intelligence · Egyptian Baccalaureate · Year 2</p>
 </main>
 <div class="actions" id="actions" hidden><div class="actions-in" id="actionsIn"></div></div>
-<noscript><p style="padding:24px;color:#E6F0FA">This homework needs JavaScript. Please open the link in Chrome or Safari.</p></noscript>
+<noscript><p style="padding:24px;color:#191633">This homework needs JavaScript. Please open the link in Chrome or Safari.</p></noscript>
 <script>
 const HW = {"id": "hw7", "title": "Homework 7: From the Tap to the Page", "sheet": "Homework 7", "salt": "one-tap-three-tiers-and-the-page-you-see", "endpoint": "https://script.google.com/macros/s/AKfycbwlkc3-gi4B4E7s3xEKEeDWZsyU8OstLs-Rr2UFe1bbHEDYSTV_1KKZ4ljDQ6nc1MUt/exec", "screens": [{"type": "mcq", "round": 0, "ids": ["Q1"], "q": "A web application is usually built from:", "options": ["Three layers", "Two layers", "One layer", "Several layers"]}, {"type": "mcq", "round": 0, "ids": ["Q2"], "q": "The layer responsible for displaying screens and collecting user data and actions is:", "options": ["Backend", "Database", "Frontend", "Processing server"]}, {"type": "mcq", "round": 0, "ids": ["Q3"], "q": "Storing post data, follower relationships, and messages in a social networking service is the function of:", "options": ["Processing server", "Database", "Frontend", "Backend"]}, {"type": "mcq", "round": 0, "ids": ["Q4"], "q": "The client in web applications is:", "options": ["The server that processes requests", "The program or device that sends requests", "The database", "The communication protocol"]}, {"type": "mcq", "round": 0, "ids": ["Q5"], "q": "When sending login information, it is preferable to use:", "options": ["GET", "POST", "200", "404"]}, {"type": "mcq", "round": 0, "ids": ["Q6"], "q": "Status code 200 means:", "options": ["Internal server error", "Successful request", "Resource not found", "Unauthorized request"]}, {"type": "mcq", "round": 0, "ids": ["Q7"], "q": "Which of the following status codes indicates an internal server error?", "options": ["200", "404", "500", "302"]}, {"type": "mcq", "round": 0, "ids": ["Q8"], "q": "The main difference between HTTP and HTTPS is:", "options": ["HTTPS uses TLS encryption", "HTTP is always faster", "HTTPS does not support POST", "HTTP uses JSON"]}, {"type": "mcq", "round": 0, "ids": ["Q9"], "q": "JSON format is used for:", "options": ["Designing the user interface", "Exchanging structured data", "Encrypting communication", "Determining status codes"]}, {"type": "mcq", "round": 0, "ids": ["Q10"], "q": "The API is:", "options": ["A database", "A set of rules for inter-program communication", "A security protocol", "A data format"]}, {"type": "mcq", "round": 0, "ids": ["Q11"], "q": "HTML is responsible for:", "options": ["Visual appearance", "The basic structure of the page", "Interactive behavior", "Performance improvement"]}, {"type": "mcq", "round": 0, "ids": ["Q12"], "q": "Which of the following is NOT an HTML semantic element?", "options": ["header", "e-mail", "main", "footer"]}, {"type": "mcq", "round": 0, "ids": ["Q13"], "q": "CSS is used for:", "options": ["Building the structure", "Adding interaction", "Styling the appearance", "Managing databases"]}, {"type": "mcq", "round": 0, "ids": ["Q14"], "q": "Which technology is used to add interactive behavior to a page?", "options": ["HTML", "CSS", "JavaScript", "SQL"]}, {"type": "mcq", "round": 0, "ids": ["Q15"], "q": "Responsive design means:", "options": ["Adjusting the layout according to different screen sizes", "Using JavaScript only", "Improving databases", "Hiding unimportant content"]}, {"type": "mcq", "round": 0, "ids": ["Q16"], "q": "The Next.js framework is built on:", "options": ["Vue", "React", "HTML", "CSS"]}, {"type": "mcq", "round": 0, "ids": ["Q17"], "q": "The term mobile-first in responsive design means:", "options": ["Designing the page first for computers", "Designing the page first for small screens such as smartphones", "Using JavaScript to add interactivity", "Improving server speed"]}, {"type": "tf", "round": 1, "ids": ["Q18"], "q": "HTTPS is the same HTTP with TLS encryption added."}, {"type": "tf", "round": 1, "ids": ["Q19"], "q": "The frontend sends the search keywords directly to the database."}, {"type": "tf", "round": 1, "ids": ["Q20"], "q": "Status code 500 means the requested page was not found."}, {"type": "tf", "round": 1, "ids": ["Q21"], "q": "JavaScript can update part of the screen without reloading the whole page."}, {"type": "tf", "round": 1, "ids": ["Q22"], "q": "Semantic HTML changes the way the page looks on the screen."}, {"type": "tf", "round": 1, "ids": ["Q23"], "q": "Responsive design means building a separate website for phones."}, {"type": "tf", "round": 1, "ids": ["Q24"], "q": "An API is a set of rules that lets different programs exchange data."}, {"type": "tf", "round": 1, "ids": ["Q25"], "q": "A framework lets developers build things that would be impossible without it."}, {"type": "match", "round": 2, "ids": ["Q26", "Q27", "Q28", "Q29", "Q30"], "note": "Match each job to the technology that does it. Each answer is used once.", "choices": ["HTML", "CSS", "JavaScript", "responsive design", "framework"], "rows": ["Defines the structure of the page: headings, paragraphs, images and links.", "Sets the colors, the fonts and the spacing.", "Filters a list of books as the user types, without reloading the page.", "Makes the layout adjust itself to a phone, a tablet or a laptop.", "Provides ready-made functions and components so development is faster."]}, {"type": "match", "round": 2, "ids": ["Q31", "Q32", "Q33", "Q34", "Q35"], "note": "Match each situation to what the server sends back, or to the method used. Each answer is used once.", "choices": ["200", "404", "500", "GET", "POST"], "rows": ["The page was found and sent successfully.", "The address that was typed does not exist.", "The server failed while it was handling the request.", "The method used to request a page or search results.", "The method used to send a sign-up form to the server."]}, {"type": "match", "round": 2, "ids": ["Q36", "Q37", "Q38"], "note": "Match each description to its tier. Each answer is used once.", "choices": ["Frontend", "Backend", "Database"], "rows": ["Displays the screen and collects what the user enters.", "Processes the request and decides what the answer is.", "Stores the records and returns them when they are asked for."]}, {"type": "order", "round": 3, "ids": ["Q39", "Q40", "Q41", "Q42", "Q43"], "note": "A student taps a link to the school results page. Put the five steps in order.", "top": "First", "bottom": "Last", "items": ["The server receives the request and processes it", "The browser, which is the client, sends a request using the GET method", "The browser displays the results page on the screen", "The request travels to the server over HTTPS, so its content is encrypted", "The server returns a response carrying status code 200 and the page content"]}, {"type": "order", "round": 3, "ids": ["Q44", "Q45", "Q46"], "note": "One web page is built up in three layers. Put them in the order they are added.", "top": "Added first", "bottom": "Added last", "items": ["CSS gives that same content its colors, its fonts and its layout", "JavaScript makes the finished page react when the user types or clicks", "HTML puts the content on the page: the headings, the list and the links"]}, {"type": "fill", "round": 4, "ids": ["Q47", "Q48", "Q49", "Q50", "Q51"], "note": "Type the missing word, or tap a word from the bank. Not every word is used.", "bank": ["client", "server", "protocol", "status code", "API", "JSON", "database"], "rows": [{"before": "The side that sends the request is the", "after": "."}, {"before": "The side that receives it, processes it and replies is the", "after": "."}, {"before": "HTTP and HTTPS are two examples of a", "after": "."}, {"before": "The number in a response that reports the result of the processing is the", "after": "."}, {"before": "Data is often exchanged between programs in the", "after": "format."}]}, {"type": "fill", "round": 4, "ids": ["Q52", "Q53", "Q54", "Q55", "Q56"], "note": "Type the missing word, or tap a word from the bank. Not every word is used.", "bank": ["HTML", "CSS", "JavaScript", "semantic", "responsive", "framework", "accessibility"], "rows": [{"before": "The structure of a web page is written in", "after": "."}, {"before": "The colors, the fonts and the layout are set by", "after": "."}, {"before": "Behavior and interactivity are added by", "after": "."}, {"before": "A design whose layout adjusts automatically to the screen size is called", "after": "design."}, {"before": "Tags that say what each part of the page means are called", "after": "HTML."}]}, {"type": "essay", "round": 5, "ids": ["E1"], "q": "Explain the difference between GET and POST methods, giving an example of each. [Assessment book page 53, homework]", "marks": 3, "refer": ["what each method is for", "one example of each"]}, {"type": "essay", "round": 5, "ids": ["E2"], "q": "Why should HTTPS be used on a login page? [Assessment book page 55, Model A]", "marks": 3, "refer": ["what the login page sends", "what HTTPS adds, and what it prevents"]}, {"type": "essay", "round": 5, "ids": ["E3"], "q": "Explain how HTML, CSS, and JavaScript work together to create a complete web page. [Assessment book page 60, Model B]", "marks": 4, "refer": ["the role of each one", "a sentence about what they do together"]}, {"type": "essay", "round": 5, "ids": ["E4"], "q": "Mention the benefits of using semantic HTML for search engines. [Assessment book page 61, Model C]", "marks": 3, "refer": ["what the search engine can do with the tags", "what the page gains"]}], "rounds": [{"era": "The tap", "tag": "Tap", "eraName": "What happens the moment you touch it", "title": "Quick picks", "how": "Choose one answer, then tap Check. Once checked, it is locked in."}, {"era": "Read it twice", "tag": "Check", "eraName": "The sentences that cost marks", "title": "○ or ×", "how": "Is the statement true (○) or false (×)?"}, {"era": "Who does what", "tag": "Match", "eraName": "Every job to its owner", "title": "Match it", "how": "Give every description its answer, then check the whole set."}, {"era": "The journey", "tag": "Order", "eraName": "From your finger to the screen", "title": "Put it in order", "how": "Move each card up or down until the order is right, then check."}, {"era": "The words", "tag": "Words", "eraName": "The terms the exam uses", "title": "Fill the gap", "how": "Type the missing word, or tap one from the word bank."}, {"era": "Your verdict", "tag": "You", "eraName": "Your own words", "title": "Explain it", "how": "Write full answers in English, like in the exam, in your own words and without any AI help. El Bashmohandes marks these."}], "minutes": 50, "arTime": "خمسين دقيقة", "kicker": "Homework 7 · Programming and AI", "h1": ["From the tap ", "to the ", "page"], "lead": "Six rounds across everything you have learned about web applications: the three tiers behind the screen, the request and the response that travel between them, and the three technologies that draw the page you end up looking at. Most of the questions are the ministry assessment book's own. Answer, check, and see which level you reach."};
 const KEYBLOB = "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";
@@ -623,7 +803,7 @@ function startNet(c) {
     const dt = Math.min(50, t - (last || t)); last = t;
     ctx.clearRect(0, 0, W, H);
     edges.forEach((e) => {
-      ctx.strokeStyle = "rgba(143,243,226," + (0.05 + e.w * 0.35) + ")";
+      ctx.strokeStyle = "rgba(91,61,245," + (0.05 + e.w * 0.35) + ")";
       ctx.lineWidth = 0.6 + e.w * 3.2;
       ctx.beginPath(); ctx.moveTo(e.a.x, e.a.y); ctx.lineTo(e.b.x, e.b.y); ctx.stroke();
     });
@@ -642,13 +822,13 @@ function startNet(c) {
       }
       const x = p.e.a.x + (p.e.b.x - p.e.a.x) * p.p, y = p.e.a.y + (p.e.b.y - p.e.a.y) * p.p;
       const g = ctx.createRadialGradient(x, y, 0, x, y, 9);
-      g.addColorStop(0, "rgba(255,210,122,.95)"); g.addColorStop(1, "rgba(255,176,32,0)");
+      g.addColorStop(0, "rgba(255,61,138,.95)"); g.addColorStop(1, "rgba(255,61,138,0)");
       ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 9, 0, Math.PI * 2); ctx.fill();
       return true;
     });
     nodes.forEach((n) => {
       n.glow = Math.max(0, n.glow - dt / 600);
-      ctx.fillStyle = "#060B20"; ctx.strokeStyle = n.glow > 0 ? "rgba(255,176,32," + (0.5 + n.glow / 2) + ")" : "rgba(39,225,193,.85)";
+      ctx.fillStyle = "#FFFFFF"; ctx.strokeStyle = n.glow > 0 ? "rgba(255,61,138," + (0.5 + n.glow / 2) + ")" : "rgba(25,22,51,.85)";
       ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(n.x, n.y, 6 + n.glow * 2.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
     });
     if (!reduce) requestAnimationFrame(frame);
@@ -1034,8 +1214,8 @@ function viewResult() {
   const svg = document.createElementNS(svgNS, "svg");
   svg.setAttribute("viewBox", "0 0 210 210");
   svg.setAttribute("aria-hidden", "true");
-  svg.innerHTML = '<defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8FF3E2"/><stop offset="1" stop-color="#27E1C1"/></linearGradient></defs>' +
-    '<circle cx="105" cy="105" r="88" fill="none" stroke="#16235A" stroke-width="16"/>' +
+  svg.innerHTML = '<defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#36DCA6"/><stop offset="1" stop-color="#00B37E"/></linearGradient></defs>' +
+    '<circle cx="105" cy="105" r="88" fill="none" stroke="#EDE9F7" stroke-width="16"/>' +
     '<circle id="ringArc" cx="105" cy="105" r="88" fill="none" stroke="url(#rg)" stroke-width="16" stroke-linecap="round" stroke-dasharray="' + C + '" stroke-dashoffset="' + C + '" style="transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)"/>';
   const sc = el("span", { class: "sc", text: "0" });
   const bars = t.rounds.map((r) => {
@@ -1071,7 +1251,7 @@ function burst() {
   document.body.append(c);
   const ctx = c.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 2);
   const W = innerWidth, H = innerHeight; c.width = W * dpr; c.height = H * dpr; ctx.scale(dpr, dpr);
-  const cols = ["#27E1C1", "#8FF3E2", "#FFB020", "#FFD27A", "#E6F0FA", "#FF6B6B"];
+  const cols = ["#5B3DF5", "#8B5CF6", "#FF3D8A", "#FFC53D", "#00B37E", "#36DCA6"];
   const ps = Array.from({ length: 160 }, () => ({ x: W / 2 + (Math.random() - .5) * 80, y: H * .38, vx: (Math.random() - .5) * 13, vy: -Math.random() * 15 - 4,
     s: 5 + Math.random() * 7, r: Math.random() * 6, vr: (Math.random() - .5) * .3, c: cols[Math.floor(Math.random() * cols.length)] }));
   const t0 = performance.now();
