@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>تجربة تصميم: ورقة امتحان</title>
+<meta name="theme-color" content="#1A1A1A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root{ --paper:#FBFAF7; --ink:#1A1A1A; --soft:#5C5C5C; --rule:#D9D6CE;
+       --red:#C0392B; --green:#16794C; --mark:#1A1A1A; }
+*{box-sizing:border-box}
+body{margin:0;background:#E7E4DC;color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif;font-size:17px;line-height:1.6}
+.ar{font-family:Cairo,sans-serif;direction:rtl}
+
+.bar{position:sticky;top:0;z-index:10;background:var(--ink);color:#fff;
+  display:flex;align-items:center;gap:14px;padding:10px 16px;
+  font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.04em}
+.bar .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .pill{background:rgba(255,255,255,.14);border-radius:4px;padding:4px 9px;font-variant-numeric:tabular-nums}
+.bar .pill.t{color:#FFD08A}
+
+.sheet{max-width:720px;margin:0 auto;background:var(--paper);min-height:100vh;
+  padding:34px 26px 120px;box-shadow:0 0 24px rgba(0,0,0,.10)}
+.head{text-align:center;border-bottom:2.5px double var(--ink);padding-bottom:16px;margin-bottom:8px}
+.head .school{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft)}
+.head h1{font-size:27px;font-weight:700;margin:8px 0 2px}
+.head .sub{color:var(--soft);font-size:15px}
+.fields{display:flex;gap:18px;margin-top:16px;font-size:15px}
+.fields span{flex:1;border-bottom:1px solid var(--ink);padding-bottom:3px;color:var(--soft)}
+
+.sec{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--soft);border-bottom:1px solid var(--rule);padding-bottom:5px;margin:30px 0 14px}
+.q{margin:0 0 24px;padding-inline-start:34px;position:relative}
+.q .n{position:absolute;inset-inline-start:0;top:0;font-weight:700;font-variant-numeric:tabular-nums}
+.q .st{font-weight:600}
+.q .mk{float:right;font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--soft)}
+.opts{margin-top:9px;display:grid;gap:3px}
+.opt{display:flex;gap:10px;align-items:baseline;padding:5px 8px;border-radius:5px;cursor:pointer}
+.opt:hover{background:#F0EDE5}
+.opt input{appearance:none;width:17px;height:17px;border:1.6px solid var(--ink);border-radius:50%;flex:none;
+  position:relative;top:3px;cursor:pointer}
+.opt input:checked{box-shadow:inset 0 0 0 3.5px var(--paper);background:var(--ink)}
+.opt .lb{flex:1}
+.opt .let{font-weight:700;width:1.1em}
+.line{display:inline-block;min-width:9em;border-bottom:1.6px solid var(--ink);padding:1px 8px;
+  font-family:inherit;font-size:17px;background:transparent;color:var(--ink);text-align:center}
+.line:focus{outline:none;background:#F3F0E7}
+
+.marked .opt.ans{background:rgba(22,121,76,.13)}
+.marked .opt.picked.bad{background:rgba(192,57,43,.12)}
+.mark{display:none;margin-top:8px;font-size:15.5px;border-inline-start:3px solid var(--green);padding-inline-start:12px}
+.marked .mark{display:block}
+.mark.bad{border-inline-start-color:var(--red)}
+.mark .v{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--green)}
+.mark.bad .v{color:var(--red)}
+.mark .ar{color:var(--soft);font-size:15px;margin-top:3px}
+.marked .q::after{position:absolute;inset-inline-end:-6px;top:-4px;font-family:"Source Serif 4",serif;
+  font-size:30px;font-weight:700}
+.marked .q.ok::after{content:"\2713";color:var(--green)}
+.marked .q.no::after{content:"\2717";color:var(--red)}
+
+.foot{margin-top:34px;border-top:1px solid var(--rule);padding-top:16px;text-align:center}
+.hand{font-family:"IBM Plex Mono",monospace;font-size:14px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;background:var(--ink);color:#fff;border:0;border-radius:4px;padding:15px 30px;cursor:pointer}
+.hand:disabled{opacity:.4;cursor:not-allowed}
+.total{display:none;margin-top:18px;font-size:22px;font-weight:700}
+.marked .total{display:block}
+.total .ar{font-family:Cairo,sans-serif;font-size:14.5px;color:var(--soft);font-weight:400;margin-top:4px}
+
+.switch{position:fixed;left:0;right:0;bottom:0;display:flex;gap:6px;justify-content:center;
+  padding:9px 10px calc(9px + env(safe-area-inset-bottom));background:rgba(26,26,26,.94);
+  font-family:Cairo,sans-serif;font-size:12.5px}
+.switch a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:5px 11px}
+.switch a.on{background:#fff;color:#1A1A1A}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="nm">Unit 3 &middot; Web Applications</span>
+  <span class="pill" id="done">0 / 4</span>
+  <span class="pill t" id="clock">50:00</span>
+</div>
+
+<main class="sheet" id="sheet">
+  <div class="head">
+    <div class="school">Programming and Artificial Intelligence &middot; Year 2</div>
+    <h1>Unit 3 Paper</h1>
+    <div class="sub">Web applications: the tiers, the message and the page</div>
+    <div class="fields"><span>Name:</span><span>Group:</span><span>Date:</span></div>
+  </div>
+
+  <div class="sec">Section A &middot; Objective questions</div>
+
+  <div class="q" id="q0">
+    <span class="n">1.</span><span class="mk">[1]</span>
+    <div class="st">Which of the following status codes indicates an internal server error?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q0" value="0"><span class="let">A</span><span class="lb">200</span></label>
+      <label class="opt"><input type="radio" name="q0" value="1"><span class="let">B</span><span class="lb">404</span></label>
+      <label class="opt"><input type="radio" name="q0" value="2"><span class="let">C</span><span class="lb">500</span></label>
+      <label class="opt"><input type="radio" name="q0" value="3"><span class="let">D</span><span class="lb">302</span></label>
+    </div>
+    <div class="mark"><span class="v"></span><div class="why"></div><div class="ar"></div></div>
+  </div>
+
+  <div class="q" id="q1">
+    <span class="n">2.</span><span class="mk">[1]</span>
+    <div class="st">Semantic HTML changes the way the page looks on the screen.</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q1" value="0"><span class="let">A</span><span class="lb">True</span></label>
+      <label class="opt"><input type="radio" name="q1" value="1"><span class="let">B</span><span class="lb">False</span></label>
+    </div>
+    <div class="mark"><span class="v"></span><div class="why"></div><div class="ar"></div></div>
+  </div>
+
+  <div class="q" id="q2">
+    <span class="n">3.</span><span class="mk">[1]</span>
+    <div class="st">Which of the following is NOT an appropriate benefit of using semantic HTML?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q2" value="0"><span class="let">A</span><span class="lb">Screen reader software can correctly understand the structure of the page</span></label>
+      <label class="opt"><input type="radio" name="q2" value="1"><span class="let">B</span><span class="lb">Search engines can more easily understand the content of a web page</span></label>
+      <label class="opt"><input type="radio" name="q2" value="2"><span class="let">C</span><span class="lb">The display speed of a web page necessarily becomes faster</span></label>
+      <label class="opt"><input type="radio" name="q2" value="3"><span class="let">D</span><span class="lb">Information becomes easier to convey to users with visual impairments</span></label>
+    </div>
+    <div class="mark"><span class="v"></span><div class="why"></div><div class="ar"></div></div>
+  </div>
+
+  <div class="sec">Section B &middot; Complete</div>
+
+  <div class="q" id="q3">
+    <span class="n">4.</span><span class="mk">[1]</span>
+    <div class="st">HTTP and HTTPS are two examples of a <input class="line" id="fill" autocomplete="off"> .</div>
+    <div class="mark"><span class="v"></span><div class="why"></div><div class="ar"></div></div>
+  </div>
+
+  <div class="foot">
+    <button class="hand" id="hand" disabled>Hand in the paper</button>
+    <div class="total" id="total"></div>
+  </div>
+</main>
+
+<nav class="switch">
+  <a href="chat.html">محادثة</a>
+  <a class="on" href="paper.html">ورقة</a>
+  <a href="cards.html">كروت</a>
+  <a href="map.html">خريطة</a>
+</nav>
+
+<script>
+const KEY = [
+  {a:2, why:"500 is the server's own failure: the address existed, but the server broke while handling it.",
+   ar:"500 عطل في السيرفر نفسه، و404 معناها العنوان مش موجود."},
+  {a:1, why:"It changes the meaning of the elements, not the appearance. Appearance is CSS.",
+   ar:"بيغير المعنى مش الشكل. الصفحة شكلها زي ما هو."},
+  {a:2, why:"Semantic HTML is about meaning, not speed. Watch the word necessarily.",
+   ar:"الوسوم بتدي معنى، مش سرعة."},
+  {accept:["protocol","communication protocol"], show:"protocol",
+   why:"A protocol is the agreed set of rules for the exchange.",
+   ar:"البروتوكول هو القواعد المتفق عليها بين الطرفين."}
+];
+
+const sheet = document.getElementById("sheet"), doneEl = document.getElementById("done"),
+      hand = document.getElementById("hand"), fill = document.getElementById("fill");
+
+function answered(){
+  let n = 0;
+  for (let i = 0; i < 3; i++) if (document.querySelector('input[name="q' + i + '"]:checked')) n++;
+  if (fill.value.trim()) n++;
+  doneEl.textContent = n + " / 4";
+  hand.disabled = n < 4;
+}
+sheet.addEventListener("change", answered);
+fill.addEventListener("input", answered);
+
+hand.addEventListener("click", () => {
+  let score = 0;
+  for (let i = 0; i < 3; i++){
+    const q = document.getElementById("q" + i);
+    const picked = document.querySelector('input[name="q' + i + '"]:checked');
+    const right = picked && +picked.value === KEY[i].a;
+    if (right) score++;
+    q.classList.add(right ? "ok" : "no");
+    [].forEach.call(q.querySelectorAll(".opt"), (o, k) => {
+      if (k === KEY[i].a) o.classList.add("ans");
+      if (picked && +picked.value === k && !right) o.classList.add("picked", "bad");
+      o.querySelector("input").disabled = true;
+    });
+    const m = q.querySelector(".mark");
+    m.classList.toggle("bad", !right);
+    m.querySelector(".v").textContent = right ? "1 / 1" : "0 / 1";
+    m.querySelector(".why").textContent = KEY[i].why;
+    m.querySelector(".ar").textContent = KEY[i].ar;
+    m.querySelector(".ar").className = "ar";
+  }
+  const q3 = document.getElementById("q3");
+  const ok3 = KEY[3].accept.some(a => a === fill.value.trim().toLowerCase());
+  if (ok3) score++;
+  q3.classList.add(ok3 ? "ok" : "no");
+  fill.disabled = true;
+  const m3 = q3.querySelector(".mark");
+  m3.classList.toggle("bad", !ok3);
+  m3.querySelector(".v").textContent = (ok3 ? "1 / 1" : "0 / 1") + (ok3 ? "" : "  ·  answer: " + KEY[3].show);
+  m3.querySelector(".why").textContent = KEY[3].why;
+  m3.querySelector(".ar").textContent = KEY[3].ar;
+
+  sheet.classList.add("marked");
+  hand.disabled = true;
+  hand.textContent = "Handed in";
+  document.getElementById("total").innerHTML = "Total: " + score + " / 4" +
+    '<div class="ar">ده شكل التصميم ده: ورقة واحدة، مفيش تصحيح فوري، التصحيح بيجي كله مرة واحدة في الآخر.</div>';
+  document.getElementById("total").scrollIntoView({behavior:"smooth", block:"center"});
+});
+
+let left = 50 * 60;
+setInterval(() => {
+  left--;
+  const m = String(Math.floor(left / 60)).padStart(2, "0"), s = String(left % 60).padStart(2, "0");
+  document.getElementById("clock").textContent = m + ":" + s;
+}, 1000);
+</script>
+</body>
+</html>

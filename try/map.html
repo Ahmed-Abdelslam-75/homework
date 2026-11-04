@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>تجربة تصميم: خريطة</title>
+<meta name="theme-color" content="#0E3B4A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Baloo+2:wght@500;600;700&display=swap">
+<style>
+:root{ --sea:#0E3B4A; --sea2:#14566B; --sand:#F7E9C9; --ink:#10242B; --soft:#5C7480;
+       --go:#17B890; --no:#F2545B; --gold:#FFC93C; }
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--sea);color:#fff;font-family:"Baloo 2",system-ui,sans-serif;
+  overflow:hidden;display:flex;flex-direction:column}
+.ar{font-family:Cairo,sans-serif}
+
+.hd{flex:none;padding:12px 16px 4px;display:flex;align-items:center;gap:12px;max-width:560px;width:100%;margin:0 auto}
+.hd .t{flex:1;font-family:Cairo,sans-serif;font-size:14px;color:#9ED3E0}
+.hd .t b{display:block;font-family:"Baloo 2",sans-serif;font-size:20px;color:#fff}
+.gems{background:rgba(255,255,255,.1);border-radius:999px;padding:6px 13px;font-weight:700;display:flex;gap:7px;align-items:center}
+.gems i{width:14px;height:14px;background:var(--gold);display:inline-block;
+  clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)}
+
+.board{flex:none;width:100%;max-width:560px;margin:0 auto;padding:0 10px}
+.board svg{width:100%;height:auto;display:block}
+.st{transition:all .4s}
+.tok{transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+
+.panel{flex:1;min-height:0;overflow-y:auto;background:var(--sand);color:var(--ink);
+  border-radius:26px 26px 0 0;margin-top:6px;padding:18px 18px calc(16px + env(safe-area-inset-bottom));
+  box-shadow:0 -10px 30px rgba(0,0,0,.25)}
+.panel .where{font-family:Cairo,sans-serif;font-size:13px;color:var(--soft)}
+.panel .q{direction:ltr;text-align:left;font-size:clamp(19px,5vw,23px);font-weight:700;line-height:1.35;margin:4px 0 14px}
+.opts{display:grid;gap:9px}
+.o{direction:ltr;border:2.5px solid #E2D3AE;border-radius:16px;background:#FFFDF6;color:var(--ink);font:inherit;
+  font-size:17px;font-weight:600;padding:14px 16px;text-align:start;cursor:pointer;transition:.14s;
+  display:flex;gap:12px;align-items:center}
+.o .k{width:30px;height:30px;border-radius:9px;background:#EFE2C0;display:grid;place-items:center;
+  font-size:14px;flex:none}
+.o:hover{border-color:var(--sea2)}
+.o.right{border-color:var(--go);background:rgba(23,184,144,.14)}
+.o.right .k{background:var(--go);color:#fff}
+.o.wrong{border-color:var(--no);background:rgba(242,84,91,.12)}
+.o.wrong .k{background:var(--no);color:#fff}
+.typerow{display:flex;gap:9px}
+.typerow input{direction:ltr;flex:1;border:2.5px solid #E2D3AE;border-radius:16px;background:#FFFDF6;padding:14px;
+  font:inherit;font-size:17px;font-weight:600;color:var(--ink)}
+.typerow input:focus{outline:none;border-color:var(--sea2)}
+.typerow button{border:0;border-radius:16px;background:var(--sea2);color:#fff;font:inherit;font-weight:700;
+  padding:0 20px;cursor:pointer}
+.res{margin-top:14px;border-radius:16px;padding:14px 16px;display:none}
+.res.on{display:block}
+.res.good{background:rgba(23,184,144,.14);border:2px solid var(--go)}
+.res.bad{background:rgba(242,84,91,.12);border:2px solid var(--no)}
+.res .h span,.res .h b{unicode-bidi:isolate}
+.res .h{font-weight:700;font-size:18px;display:flex;align-items:center;gap:9px}
+.res.good .h{color:#0E7C62} .res.bad .h{color:#C2343B}
+.res .w{direction:ltr;text-align:left;margin-top:5px;font-size:16px;line-height:1.45}
+.res .a{font-family:Cairo,sans-serif;direction:rtl;color:var(--soft);font-size:15px;line-height:1.9;margin-top:4px}
+.go{margin-top:12px;width:100%;border:0;border-radius:16px;background:var(--sea);color:#fff;font:inherit;
+  font-size:17px;font-weight:700;padding:15px;cursor:pointer;display:none}
+.go.on{display:block}
+
+.switch{flex:none;display:flex;gap:6px;justify-content:center;padding:8px 10px;background:var(--sand);
+  font-family:Cairo,sans-serif;font-size:12.5px}
+.switch a{color:var(--ink);text-decoration:none;border:1px solid #D9C9A3;border-radius:999px;padding:5px 11px;background:#FFFDF6}
+.switch a.on{background:var(--sea);color:#fff;border-color:var(--sea)}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="t">رحلة الوحدة التالتة<b>من الضغطة للصفحة</b></div>
+  <div class="gems"><i></i><span id="gems">0</span></div>
+</header>
+
+<div class="board">
+<svg viewBox="0 0 520 220" role="img" aria-label="Journey board with four stations">
+  <path d="M40 170 C 110 170, 110 60, 180 60 S 250 170, 320 170 S 390 60, 460 60"
+        fill="none" stroke="rgba(255,255,255,.16)" stroke-width="16" stroke-linecap="round"/>
+  <path id="trail" d="M40 170 C 110 170, 110 60, 180 60 S 250 170, 320 170 S 390 60, 460 60"
+        fill="none" stroke="#FFC93C" stroke-width="7" stroke-linecap="round"
+        stroke-dasharray="1000" stroke-dashoffset="1000" style="transition:stroke-dashoffset .6s"/>
+  <g id="stations">
+    <circle class="st" id="s0" cx="40" cy="170" r="18" fill="#14566B" stroke="#fff" stroke-width="3"/>
+    <circle class="st" id="s1" cx="180" cy="60" r="18" fill="#14566B" stroke="rgba(255,255,255,.5)" stroke-width="3"/>
+    <circle class="st" id="s2" cx="320" cy="170" r="18" fill="#14566B" stroke="rgba(255,255,255,.5)" stroke-width="3"/>
+    <circle class="st" id="s3" cx="460" cy="60" r="18" fill="#14566B" stroke="rgba(255,255,255,.5)" stroke-width="3"/>
+    <text x="40" y="176" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">1</text>
+    <text x="180" y="66" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">2</text>
+    <text x="320" y="176" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">3</text>
+    <text x="460" y="66" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">4</text>
+  </g>
+  <g class="tok" id="tok" transform="translate(40,170)">
+    <circle r="13" cy="-34" fill="#FFC93C"/>
+    <path d="M0 -21 L -7 -34 L 7 -34 Z" fill="#FFC93C"/>
+    <circle r="4.5" cy="-37" fill="#0E3B4A"/>
+    <path d="M-5 -30 q5 5 10 0" stroke="#0E3B4A" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>
+</div>
+
+<div class="panel">
+  <div class="where" id="where"></div>
+  <div class="q" id="q"></div>
+  <div id="body"></div>
+  <div class="res" id="res"><div class="h" id="resh"></div><div class="w" id="resw"></div><div class="a" id="resa"></div></div>
+  <button class="go" id="go"></button>
+</div>
+
+<nav class="switch">
+  <a href="chat.html">محادثة</a>
+  <a href="paper.html">ورقة</a>
+  <a href="cards.html">كروت</a>
+  <a class="on" href="map.html">خريطة</a>
+</nav>
+
+<script>
+const Q = [
+  {st:"محطة ١ · الرسالة", q:"Which status code means the server itself failed?", o:["200","404","500","302"], a:2,
+   why:"500 is the server's own failure: the address existed, but the server broke while handling it.",
+   ar:"500 عطل في السيرفر نفسه، و404 معناها العنوان مش موجود."},
+  {st:"محطة ٢ · الصفحة", q:"Semantic HTML changes the way the page looks on the screen.", o:["True","False"], a:1,
+   why:"It changes the meaning of the elements, not the appearance. Appearance is CSS.",
+   ar:"بيغير المعنى مش الشكل. الصفحة شكلها زي ما هو بالظبط."},
+  {st:"محطة ٣ · المعنى", q:"Which of these is NOT a benefit of semantic HTML?",
+   o:["Screen readers understand the structure","Search engines understand the content",
+      "The display speed necessarily becomes faster","It reaches users with visual impairments"], a:2,
+   why:"Semantic HTML is about meaning, not speed. Watch the word necessarily.",
+   ar:"الوسوم بتدي معنى، مش سرعة."},
+  {st:"محطة ٤ · القواعد", q:"HTTP and HTTPS are two examples of a ______ .", type:true,
+   accept:["protocol","communication protocol"], show:"protocol",
+   why:"A protocol is the agreed set of rules for the exchange.",
+   ar:"البروتوكول هو القواعد المتفق عليها بين الطرفين."}
+];
+const POS = [[40,170],[180,60],[320,170],[460,60]];
+const DASH = [1000, 700, 450, 190];
+
+const el = id => document.getElementById(id);
+let at = 0, gems = 0;
+
+function render(){
+  const q = Q[at];
+  el("where").textContent = q.st + " · سؤال " + (at + 1) + " من " + Q.length;
+  el("q").textContent = q.q;
+  el("res").className = "res";
+  el("go").className = "go";
+  const body = el("body");
+  body.innerHTML = "";
+  if (q.type){
+    const row = document.createElement("div");
+    row.className = "typerow";
+    row.innerHTML = '<input id="tin" placeholder="اكتب الكلمة" autocomplete="off"><button id="tgo">تمام</button>';
+    body.appendChild(row);
+    row.querySelector("#tgo").onclick = () => { const v = row.querySelector("#tin").value.trim(); if (v) answer(v, null); };
+  } else {
+    const wrap = document.createElement("div");
+    wrap.className = "opts";
+    q.o.forEach((o, k) => {
+      const b = document.createElement("button");
+      b.className = "o";
+      b.innerHTML = '<span class="k">' + "ABCD"[k] + "</span><span>" + o + "</span>";
+      b.onclick = () => answer(k, b);
+      wrap.appendChild(b);
+    });
+    body.appendChild(wrap);
+  }
+}
+
+function answer(v, node){
+  const q = Q[at];
+  const right = q.type ? q.accept.some(a => a === String(v).toLowerCase()) : v === q.a;
+  if (node){
+    node.classList.add(right ? "right" : "wrong");
+    if (!right) el("body").querySelectorAll(".o")[q.a].classList.add("right");
+  }
+  el("body").querySelectorAll("button,input").forEach(b => b.disabled = true);
+  if (right) { gems++; el("gems").textContent = gems; }
+  el("s" + at).setAttribute("fill", right ? "#17B890" : "#F2545B");
+  el("res").className = "res on " + (right ? "good" : "bad");
+  el("resh").innerHTML = (right ? "&#10003; صح" : "&#10007; غلط") +
+    (right ? "" : " &middot; الإجابة: " + (q.type ? q.show : q.o[q.a]));
+  el("resw").textContent = q.why;
+  el("resa").textContent = q.ar;
+  el("go").className = "go on";
+  el("go").textContent = at === Q.length - 1 ? "وصلت النهاية" : "اتحرك للمحطة اللي بعدها";
+  el("go").onclick = move;
+}
+
+function move(){
+  if (at === Q.length - 1){
+    el("where").textContent = "خلصت الرحلة";
+    el("q").textContent = "جمعت " + gems + " من " + Q.length;
+    el("body").innerHTML = '<div style="font-family:Cairo,sans-serif;direction:rtl;line-height:1.9">ده شكل التصميم ده: لوحة قدامك، وكل إجابة بتحركك محطة، وشايف الطريق كله من الأول.</div>';
+    el("res").className = "res";
+    el("go").textContent = "من الأول";
+    el("go").onclick = () => location.reload();
+    return;
+  }
+  at++;
+  el("trail").style.strokeDashoffset = DASH[at];
+  el("tok").setAttribute("transform", "translate(" + POS[at][0] + "," + POS[at][1] + ")");
+  el("s" + at).setAttribute("stroke", "#fff");
+  setTimeout(render, 500);
+}
+
+render();
+</script>
+</body>
+</html>

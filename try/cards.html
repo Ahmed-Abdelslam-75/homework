@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>تجربة تصميم: كروت</title>
+<meta name="theme-color" content="#140F2B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+:root{ --bg:#140F2B; --bg2:#1E1744; --card:#FFFFFF; --ink:#140F2B; --soft:#6E6A86;
+       --win:#00C48C; --lose:#FF5E7A; --gold:#FFC93C; --violet:#7C5CFF; }
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:radial-gradient(900px 600px at 50% -10%,#2A1F5E,var(--bg));
+  color:#fff;font-family:"Space Grotesk",system-ui,sans-serif;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center}
+.ar{font-family:Cairo,sans-serif;direction:rtl}
+
+.hd{flex:none;width:100%;max-width:520px;padding:14px 18px 6px;display:flex;align-items:center;gap:12px}
+.hd .left{flex:1}
+.hd .ttl{font-family:Cairo,sans-serif;font-size:13px;color:#A79FD6}
+.hd .deck{font-size:21px;font-weight:700;letter-spacing:-.02em}
+.coins{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border-radius:999px;
+  padding:7px 14px;font-weight:700;font-variant-numeric:tabular-nums}
+.coins i{width:16px;height:16px;border-radius:50%;background:var(--gold);display:inline-block;
+  box-shadow:0 0 0 3px rgba(255,201,60,.22)}
+
+.stage{flex:1;width:100%;display:grid;place-items:center;perspective:1400px;padding:4px 16px 0}
+.deckwrap{position:relative;width:min(92vw,430px);height:min(66vh,520px)}
+.ghost{position:absolute;inset:0;border-radius:26px;background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.14)}
+.ghost.g1{transform:translateY(16px) scale(.955)}
+.ghost.g2{transform:translateY(32px) scale(.91);opacity:.6}
+
+.card{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.2,.8,.25,1)}
+.card.flipped{transform:rotateY(180deg)}
+.card.gone{transition:transform .45s ease-in,opacity .45s ease-in;transform:translateX(-120%) rotate(-14deg);opacity:0}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:26px;background:var(--card);
+  color:var(--ink);padding:26px 22px;display:flex;flex-direction:column;
+  box-shadow:0 26px 60px rgba(8,4,28,.55)}
+.back{transform:rotateY(180deg);justify-content:center;gap:14px}
+.tag{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--violet)}
+.qt{direction:ltr;text-align:left;margin-top:14px;font-size:clamp(20px,5.4vw,26px);font-weight:700;line-height:1.3;letter-spacing:-.01em}
+.tiles{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{direction:ltr;border:2px solid #E6E3F2;border-radius:16px;background:#FAF9FF;color:var(--ink);
+  font:inherit;font-size:17px;font-weight:600;padding:16px 12px;cursor:pointer;transition:.14s;text-align:center}
+.tile.long{grid-column:span 2;text-align:start;font-size:15.5px;font-weight:500;line-height:1.35}
+.tile:hover{border-color:var(--violet);transform:translateY(-2px)}
+.tile:active{transform:scale(.98)}
+.tile.right{border-color:var(--win);background:rgba(0,196,140,.14)}
+.tile.wrong{border-color:var(--lose);background:rgba(255,94,122,.12)}
+.typerow{margin-top:auto;display:flex;gap:10px}
+.typerow input{direction:ltr;flex:1;border:2px solid #E6E3F2;border-radius:16px;padding:16px;font:inherit;font-size:17px;
+  font-weight:600;background:#FAF9FF;color:var(--ink)}
+.typerow input:focus{outline:none;border-color:var(--violet)}
+.typerow button{border:0;border-radius:16px;background:var(--violet);color:#fff;font:inherit;font-weight:700;
+  padding:0 20px;cursor:pointer}
+
+.verdict{display:flex;align-items:center;gap:12px;font-size:27px;font-weight:700}
+.verdict .ic{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:24px}
+.verdict.win .ic{background:var(--win)} .verdict.win{color:#00895F}
+.verdict.lose .ic{background:var(--lose)} .verdict.lose{color:#D2304D}
+.back .corr{font-size:17px;font-weight:600}
+.back .corr b,.back .corr span{unicode-bidi:isolate}
+.back .why{direction:ltr;text-align:left;font-size:16px;color:#3B3758;line-height:1.5}
+.back .arx{font-family:Cairo,sans-serif;direction:rtl;font-size:15px;color:var(--soft);line-height:1.9}
+.next{margin-top:auto;border:0;border-radius:16px;background:var(--ink);color:#fff;font:inherit;
+  font-size:16px;font-weight:700;padding:16px;cursor:pointer}
+
+.bottom{flex:none;width:100%;max-width:520px;padding:10px 18px 4px;text-align:center;
+  font-family:Cairo,sans-serif;font-size:13px;color:#A79FD6}
+.switch{flex:none;display:flex;gap:6px;justify-content:center;padding:8px 10px calc(10px + env(safe-area-inset-bottom));
+  font-family:Cairo,sans-serif;font-size:12.5px}
+.switch a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.26);border-radius:999px;padding:5px 11px}
+.switch a.on{background:#fff;color:var(--bg)}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="left"><div class="ttl">الوحدة التالتة</div><div class="deck" id="left">٤ كروت</div></div>
+  <div class="coins"><i></i><span id="score">0</span></div>
+</header>
+
+<div class="stage">
+  <div class="deckwrap">
+    <div class="ghost g2" id="g2"></div>
+    <div class="ghost g1" id="g1"></div>
+    <div class="card" id="card">
+      <div class="face front" id="front"></div>
+      <div class="face back" id="back"></div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom" id="hint">جاوب، والكارت هيتقلب يوريك الشرح</div>
+
+<nav class="switch">
+  <a href="chat.html">محادثة</a>
+  <a href="paper.html">ورقة</a>
+  <a class="on" href="cards.html">كروت</a>
+  <a href="map.html">خريطة</a>
+</nav>
+
+<script>
+const Q = [
+  {tag:"Quick pick", q:"Which status code means the server itself failed?", o:["200","404","500","302"], a:2,
+   why:"500 is the server's own failure: the address existed, but the server broke while handling it.",
+   ar:"500 عطل في السيرفر نفسه، و404 معناها العنوان مش موجود."},
+  {tag:"True or false", q:"Semantic HTML changes the way the page looks on the screen.", o:["True","False"], a:1,
+   why:"It changes the meaning of the elements, not the appearance. Appearance is CSS.",
+   ar:"بيغير المعنى مش الشكل. الصفحة شكلها زي ما هو بالظبط."},
+  {tag:"Quick pick", q:"Which of these is NOT a benefit of semantic HTML?",
+   o:["Screen readers understand the structure","Search engines understand the content",
+      "The display speed necessarily becomes faster","It reaches users with visual impairments"], a:2, long:true,
+   why:"Semantic HTML is about meaning, not speed. Watch the word necessarily.",
+   ar:"الوسوم بتدي معنى، مش سرعة."},
+  {tag:"Type it", q:"HTTP and HTTPS are two examples of a ______ .", type:true,
+   accept:["protocol","communication protocol"], show:"protocol",
+   why:"A protocol is the agreed set of rules for the exchange.",
+   ar:"البروتوكول هو القواعد المتفق عليها بين الطرفين."}
+];
+
+const AR_N = ["صفر","كارت واحد","كارتين","٣ كروت","٤ كروت"];
+const card = document.getElementById("card"), front = document.getElementById("front"),
+      back = document.getElementById("back"), scoreEl = document.getElementById("score"),
+      leftEl = document.getElementById("left"), hint = document.getElementById("hint");
+let at = 0, score = 0;
+
+function render(){
+  if (at >= Q.length) return done();
+  leftEl.textContent = AR_N[Q.length - at] + " فاضل";
+  document.getElementById("g1").style.display = at < Q.length - 1 ? "" : "none";
+  document.getElementById("g2").style.display = at < Q.length - 2 ? "" : "none";
+  const q = Q[at];
+  front.innerHTML = '<div class="tag">' + q.tag + " &middot; " + (at + 1) + "/" + Q.length +
+    '</div><div class="qt">' + q.q + "</div>";
+  if (q.type){
+    const row = document.createElement("div");
+    row.className = "typerow";
+    row.innerHTML = '<input id="tin" placeholder="اكتب الكلمة" autocomplete="off"><button id="tgo">تمام</button>';
+    front.appendChild(row);
+    row.querySelector("#tgo").onclick = () => { const v = row.querySelector("#tin").value.trim(); if (v) answer(v, null); };
+  } else {
+    const tiles = document.createElement("div");
+    tiles.className = "tiles";
+    q.o.forEach((o, k) => {
+      const b = document.createElement("button");
+      b.className = "tile" + (q.long ? " long" : "");
+      b.textContent = o;
+      b.onclick = () => answer(k, b);
+      tiles.appendChild(b);
+    });
+    front.appendChild(tiles);
+  }
+  hint.textContent = q.type ? "اكتب إجابتك ودوس تمام" : "جاوب، والكارت هيتقلب يوريك الشرح";
+}
+
+function answer(v, node){
+  const q = Q[at];
+  const right = q.type
+    ? q.accept.some(a => a === String(v).toLowerCase())
+    : v === q.a;
+  if (node){
+    node.classList.add(right ? "right" : "wrong");
+    if (!right) front.querySelectorAll(".tile")[q.a].classList.add("right");
+  }
+  if (right){ score++; scoreEl.textContent = score; }
+  const corr = right ? "" : '<div class="corr">الإجابة: ' + (q.type ? q.show : q.o[q.a]) + "</div>";
+  back.innerHTML = '<div class="verdict ' + (right ? "win" : "lose") + '"><span class="ic">' +
+    (right ? "&#10003;" : "&#10007;") + "</span>" + (right ? "صح" : "غلط") + "</div>" + corr +
+    '<div class="why">' + q.why + '</div><div class="arx">' + q.ar + "</div>" +
+    '<button class="next" id="nx">' + (at === Q.length - 1 ? "شوف النتيجة" : "الكارت اللي بعده") + "</button>";
+  setTimeout(() => card.classList.add("flipped"), 420);
+  setTimeout(() => {
+    document.getElementById("nx").onclick = () => {
+      card.classList.add("gone");
+      setTimeout(() => {
+        card.classList.remove("gone", "flipped");
+        at++;
+        render();
+      }, 460);
+    };
+  }, 440);
+  hint.textContent = "اقرا ضهر الكارت";
+}
+
+function done(){
+  document.getElementById("g1").style.display = "none";
+  document.getElementById("g2").style.display = "none";
+  front.innerHTML = '<div class="tag">النتيجة</div><div class="qt">خدت ' + score + ' من ' + Q.length +
+    '</div><div class="why" style="margin-top:14px">ده شكل التصميم ده: كارت واحد قدامك، الكومة بتقل، وكل إجابة بتقلب الكارت.</div>' +
+    '<button class="next" onclick="location.reload()">من الأول</button>';
+  leftEl.textContent = "خلصت";
+  hint.textContent = "";
+}
+
+render();
+</script>
+</body>
+</html>

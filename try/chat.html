@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>تجربة تصميم: محادثة</title>
+<meta name="theme-color" content="#0B3B2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#E9E2D8; --head:#0B3B2E; --mine:#1F9A6E; --theirs:#FFFFFF;
+  --ink:#16221E; --soft:#6B7A74; --line:#D7CEC2; --ok:#128C5A; --no:#C5342B;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:Inter,"Cairo",system-ui,sans-serif;font-size:16px;line-height:1.55;
+  display:flex;flex-direction:column;overflow:hidden}
+.ar{font-family:Cairo,system-ui,sans-serif}
+
+.top{flex:none;background:var(--head);color:#fff;padding:10px 14px;display:flex;align-items:center;gap:12px}
+.av{width:42px;height:42px;border-radius:50%;background:#1F9A6E;display:grid;place-items:center;
+  font-weight:700;font-size:15px;flex:none}
+.who{flex:1;min-width:0}
+.who b{display:block;font-size:16px;font-weight:600}
+.who span{font-size:12.5px;color:#9FD3C0;display:flex;align-items:center;gap:6px}
+.who span i{width:7px;height:7px;border-radius:50%;background:#49E39E;display:inline-block}
+.score{background:rgba(255,255,255,.14);border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:700;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.thread{flex:1;overflow-y:auto;padding:16px 12px 8px;display:flex;flex-direction:column;gap:10px;
+  background-image:radial-gradient(rgba(11,59,46,.05) 1px,transparent 1.5px);background-size:18px 18px}
+.row{display:flex;max-width:100%}
+.row.me{justify-content:flex-end}
+.row.them{justify-content:flex-start}
+.b{max-width:86%;padding:11px 14px;border-radius:18px;position:relative;
+  box-shadow:0 1px 1px rgba(16,34,28,.10);animation:pop .22s ease-out both}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.97)}}
+.them .b{background:var(--theirs);border-top-right-radius:5px}
+.me .b{background:var(--mine);color:#fff;border-top-left-radius:5px}
+.b .q{font-weight:600;font-size:16.5px}
+.en{direction:ltr;text-align:left;unicode-bidi:isolate}
+.b .meta{font-size:11.5px;color:var(--soft);margin-top:4px;display:flex;gap:6px;justify-content:flex-start}
+.me .b .meta{color:rgba(255,255,255,.75)}
+.b.verdict{border-inline-start:4px solid var(--ok)}
+.b.verdict.no{border-inline-start-color:var(--no)}
+.b .hd{font-weight:700;display:flex;align-items:center;gap:7px;margin-bottom:3px}
+.b.verdict .hd{color:var(--ok)}
+.b.verdict.no .hd{color:var(--no)}
+.b .arline{font-family:Cairo,sans-serif;color:var(--soft);font-size:14.5px;margin-top:6px;line-height:1.9}
+.typing{display:flex;gap:4px;padding:14px 16px}
+.typing i{width:7px;height:7px;border-radius:50%;background:#B9C4BF;animation:blink 1.1s infinite}
+.typing i:nth-child(2){animation-delay:.18s}
+.typing i:nth-child(3){animation-delay:.36s}
+@keyframes blink{50%{opacity:.25;transform:translateY(-3px)}}
+
+.dock{flex:none;background:#F4EFE7;border-top:1px solid var(--line);padding:10px 12px calc(10px + env(safe-area-inset-bottom))}
+.hint{font-family:Cairo,sans-serif;font-size:12.5px;color:var(--soft);margin:0 2px 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{flex:1 1 44%;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:12px 13px;
+  font:inherit;font-size:15.5px;color:var(--ink);text-align:start;cursor:pointer;transition:.14s}
+.chip:hover{border-color:var(--mine)}
+.chip:active{transform:scale(.98)}
+.chip.full{flex:1 1 100%}
+.typebox{display:flex;gap:8px;align-items:center}
+.typebox input{flex:1;border:1.5px solid var(--line);border-radius:999px;padding:12px 16px;font:inherit;
+  font-size:16px;background:#fff;color:var(--ink)}
+.typebox input:focus{outline:none;border-color:var(--mine)}
+.send{width:46px;height:46px;border-radius:50%;border:0;background:var(--mine);color:#fff;font-size:18px;
+  cursor:pointer;flex:none}
+.done{font-family:Cairo,sans-serif;text-align:center;color:var(--soft);font-size:14px;padding:4px}
+
+.switch{flex:none;display:flex;gap:6px;justify-content:center;padding:8px 10px 12px;background:#F4EFE7;
+  border-top:1px solid var(--line);font-family:Cairo,sans-serif;font-size:12.5px}
+.switch a{color:var(--head);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:#fff}
+.switch a.on{background:var(--head);color:#fff;border-color:var(--head)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="av">ب</div>
+  <div class="who"><b>El Bashmohandes</b><span><i></i> الوحدة التالتة · ٤ أسئلة</span></div>
+  <div class="score" id="score">0 / 4</div>
+</header>
+
+<div class="thread" id="thread"></div>
+
+<div class="dock" id="dock"></div>
+
+<nav class="switch">
+  <a class="on" href="chat.html">محادثة</a>
+  <a href="paper.html">ورقة</a>
+  <a href="cards.html">كروت</a>
+  <a href="map.html">خريطة</a>
+</nav>
+
+<script>
+const Q = [
+  {t:"mcq", q:"Which of the following status codes indicates an internal server error?",
+   o:["200","404","500","302"], a:2,
+   why:"500 is the server's own failure: the address existed, but the server broke while handling it.",
+   ar:"500 عطل في السيرفر نفسه، و404 معناها العنوان مش موجود."},
+  {t:"tf", q:"Semantic HTML changes the way the page looks on the screen.", o:["True","False"], a:1,
+   why:"It changes the meaning of the elements, not the appearance. Appearance is CSS.",
+   ar:"بيغير المعنى مش الشكل. الصفحة شكلها زي ما هو، واللي اتغير إن البرنامج بقى يفهمها."},
+  {t:"mcq", q:"Which of the following is NOT an appropriate benefit of using semantic HTML?",
+   o:["Screen readers understand the structure","Search engines understand the content",
+      "The display speed necessarily becomes faster","Information reaches users with visual impairments"], a:2,
+   why:"Semantic HTML is about meaning, not speed.",
+   ar:"الوسوم بتدي معنى، مش سرعة. خد بالك من كلمة necessarily."},
+  {t:"type", q:"HTTP and HTTPS are two examples of a ______ .", accept:["protocol","communication protocol"],
+   show:"protocol", why:"A protocol is the agreed set of rules for the exchange.",
+   ar:"البروتوكول هو القواعد المتفق عليها بين الطرفين."}
+];
+
+const thread = document.getElementById("thread");
+const dock = document.getElementById("dock");
+const scoreEl = document.getElementById("score");
+let at = 0, score = 0;
+
+function bubble(side, html, cls){
+  const row = document.createElement("div");
+  row.className = "row " + side;
+  const b = document.createElement("div");
+  b.className = "b" + (cls ? " " + cls : "");
+  b.innerHTML = html;
+  row.appendChild(b);
+  thread.appendChild(row);
+  thread.scrollTop = thread.scrollHeight;
+  return b;
+}
+
+function typing(then){
+  const row = document.createElement("div");
+  row.className = "row them";
+  row.innerHTML = '<div class="b typing"><i></i><i></i><i></i></div>';
+  thread.appendChild(row);
+  thread.scrollTop = thread.scrollHeight;
+  setTimeout(() => { row.remove(); then(); }, 620);
+}
+
+function ask(){
+  if (at >= Q.length) return finish();
+  const q = Q[at];
+  typing(() => {
+    bubble("them", '<div class="q en">' + q.q + '</div><div class="meta">سؤال ' + (at+1) + ' من ' + Q.length + '</div>');
+    dock.innerHTML = "";
+    if (q.t === "type"){
+      const p = document.createElement("p");
+      p.className = "hint"; p.textContent = "اكتب الكلمة الناقصة وابعتها";
+      const box = document.createElement("div");
+      box.className = "typebox";
+      box.innerHTML = '<input id="tin" placeholder="اكتب هنا..." autocomplete="off"><button class="send" id="sbtn">&#10148;</button>';
+      dock.append(p, box);
+      const go = () => { const v = document.getElementById("tin").value.trim(); if (v) answer(v); };
+      document.getElementById("sbtn").onclick = go;
+      document.getElementById("tin").addEventListener("keydown", e => { if (e.key === "Enter") go(); });
+      document.getElementById("tin").focus();
+    } else {
+      const p = document.createElement("p");
+      p.className = "hint"; p.textContent = "دوس على الإجابة";
+      const wrap = document.createElement("div");
+      wrap.className = "chips";
+      q.o.forEach((o, k) => {
+        const b = document.createElement("button");
+        b.className = "chip" + (q.o.length === 2 ? "" : (o.length > 26 ? " full" : ""));
+        b.textContent = (q.t === "mcq" ? "ABCD"[k] + ". " : "") + o; b.dir = "ltr";
+        b.onclick = () => answer(k);
+        wrap.appendChild(b);
+      });
+      dock.append(p, wrap);
+    }
+  });
+}
+
+function answer(v){
+  const q = Q[at];
+  let right, said;
+  if (q.t === "type"){
+    right = q.accept.some(a => a.toLowerCase() === String(v).toLowerCase());
+    said = v;
+  } else {
+    right = v === q.a;
+    said = (q.t === "mcq" ? "ABCD"[v] + ". " : "") + q.o[v];
+  }
+  bubble("me", '<span class="en">' + said + "</span>");
+  dock.innerHTML = '<p class="hint">&nbsp;</p>';
+  if (right) score++;
+  scoreEl.textContent = score + " / " + Q.length;
+  typing(() => {
+    const head = right ? "&#10003; صح" : "&#10007; غلط";
+    const corr = right ? "" : '<div style="margin-top:4px">الإجابة: <b class="en" style="display:inline-block">' +
+      (q.t === "type" ? q.show : (q.t === "mcq" ? "ABCD"[q.a] + ". " : "") + q.o[q.a]) + "</b></div>";
+    bubble("them", '<div class="hd">' + head + "</div>" + corr +
+      '<div class="en">' + q.why + '</div><div class="arline">' + q.ar + "</div>",
+      "verdict" + (right ? "" : " no"));
+    at++;
+    setTimeout(ask, 420);
+  });
+}
+
+function finish(){
+  dock.innerHTML = '<p class="done">خلصت الأربعة. درجتك ' + score + ' من ' + Q.length + '.</p>';
+  typing(() => bubble("them", '<div class="hd">تمام</div><div class="en">That is the whole flow: one thread, nothing to navigate.</div><div class="arline">ده شكل التصميم ده بالكامل: خيط واحد، مفيش شاشات ولا أزرار تنقل.</div>'));
+}
+
+ask();
+</script>
+</body>
+</html>
