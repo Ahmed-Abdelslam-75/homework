@@ -211,9 +211,9 @@ function finish(){
   el("next").onclick = () => location.reload();
 }
 
-const NAV = [["chat.html","تيرمنال"],["talk.html","حوار"],["paper.html","ورقة"],["cards.html","كروت"],
-             ["map.html","خريطة"],["story.html","ستوري"],["show.html","مسابقة"],["notebook.html","كشكول"],
-             ["rings.html","دوائر"],["index.html","الكل"]];
+const NAV = [["chat.html","محادثة"],["term.html","تيرمنال"],["talk.html","حوار"],["paper.html","ورقة"],
+             ["cards.html","كروت"],["map.html","خريطة"],["story.html","ستوري"],["show.html","مسابقة"],
+             ["notebook.html","كشكول"],["rings.html","دوائر"],["index.html","الكل"]];
 el("nav").innerHTML = NAV.map(([h, t]) =>
   '<a href="' + h + '"' + (h === "rings.html" ? ' class="on"' : "") + ">" + t + "</a>").join("");
 
