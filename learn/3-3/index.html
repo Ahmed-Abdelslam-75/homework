@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lesson 3-3 &middot; Fundamentals of Frontend Technology</title>
+<meta name="description" content="The Study Companion for Lesson 3-3 on screen, with a button on every part that explains it a different way.">
+<meta name="theme-color" content="#0B1437">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B1437'/%3E%3Crect x='16' y='16' width='32' height='9' rx='3' fill='%2327E1C1'/%3E%3Crect x='16' y='29' width='32' height='9' rx='3' fill='%2327E1C1' opacity='.72'/%3E%3Crect x='16' y='42' width='32' height='9' rx='3' fill='%2327E1C1' opacity='.44'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap">
+<style>
+:root{--ink:#16213E;--navy:#0B1437;--teal:#0E7C66;--amber:#A2620A;--red:#B3261E;--line:#C7D0E0;
+      --soft:#F5F7FC;--muted:#5E6C8A;--page:#FFFFFF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:#E9EDF5;color:var(--ink);font-family:Georgia,"Times New Roman",serif;
+     font-size:17px;line-height:1.72}
+.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff}
+.top-in{max-width:720px;margin:0 auto;padding:10px 18px;display:flex;align-items:baseline;gap:10px}
+.top .ls{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#8FE8D8}
+.top .nm{font-size:15px}
+.bar{height:3px;background:#22305F}
+.bar i{display:block;height:100%;width:0;background:#27E1C1;transition:width .15s linear}
+.sheet{max-width:720px;margin:0 auto;background:var(--page);min-height:100vh;
+       padding:0 22px 48px;box-shadow:0 0 28px rgba(11,20,55,.12)}
+.cover{padding:30px 0 6px;border-bottom:3px solid var(--navy);margin-bottom:20px}
+.cover .k{font-family:Cambria,Georgia,serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;
+          color:var(--teal);font-weight:bold}
+.cover h1{font-family:Cambria,Georgia,serif;font-size:27px;line-height:1.25;margin:6px 0 4px;color:var(--navy)}
+.cover .s{color:var(--muted);font-size:15px;margin:0}
+.howto{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:13px 15px;
+       margin:16px 0 4px;direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;
+       font-size:15.5px;line-height:1.85}
+.howto b{color:var(--teal)}
+
+.blk{padding:16px 0 4px;border-bottom:1px solid #E8ECF4}
+.blk:last-of-type{border-bottom:0}
+h2{font-family:Cambria,Georgia,serif;font-size:20px;color:var(--navy);margin:0 0 9px;line-height:1.35}
+.kick{font-size:13.5px;color:var(--muted);font-style:italic;margin:0 0 8px}
+.blk p{margin:0 0 11px}
+.blk p:last-child{margin-bottom:0}
+.blk b{color:var(--navy)}
+ul,ol{margin:0 0 11px;padding-left:22px}
+li{margin-bottom:7px}
+ol.circ{list-style:none;counter-reset:c;padding-left:0}
+ol.circ li{counter-increment:c;padding-left:30px;position:relative}
+ol.circ li::before{content:counter(c);position:absolute;left:0;top:2px;width:20px;height:20px;
+  border-radius:50%;background:var(--navy);color:#fff;font-family:Cambria,serif;font-size:12px;
+  display:flex;align-items:center;justify-content:center}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15.5px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:#EEF2FA;font-family:Cambria,serif;color:var(--navy);font-size:14.5px}
+td.k{font-weight:bold;color:var(--navy);width:30%}
+td .sm{font-weight:normal;color:var(--muted);font-size:13.5px}
+.formula{text-align:center;background:#FDF6EC;border:1.5px solid #A2620A;border-radius:8px;
+  padding:8px 10px;margin:10px 0;font-family:Cambria,Georgia,serif;font-size:17px;font-weight:bold;
+  color:#A2620A}
+.gq{font-style:italic;color:var(--teal);font-size:18px;border-left:3px solid var(--teal);
+    padding-left:12px;margin:0 0 12px}
+.kf{background:#EFFAF6;border:1px solid #A9DDCC;border-radius:8px;padding:10px 13px;font-size:16px}
+.kf b{color:var(--teal)}
+.q{font-weight:bold;color:var(--navy)}
+.ans{background:var(--soft);border-left:3px solid var(--teal);padding:10px 13px;border-radius:0 8px 8px 0;
+     font-size:16px}
+.note,.cap{color:var(--muted);font-size:14px;font-style:italic}
+p.ar{direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:16px;
+     line-height:1.9;color:var(--ink);background:#F4F6FB;border-radius:8px;padding:10px 13px}
+figure{margin:12px 0}
+figure svg{width:100%;height:auto;display:block}
+figcaption{text-align:center;color:var(--muted);font-size:14px;font-style:italic;margin-top:6px;
+  direction:rtl;font-family:Tajawal,"Segoe UI",Arial,sans-serif}
+
+.qbox{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:13px 0}
+.qbox.new{border-color:#A9DDCC;background:#FCFEFD}
+.tag{display:inline-block;font-family:ui-monospace,monospace;font-size:10.5px;font-weight:bold;
+  letter-spacing:.08em;padding:2px 9px;border-radius:999px;margin:0 0 8px;background:#EEF2FA;
+  color:var(--navy)}
+.tag.new{background:#E8F8F3;color:var(--teal)}
+.qbox p{margin:0 0 9px}
+.qbox p:last-child{margin-bottom:0}
+.ask{margin:12px 0 2px}
+.ask button{font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:15.5px;font-weight:700;cursor:pointer;
+  background:#FFF6E8;color:var(--amber);border:1.5px solid #E8C89A;border-radius:999px;padding:8px 18px;
+  line-height:1.3}
+.ask button:hover{background:var(--amber);border-color:var(--amber);color:#fff}
+.ask button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.ask .cnt{font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:13.5px;color:var(--muted);
+  margin-inline-start:10px}
+.way{direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:16.5px;
+  line-height:1.95;background:#FFFBF3;border:1px solid #E8C89A;border-radius:10px;padding:13px 16px;
+  margin-top:10px}
+.way p{margin:0 0 10px}
+.way p:last-child{margin-bottom:0}
+.way b{color:var(--amber)}
+.way ol{padding-right:22px;padding-left:0}
+.way figure{margin:2px 0}
+.end{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:24px;
+  text-align:center;direction:rtl;font-family:Tajawal,"Segoe UI",Arial,sans-serif}
+.end h2{margin:0 0 6px}
+.end p{color:var(--muted);font-size:15.5px;margin:0 0 13px}
+.btn{display:inline-block;text-decoration:none;background:var(--teal);color:#fff;font-weight:700;
+  border-radius:999px;padding:11px 24px}
+.foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px}
+@media (max-width:460px){ body{font-size:16px} .sheet{padding:0 15px 40px} .cover h1{font-size:23px}
+  h2{font-size:18.5px} table{font-size:14.5px} th,td{padding:6px 7px} }
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .bar i{transition:none} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in"><span class="ls">LESSON 3-3</span><span class="nm">Study Companion</span></div>
+  <div class="bar"><i id="prog"></i></div>
+</header>
+
+<main class="sheet">
+  <div class="cover">
+    <div class="k">Part A &middot; The Lesson</div>
+    <h1>Fundamentals of Frontend Technology</h1>
+    <p class="s">Lesson 3-3 &middot; Unit 3 &middot; Web Applications</p>
+  </div>
+
+  <div class="howto">نفس كلام الـ <b>Study Companion</b> بالظبط. الجديد هنا إن تحت أي جزء مش واضح فيه زرار
+  <b>مش فاهم؟</b>، تدوس عليه يشرحلك نفس الجزء بطريقة تانية خالص، وتدوس تاني يديك طريقة ثالثة.</div>
+
+  <section class="blk" data-ways="[&quot;&lt;p&gt;درس &lt;b&gt;3-1&lt;/b&gt; قال إن تطبيق الويب مبني طبقات: فرونت إند وباك إند وقاعدة بيانات، وكل واحد\nبيعمل شغلانة لوحده. ودرس &lt;b&gt;3-2&lt;/b&gt; قال إن الفرونت إند والباك إند بيتكلموا بطلب ورد.&lt;/p&gt;\n&lt;p&gt;الاتنين دول بيحصلوا في مكان &lt;b&gt;إنت مش بتشوفه&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;الدرس ده هو الحتة الوحيدة في الوحدة اللي إنت فعلًا بتبص عليها. &lt;b&gt;الفرونت إند&lt;/b&gt; هو الصفحة نفسها:\nاللي بيظهر على شاشة موبايلك أو اللاب بتاعك. والصفحة دي، أي صفحة، معمولة من تلات حاجات بالظبط.&lt;/p&gt;&quot;, &quot;&lt;p&gt;أي صفحة بتفتحها على النت مبنية من تلات حاجات بس.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;HTML&lt;/b&gt; بيحط المحتوى نفسه: العناوين والفقرات والصور والروابط.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;CSS&lt;/b&gt; بيقول المحتوى ده يبان إزاي: الألوان والترتيب وحجم الخط.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;JavaScript&lt;/b&gt; بيخلي الصفحة تتفاعل معاك: تضغط زرار فيحصل حاجة، أو حتة من الشاشة تتغير من غير ما\nالصفحة كلها تتحمل تاني.&lt;/p&gt;\n&lt;p&gt;والفرونت إند الحديث بيزود تلاتة كمان: &lt;b&gt;وسوم ليها معنى&lt;/b&gt;، و&lt;b&gt;تصميم بيتظبط على أي شاشة&lt;/b&gt;،\nو&lt;b&gt;أدوات جاهزة بتوفر وقت&lt;/b&gt;. والتلاتة دول هم باقي الدرس بالترتيب.&lt;/p&gt;&quot;]">
+<p class="kick">Textbook pages 68 to 74</p>
+<h2>Lesson 3-3: Fundamentals of Frontend Technology</h2>
+<p class="gq">How do HTML, CSS, and JavaScript work together to build a web page, and what makes a
+modern frontend meaningful, adaptable, and efficient to build?</p>
+<p>Open any web page and you are seeing three technologies at work together. <b>HTML</b> builds the structure,
+the headings, paragraphs, and links, like the frame of a building. <b>CSS</b> adds the appearance, colors,
+layout, and fonts, like a building's interior. <b>JavaScript</b> adds behavior, search boxes that respond,
+buttons that count, screens that update. A modern frontend goes further: it makes pages meaningful, adaptable
+to every screen, and faster to build.</p>
+<p class="kf"><b>Key Fact.</b> A web page is built from HTML (structure), CSS (appearance), and JavaScript
+(behavior); a modern frontend adds semantic HTML, responsive design, and frameworks.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;خد تشبيه الكتاب، لأنه هو اللي هيفضل في دماغك يوم الامتحان.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;HTML&lt;/b&gt; هو هيكل المبنى: الخرسانة والحيطان. لو شيلته مفيش مبنى أصلًا.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;CSS&lt;/b&gt; هو الديكور من جوه ومن بره: الدهان والسيراميك. لو شيلته المبنى لسه واقف، بس شكله وحش.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;JavaScript&lt;/b&gt; هو الكهربا والسباكة: لو شيلتهم المبنى شكله حلو وواقف، بس مفيش حاجة بتشتغل فيه.&lt;/p&gt;&quot;, &quot;&lt;p&gt;بص على الرسمة من الشمال لليمين، وركّز في كلمة &lt;b&gt;Books I like&lt;/b&gt;: هي موجودة في التلات\nلوحات زي ما هي، ما اتغيرتش.&lt;/p&gt;\n&lt;p&gt;في اللوحة الأولى فيه &lt;b&gt;HTML&lt;/b&gt; بس: كل كلمة موجودة، وكل لينك شغال، والشكل ورقة بيضا.&lt;/p&gt;\n&lt;p&gt;في اللوحة التانية اتزود &lt;b&gt;CSS&lt;/b&gt;: ولا كلمة جديدة، بس بقى فيه ألوان، وشريط عنوان غامق، وزرار شكله\nزرار.&lt;/p&gt;\n&lt;p&gt;في اللوحة التالتة اتزود &lt;b&gt;JavaScript&lt;/b&gt;: خانة بحث بتفلتر القائمة وإنت بتكتب، وزرار Like بيعد.&lt;/p&gt;\n&lt;p&gt;يعني كل طبقة بتضيف حاجة اللي قبلها ما كانتش تقدر تعملها، ومحدش فيهم بيلغي التاني. شيل الـ CSS الصفحة\nتفضل شغالة، بس شكلها بايخ. شيل الـ JavaScript الصفحة تفضل شكلها حلو، بس بطلت ترد عليك. شيل الـ HTML،\nمفيش صفحة أصلًا، لأن مفيش حاجة تتلون ولا حاجة ترد.&lt;/p&gt;&quot;, &quot;&lt;p&gt;مثال مصري: افتح جوميا أو طلبات وبص على منتج واحد.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;اسم المنتج، والسعر، والصورة، ولينك البايع&lt;/b&gt;: دول HTML، المحتوى نفسه.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;الألوان، والكارت اللي حوالين كل منتج، وحجم السعر، والمسافات&lt;/b&gt;: دول CSS.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;خانة البحث اللي بتضيّق القائمة وإنت بتكتب، ورقم العربية اللي بيزيد من غير ما الصفحة تتحمل تاني&lt;/b&gt;:\nدول JavaScript.&lt;/p&gt;\n&lt;p&gt;ولو التطبيق فتح مرة بشكل بايخ لثانية وبعدين ظبط نفسه، تبقى شوفت بعينك الـ HTML وهو بيوصل قبل الـ\nCSS.&lt;/p&gt;&quot;]">
+<h2>1. The Roles of HTML, CSS, and JavaScript</h2>
+<p><b>(1)</b> Web pages are mainly based on the following three technologies.</p>
+<table>
+  <tr><th style="width:17%">Technology</th><th style="width:53%">Role</th><th>Analogy</th></tr>
+  <tr><td class="k">HTML</td>
+      <td>Defines the structure (skeleton) of a web page. Describes elements such as headings, paragraphs,
+          images, and links.</td>
+      <td>The frame of a building</td></tr>
+  <tr><td class="k">CSS</td>
+      <td>Specifies the appearance of a web page (colors, layout, size, fonts, etc.).</td>
+      <td>The interior and exterior of a building</td></tr>
+  <tr><td class="k">JavaScript</td>
+      <td>Adds behavior and interactivity to a web page. Activates responses when buttons are pressed and
+          updates only part of the screen.</td>
+      <td>The electrical and plumbing systems of a building</td></tr>
+</table>
+<p><b>(2)</b> These three technologies each have independent roles, and a web page is created using all of
+them in combination.</p>
+<svg viewBox="0 0 540 182" role="img" aria-label="The same book list page three times. With HTML only every
+ word and link is there but the page is plain. With CSS added the same words gain a title bar, cards and a
+ button. With JavaScript added a search box filters the list as the user types and the like button counts.">
+  <rect x="6" y="16" width="162" height="116" rx="7" fill="#FFFFFF" stroke="#C7D0E0" stroke-width="1.6"/>
+  <text x="18" y="38" font-family="Cambria,Georgia,serif" font-size="12" font-weight="bold" fill="#16213E">Books I like</text>
+  <text x="18" y="58" font-size="9" fill="#5E6C8A">The Alchemist</text>
+  <text x="18" y="74" font-size="9" fill="#5E6C8A">Kafka on the Shore</text>
+  <text x="18" y="90" font-size="9" fill="#5E6C8A">Dune</text>
+  <text x="18" y="112" font-size="9" fill="#16213E" text-decoration="underline">see all books</text>
+  <text x="87" y="152" font-size="10.5" font-family="Cambria,Georgia,serif" font-weight="bold" fill="#5E6C8A" text-anchor="middle">HTML only</text>
+  <text x="87" y="167" font-size="9" fill="#5E6C8A" text-anchor="middle">every word, every link, no style</text>
+
+  <rect x="189" y="16" width="162" height="116" rx="7" fill="#FFFFFF" stroke="#C7D0E0" stroke-width="1.6"/>
+  <path d="M 189 23 a 7 7 0 0 1 7 -7 h 148 a 7 7 0 0 1 7 7 v 19 h -162 z" fill="#0B1437"/>
+  <text x="201" y="36" font-family="Cambria,Georgia,serif" font-size="12" font-weight="bold" fill="#FFFFFF">Books I like</text>
+  <rect x="199" y="52" width="142" height="18" rx="4" fill="#F5F7FC" stroke="#C7D0E0" stroke-width="1.2"/>
+  <text x="207" y="65" font-size="9" fill="#16213E">The Alchemist</text>
+  <rect x="199" y="74" width="142" height="18" rx="4" fill="#F5F7FC" stroke="#C7D0E0" stroke-width="1.2"/>
+  <text x="207" y="87" font-size="9" fill="#16213E">Kafka on the Shore</text>
+  <rect x="199" y="96" width="142" height="18" rx="4" fill="#F5F7FC" stroke="#C7D0E0" stroke-width="1.2"/>
+  <text x="207" y="109" font-size="9" fill="#16213E">Dune</text>
+  <rect x="291" y="118" width="50" height="11" rx="5.5" fill="#0E7C66"/>
+  <text x="316" y="126.5" font-size="7.5" fill="#FFFFFF" text-anchor="middle">see all books</text>
+  <text x="270" y="152" font-size="10.5" font-family="Cambria,Georgia,serif" font-weight="bold" fill="#0E7C66" text-anchor="middle">CSS added</text>
+  <text x="270" y="167" font-size="9" fill="#5E6C8A" text-anchor="middle">not one new word, a new look</text>
+
+  <rect x="372" y="16" width="162" height="116" rx="7" fill="#FFFFFF" stroke="#C7D0E0" stroke-width="1.6"/>
+  <path d="M 372 23 a 7 7 0 0 1 7 -7 h 148 a 7 7 0 0 1 7 7 v 19 h -162 z" fill="#0B1437"/>
+  <text x="384" y="36" font-family="Cambria,Georgia,serif" font-size="12" font-weight="bold" fill="#FFFFFF">Books I like</text>
+  <rect x="382" y="50" width="142" height="16" rx="4" fill="#FFFFFF" stroke="#0E7C66" stroke-width="1.4"/>
+  <text x="390" y="61.5" font-size="9" fill="#16213E">ka</text>
+  <line x1="402" y1="53" x2="402" y2="63" stroke="#0E7C66" stroke-width="1.4"/>
+  <rect x="382" y="72" width="142" height="18" rx="4" fill="#EFFAF6" stroke="#0E7C66" stroke-width="1.2"/>
+  <text x="390" y="85" font-size="9" fill="#16213E">Kafka on the Shore</text>
+  <text x="390" y="106" font-size="8.5" fill="#5E6C8A" font-style="italic">the other two are hidden</text>
+  <rect x="474" y="118" width="50" height="11" rx="5.5" fill="#A2620A"/>
+  <text x="499" y="126.5" font-size="7.5" fill="#FFFFFF" text-anchor="middle">Like  12</text>
+  <text x="453" y="152" font-size="10.5" font-family="Cambria,Georgia,serif" font-weight="bold" fill="#A2620A" text-anchor="middle">JavaScript added</text>
+  <text x="453" y="167" font-size="9" fill="#5E6C8A" text-anchor="middle">now the page reacts to you</text>
+</svg><p class="cap">The same page with HTML only, then with CSS
+added, then with JavaScript added.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;جرّب السؤال ده على موقع بتدخله فعلًا، وامشي بقاعدة واحدة:&lt;/p&gt;\n&lt;p&gt;لو الكلام عن &lt;b&gt;إيه اللي موجود&lt;/b&gt; يبقى HTML. لو عن &lt;b&gt;شكله&lt;/b&gt; يبقى CSS. لو عن &lt;b&gt;اللي بيحصل&lt;/b&gt;\nيبقى JavaScript.&lt;/p&gt;\n&lt;p&gt;وفيه غلطة بيقع فيها ناس كتير: «الصور دي CSS». لأ. &lt;b&gt;الصورة نفسها HTML&lt;/b&gt;، لأنها عنصر حقيقي موجود في\nالصفحة. حجمها ومكانها هما اللي CSS.&lt;/p&gt;&quot;]">
+<div class="qbox new"><span class="tag new">PAUSE &amp; THINK</span>
+<p class="q">On a page you use often, which parts are structure (HTML), which are style (CSS), and which react
+to you (JavaScript)?</p>
+<div class="ans"><b>Example of a strong answer</b> (one good answer, not the only one), using a news site.
+<br><br>
+<b>Structure (HTML):</b> the headline, the article text, the photographs, and the links to other articles.
+These are the things that would still be there if everything else failed.
+<br><br>
+<b>Style (CSS):</b> the colors of the site, the size of the headline compared to the body text, how the
+articles are arranged in columns, and the spacing between them.
+<br><br>
+<b>Reacts to you (JavaScript):</b> the search box that suggests articles as you type, the menu that opens when
+you tap it, and the comments that appear underneath without the page reloading.</div>
+</div>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;semantic HTML&lt;/b&gt; معناها إنك تسمي كل حتة في الصفحة باسمها الصح بدل ما تسميها «صندوق».&lt;/p&gt;\n&lt;p&gt;والحاجة المهمة اللي لازم تاخد بالك منها: &lt;b&gt;الصفحة شكلها مش هيتغير ولا حاجة&lt;/b&gt;، واللي بيشوف بعينه مش\nهيحس بأي فرق.&lt;/p&gt;\n&lt;p&gt;اللي هيحس بالفرق حاجتين بيقروا الصفحة &lt;b&gt;من غير عين&lt;/b&gt;: برنامج قارئ الشاشة اللي بيقرا للمكفوفين،\nومحرك البحث. الاتنين دول لما يلاقوا &lt;b&gt;&amp;lt;main&amp;gt;&lt;/b&gt; يبقوا عارفين إن ده المحتوى الحقيقي، ولما يلاقوا\n&lt;b&gt;&amp;lt;nav&amp;gt;&lt;/b&gt; يبقوا عارفين إن دي قائمة التنقل.&lt;/p&gt;&quot;, &quot;&lt;p&gt;دي الحتة اللي الطلبة بيجاوبوها بكلمتين محفوظين، accessibility وSEO، ومفيش ورا الكلمتين\nحاجة. فخلي بالك بالظبط من اللي الـ semantic HTML بيغيره: &lt;b&gt;ولا حاجة إنت بتشوفها&lt;/b&gt;. الصفحتين اللي في\nالرسمة بيظهروا بنفس الشكل تمامًا.&lt;/p&gt;\n&lt;p&gt;اللي بيتغير هو اللي بيحصل لما حاجة &lt;b&gt;مش عين&lt;/b&gt; تقرا الصفحة. قارئ الشاشة برنامج بيقرا الصفحة بصوت عالي\nلواحد مش شايف. لما يلاقي صناديق مجهولة، كل اللي يقدر يقوله «صندوق، صندوق، صندوق»، والمستخدم لازم يستنى\nالقائمة كلها تتقرا قبل ما يوصل للمقال. ولما يلاقي &lt;b&gt;&amp;lt;nav&amp;gt;&lt;/b&gt; و&lt;b&gt;&amp;lt;main&amp;gt;&lt;/b&gt;، يقدر يقول\n«قائمة تنقل»، ويخليها تتخطاها، وينط للمحتوى على طول.&lt;/p&gt;\n&lt;p&gt;ومحرك البحث عنده نفس المشكلة بالظبط. هو كمان بيقرا من غير عين، وبيحاول يقرر الصفحة دي عن إيه. لو\nالمقال الحقيقي متحطوط جوه &lt;b&gt;&amp;lt;main&amp;gt;&lt;/b&gt;، يبقى عارف أنهي كلام هو المهم وأنهي كلام مجرد قائمة\nبتتكرر في كل صفحة في الموقع.&lt;/p&gt;\n&lt;p&gt;فكرة واحدة، واتنين بيستفيدوا منها: &lt;b&gt;الوسم نفسه هو المعلومة&lt;/b&gt;، فالبرنامج مش محتاج يخمن.&lt;/p&gt;&quot;, &quot;&lt;p&gt;مثال مصري: طالب بيدور على موضوع، فيلاقي بنك المعرفة المصري طالع في أول النتايج. عشان ده\nيحصل، كان لازم محرك بحث يبص على الصفحة ويعرف إن المقال هو المحتوى الحقيقي وإن قائمة الموقع مش هي. الوسوم\nاللي ليها معنى هي اللي بتخلي ده ممكن. دي الـ &lt;b&gt;SEO&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;ودلوقتي تخيل طالبة عندها ضعف شديد في النظر بتفتح نفس الصفحة بقارئ شاشة. مع الوسوم، بتسمع «قائمة\nتنقل»، بتتخطاها في خطوة واحدة، وبعدين تسمع «المحتوى الأساسي» ويبدأ المقال. من غير الوسوم، لازم تسمع كل\nلينك في القائمة، في كل صفحة، كل مرة. دي الـ &lt;b&gt;accessibility&lt;/b&gt;، وهي الفرق بين موقع تقدر تستخدمه وموقع\nبتسيبه.&lt;/p&gt;&quot;]">
+<h2>2. Semantic HTML</h2>
+<p><b>(1) Semantic HTML</b> is the concept of describing each part of a web page using element names
+(tags) that indicate their meaning.</p>
+<p>For example, use <b>&lt;header&gt;</b> at the top of the page, <b>&lt;nav&gt;</b> for navigation,
+<b>&lt;main&gt;</b> for the body, and <b>&lt;footer&gt;</b> at the bottom of the page.</p>
+<p><b>(2)</b> Benefits of using semantic HTML:</p>
+<ol class="circ">
+  <li><b>Improved accessibility.</b> Screen reader software can correctly understand the structure of the
+      page. Information becomes easier to convey to users with visual impairments.</li>
+  <li><b>Improved SEO (Search Engine Optimization).</b> Search engines can more easily understand the content
+      of a web page correctly, making it more likely to be displayed appropriately in search results.</li>
+</ol>
+<svg viewBox="0 0 540 300" role="img" aria-label="The same page built from anonymous div boxes, and built
+ from semantic tags. With plain boxes a screen reader hears only box, box, box, and a search engine cannot
+ tell what the page is for. With header, nav, main and footer the screen reader can announce the navigation
+ and the main content, and the search engine can see the real content of the page.">
+<text x="6" y="20" font-family="Cambria,Georgia,serif" font-size="12" font-weight="bold" fill="#5E6C8A">The same page in plain boxes</text><rect x="6" y="28" width="232" height="108" rx="7" fill="#FFFFFF" stroke="#5E6C8A" stroke-width="1.6"/><rect x="18" y="36" width="208" height="20" rx="4" fill="#F5F7FC" stroke="#5E6C8A" stroke-width="1.2"/><text x="122" y="49" text-anchor="middle" font-size="9.5" font-family="Consolas,monospace" fill="#5E6C8A">&lt;div&gt;</text><rect x="18" y="60" width="208" height="16" rx="4" fill="#F5F7FC" stroke="#5E6C8A" stroke-width="1.2"/><text x="122" y="71" text-anchor="middle" font-size="9.5" font-family="Consolas,monospace" fill="#5E6C8A">&lt;div&gt;</text><rect x="18" y="80" width="208" height="32" rx="4" fill="#F5F7FC" stroke="#5E6C8A" stroke-width="1.2"/><text x="122" y="99" text-anchor="middle" font-size="9.5" font-family="Consolas,monospace" fill="#5E6C8A">&lt;div&gt;</text><rect x="18" y="116" width="208" height="12" rx="4" fill="#F5F7FC" stroke="#5E6C8A" stroke-width="1.2"/><text x="122" y="125" text-anchor="middle" font-size="9.5" font-family="Consolas,monospace" fill="#5E6C8A">&lt;div&gt;</text><text x="262" y="52" font-size="9.5" font-weight="bold" letter-spacing="0.6" fill="#5E6C8A">A SCREEN READER HEARS</text><text x="262" y="70" font-size="11.5" fill="#16213E">&#8220;box. box. box. box.&#8221;</text><text x="262" y="98" font-size="9.5" font-weight="bold" letter-spacing="0.6" fill="#5E6C8A">A SEARCH ENGINE UNDERSTANDS</text><text x="262" y="116" font-size="11.5" fill="#16213E">text on a page, but not what it is for</text>
+<text x="6" y="168" font-family="Cambria,Georgia,serif" font-size="12" font-weight="bold" fill="#0E7C66">The same page in semantic tags</text><rect x="6" y="176" width="232" height="108" rx="7" fill="#FFFFFF" stroke="#0E7C66" stroke-width="1.6"/><rect x="18" y="184" width="208" height="20" rx="4" fill="#EFFAF6" stroke="#0E7C66" stroke-width="1.2"/><text x="122" y="197" text-anchor="middle" font-size="9.5" font-family="Consolas,monospace" fill="#0E7C66">&lt;header&gt;</text><rect x="18" y="208" width="208" height="16" rx="4" fill="#EFFAF6" stroke="#0E7C66" stroke-width="1.2"/><text x="122" y="219" text-anchor="middle" font-size="9.5" font-family="Consolas,monospace" fill="#0E7C66">&lt;nav&gt;</text><rect x="18" y="228" width="208" height="32" rx="4" fill="#EFFAF6" stroke="#0E7C66" stroke-width="1.2"/><text x="122" y="247" text-anchor="middle" font-size="9.5" font-family="Consolas,monospace" fill="#0E7C66">&lt;main&gt;</text><rect x="18" y="264" width="208" height="12" rx="4" fill="#EFFAF6" stroke="#0E7C66" stroke-width="1.2"/><text x="122" y="273" text-anchor="middle" font-size="9.5" font-family="Consolas,monospace" fill="#0E7C66">&lt;footer&gt;</text><text x="262" y="200" font-size="9.5" font-weight="bold" letter-spacing="0.6" fill="#5E6C8A">A SCREEN READER HEARS</text><text x="262" y="218" font-size="11.5" fill="#16213E">&#8220;navigation&#8230; main content&#8230;&#8221;</text><text x="262" y="246" font-size="9.5" font-weight="bold" letter-spacing="0.6" fill="#5E6C8A">A SEARCH ENGINE UNDERSTANDS</text><text x="262" y="264" font-size="11.5" fill="#16213E">this is the real content of the page</text>
+</svg><p class="cap">Both pages look exactly the same on screen. Only the lower one can be
+understood by anything other than an eye.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;الجملة اللي بتجاوب السؤال ده كله: &lt;b&gt;الوسم نفسه هو المعلومة، فالبرنامج مش محتاج يخمن الحتة\nدي إيه.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;مع الصناديق العادية، كل اللي البرنامج بيعرفه إن فيه حاجة موجودة، ولازم يقرا من فوق لتحت بالترتيب، ومفيش\nطريقة يعرف بيها الفرق بين القائمة والمقال.&lt;/p&gt;\n&lt;p&gt;ومع &lt;b&gt;&amp;lt;nav&amp;gt;&lt;/b&gt; و&lt;b&gt;&amp;lt;main&amp;gt;&lt;/b&gt;، يقدر يعلن القائمة ويخلي المستخدم يتخطاها، أو ينط للمحتوى\nالأساسي على طول.&lt;/p&gt;&quot;]">
+<div class="qbox new"><span class="tag new">PAUSE &amp; THINK</span>
+<p class="q">Why does a screen reader understand a page better when it uses &lt;header&gt;, &lt;nav&gt;, and
+&lt;main&gt; instead of plain boxes?</p>
+<div class="ans"><b>Model answer.</b> Because the tag itself carries the meaning, so the software does not
+have to guess.
+<br><br>
+With plain boxes, the software is told only that something is there. It has to read everything from top to
+bottom in order, with no way to tell a menu from the article. With <b>&lt;nav&gt;</b> and <b>&lt;main&gt;</b>
+it can announce the navigation, let the user skip it, or jump straight to the main content.</div>
+</div>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;السؤال ده فخ، وهو فخ مقصود.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;مفيش فيهم حاجة بتخص شكل الصفحة&lt;/b&gt;، لأن الـ semantic HTML ما بيغيرش حاجة على الشاشة.&lt;/p&gt;\n&lt;p&gt;الاتنين بيخصوا إن &lt;b&gt;برنامج&lt;/b&gt; يفهم الصفحة: الـ &lt;b&gt;accessibility&lt;/b&gt; بتخص إن حد يعرف &lt;b&gt;يقراها&lt;/b&gt;،\nوالـ &lt;b&gt;SEO&lt;/b&gt; بتخص إن حد يعرف &lt;b&gt;يلاقيها&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;اقرا يبقى accessibility، لاقي يبقى SEO. كلمتين تمشي بيهم.&lt;/p&gt;&quot;]">
+<div class="qbox new"><span class="tag new">PAUSE &amp; THINK</span>
+<p class="q">Which of the two benefits above is about how the page looks, and which is about how well others
+can find and read it?</p>
+<div class="ans"><b>Model answer.</b> <b>Neither one is about how the page looks.</b> That is what the
+question is testing. Semantic HTML changes nothing on the screen.
+<br><br>
+Both benefits are about being understood by software. <b>Accessibility</b> is about how well the page can be
+<i>read</i>, by a screen reader on behalf of a user with a visual impairment. <b>SEO</b> is about how well the
+page can be <i>found</i>, by a search engine deciding where to place it in its results.</div>
+</div>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;responsive design&lt;/b&gt; يعني صفحة واحدة بس، بتعيد ترتيب نفسها حسب حجم الشاشة. مش تلات\nمواقع.&lt;/p&gt;\n&lt;p&gt;بص على الرسمة: نفس الكروت بالظبط، على اللاب جنب بعض وعلى الموبايل تحت بعض. محدش شال حاجة ومحدش بنى\nموقع تاني.&lt;/p&gt;\n&lt;p&gt;و&lt;b&gt;mobile-first&lt;/b&gt; يعني تبدأ التصميم من الموبايل وبعدين تكبر، لأن معظم الناس بتدخل من الموبايل\nأصلًا.&lt;/p&gt;&quot;, &quot;&lt;p&gt;الجملة اللي الدرجات بتضيع عليها هي نقطة (2): &lt;b&gt;a single web page&lt;/b&gt;، صفحة واحدة.&lt;/p&gt;\n&lt;p&gt;سهل إنك تتخيل إن الشركة بتبني موقع للموبايل وموقع للاب وتبعتلك اللي يناسبك. &lt;b&gt;ده مش الـ responsive\ndesign.&lt;/b&gt; فيه صفحة واحدة، وهي اللي بتعيد ترتيب نفسها.&lt;/p&gt;\n&lt;p&gt;بص على الرسمة تاني: نفس الكروت التلاتة في التلات أجهزة. على اللاب تلاتة جنب بعض، وعلى الموبايل نفس\nالتلاتة تحت بعض. مفيش حاجة اتشالت ومفيش حاجة اتبنت مرتين. المحتوى فضل زي ما هو، اللي اتغير الترتيب بس.&lt;/p&gt;\n&lt;p&gt;وبعدين الـ &lt;b&gt;mobile-first&lt;/b&gt; بيضيف قرار واحد فوق ده: ابدأ التصميم من أصغر شاشة وكبّر، بدل ما تصمم\nلشاشة كبيرة وتزنق كل حاجة بعدين. والسبب اللي الكتاب بيقوله بسيط: الزوار بيدخلوا من الموبايل.&lt;/p&gt;&quot;, &quot;&lt;p&gt;مثال مصري: افتح جوميا أو طلبات من موبايلك في الأتوبيس، وبعدين افتح نفس الموقع من اللاب في\nالبيت.&lt;/p&gt;\n&lt;p&gt;المنتجات هي هي، والعنوان هو هو، بس على الموبايل نازلين تحت بعض في عمود واحد، وعلى اللاب مفرودين في\nصفوف. مفيش حاجة اتقصت، ومحدش بنى موقع تاني.&lt;/p&gt;\n&lt;p&gt;ده الـ responsive design، وإنت بتستخدمه من سنين من غير ما تعرف اسمه.&lt;/p&gt;&quot;]">
+<h2>3. Responsive Design</h2>
+<p><b>(1) Responsive design</b> is a design concept in which the layout is automatically adjusted
+according to different screen sizes such as PCs, smartphones, and tablets.</p>
+<p><b>(2)</b> With a single web page, a display that is easy to view from any device can be achieved.</p>
+<p><b>(3)</b> As of 2026, websites are frequently accessed from smartphones, and support for responsive design
+is widely required. Against this backdrop, the <b>mobile-first</b> concept, prioritizing small screens such as
+smartphones from the design stage, has also become widespread.</p>
+<svg viewBox="0 0 540 196" role="img" aria-label="One page shown on a laptop, a tablet and a phone. The same
+ three cards sit side by side on the laptop, two across on the tablet, and stacked in one column on the
+ phone.">
+  <rect x="6" y="14" width="228" height="124" rx="7" fill="#FFFFFF" stroke="#0B1437" stroke-width="1.8"/>
+  <rect x="6" y="138" width="228" height="7" rx="3" fill="#0B1437"/>
+  <rect x="18" y="26" width="204" height="14" rx="4" fill="#0B1437" opacity="0.12"/>
+  <rect x="18" y="48" width="62" height="78" rx="5" fill="#F5F7FC" stroke="#0E7C66" stroke-width="1.4"/>
+  <rect x="89" y="48" width="62" height="78" rx="5" fill="#F5F7FC" stroke="#0E7C66" stroke-width="1.4"/>
+  <rect x="160" y="48" width="62" height="78" rx="5" fill="#F5F7FC" stroke="#0E7C66" stroke-width="1.4"/>
+  <text x="120" y="166" font-size="10.5" font-family="Cambria,Georgia,serif" font-weight="bold" fill="#0B1437" text-anchor="middle">Laptop</text>
+  <text x="120" y="181" font-size="9" fill="#5E6C8A" text-anchor="middle">three cards side by side</text>
+
+  <rect x="262" y="14" width="124" height="131" rx="7" fill="#FFFFFF" stroke="#0B1437" stroke-width="1.8"/>
+  <rect x="274" y="26" width="100" height="12" rx="4" fill="#0B1437" opacity="0.12"/>
+  <rect x="274" y="46" width="46" height="44" rx="5" fill="#F5F7FC" stroke="#0E7C66" stroke-width="1.4"/>
+  <rect x="328" y="46" width="46" height="44" rx="5" fill="#F5F7FC" stroke="#0E7C66" stroke-width="1.4"/>
+  <rect x="274" y="96" width="100" height="38" rx="5" fill="#F5F7FC" stroke="#0E7C66" stroke-width="1.4"/>
+  <text x="324" y="166" font-size="10.5" font-family="Cambria,Georgia,serif" font-weight="bold" fill="#0B1437" text-anchor="middle">Tablet</text>
+  <text x="324" y="181" font-size="9" fill="#5E6C8A" text-anchor="middle">two across, then one</text>
+
+  <rect x="446" y="14" width="68" height="131" rx="9" fill="#FFFFFF" stroke="#0B1437" stroke-width="1.8"/>
+  <rect x="470" y="19" width="20" height="3" rx="1.5" fill="#0B1437" opacity="0.35"/>
+  <rect x="454" y="28" width="52" height="10" rx="3" fill="#0B1437" opacity="0.12"/>
+  <rect x="454" y="44" width="52" height="30" rx="5" fill="#F5F7FC" stroke="#0E7C66" stroke-width="1.4"/>
+  <rect x="454" y="78" width="52" height="30" rx="5" fill="#F5F7FC" stroke="#0E7C66" stroke-width="1.4"/>
+  <rect x="454" y="112" width="52" height="26" rx="5" fill="#F5F7FC" stroke="#0E7C66" stroke-width="1.4"/>
+  <text x="480" y="166" font-size="10.5" font-family="Cambria,Georgia,serif" font-weight="bold" fill="#0B1437" text-anchor="middle">Phone</text>
+  <text x="480" y="181" font-size="9" fill="#5E6C8A" text-anchor="middle">one column, stacked</text>
+</svg><p class="cap">One page,
+three devices: the same content re-flowed for a laptop, a tablet and a phone.</p>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;framework&lt;/b&gt; يعني قطع جاهزة.&lt;/p&gt;\n&lt;p&gt;لو بتبني بيت مش هتصنع الطوب والشبابيك ومقابض الأبواب بنفسك. هتشتريهم جاهزين وتركبهم، وتصرف مجهودك على\nالحتة المخصوصة بالبيت ده. الفكرة دي بالظبط هي الـ framework، بس لصفحة ويب: شريط قائمة جاهز، وكارت جاهز،\nوزرار جاهز، بتركبهم، وتبني إنت الحتة اللي مفيش framework يعرفها، وهي اللي الموقع ده عشانها.&lt;/p&gt;&quot;, &quot;&lt;p&gt;خد بالك من الكلمة اللي الكتاب بيكررها في النقطتين: &lt;b&gt;efficient&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;الـ framework &lt;b&gt;مش&lt;/b&gt; بيخليك تعمل حاجة كانت مستحيلة. أي حاجة الـ framework بيبنيها كان ممكن تتكتب\nبالإيد. اللي بيوفره هو &lt;b&gt;الوقت&lt;/b&gt;. دي كل الحكاية، ودي اللي الامتحان بيسأل عليها.&lt;/p&gt;\n&lt;p&gt;وحاجة أخيرة تفضل مظبوطة في دماغك: &lt;b&gt;Next.js مبني على React&lt;/b&gt;، هو مش منافس ليه. وReact هو اللي\n«بيحدّث جزء من الشاشة بكفاءة»، وده بالظبط شغل الـ JavaScript اللي قابلته في القسم الأول، بس معمول كويس\nبما يكفي لتطبيقات كبيرة جدًا.&lt;/p&gt;&quot;]">
+<h2>4. Frameworks</h2>
+<p><b>(1) Framework</b> is a structure that provides commonly used functions and components in advance,
+in order to make web application development more efficient.</p>
+<p><b>(2)</b> By using a framework, developers do not need to write all code from scratch and can develop more
+efficiently.</p>
+<p><b>(3)</b> Major frontend frameworks:</p>
+<table>
+  <tr><th style="width:22%">Framework name</th><th>Characteristics</th></tr>
+  <tr><td class="k">React</td>
+      <td>Developed by Meta (formerly Facebook). It can efficiently update only part of the screen and is
+          suited to large-scale web applications.</td></tr>
+  <tr><td class="k">Vue</td>
+      <td>Has a simple structure and allows web applications to be built incrementally from small
+          features.</td></tr>
+  <tr><td class="k">Next.js</td>
+      <td>In addition to React's features, includes mechanisms to speed up page display.</td></tr>
+</table>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;تمن كلمات، وكل واحدة في جملة:&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;HTML&lt;/b&gt;: الهيكل. &lt;b&gt;CSS&lt;/b&gt;: الشكل. &lt;b&gt;JavaScript&lt;/b&gt;: الحركة والتفاعل.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;semantic HTML&lt;/b&gt;: إنك توصف كل حتة في الصفحة بوسم بيقول معناها.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;accessibility&lt;/b&gt;: إن الصفحة تنفع لناس عندهم إعاقة.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;SEO&lt;/b&gt;: إن محركات البحث تلاقي الصفحة.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;responsive design&lt;/b&gt;: الترتيب بيتظبط حسب حجم الشاشة.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;framework&lt;/b&gt;: وظايف جاهزة بتخلي التطوير أكفأ.&lt;/p&gt;\n&lt;p&gt;ولو الامتحان طلب تعريف، اكتب الجملة الإنجليزي زي ما هي. الكلمات دي هي اللي الدرجة معلقة عليها.&lt;/p&gt;&quot;]">
+<h2>Key Terms</h2>
+<table>
+  <tr><th style="width:26%">Term</th><th>Meaning</th></tr>
+  <tr><td class="k">HTML</td><td>Structure.</td></tr>
+  <tr><td class="k">CSS</td><td>Appearance.</td></tr>
+  <tr><td class="k">JavaScript</td><td>Behavior.</td></tr>
+  <tr><td class="k">semantic HTML</td><td>Describing each part of a page with tags that indicate their
+      meaning.</td></tr>
+  <tr><td class="k">accessibility</td><td>Usable by people with impairments.</td></tr>
+  <tr><td class="k">SEO</td><td>Being found by search engines.</td></tr>
+  <tr><td class="k">responsive design</td><td>Layout adapts to screen size.</td></tr>
+  <tr><td class="k">framework</td><td>Ready-made functions for efficient development.</td></tr>
+</table>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;واحدة غلط بس من الأربعة، وهي &lt;b&gt;B&lt;/b&gt;، وهي غلط بالطريقة اللي الامتحان بيحبها: بياخد\nتكنولوجيا حقيقية ويديها شغل تكنولوجيا تانية حقيقية.&lt;/p&gt;\n&lt;p&gt;فأي ما تشوف &lt;b&gt;CSS&lt;/b&gt; وكلمة &lt;b&gt;behavior&lt;/b&gt; في نفس الجملة، أو &lt;b&gt;JavaScript&lt;/b&gt; وكلمة\n&lt;b&gt;appearance&lt;/b&gt;، اقرا الجملة تاني قبل ما تجاوب.&lt;/p&gt;\n&lt;p&gt;وجزء (2) هو نفس الجدول اللي في أول الدرس، بس مقلوب: الكتاب بيديك الدور وإنت بتدور على صاحبه. الهيكل\nHTML، والشكل CSS، والحركة JavaScript.&lt;/p&gt;&quot;]">
+<h2>Worked Example</h2>
+<div class="qbox"><span class="tag book">FROM THE TEXTBOOK</span>
+<p class="q">(1) Mark each statement (A to D) with &#9675; if true, or &times; if false.</p>
+<table>
+  <tr><td style="width:7%"><b>A</b></td><td>HTML is a technology that defines the structure (skeleton) of a
+      web page.</td></tr>
+  <tr><td><b>B</b></td><td>CSS is a technology that adds behavior to a web page.</td></tr>
+  <tr><td><b>C</b></td><td>Responsive design is a concept in which the layout is automatically adjusted
+      according to different screen sizes.</td></tr>
+  <tr><td><b>D</b></td><td>Using a framework eliminates the need to write all code from scratch and allows
+      efficient development.</td></tr>
+</table>
+<p class="q">(2) Match each role (a to c) with the most appropriate technology from the choices below
+(A to C).</p>
+<table>
+  <tr><td style="width:7%"><b>a</b></td><td>Defines the structure of a web page</td></tr>
+  <tr><td><b>b</b></td><td>Specifies the appearance of a web page</td></tr>
+  <tr><td><b>c</b></td><td>Adds behavior and interactivity to a web page</td></tr>
+</table>
+<p>[Choices] &nbsp; A HTML &nbsp;&nbsp; B CSS &nbsp;&nbsp; C JavaScript</p>
+<div class="ans"><b>Solution.</b>
+<br><br>
+<b>(1) A: true.</b> HTML defines the structure of a web page.
+<br><b>B: false.</b> CSS is a technology that specifies the appearance of a web page. Adding behavior is
+JavaScript.
+<br><b>C: true.</b> That is the correct definition of responsive design.
+<br><b>D: true.</b> That is the correct description of the benefit of frameworks.
+<br><br>
+<b>(2)</b> a = <b>A</b> (defining structure is HTML). b = <b>B</b> (specifying appearance is CSS).
+c = <b>C</b> (adding behavior is JavaScript).</div>
+</div>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;عدّ الدرجات الأول: ست درجات على تلات تكنولوجيز، يعني &lt;b&gt;درجتين لكل واحد&lt;/b&gt;. درجة إنك تقول\nدوره، ودرجة إنك تقول بيعمل إيه &lt;b&gt;في صفحة المكتبة دي بالذات&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;وعشان كده الإجابة العامة «HTML is structure, CSS is style, JavaScript is behavior» كلامها صح وبتاخد نص\nالدرجات بس.&lt;/p&gt;\n&lt;p&gt;وكلمة &lt;b&gt;Refer to&lt;/b&gt; دي &lt;b&gt;أمر، مش مساعدة&lt;/b&gt;: التلات كلمات structure وappearance وbehavior لازم\nتظهر في إجابتك بالاسم.&lt;/p&gt;&quot;]">
+<h2>Exam-Style Question</h2>
+<div class="qbox"><span class="tag book">FROM THE TEXTBOOK &middot; [6 MARKS]</span>
+<p class="q">Explain how HTML, CSS, and JavaScript each contribute to a library page that lists books, is
+styled, and filters the results as the user types.</p>
+<p class="note">Refer to: structure, appearance, behavior.</p>
+<div class="ans"><b>Model answer</b> (2 marks for each technology: one for the role, one for the example from
+this page).
+<br><br>
+<b>HTML</b> defines the <b>structure</b> of the page. It provides the heading of the library page and the list
+of books, with each book title as an item in that list, along with any links to the individual books.
+<br><br>
+<b>CSS</b> specifies the <b>appearance</b>. It sets the colors of the page, the fonts and their sizes, and how
+the list of books is laid out on the screen, for example the spacing between entries.
+<br><br>
+<b>JavaScript</b> adds the <b>behavior</b>. As the user types in the search box, it filters the list so that
+only the matching books remain, and it updates only that part of the screen, without reloading the page.</div>
+</div>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;في السؤال الأول، الكتاب بيقولك طول الإجابة: أربع حروف، وتلات حروف. استخدمها كمراجعة على\nنفسك.&lt;/p&gt;\n&lt;p&gt;في &lt;b&gt;2 (1)&lt;/b&gt;، خد بالك من كلمة &lt;b&gt;necessarily&lt;/b&gt;. الخيار C مش بيقول إن الوسوم &lt;i&gt;ممكن&lt;/i&gt; تساعد في\nالسرعة، هو بيقول إنها &lt;b&gt;بالضرورة&lt;/b&gt; بتخلي الصفحة أسرع، ومفيش حاجة في الدرس بتقول كده. الـ semantic HTML\nبيدي &lt;b&gt;معنى&lt;/b&gt;، مش سرعة.&lt;/p&gt;\n&lt;p&gt;في &lt;b&gt;2 (2)&lt;/b&gt;، كل خيار غلط هنا هو مصطلح حقيقي إنت اتعلمته، من الدرس ده أو اللي قبله. وعشان كده\nالتعريفات لازم تتحفظ &lt;b&gt;بالظبط&lt;/b&gt;، مش تقريبًا. والكلمة المفتاحية في تعريف الـ framework هي\n&lt;b&gt;efficient&lt;/b&gt;.&lt;/p&gt;&quot;]">
+<h2>Try</h2>
+<div class="qbox"><span class="tag book">FROM THE TEXTBOOK</span>
+<p class="q">1. Answer the following questions.</p>
+<ol>
+  <li>What is the four-letter abbreviation for the technology that defines the structure (skeleton) of a web
+      page?</li>
+  <li>What is the three-letter abbreviation for the technology that specifies the appearance of a web page
+      (colors, layout, size, etc.)?</li>
+  <li>What is the term for the technology that adds behavior and interactivity to a web page?</li>
+  <li>What is the term for the design concept in which the layout is automatically adjusted according to
+      different screen sizes?</li>
+</ol>
+<div class="ans"><b>Answers.</b> 1. <b>HTML</b> &nbsp;&middot;&nbsp; 2. <b>CSS</b> &nbsp;&middot;&nbsp;
+3. <b>JavaScript</b> &nbsp;&middot;&nbsp; 4. <b>responsive design</b>.</div>
+</div>
+<div class="qbox"><span class="tag book">FROM THE TEXTBOOK</span>
+<p class="q">2 (1). Choose the option that is NOT an appropriate benefit of using semantic HTML.</p>
+<table>
+  <tr><td style="width:7%"><b>A</b></td><td>Screen reader software can correctly understand the structure of
+      the page.</td></tr>
+  <tr><td><b>B</b></td><td>Search engines can more easily understand the content of a web page.</td></tr>
+  <tr><td><b>C</b></td><td>The display speed of a web page necessarily becomes faster.</td></tr>
+  <tr><td><b>D</b></td><td>Information becomes easier to convey to users with visual impairments.</td></tr>
+</table>
+<div class="ans"><b>Answer: C.</b> Semantic HTML is about meaning, not speed. A, B and D are the two benefits
+the book lists, with A and D both being parts of accessibility and B being SEO.</div>
+</div>
+<div class="qbox"><span class="tag book">FROM THE TEXTBOOK</span>
+<p class="q">2 (2). Choose the option that most appropriately describes a framework.</p>
+<table>
+  <tr><td style="width:7%"><b>A</b></td><td>A language for defining the structure of a web page</td></tr>
+  <tr><td><b>B</b></td><td>A structure for making web application development more efficient</td></tr>
+  <tr><td><b>C</b></td><td>A technology for encrypting data and sending it safely</td></tr>
+  <tr><td><b>D</b></td><td>A design concept for supporting different screen sizes</td></tr>
+</table>
+<div class="ans"><b>Answer: B.</b> A describes HTML, C describes HTTPS from lesson 3-2, and D describes
+responsive design.</div>
+</div>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;لو هتفتكر جملتين بس من الدرس ده، خليهم دول:&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;HTML هيكل، وCSS شكل، وJavaScript حركة.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;والصفحة الحديثة بتزوّد تلاتة: وسوم ليها معنى، وترتيب بيتظبط على أي شاشة، وأجزاء جاهزة بتتركب.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;والجملة اللي بتحميك من أكتر فخ في الدرس: &lt;b&gt;الصفحتين شكلهم واحد بالظبط، اللي اتغير هو اللي بيفهمه\nاللي مش بيشوف.&lt;/b&gt;&lt;/p&gt;&quot;]">
+<h2>Lesson Question, Answered</h2>
+<p>A web page is built from three technologies with independent roles: <b>HTML</b> defines the
+structure, <b>CSS</b> specifies the appearance, and <b>JavaScript</b> adds behavior and interactivity.
+Combined, they create the page. A modern frontend goes further: <b>semantic HTML</b> uses meaningful tags so
+screen readers and search engines understand the page, improving accessibility and SEO; <b>responsive
+design</b> adjusts the layout to any screen size, with a mobile-first approach; and <b>frameworks</b> such as
+React, Vue, and Next.js provide ready-made functions so developers build efficiently without writing
+everything from scratch. A modern web page is therefore not one technology but a combination: structured,
+styled, interactive, meaningful, adaptable, and efficient to build.</p>
+  </section>
+
+  <div class="end">
+    <h2>خلصت الدرس</h2>
+    <p>باقي الـ PDF فيه الأسئلة والتمارين بإجاباتها، وزيادة عليها Part C.</p>
+    <a class="btn" href="../../">كل الواجبات</a>
+  </div>
+
+  <p class="foot">Programming and Artificial Intelligence &middot; Egyptian Baccalaureate &middot; Year 2</p>
+</main>
+
+<script>
+const KEY = "learn-3-3-open";
+let open = {};
+try { open = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { open = {}; }
+function remember() { try { localStorage.setItem(KEY, JSON.stringify(open)); } catch (e) {} }
+
+document.querySelectorAll(".blk").forEach((blk, i) => {
+  const ways = JSON.parse(blk.dataset.ways || "[]");
+  if (!ways.length) return;
+
+  const wrap = document.createElement("div");
+  wrap.className = "ask";
+  const btn = document.createElement("button");
+  btn.type = "button";
+  const cnt = document.createElement("span");
+  cnt.className = "cnt";
+  const panel = document.createElement("div");
+  panel.hidden = true;
+  wrap.append(btn, cnt, panel);
+  blk.append(wrap);
+
+  let at = typeof open[i] === "number" ? open[i] : -1;   // -1 means closed
+
+  function paint() {
+    if (at < 0) {
+      panel.hidden = true;
+      panel.innerHTML = "";
+      btn.textContent = "مش فاهم؟";
+      cnt.textContent = "";
+      return;
+    }
+    panel.hidden = false;
+    panel.className = "way";
+    panel.innerHTML = ways[at];
+    btn.textContent = at + 1 < ways.length ? "اشرحها بطريقة تانية" : "إخفاء";
+    cnt.textContent = ways.length > 1 ? "طريقة " + (at + 1) + " من " + ways.length : "";
+  }
+
+  btn.addEventListener("click", () => {
+    at = at + 1 < ways.length ? at + 1 : -1;
+    open[i] = at;
+    remember();
+    paint();
+  });
+  paint();
+});
+
+const prog = document.getElementById("prog");
+function scrolled() {
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  prog.style.width = (max > 0 ? Math.min(100, (h.scrollTop / max) * 100) : 0) + "%";
+}
+addEventListener("scroll", scrolled, { passive: true });
+addEventListener("resize", scrolled);
+scrolled();
+</script>
+</body>
+</html>
