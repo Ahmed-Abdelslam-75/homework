@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Three Tiers, One App &middot; Homework 8</title>
+<meta name="description" content="Six rounds on the frontend, the backend and the database behind one web application. Homework 8 for Programming and AI.">
+<meta name="theme-color" content="#BDB5A4">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Three Tiers, One App &middot; Homework 8">
+<meta property="og:description" content="Which tier does this job? Six rounds on the three tiers behind every web application.">
+<meta property="og:image" content="https://ahmed-abdelslam-75.github.io/homework/hw8/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23FDFBF2' stroke='%231B2A4A' stroke-width='4'/%3E%3Cg stroke='%23CFE0EE' stroke-width='2'%3E%3Cpath d='M8 22h48M8 34h48M8 46h48'/%3E%3C/g%3E%3Cpath d='M18 6v52' stroke='%23E9A0A0' stroke-width='3'/%3E%3Cpath d='M30 40l8 8 16-20' stroke='%23D1372F' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Kalam:wght@300;400;700&display=swap">
+<style>
+[hidden]{display:none!important}
+/* =====================================================================
+   The notebook skin for Homework 7.
+
+   One squared page you scroll down, a red margin the teacher marks in,
+   and handwriting for anything written by hand. Nothing here is shared
+   with the other six homeworks.
+   ===================================================================== */
+:root{
+  --paper:#FDFBF2; --grid:#CFE0EE; --marg:#E9A0A0; --ink:#1B2A4A; --soft:#6E7B96;
+  --pen:#D1372F; --ok:#1E8A5B; --amber:#B07A17; --hand:Kalam,"Comic Sans MS",cursive;
+  --title:Caveat,cursive; --body:Kalam,"Comic Sans MS",cursive;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:#BDB5A4;color:var(--ink);font-family:var(--body);font-size:18.5px;line-height:1.95;
+  padding:14px 8px 40px}
+.en{direction:ltr;text-align:left;unicode-bidi:isolate}
+
+
+/* ---------- the page ---------- */
+.book{max-width:720px;margin:0 auto;background:var(--paper);border-radius:4px;position:relative;
+  box-shadow:0 16px 40px rgba(0,0,0,.3);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:27px 27px;padding-block:30px 46px;padding-inline:72px 24px}
+.book::before{content:"";position:absolute;top:0;bottom:0;inset-inline-start:54px;width:2px;background:var(--marg)}
+.spiral{position:absolute;top:0;bottom:0;inset-inline-start:14px;width:26px;display:flex;flex-direction:column;
+  justify-content:space-around;align-items:center;padding:26px 0;pointer-events:none}
+.spiral i{width:13px;height:13px;border-radius:50%;background:#C9BFAC;box-shadow:inset 0 2px 3px rgba(0,0,0,.35)}
+@media (max-width:560px){ .book{padding-block:24px 40px;padding-inline:56px 16px;background-size:24px 24px}
+  .book::before{inset-inline-start:42px} .spiral{inset-inline-start:10px;width:20px} .spiral i{width:10px;height:10px} }
+
+/* ---------- cover ---------- */
+.cover{border-bottom:2px dashed #C6CFDD;padding-bottom:16px;margin-bottom:10px}
+.cover .k{font-family:var(--body);font-size:13.5px;color:var(--soft);letter-spacing:.02em}
+.cover h1{font-family:var(--title);font-size:42px;line-height:1.05;margin:4px 0 2px;font-weight:700}
+.cover .sub{font-family:var(--title);font-size:25px;color:var(--soft);margin:0 0 14px}
+.nameline{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.nameline label{font-family:var(--title);font-size:26px;color:var(--pen)}
+.nameline input{flex:1;min-width:190px;border:0;border-bottom:2px solid var(--ink);background:transparent;
+  font-family:var(--title);font-size:27px;color:var(--ink);padding:0 6px 2px}
+.nameline input:focus{outline:none;border-bottom-color:var(--pen)}
+.meta{font-family:var(--title);font-size:21px;color:var(--soft);margin-top:8px}
+
+.warn{border:2px solid var(--pen);border-radius:4px;background:#FDEEED;padding:12px 14px;margin:14px 0}
+.warn b{color:var(--pen)}
+
+/* ---------- section headings ---------- */
+.sec{font-family:var(--title);font-size:30px;color:var(--ink);margin:34px 0 4px;position:relative}
+.sec::after{content:"";display:block;width:120px;height:3px;background:var(--amber);border-radius:3px;margin-top:2px;
+  opacity:.5}
+.sec .cnt{font-family:var(--body);font-size:14px;color:var(--soft)}
+
+/* ---------- a question ---------- */
+.q{position:relative;margin:0 0 30px;padding-top:4px}
+.q .n{font-family:var(--title);font-size:28px;color:var(--pen);margin-inline-end:9px;unicode-bidi:isolate;direction:ltr}
+.q .st{font-size:18.5px}
+.q .note-line{font-family:var(--body);font-size:15px;color:var(--soft)}
+.opts{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:3px}
+.pick{background:none;border:0;font:inherit;font-size:18.5px;color:var(--ink);cursor:pointer;text-align:start;
+  padding:5px 13px;border-radius:42% 58% 52% 48% / 58% 42% 58% 42%;direction:ltr;width:100%}
+.pick:hover{background:rgba(27,42,74,.06)}
+.pick .let{font-family:var(--title);font-size:24px;margin-inline-end:8px;color:var(--soft)}
+.pick.chosen{box-shadow:inset 0 0 0 2.5px var(--ink)}
+.pick.good{box-shadow:inset 0 0 0 2.5px var(--ok);color:var(--ok)}
+.pick.bad{box-shadow:inset 0 0 0 2.5px var(--pen);color:var(--pen)}
+.pick[disabled]{cursor:default}
+
+/* match */
+.bank{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0 10px;padding:9px 11px;border:2px dashed #C6CFDD;border-radius:4px}
+.bank .w{font:inherit;font-size:17px;border:0;background:#EFF4F9;border-radius:3px;padding:4px 11px;cursor:pointer;
+  color:var(--ink);direction:ltr}
+.bank .w:hover{background:#DDE8F2}
+.bank .w.used{opacity:.4}
+.mrow{display:flex;gap:10px;align-items:baseline;padding:5px 0;direction:ltr}
+.mrow .t{flex:1;direction:ltr;text-align:left}
+.blank{min-width:7.5em;border-bottom:2px dotted #8C9AB5;font-family:var(--title);font-size:24px;
+  color:var(--ink);background:none;border-top:0;border-inline:0;text-align:center;padding:0 7px;cursor:pointer;
+  direction:ltr}
+.blank.live{border-bottom-color:var(--pen);background:#FBF3D9}
+.blank.good{color:var(--ok);border-bottom-color:var(--ok)}
+.blank.bad{color:var(--pen);border-bottom-color:var(--pen);text-decoration:line-through}
+
+/* order */
+.orow{display:flex;gap:11px;align-items:center;padding:5px 0}
+.obox{width:40px;height:40px;flex:none;border:2px solid var(--ink);border-radius:3px;background:none;
+  font-family:var(--title);font-size:25px;color:var(--ink);cursor:pointer;line-height:1}
+.obox.good{border-color:var(--ok);color:var(--ok)}
+.obox.bad{border-color:var(--pen);color:var(--pen)}
+.orow .t{flex:1;direction:ltr;text-align:left;font-size:17.5px}
+.okbtn{font-family:var(--title);font-size:22px;background:none;border:2px solid var(--ink);border-radius:3px;padding:3px 18px;cursor:pointer;color:var(--ink);margin-top:6px}
+.okbtn[disabled]{opacity:.35;cursor:not-allowed}
+
+/* fill */
+.frow{padding:5px 0;direction:ltr;text-align:left}
+.wr{min-width:7em;border:0;border-bottom:2px dotted #8C9AB5;background:transparent;font-family:var(--title);
+  font-size:25px;color:var(--ink);text-align:center;padding:0 6px;direction:ltr}
+.wr:focus{outline:none;border-bottom-color:var(--pen);background:#FBF3D9}
+.wr.good{color:var(--ok);border-bottom-color:var(--ok)}
+.wr.bad{color:var(--pen);border-bottom-color:var(--pen)}
+
+/* essay */
+.marks{font-family:var(--title);font-size:22px;color:var(--pen);margin-inline-start:6px}
+.refer{margin:8px 0 6px;padding:8px 12px;border-inline-start:3px solid var(--amber);background:#FCF6E7}
+.refer .t{font-family:var(--body);font-size:14px;color:var(--amber);letter-spacing:.04em;text-transform:uppercase}
+.tick{display:flex;gap:9px;align-items:center;background:none;border:0;font:inherit;font-size:17px;
+  color:var(--ink);cursor:pointer;padding:3px 0;text-align:start;width:100%}
+.tick .box{width:21px;height:21px;flex:none;border:2px solid var(--amber);border-radius:3px;display:grid;
+  place-items:center;font-size:14px;color:var(--pen);font-family:var(--title)}
+.tick[aria-checked="true"] .lb{text-decoration:line-through;color:var(--soft)}
+.essaybox{width:100%;min-height:13rem;border:0;background:
+  repeating-linear-gradient(transparent,transparent 33px,#C6CFDD 33px,#C6CFDD 34px);
+  font-family:var(--body);font-size:18px;line-height:34px;color:var(--ink);padding:0 4px;resize:vertical;
+  direction:ltr;text-align:left}
+.essaybox:focus{outline:none;background-color:#FBF8E8}
+.wc{font-family:var(--body);font-size:14px;color:var(--soft);margin-top:4px}
+
+/* the red pen */
+.red{position:absolute;inset-inline-start:-58px;top:0;width:46px;text-align:center;font-family:var(--title);
+  color:var(--pen);font-size:34px;line-height:1;opacity:0;transform:rotate(-12deg);transition:opacity .25s}
+.red.on{opacity:1}
+.red.part{font-size:24px;line-height:1.2}
+@media (max-width:560px){ .red{inset-inline-start:-46px;width:38px;font-size:28px} }
+.pennote{display:none;margin-top:7px;font-family:var(--title);font-size:22px;color:var(--pen);line-height:1.4}
+.pennote.on{display:block}
+.pennote .en{display:block;margin-bottom:2px}
+
+.pennote .fix{color:var(--ok)}
+
+/* ---------- hand in ---------- */
+.handin{margin-top:36px;border-top:2px dashed #C6CFDD;padding-top:18px}
+.handin h2{font-family:var(--title);font-size:32px;margin:0 0 6px}
+.tally{display:grid;gap:4px;margin:10px 0 14px}
+.tally div{display:flex;gap:10px;align-items:baseline;font-size:17px}
+.tally .v{font-family:var(--title);font-size:22px;margin-inline-start:auto;unicode-bidi:isolate;direction:ltr}
+.tally .v.done{color:var(--ok)} .tally .v.open{color:var(--pen)}
+.send{font-family:var(--title);font-size:26px;background:var(--ink);color:var(--paper);border:0;border-radius:4px;
+  padding:12px 30px;cursor:pointer}
+.send:disabled{opacity:.45;cursor:not-allowed}
+.send.again{background:var(--pen)}
+.status{font-size:16px;margin-top:10px;min-height:1.6em}
+.status.bad{color:var(--pen)} .status.good{color:var(--ok)}
+.ghost{font-family:var(--body);font-size:15px;background:none;border:1.5px solid #C6CFDD;border-radius:3px;
+  padding:7px 14px;cursor:pointer;color:var(--soft);margin-inline-end:8px}
+.ghost:hover{border-color:var(--ink);color:var(--ink)}
+
+/* ---------- the marked summary ---------- */
+.result{margin-top:22px;border:2.5px solid var(--pen);border-radius:4px;padding:16px 18px;background:#FFF8F7}
+.result .big{font-family:var(--title);font-size:46px;color:var(--pen);line-height:1}
+.result .big span{font-size:24px;color:var(--soft)}
+.result .line{font-size:17px;margin-top:6px}
+.model{margin-top:12px;border-inline-start:3px solid var(--ok);padding:8px 12px;background:#F1F9F4}
+.model .t{font-family:var(--body);font-size:13.5px;color:var(--ok);letter-spacing:.04em;text-transform:uppercase}
+.model p{margin:4px 0 0;font-size:17px;direction:ltr;text-align:left}
+
+/* ---------- the bookmark tab ---------- */
+.tab bdi{unicode-bidi:isolate;direction:ltr}
+.tab{position:fixed;inset-inline-end:0;top:40%;background:var(--ink);color:var(--paper);
+  font-family:var(--title);font-size:21px;padding:10px 12px;border-radius:6px 0 0 6px;
+  box-shadow:-3px 3px 10px rgba(0,0,0,.25);z-index:5;text-align:center;line-height:1.1}
+.tab small{display:block;font-family:var(--body);font-size:11px;opacity:.75}
+
+.foot{max-width:720px;margin:14px auto 0;text-align:center;color:#6B6558;font-size:13px;
+  font-family:var(--body)}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} html{scroll-behavior:auto} }
+
+</style>
+</head>
+<body>
+
+<main class="book">
+  <div class="spiral"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <div class="cover">
+    <div class="k">Programming and Artificial Intelligence &middot; Year 2</div>
+    <h1>Three tiers, one app</h1>
+    <p class="sub">Who does what behind the screen</p>
+    <div class="nameline">
+      <label for="nameInput">Name</label>
+      <input id="nameInput" autocomplete="name" placeholder="write your name here">
+    </div>
+    <div class="meta">Date: <span id="today"></span></div>
+  </div>
+
+  <div id="paper"></div>
+</main>
+
+<div class="tab" id="tab"></div>
+<p class="foot">Programming and Artificial Intelligence &middot; Egyptian Baccalaureate &middot; Year 2</p>
+
+<noscript><p style="max-width:720px;margin:20px auto;background:#FDFBF2;padding:20px">
+This homework needs JavaScript. Please open the link in Chrome or Safari.</p></noscript>
+
+<script>
+const HW = {"id": "hw8", "title": "Homework 8: Three Tiers, One App", "sheet": "Homework 8", "salt": "three-tiers-one-app-and-the-job-each-one-has", "endpoint": "https://script.google.com/macros/s/AKfycbwlkc3-gi4B4E7s3xEKEeDWZsyU8OstLs-Rr2UFe1bbHEDYSTV_1KKZ4ljDQ6nc1MUt/exec", "screens": [{"type": "mcq", "round": 0, "ids": ["Q1"], "q": "Which statement correctly describes a web application?", "options": ["It must be installed on every device.", "It is used through a web browser.", "It is used only to store data.", "It runs only on a server."]}, {"type": "mcq", "round": 0, "ids": ["Q2"], "q": "Which group contains only examples of web applications?", "options": ["YouTube, Amazon, Gmail, Google Maps", "Search screen, Gmail, database, Amazon", "YouTube, backend, Gmail, input form", "Google Maps, database, backend, Amazon"]}, {"type": "mcq", "round": 0, "ids": ["Q3"], "q": "Which statement correctly describes the frontend?", "options": ["It stores and manages data.", "It performs server-side processing.", "It runs on the browser and accepts user input.", "It stores application records."]}, {"type": "mcq", "round": 0, "ids": ["Q4"], "q": "Which statement correctly describes the backend?", "options": ["It displays screens to users.", "It performs server-side processing and decisions.", "It stores application records.", "It receives input directly from users."]}, {"type": "mcq", "round": 0, "ids": ["Q5"], "q": "Which statement correctly describes the database?", "options": ["It displays screens.", "It makes processing decisions.", "It stores and manages data.", "It accepts user input."]}, {"type": "mcq", "round": 0, "ids": ["Q6"], "q": "Which group contains only frontend examples?", "options": ["Search screen, product listing, input form", "Login, product search, payment processing", "Product data, user data, order history", "Stock checking, payment, login"]}, {"type": "mcq", "round": 0, "ids": ["Q7"], "q": "Which group contains only backend tasks?", "options": ["Product listing and input forms", "Login and product search", "User data and order history", "Search screen and cart screen"]}, {"type": "mcq", "round": 0, "ids": ["Q8"], "q": "Which group contains only database examples?", "options": ["Product data, user data, order history", "Search screen, cart screen, input form", "Login, stock checking, payment", "Timeline, post screen, playback screen"]}, {"type": "mcq", "round": 0, "ids": ["Q9"], "q": "A user enters search keywords. Which tiers collect the input and search for matching products, in this order?", "options": ["Database → Frontend", "Backend → Database", "Frontend → Backend", "Backend → Frontend"]}, {"type": "mcq", "round": 0, "ids": ["Q10"], "q": "Which mapping correctly represents the three tiers?", "options": ["Frontend = Data, Backend = Presentation, Database = Logic", "Frontend = Presentation, Backend = Logic, Database = Data", "Frontend = Logic, Backend = Data, Database = Presentation", "Frontend = Presentation, Backend = Data, Database = Logic"]}, {"type": "mcq", "round": 0, "ids": ["Q11"], "q": "On a video-sharing site, which task belongs to the backend?", "options": ["Displaying videos", "Selecting recommended videos", "Storing viewing history", "Receiving user operations"]}, {"type": "mcq", "round": 0, "ids": ["Q12"], "q": "Which data is stored in the database of a video-sharing site?", "options": ["Video data and viewing history", "Playback and search screens", "Recommended videos and view counts", "User operations and search screens"]}, {"type": "mcq", "round": 0, "ids": ["Q13"], "q": "On a social networking service, which classification is correct?", "options": ["Post screen → Database", "Post audience → Backend", "Messages → Frontend", "Notifications → Database"]}, {"type": "mcq", "round": 0, "ids": ["Q14"], "q": "On an e-commerce site, which classification is correct?", "options": ["Cart screen → Frontend", "Stock checking → Database", "Customer information → Backend", "Payment processing → Frontend"]}, {"type": "mcq", "round": 0, "ids": ["Q15"], "q": "Your account page opens and looks exactly as it should, but your past orders are missing from it. Which tier most probably failed?", "options": ["The frontend, because the page is what it draws", "The database, because past orders are what it stores", "No tier failed, the page is simply still loading", "The frontend and the backend together"]}, {"type": "mcq", "round": 0, "ids": ["Q16"], "q": "Which pair of verbs describes the backend?", "options": ["Shows and collects", "Processes and decides", "Stores and retrieves", "Draws and styles"]}, {"type": "mcq", "round": 0, "ids": ["Q17"], "q": "Why is a web application built as three separate tiers instead of one single program?", "options": ["Because a browser cannot run a large program", "So that each tier can be changed or repaired on its own", "Because the database cannot sit on the same computer", "So that the user can choose which tier to open"]}, {"type": "tf", "round": 1, "ids": ["Q18"], "q": "A web application can be used through a browser without dedicated software."}, {"type": "tf", "round": 1, "ids": ["Q19"], "q": "The backend runs on the browser."}, {"type": "tf", "round": 1, "ids": ["Q20"], "q": "A database can retrieve stored data and record new data."}, {"type": "tf", "round": 1, "ids": ["Q21"], "q": "A web application can work with the frontend alone."}, {"type": "tf", "round": 1, "ids": ["Q22"], "q": "Different web services can use the same three-tier architecture."}, {"type": "tf", "round": 1, "ids": ["Q23"], "q": "The database sends a query to the backend."}, {"type": "tf", "round": 1, "ids": ["Q24"], "q": "The backend is the only tier that speaks to the database."}, {"type": "tf", "round": 1, "ids": ["Q25"], "q": "If a page draws correctly but the information on it is missing, the frontend is the tier that failed."}, {"type": "tf", "round": 1, "ids": ["Q26"], "q": "Presentation, logic and data are another way of naming the frontend, the backend and the database."}, {"type": "match", "round": 2, "ids": ["Q27", "Q28", "Q29", "Q30", "Q31", "Q32"], "note": "An e-commerce site. Give every item the tier it belongs to. A tier can be used more than once.", "choices": ["Frontend", "Backend", "Database"], "rows": ["Storage of order history", "Storage of customer information", "Product listing page", "Payment processing", "Stock checking", "Cart screen"], "reuse": true}, {"type": "match", "round": 2, "ids": ["Q33", "Q34", "Q35", "Q36", "Q37", "Q38"], "note": "A social networking service. The same three tiers, a different service. A tier can be used more than once.", "choices": ["Frontend", "Backend", "Database"], "rows": ["Storage of post data", "Timeline screen", "Notification processing", "Determining the audience for a post", "Post screen", "Storage of follow relationships"], "reuse": true}, {"type": "match", "round": 2, "ids": ["Q39", "Q40", "Q41", "Q42", "Q43", "Q44"], "note": "A clinic booking app and a weather app. A tier can be used more than once.", "choices": ["Frontend", "Backend", "Database"], "rows": ["The booking form the patient fills in", "Checking which time slots are still free", "Storing the patient's past visits", "Entering the name of the city", "Looking up the forecast data for that city", "Storing past forecasts"], "reuse": true}, {"type": "order", "round": 3, "ids": ["Q45", "Q46", "Q47", "Q48", "Q49", "Q50"], "note": "A user searches for a product online. Put the six steps in order, from entering the keywords to seeing the results.", "top": "First", "bottom": "Last", "items": ["The database searches and returns the matching data to the backend", "The user enters the search keywords, and the frontend collects them", "The frontend displays the list of products on the screen", "The backend sends a query to the database", "The frontend sends a request to the backend", "The backend organizes the results and sends a response to the frontend"]}, {"type": "fill", "round": 4, "ids": ["Q51", "Q52", "Q53", "Q54", "Q55", "Q56"], "note": "The six messages that travel between the user and the three tiers. Each word in the bank is used once.", "bank": ["Operation", "Display", "Request", "Response", "Query", "Data"], "rows": [{"before": "The user sends an", "after": "to the frontend."}, {"before": "The frontend sends a", "after": "to the user."}, {"before": "The frontend sends a", "after": "to the backend."}, {"before": "The backend sends a", "after": "to the frontend."}, {"before": "The backend sends a", "after": "to the database."}, {"before": "The database returns the requested", "after": "to the backend."}]}, {"type": "fill", "round": 4, "ids": ["Q57", "Q58", "Q59", "Q60"], "note": "Type the missing word, or tap one from the bank. Not every word is used.", "bank": ["three-tier", "frontend", "backend", "database", "presentation", "logic", "data"], "rows": [{"before": "The three tiers working together are called the", "after": "architecture."}, {"before": "The only tier that never speaks to the database is the", "after": "."}, {"before": "Another name for the frontend is the", "after": "layer."}, {"before": "Another name for the backend is the", "after": "layer."}]}, {"type": "essay", "round": 5, "ids": ["E1"], "q": "A user posts a photo on a social networking service. Explain how the frontend, the backend and the database work together to complete the action. [PONY book page 145]", "marks": 4, "refer": ["what the user sees and sends", "what is processed and decided", "what is stored"]}, {"type": "essay", "round": 5, "ids": ["E2"], "q": "A clinic web app lets patients book appointments. The booking page opens, but no free time slots appear. Name the tier that is clearly working and the tier that most probably failed, and explain your reasoning. [PONY book page 145]", "marks": 4, "refer": ["which tier drew the page you can see", "where the missing information had to come from"]}, {"type": "essay", "round": 5, "ids": ["E3"], "q": "A weather app lets users enter a city and see its forecast. Identify one task the frontend cannot do on its own, and explain why. [PONY book page 146]", "marks": 3, "refer": ["the task you chose", "which tier it needs, and why"]}, {"type": "essay", "round": 5, "ids": ["E4"], "q": "Choose one online service that you use yourself. State the function of its frontend, its backend and its database. [PONY book page 147]", "marks": 3, "refer": ["name the service", "one clear sentence for each of the three tiers"]}], "rounds": [{"era": "One app", "tag": "Tap", "eraName": "What a web application is made of", "title": "Quick picks", "how": "Choose one answer, then it is marked straight away."}, {"era": "Read it twice", "tag": "Check", "eraName": "The sentences that cost marks", "title": "True or false", "how": "Is the statement true or false?"}, {"era": "Who does what", "tag": "Sort", "eraName": "Every job to its tier", "title": "Give it its tier", "how": "Give every item its tier. A tier can be used more than once."}, {"era": "The journey", "tag": "Order", "eraName": "From the keywords to the results", "title": "Put it in order", "how": "Number the steps, then ask for them to be marked."}, {"era": "The words", "tag": "Words", "eraName": "The terms the exam uses", "title": "Fill the gap", "how": "Type the missing word, or tap one from the word bank."}, {"era": "Your verdict", "tag": "You", "eraName": "Your own words", "title": "Explain it", "how": "Write full answers in English, in your own words and without any AI help. El Bashmohandes marks these."}], "minutes": 55, "arTime": "about 55 minutes", "kicker": "Homework 8 · Programming and AI", "h1": ["Three tiers, ", "one ", "app"], "lead": "Six rounds on the three tiers behind every web application: what each one does, which one a job belongs to, and what the six steps between them look like. Most of the questions are the exercise book's own."};
+const KEYBLOB = "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";
+/* ===== Part A: data, state, scoring ===== */
+const ROUNDS = (typeof HW !== "undefined" && HW.rounds) ? HW.rounds : [
+  { era: "1940s–60s", tag: "40s", eraName: "Birth of the computer", title: "Quick picks", how: "Choose one answer, then tap Check. Once checked, it is locked in." },
+  { era: "1970s–80s", tag: "70s", eraName: "Personal computers", title: "○ or ×", how: "Is the statement true (○) or false (×)?" },
+  { era: "1990s", tag: "90s", eraName: "The Internet", title: "Match it", how: "Give every situation its answer, then check the whole set." },
+  { era: "2000s", tag: "00s", eraName: "Smartphones", title: "Put it in order", how: "Move each card up or down until the order is right, then check." },
+  { era: "2010s", tag: "10s", eraName: "The cloud", title: "Fill the gap", how: "Type the missing word, or tap one from the word bank." },
+  { era: "Now", tag: "Now", eraName: "Generative AI", title: "Explain it", how: "Write full answers in English, like in the exam, in your own words and without any AI help. El Bashmohandes marks these." }
+];
+const TYPE_LABEL = { mcq: "Quick pick", tf: "True or false", match: "Match it", order: "In order", fill: "Fill the gap", essay: "Explain it" };
+
+const $ = (s, r) => (r || document).querySelector(s);
+function el(tag, attrs, ...kids) {
+  const n = document.createElement(tag);
+  if (attrs) for (const k in attrs) {
+    const v = attrs[k];
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "class") n.className = v;
+    else if (k === "text") n.textContent = v;
+    else if (k === "svg") n.innerHTML = v;
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v === true ? "" : v);
+  }
+  for (const c of kids.flat(Infinity)) if (c !== null && c !== undefined && c !== false) n.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return n;
+}
+const ICON = {
+  check: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  cross: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  half: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 12h12"/></svg>',
+  grid: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg>',
+  bolt: '<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 2L4 14h6.5L9.5 22 20 9.5h-6.8z"/></svg>',
+  up: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>',
+  down: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  send: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M3 11.5L21 3l-6.5 18-3.5-7.5z"/><path d="M11 13.5L21 3"/></svg>',
+  arrow: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  back: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
+};
+
+/* answer key, scrambled so it is not readable in the page source */
+const KEY = (function () {
+  const raw = atob(KEYBLOB), pass = HW.salt, bytes = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i) ^ pass.charCodeAt(i % pass.length);
+  return JSON.parse(new TextDecoder().decode(bytes));
+})();
+
+const SCREENS = HW.screens;
+const AUTO_TOTAL = SCREENS.filter((s) => s.type !== "essay").reduce((a, s) => a + s.ids.length, 0);
+const ESSAY_MARKS = SCREENS.filter((s) => s.type === "essay").reduce((a, s) => a + s.marks, 0);
+
+/* ---------- state, kept on this device ---------- */
+const STORE = "hw-" + HW.id + "-v2";
+function fresh() {
+  return { name: "", view: "start", answers: {}, ticks: {}, checked: {}, visited: {}, streak: 0, best: 0,
+           startedAt: null, sent: null, submissionId: null };
+}
+let S = fresh();
+try { const raw = localStorage.getItem(STORE); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
+function save() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} }
+
+/* ---------- is this browser actually keeping anything? ----------
+   A private tab on an iPhone throws the answers away the moment the tab closes, and Safari clears a site it
+   has not seen for a week. The page cannot stop either one, so it checks that writing works, asks to keep the
+   storage, and lets the student carry a copy of their own. */
+const STORE_OK = (function () {
+  try {
+    const probe = STORE + "-probe";
+    localStorage.setItem(probe, "1");
+    const ok = localStorage.getItem(probe) === "1";
+    localStorage.removeItem(probe);
+    return ok;
+  } catch (e) { return false; }
+})();
+function answeredCount() { return SCREENS.reduce((a, s, i) => a + (hasAnswer(i) ? 1 : 0), 0); }
+
+/* A copy the student keeps in their own Files, which nothing on the phone clears. */
+function backupBlob() {
+  return new Blob([JSON.stringify({ app: "homework", hw: HW.id, name: S.name, savedAt: new Date().toISOString(),
+                                    answered: answeredCount(), state: S }, null, 1)], { type: "application/json" });
+}
+function saveBackup() {
+  const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-");
+  const url = URL.createObjectURL(backupBlob());
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = (HW.id + "-" + (S.name || "answers") + "-" + stamp + ".json").replace(/\s+/g, "-");
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+function readBackup(file) {
+  return new Promise((resolve) => {
+    const r = new FileReader();
+    r.onerror = () => resolve(null);
+    r.onload = () => {
+      try {
+        const d = JSON.parse(String(r.result));
+        resolve(d && d.state && d.hw === HW.id ? d : null);
+      } catch (e) { resolve(null); }
+    };
+    r.readAsText(file);
+  });
+}
+
+/* ---------- scoring ---------- */
+function norm(s) {
+  return String(s || "").toLowerCase().replace(/[‘’`´]/g, "'").replace(/[^a-z0-9.,'\/ ]/g, " ")
+    .replace(/\s+/g, " ").trim().replace(/[.,]+$/, "").trim();
+}
+function orderOf(i) {
+  const s = SCREENS[i];
+  const cur = S.answers["order-" + i];
+  return Array.isArray(cur) && cur.length === s.items.length ? cur : s.items.map((_, k) => k);
+}
+/* one entry per point: {id, ok, given, correct} */
+function itemResults(i) {
+  const s = SCREENS[i], k = KEY.screens[i], A = S.answers;
+  if (s.type === "mcq") {
+    const v = A[s.ids[0]];
+    return [{ id: s.ids[0], ok: v === k.answer, given: typeof v === "number" ? "ABCD"[v] + ". " + s.options[v] : "no answer", correct: "ABCD"[k.answer] + ". " + s.options[k.answer] }];
+  }
+  if (s.type === "tf") {
+    const v = A[s.ids[0]];
+    const t = (b) => (b ? "True" : "False");
+    return [{ id: s.ids[0], ok: v === k.answer, given: typeof v === "boolean" ? t(v) : "no answer", correct: t(k.answer) }];
+  }
+  if (s.type === "match") return s.ids.map((id, r) => {
+    const v = A[id];
+    return { id, ok: v === k.answers[r], given: typeof v === "number" ? s.choices[v] : "no answer", correct: s.choices[k.answers[r]] };
+  });
+  if (s.type === "order") {
+    const cur = orderOf(i);
+    return s.ids.map((id, p) => ({ id, ok: cur[p] === k.correct[p], given: s.items[cur[p]], correct: s.items[k.correct[p]] }));
+  }
+  if (s.type === "fill") return s.ids.map((id, r) => {
+    const v = String(A[id] || "").trim();
+    return { id, ok: k.accept[r].map(norm).includes(norm(v)), given: v || "no answer", correct: k.show[r] };
+  });
+  return [];
+}
+function screenScore(i) { const r = itemResults(i); return { got: r.filter((x) => x.ok).length, of: r.length }; }
+function hasAnswer(i) {
+  const s = SCREENS[i], A = S.answers;
+  if (s.type === "mcq" || s.type === "tf") return A[s.ids[0]] !== undefined;
+  if (s.type === "order") return !!S.visited[i];
+  if (s.type === "essay") return String(A[s.ids[0]] || "").trim().length > 0;
+  return s.ids.some((id) => A[id] !== undefined && String(A[id]).trim() !== "");
+}
+function screenState(i) {
+  const s = SCREENS[i];
+  if (s.type === "essay") return hasAnswer(i) ? "essay" : "";
+  if (S.checked[i]) { const sc = screenScore(i); return sc.got === sc.of ? "good" : sc.got === 0 ? "bad" : "part"; }
+  return hasAnswer(i) ? "seen" : "";
+}
+function totals() {
+  let got = 0;
+  const rounds = ROUNDS.map((r, ri) => ({ title: r.title, got: 0, of: 0 }));
+  SCREENS.forEach((s, i) => {
+    if (s.type === "essay") return;
+    const sc = screenScore(i);
+    rounds[s.round].of += sc.of;
+    if (S.checked[i]) { rounds[s.round].got += sc.got; got += sc.got; }
+  });
+  return { got, of: AUTO_TOTAL, rounds: rounds.filter((r) => r.of > 0) };
+}
+function checkedCorrect() {
+  let n = 0;
+  SCREENS.forEach((s, i) => { if (S.checked[i] && s.type !== "essay") n += screenScore(i).got; });
+  return n;
+}
+
+/* ---------- HUD ---------- */
+function currentRound() {
+  if (S.view.startsWith("round:")) return Number(S.view.slice(6));
+  if (S.view.startsWith("q:")) return SCREENS[Number(S.view.slice(2))].round;
+  if (S.view === "finish" || S.view === "result") return ROUNDS.length;
+  return -1;
+}
+function renderHud() {
+  const hud = $("#hud");
+  hud.hidden = S.view === "start";
+  if (hud.hidden) return;
+  const cr = currentRound();
+  $("#tl").replaceChildren(
+    el("div", { class: "tl-track" }, el("div", { class: "tl-fill", style: "width:" + Math.max(0, Math.min(100, (cr / (ROUNDS.length - 1)) * 100)) + "%" })),
+    ...ROUNDS.map((r, ri) => el("button", {
+      class: "era" + (ri < cr ? " done" : ri === cr ? " now" : ""), type: "button", title: r.era + ": " + r.title,
+      "aria-label": "Round " + (ri + 1) + ", " + r.title, onclick: () => go("round:" + ri)
+    }, el("span", { class: "dot" }), el("span", { class: "lab", text: r.tag }))));
+  $("#statOk").replaceChildren(el("span", { svg: ICON.check }), String(checkedCorrect()));
+  const st = $("#statStreak");
+  st.replaceChildren(el("span", { svg: ICON.bolt }), String(S.streak));
+  st.classList.toggle("hot", S.streak >= 3);
+  st.title = "Streak: " + S.streak + " in a row (best " + S.best + ")";
+}
+
+/* ===== The notebook renderer for Homework 7 =====
+   One page, every question written down the sheet, marked in red pen in the margin the moment it is
+   answered. State, scoring and storage all come from app_a.js, which the other homeworks share, so an
+   answer is scored here exactly as it would be there. Sending reuses the same payload shape, so the rows
+   land in the same sheet under the same headings. */
+
+const PAPER = document.getElementById("paper");
+const TAB = document.getElementById("tab");
+
+if (!S.startedAt) { S.startedAt = new Date().toISOString(); save(); }
+if (!S.submissionId) { S.submissionId = "s-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8); save(); }
+
+/* ---------- small helpers ---------- */
+function nodeFor(i) { return document.getElementById("q" + i); }
+function markOf(i) { return nodeFor(i).querySelector(".red"); }
+function penOf(i) { return nodeFor(i).querySelector(".pennote"); }
+
+function allFilled(i) {
+  const s = SCREENS[i], A = S.answers;
+  if (s.type === "mcq" || s.type === "tf") return A[s.ids[0]] !== undefined;
+  if (s.type === "match") return s.ids.every((id) => A[id] !== undefined);
+  if (s.type === "fill") return s.ids.every((id) => String(A[id] || "").trim() !== "");
+  if (s.type === "order") return !!S.visited[i];
+  return false;
+}
+
+function progress() {
+  const auto = SCREENS.filter((s) => s.type !== "essay");
+  const done = SCREENS.reduce((a, s, i) => a + (s.type !== "essay" && S.checked[i] ? s.ids.length : 0), 0);
+  const written = SCREENS.filter((s, i) => s.type === "essay" && hasAnswer(i)).length;
+  TAB.innerHTML = "<bdi>" + done + " / " + AUTO_TOTAL + "</bdi><small>marked</small>";
+  const t = document.getElementById("tally");
+  if (t) {
+    t.innerHTML = "";
+    const row = (label, v, ok) => {
+      const d = document.createElement("div");
+      d.innerHTML = '<span>' + label + '</span><span class="v ' + (ok ? "done" : "open") + '"><bdi>' + v + "</bdi></span>";
+      t.appendChild(d);
+    };
+    row("Questions marked", done + " / " + AUTO_TOTAL, done === AUTO_TOTAL);
+    row("Right so far", checkedCorrect() + " / " + AUTO_TOTAL, false);
+    row("Written answers", written + " / " + essayCount(), written === essayCount());
+  }
+  const btn = document.getElementById("sendBtn");
+  if (btn && !S.sent) btn.disabled = !S.name.trim();
+}
+function essayCount() { return SCREENS.filter((s) => s.type === "essay").length; }
+
+/* ---------- marking ---------- */
+function mark(i) {
+  if (S.checked[i]) return;
+  S.checked[i] = true;
+  const res = itemResults(i), k = KEY.screens[i], s = SCREENS[i];
+  const got = res.filter((r) => r.ok).length;
+  S.streak = got === res.length ? S.streak + 1 : 0;
+  S.best = Math.max(S.best || 0, S.streak);
+  save();
+
+  const node = nodeFor(i), red = markOf(i), pen = penOf(i);
+  if (s.type === "mcq" || s.type === "tf") {
+    const picks = node.querySelectorAll(".pick");
+    picks.forEach((b, idx) => {
+      b.disabled = true;
+      b.classList.remove("chosen");
+      const isAnswer = s.type === "tf" ? (idx === 0) === k.answer : idx === k.answer;
+      const chosen = s.type === "tf" ? S.answers[s.ids[0]] === (idx === 0) : S.answers[s.ids[0]] === idx;
+      if (isAnswer) b.classList.add("good");
+      else if (chosen) b.classList.add("bad");
+    });
+  }
+  if (s.type === "match") {
+    node.querySelectorAll(".blank").forEach((bl, r) => {
+      bl.classList.remove("live");
+      bl.classList.add(res[r].ok ? "good" : "bad");
+      if (!res[r].ok) bl.textContent = s.choices[k.answers[r]];
+      bl.disabled = true;
+    });
+    node.querySelectorAll(".bank .w").forEach((w) => w.disabled = true);
+  }
+  if (s.type === "fill") {
+    node.querySelectorAll(".wr").forEach((inp, r) => {
+      inp.readOnly = true;
+      inp.classList.add(res[r].ok ? "good" : "bad");
+      if (!res[r].ok) inp.value = k.show[r];
+    });
+  }
+  if (s.type === "order") {
+    const cur = orderOf(i);
+    const rightPos = {};
+    k.correct.forEach((item, pos) => { rightPos[item] = pos + 1; });
+    node.querySelectorAll(".obox").forEach((b) => b.disabled = true);
+    node.querySelectorAll(".orow").forEach((row, idx) => {
+      const box = row.querySelector(".obox");
+      const given = cur.indexOf(idx) + 1;
+      const want = rightPos[idx];
+      box.classList.add(given === want ? "good" : "bad");
+      box.textContent = want;
+    });
+    const btn = node.querySelector(".okbtn");
+    if (btn) btn.remove();
+  }
+
+  red.textContent = got === res.length ? "✓" : got === 0 ? "✗" : got + "/" + res.length;
+  red.className = "red on" + (got && got < res.length ? " part" : "");
+  let why = k.why || "";
+  let ar = k.ar || "";
+  if (s.type === "match" || s.type === "fill" || s.type === "order") {
+    const wrong = res.filter((r) => !r.ok).length;
+    why = wrong === 0 ? "All correct."
+      : s.type === "order"
+        ? (res.length - wrong) + " of " + res.length + " right. The numbers in red are the right order."
+        : (res.length - wrong) + " of " + res.length + " right. What is written in red is the right answer.";
+    ar = "";
+  }
+  const english = s.type === "mcq" || s.type === "tf";
+  const head = got === res.length ? "" : fixLine(i, res);
+  pen.innerHTML =
+    (english
+      ? '<span class="en' + (got === res.length ? " fix" : "") + '">' + head + why + "</span>"
+      : '<span class="en">' + head + why + "</span>") +
+    "";
+  pen.classList.add("on");
+  progress();
+}
+
+function fixLine(i, res) {
+  const s = SCREENS[i];
+  if (s.type === "mcq" || s.type === "tf") return "→ " + res[0].correct + ". ";
+  return "";
+}
+
+/* ---------- builders for each kind of question ---------- */
+function qShell(i, number, stem, extra) {
+  const d = document.createElement("div");
+  d.className = "q";
+  d.id = "q" + i;
+  d.innerHTML = '<span class="red"></span>' +
+    '<span class="n">' + number + ".</span>" +
+    '<span class="st en">' + stem + "</span>" +
+    (extra ? '<span class="marks">' + extra + "</span>" : "") +
+    '<div class="pennote"></div>';
+  return d;
+}
+
+function buildChoice(i, d) {
+  const s = SCREENS[i];
+  const ul = document.createElement("ul");
+  ul.className = "opts";
+  const labels = s.type === "tf" ? ["True", "False"] : s.options;
+  labels.forEach((o, k) => {
+    const li = document.createElement("li");
+    const b = document.createElement("button");
+    b.className = "pick";
+    b.type = "button";
+    b.innerHTML = '<span class="let">' + "abcd"[k] + ")</span>" + o;
+    const val = s.type === "tf" ? (k === 0) : k;
+    if (S.answers[s.ids[0]] === val) b.classList.add("chosen");
+    b.onclick = () => {
+      if (S.checked[i]) return;
+      S.answers[s.ids[0]] = val;
+      save();
+      ul.querySelectorAll(".pick").forEach((x) => x.classList.remove("chosen"));
+      b.classList.add("chosen");
+      mark(i);
+    };
+    li.appendChild(b);
+    ul.appendChild(li);
+  });
+  d.querySelector(".pennote").before(ul);
+}
+
+function buildMatch(i, d) {
+  const s = SCREENS[i];
+  const wrap = document.createElement("div");
+  const bank = document.createElement("div");
+  bank.className = "bank";
+  const rows = document.createElement("div");
+  let live = null;
+
+  const paint = () => {
+    bank.querySelectorAll(".w").forEach((w, c) => {
+      const used = !s.reuse && s.ids.some((id) => S.answers[id] === c);
+      w.classList.toggle("used", used);
+    });
+  };
+
+  s.choices.forEach((c, ci) => {
+    const w = document.createElement("button");
+    w.className = "w";
+    w.type = "button";
+    w.textContent = c;
+    w.onclick = () => {
+      if (S.checked[i] || !live) return;
+      const r = Number(live.dataset.row);
+      if (!s.reuse) s.ids.forEach((id, rr) => { if (rr !== r && S.answers[id] === ci) { delete S.answers[id]; rows.querySelectorAll(".blank")[rr].textContent = "......"; } });
+      S.answers[s.ids[r]] = ci;
+      live.textContent = c;
+      live.classList.remove("live");
+      live = null;
+      save();
+      paint();
+      if (allFilled(i)) mark(i);
+    };
+    bank.appendChild(w);
+  });
+
+  s.rows.forEach((t, r) => {
+    const row = document.createElement("div");
+    row.className = "mrow";
+    row.innerHTML = '<span class="t en">' + t + "</span>";
+    const bl = document.createElement("button");
+    bl.className = "blank";
+    bl.type = "button";
+    bl.dataset.row = r;
+    const cur = S.answers[s.ids[r]];
+    bl.textContent = cur === undefined ? "......" : s.choices[cur];
+    bl.onclick = () => {
+      if (S.checked[i]) return;
+      rows.querySelectorAll(".blank").forEach((x) => x.classList.remove("live"));
+      bl.classList.add("live");
+      live = bl;
+    };
+    row.appendChild(bl);
+    rows.appendChild(row);
+  });
+
+  const hint = document.createElement("p");
+  hint.className = "note-line en";
+  hint.textContent = s.note;
+  wrap.append(hint, bank, rows);
+  d.querySelector(".pennote").before(wrap);
+  paint();
+}
+
+function buildOrder(i, d) {
+  const s = SCREENS[i];
+  const wrap = document.createElement("div");
+  const hint = document.createElement("p");
+  hint.className = "note-line en";
+  hint.textContent = "Write the order in the boxes: 1 for the first step, and so on. Tap a box to change its number.";
+  wrap.appendChild(hint);
+  const cur = orderOf(i).slice();
+  const seats = s.items.map((_, k) => k);
+
+  s.items.forEach((t, k) => {
+    const row = document.createElement("div");
+    row.className = "orow";
+    const box = document.createElement("button");
+    box.className = "obox";
+    box.type = "button";
+    const posOf = () => cur.indexOf(k);
+    box.textContent = posOf() >= 0 && S.visited[i] ? posOf() + 1 : "";
+    box.onclick = () => {
+      if (S.checked[i]) return;
+      const taken = seats.map((p) => cur[p]);
+      const now = Number(box.textContent || 0);
+      const next = now >= s.items.length ? 0 : now + 1;
+      box.textContent = next || "";
+      const chosen = [];
+      wrap.querySelectorAll(".obox").forEach((b, idx) => {
+        const v = Number(b.textContent || 0);
+        if (v) chosen.push([v, idx]);
+      });
+      const seen = {};
+      let clash = false;
+      chosen.forEach(([v]) => { if (seen[v]) clash = true; seen[v] = 1; });
+      const ready = chosen.length === s.items.length && !clash;
+      if (ready) {
+        const order = [];
+        chosen.sort((a, b2) => a[0] - b2[0]).forEach(([, idx]) => order.push(idx));
+        S.answers["order-" + i] = order;
+        save();
+      }
+      const ok = wrap.querySelector(".okbtn");
+      if (ok) ok.disabled = !ready;
+    };
+    row.appendChild(box);
+    const t2 = document.createElement("span");
+    t2.className = "t en";
+    t2.textContent = t;
+    row.appendChild(t2);
+    wrap.appendChild(row);
+  });
+  const ok = document.createElement("button");
+  ok.className = "okbtn";
+  ok.type = "button";
+  ok.textContent = "Done, mark it";
+  ok.disabled = !S.answers["order-" + i];
+  ok.onclick = () => {
+    if (S.checked[i] || ok.disabled) return;
+    S.visited[i] = true;
+    save();
+    mark(i);
+    ok.remove();
+  };
+  wrap.appendChild(ok);
+  d.querySelector(".pennote").before(wrap);
+}
+
+function buildFill(i, d) {
+  const s = SCREENS[i];
+  const wrap = document.createElement("div");
+  const hint = document.createElement("p");
+  hint.className = "note-line en";
+  hint.textContent = s.note;
+  wrap.appendChild(hint);
+  s.rows.forEach((r, k) => {
+    const row = document.createElement("div");
+    row.className = "frow en";
+    row.append(document.createTextNode(r.before + " "));
+    const inp = document.createElement("input");
+    inp.className = "wr";
+    inp.value = S.answers[s.ids[k]] || "";
+    inp.placeholder = "......";
+    inp.autocomplete = "off";
+    inp.oninput = () => { S.answers[s.ids[k]] = inp.value; save(); };
+    inp.onblur = () => { if (!S.checked[i] && allFilled(i)) mark(i); };
+    inp.onkeydown = (e) => { if (e.key === "Enter") inp.blur(); };
+    row.appendChild(inp);
+    row.append(document.createTextNode(" " + r.after));
+    wrap.appendChild(row);
+  });
+  const bank = document.createElement("div");
+  bank.className = "bank";
+  s.bank.forEach((w) => {
+    const b = document.createElement("span");
+    b.className = "w";
+    b.textContent = w;
+    bank.appendChild(b);
+  });
+  wrap.insertBefore(bank, wrap.children[1]);
+  d.querySelector(".pennote").before(wrap);
+}
+
+function buildEssay(i, d) {
+  const s = SCREENS[i], id = s.ids[0];
+  const wrap = document.createElement("div");
+  if (s.refer && s.refer.length) {
+    const ref = document.createElement("div");
+    ref.className = "refer";
+    ref.innerHTML = '<div class="t">in your answer, refer to</div>';
+    s.refer.forEach((r, k) => {
+      const b = document.createElement("button");
+      b.className = "tick";
+      b.type = "button";
+      const key = id + "-" + k;
+      b.setAttribute("aria-checked", S.ticks[key] ? "true" : "false");
+      b.innerHTML = '<span class="box">' + (S.ticks[key] ? "✓" : "") + '</span><span class="lb en">' + r + "</span>";
+      b.onclick = () => {
+        S.ticks[key] = !S.ticks[key];
+        save();
+        b.setAttribute("aria-checked", S.ticks[key] ? "true" : "false");
+        b.querySelector(".box").textContent = S.ticks[key] ? "✓" : "";
+      };
+      ref.appendChild(b);
+    });
+    wrap.appendChild(ref);
+  }
+  const ta = document.createElement("textarea");
+  ta.className = "essaybox";
+  ta.value = S.answers[id] || "";
+  ta.placeholder = "Write your answer in English here";
+  const wc = document.createElement("div");
+  wc.className = "wc";
+  const count = () => {
+    const n = (ta.value.trim().match(/\S+/g) || []).length;
+    wc.textContent = n + (n === 1 ? " word" : " words") + (S.sent ? "" : " · saved as you write");
+  };
+  ta.oninput = () => { S.answers[id] = ta.value; save(); count(); progress(); };
+  if (S.sent) ta.readOnly = true;
+  count();
+  wrap.append(ta, wc);
+  d.querySelector(".pennote").before(wrap);
+}
+
+/* ---------- lay the whole notebook out ---------- */
+function layout() {
+  let round = -1, number = 0;
+  SCREENS.forEach((s, i) => {
+    if (s.round !== round) {
+      round = s.round;
+      const h = document.createElement("p");
+      h.className = "sec";
+      const n = SCREENS.filter((x) => x.round === round).reduce((a, x) => a + x.ids.length, 0);
+      h.innerHTML = ROUNDS[round].title + ' <span class="cnt">(' + n +
+        (s.type === "essay" ? " marks" : " points") + ")</span>";
+      PAPER.appendChild(h);
+    }
+    number++;
+    const stem = s.type === "essay" ? s.q
+      : s.type === "mcq" || s.type === "tf" ? s.q
+      : s.note ? "" : "";
+    const d = qShell(i, number,
+      s.type === "match" ? "Match each one." : s.type === "order" ? "Put these in order." :
+      s.type === "fill" ? "Complete the sentences." : stem,
+      s.type === "essay" ? "[" + s.marks + "]" : "");
+    if (s.type === "mcq" || s.type === "tf") buildChoice(i, d);
+    else if (s.type === "match") buildMatch(i, d);
+    else if (s.type === "order") buildOrder(i, d);
+    else if (s.type === "fill") buildFill(i, d);
+    else buildEssay(i, d);
+    PAPER.appendChild(d);
+    if (S.checked[i]) replay(i, d);
+  });
+  handIn();
+  progress();
+  if (S.sent) showResult();
+}
+
+/* a question that was already marked before the page was reopened */
+function replay(i, d) {
+  S.checked[i] = false;
+  const s = SCREENS[i];
+  if (s.type === "order") S.visited[i] = true;
+  mark(i);
+}
+
+/* ---------- hand in ---------- */
+function handIn() {
+  const box = document.createElement("div");
+  box.className = "handin";
+  box.id = "handin";
+  box.innerHTML = '<h2>Hand it in</h2>' +
+    '<div class="tally" id="tally"></div>' +
+    '<p class="note-line">Once you hand in, your answers go to El Bashmohandes and nothing can be ' +
+    'changed. He marks the written answers himself.</p>' +
+    '<button class="send" id="sendBtn" type="button" disabled>Hand in to El Bashmohandes</button>' +
+    '<p class="status" id="status"></p>' +
+    '<p style="margin-top:12px"><button class="ghost" id="bk">Save a copy to this phone</button>' +
+    '<button class="ghost" id="rd">Open a copy you saved</button>' +
+    '<input id="rdf" type="file" accept="application/json" hidden></p>';
+  PAPER.appendChild(box);
+
+  document.getElementById("sendBtn").onclick = send;
+  document.getElementById("bk").onclick = () => saveBackup();
+  document.getElementById("rd").onclick = () => document.getElementById("rdf").click();
+  document.getElementById("rdf").onchange = (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (f) readBackup(f).then(() => location.reload()).catch(() => alert("That file is not a copy of this homework."));
+  };
+}
+
+function fmtDate(d) {
+  try { return new Date(d).toLocaleString("en-GB", { day:"numeric", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit" }); }
+  catch (e) { return String(d); }
+}
+function countWords(a) { return (String(a).trim().match(/\S+/g) || []).length; }
+
+function buildPayload() {
+  const now = new Date();
+  const results = [];
+  SCREENS.forEach((s, i) => { if (s.type !== "essay") itemResults(i).forEach((r) => results.push(r)); });
+  const t = totals();
+  const pct = Math.round((t.got / t.of) * 100);
+  const mistakes = results.filter((r) => !r.ok).map((r) => ({ id:r.id, lesson:KEY.lessons[r.id], given:r.given, correct:r.correct }));
+  const essays = SCREENS.map((s, i) => [s, i]).filter(([s]) => s.type === "essay").map(([s, i]) => {
+    const id = s.ids[0], a = String(S.answers[id] || "").trim();
+    return { id, lesson:KEY.lessons[id], marks:s.marks, question:s.q, answer:a, words:countWords(a) };
+  });
+  const minutes = S.startedAt ? Math.round((now - new Date(S.startedAt)) / 60000) : "";
+  const columns = [
+    ["Submitted at", fmtDate(now)], ["Student", S.name], ["Score", t.got], ["Out of", t.of], ["Percent", pct + "%"],
+    ["Essay mark /" + ESSAY_MARKS + " (you fill)", ""], ["Mistakes", mistakes.length],
+    ["Minutes since starting", minutes], ["Best streak", S.best]
+  ];
+  t.rounds.forEach((r) => columns.push([r.title, r.got + "/" + r.of]));
+  results.forEach((r) => columns.push([r.id + " [" + KEY.lessons[r.id] + "]", (r.ok ? "✓ " : "✗ ") + r.given + (r.ok ? "" : "  →  " + r.correct)]));
+  essays.forEach((e) => columns.push([e.id + " [" + e.lesson + "] /" + e.marks, e.answer || "(no answer)"]));
+  columns.push(["Submission ID", S.submissionId]);
+  return { homework:HW.title, sheet:HW.sheet, submissionId:S.submissionId, name:S.name, submittedAt:now.toISOString(),
+           minutes, score:t.got, outOf:t.of, percent:pct, essayMarks:ESSAY_MARKS, bestStreak:S.best,
+           rounds:t.rounds, mistakes, essays, columns };
+}
+
+async function send() {
+  const btn = document.getElementById("sendBtn"), status = document.getElementById("status");
+  if (!S.name.trim()) { status.className = "status bad"; status.textContent = "Write your name at the top first."; return; }
+  const open = SCREENS.filter((s, i) => s.type !== "essay" && !S.checked[i]).length;
+  const blank = SCREENS.filter((s, i) => s.type === "essay" && !hasAnswer(i)).length;
+  if ((open || blank) && !btn.classList.contains("again")) {
+    btn.classList.add("again");
+    btn.textContent = "Hand in anyway";
+    status.className = "status bad";
+    status.textContent = "You still have " + (open ? open + " question" + (open === 1 ? "" : "s") + " unanswered" : "") +
+      (open && blank ? " and " : "") + (blank ? blank + " empty written answer" + (blank === 1 ? "" : "s") : "") +
+      ". Tap again to hand in as it is.";
+    return;
+  }
+  if (!HW.endpoint) {
+    status.className = "status bad";
+    status.textContent = "Sending is not switched on yet. Tell El Bashmohandes and keep this page: your answers are saved.";
+    return;
+  }
+  SCREENS.forEach((s, i) => { if (s.type !== "essay") S.checked[i] = true; });
+  save();
+  const payload = JSON.stringify(buildPayload());
+  btn.disabled = true;
+  status.className = "status";
+  status.textContent = "Sending to El Bashmohandes...";
+  let reached = false, refused = false;
+  try {
+    const res = await fetch(HW.endpoint, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" },
+                                           body:payload, redirect:"follow" });
+    let data = null;
+    try { data = await res.json(); } catch (e) { data = null; }
+    if (data && data.ok) reached = true;
+    else if (data && data.ok === false) refused = true;
+    else reached = res.ok;
+  } catch (e) {
+    try {
+      await fetch(HW.endpoint, { method:"POST", mode:"no-cors",
+                                 headers:{ "Content-Type":"text/plain;charset=utf-8" }, body:payload });
+      reached = true;
+    } catch (e2) { reached = false; }
+  }
+  if (refused || !reached) {
+    btn.disabled = false;
+    status.className = "status bad";
+    status.textContent = refused
+      ? "It reached the sheet but was not saved. Tap hand in again, and if it happens twice tell El Bashmohandes."
+      : "The connection dropped. Your answers are saved: try again when you are back online.";
+    return;
+  }
+  S.sent = new Date().toISOString();
+  save();
+  status.className = "status good";
+  status.textContent = "Handed in. " + fmtDate(S.sent);
+  btn.textContent = "Handed in";
+  showResult();
+}
+
+function showResult() {
+  if (document.getElementById("result")) return;
+  const t = totals(), pct = Math.round((t.got / t.of) * 100);
+  const box = document.createElement("div");
+  box.className = "result";
+  box.id = "result";
+  let html = '<div class="big">' + t.got + " <span>/ " + t.of + " · " + pct + "%</span></div>" +
+    '<div class="line">That is the mark for the questions with one right answer. The written answers (' +
+    ESSAY_MARKS + ' marks) are marked by El Bashmohandes himself.</div>';
+  t.rounds.forEach((r) => { html += '<div class="line">' + r.title + ": <b>" + r.got + " / " + r.of + "</b></div>"; });
+  box.innerHTML = html;
+  SCREENS.forEach((s, i) => {
+    if (s.type !== "essay") return;
+    const k = KEY.screens[i];
+    if (!k || !k.model) return;
+    const m = document.createElement("div");
+    m.className = "model";
+    m.innerHTML = '<div class="t">model answer &middot; ' + s.marks + ' marks</div><p class="en">' + k.model + "</p>";
+    box.appendChild(m);
+  });
+  document.getElementById("handin").appendChild(box);
+  document.querySelectorAll(".essaybox").forEach((t2) => t2.readOnly = true);
+  box.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+/* ---------- name, warning, boot ---------- */
+const nameInput = document.getElementById("nameInput");
+nameInput.value = S.name || "";
+nameInput.oninput = () => { S.name = nameInput.value; save(); progress(); };
+if (S.sent) nameInput.readOnly = true;
+document.getElementById("today").textContent = new Date().toLocaleDateString("en-GB",
+  { day:"numeric", month:"long", year:"numeric" });
+
+if (!STORE_OK) {
+  const w = document.createElement("div");
+  w.className = "warn";
+  w.innerHTML = "<b>This browser is keeping nothing.</b> If you close the page your answers are gone. " +
+    "Open the link in a normal tab, not a Private one, or finish the homework in one sitting.";
+  PAPER.appendChild(w);
+}
+
+layout();
+
+</script>
+</body>
+</html>
