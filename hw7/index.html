@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23FDFBF2' stroke='%231B2A4A' stroke-width='4'/%3E%3Cg stroke='%23CFE0EE' stroke-width='2'%3E%3Cpath d='M8 22h48M8 34h48M8 46h48'/%3E%3C/g%3E%3Cpath d='M18 6v52' stroke='%23E9A0A0' stroke-width='3'/%3E%3Cpath d='M30 40l8 8 16-20' stroke='%23D1372F' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Kalam:wght@300;400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Kalam:wght@300;400;700&display=swap">
 <style>
 [hidden]{display:none!important}
 /* =====================================================================
@@ -36,26 +36,24 @@ html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;background:#BDB5A4;color:var(--ink);font-family:var(--body);font-size:18.5px;line-height:1.95;
   padding:14px 8px 40px}
 .en{direction:ltr;text-align:left;unicode-bidi:isolate}
-.ar{font-family:"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;direction:rtl;text-align:right;
-  font-size:15.5px;line-height:2}
+
 
 /* ---------- the page ---------- */
 .book{max-width:720px;margin:0 auto;background:var(--paper);border-radius:4px;position:relative;
   box-shadow:0 16px 40px rgba(0,0,0,.3);
   background-image:linear-gradient(var(--grid) 1px,transparent 1px),
                    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:27px 27px;padding:30px 72px 46px 24px}
+  background-size:27px 27px;padding-block:30px 46px;padding-inline:72px 24px}
 .book::before{content:"";position:absolute;top:0;bottom:0;inset-inline-start:54px;width:2px;background:var(--marg)}
 .spiral{position:absolute;top:0;bottom:0;inset-inline-start:14px;width:26px;display:flex;flex-direction:column;
   justify-content:space-around;align-items:center;padding:26px 0;pointer-events:none}
 .spiral i{width:13px;height:13px;border-radius:50%;background:#C9BFAC;box-shadow:inset 0 2px 3px rgba(0,0,0,.35)}
-@media (max-width:560px){ .book{padding:24px 56px 40px 16px;background-size:24px 24px}
+@media (max-width:560px){ .book{padding-block:24px 40px;padding-inline:56px 16px;background-size:24px 24px}
   .book::before{inset-inline-start:42px} .spiral{inset-inline-start:10px;width:20px} .spiral i{width:10px;height:10px} }
 
 /* ---------- cover ---------- */
 .cover{border-bottom:2px dashed #C6CFDD;padding-bottom:16px;margin-bottom:10px}
-.cover .k{font-family:var(--ar-sans,"IBM Plex Sans Arabic",sans-serif);font-size:13px;color:var(--soft);
-  letter-spacing:.02em;direction:rtl;text-align:right}
+.cover .k{font-family:var(--body);font-size:13.5px;color:var(--soft);letter-spacing:.02em}
 .cover h1{font-family:var(--title);font-size:42px;line-height:1.05;margin:4px 0 2px;font-weight:700}
 .cover .sub{font-family:var(--title);font-size:25px;color:var(--soft);margin:0 0 14px}
 .nameline{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
@@ -147,8 +145,7 @@ body{margin:0;background:#BDB5A4;color:var(--ink);font-family:var(--body);font-s
 .pennote{display:none;margin-top:7px;font-family:var(--title);font-size:22px;color:var(--pen);line-height:1.4}
 .pennote.on{display:block}
 .pennote .en{display:block;margin-bottom:2px}
-.pennote .arx{font-family:"IBM Plex Sans Arabic",sans-serif;direction:rtl;font-size:15px;color:#8A7F6E;
-  display:block;line-height:1.95}
+
 .pennote .fix{color:var(--ok)}
 
 /* ---------- hand in ---------- */
@@ -185,7 +182,7 @@ body{margin:0;background:#BDB5A4;color:var(--ink);font-family:var(--body);font-s
 .tab small{display:block;font-family:var(--body);font-size:11px;opacity:.75}
 
 .foot{max-width:720px;margin:14px auto 0;text-align:center;color:#6B6558;font-size:13px;
-  font-family:"IBM Plex Sans Arabic",sans-serif}
+  font-family:var(--body)}
 @media (prefers-reduced-motion:reduce){ *{transition:none!important} html{scroll-behavior:auto} }
 
 </style>
@@ -196,14 +193,14 @@ body{margin:0;background:#BDB5A4;color:var(--ink);font-family:var(--body);font-s
   <div class="spiral"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
   <div class="cover">
-    <div class="k">Programming and Artificial Intelligence &middot; الصف الثاني الثانوي</div>
-    <h1>واجب الوحدة التالتة</h1>
-    <p class="sub">من الضغطة للصفحة</p>
+    <div class="k">Programming and Artificial Intelligence &middot; Year 2</div>
+    <h1>Unit 3 Homework</h1>
+    <p class="sub">From the tap to the page</p>
     <div class="nameline">
-      <label for="nameInput">الاسم</label>
-      <input id="nameInput" autocomplete="name" placeholder="اكتب اسمك هنا">
+      <label for="nameInput">Name</label>
+      <input id="nameInput" autocomplete="name" placeholder="write your name here">
     </div>
-    <div class="meta">التاريخ: <span id="today"></span></div>
+    <div class="meta">Date: <span id="today"></span></div>
   </div>
 
   <div id="paper"></div>
@@ -213,10 +210,10 @@ body{margin:0;background:#BDB5A4;color:var(--ink);font-family:var(--body);font-s
 <p class="foot">Programming and Artificial Intelligence &middot; Egyptian Baccalaureate &middot; Year 2</p>
 
 <noscript><p style="max-width:720px;margin:20px auto;background:#FDFBF2;padding:20px">
-الواجب ده محتاج JavaScript. افتح اللينك في كروم أو سفاري.</p></noscript>
+This homework needs JavaScript. Please open the link in Chrome or Safari.</p></noscript>
 
 <script>
-const HW = {"id": "hw7", "title": "Homework 7: From the Tap to the Page", "sheet": "Homework 7", "salt": "one-tap-three-tiers-and-the-page-you-see", "endpoint": "https://script.google.com/macros/s/AKfycbwlkc3-gi4B4E7s3xEKEeDWZsyU8OstLs-Rr2UFe1bbHEDYSTV_1KKZ4ljDQ6nc1MUt/exec", "screens": [{"type": "mcq", "round": 0, "ids": ["Q1"], "q": "A web application is usually built from:", "options": ["Three layers", "Two layers", "One layer", "Several layers"]}, {"type": "mcq", "round": 0, "ids": ["Q2"], "q": "The layer responsible for displaying screens and collecting user data and actions is:", "options": ["Backend", "Database", "Frontend", "Processing server"]}, {"type": "mcq", "round": 0, "ids": ["Q3"], "q": "Storing post data, follower relationships, and messages in a social networking service is the function of:", "options": ["Processing server", "Database", "Frontend", "Backend"]}, {"type": "mcq", "round": 0, "ids": ["Q4"], "q": "The client in web applications is:", "options": ["The server that processes requests", "The program or device that sends requests", "The database", "The communication protocol"]}, {"type": "mcq", "round": 0, "ids": ["Q5"], "q": "When sending login information, it is preferable to use:", "options": ["GET", "POST", "200", "404"]}, {"type": "mcq", "round": 0, "ids": ["Q6"], "q": "Status code 200 means:", "options": ["Internal server error", "Successful request", "Resource not found", "Unauthorized request"]}, {"type": "mcq", "round": 0, "ids": ["Q7"], "q": "Which of the following status codes indicates an internal server error?", "options": ["200", "404", "500", "302"]}, {"type": "mcq", "round": 0, "ids": ["Q8"], "q": "The main difference between HTTP and HTTPS is:", "options": ["HTTPS uses TLS encryption", "HTTP is always faster", "HTTPS does not support POST", "HTTP uses JSON"]}, {"type": "mcq", "round": 0, "ids": ["Q9"], "q": "JSON format is used for:", "options": ["Designing the user interface", "Exchanging structured data", "Encrypting communication", "Determining status codes"]}, {"type": "mcq", "round": 0, "ids": ["Q10"], "q": "The API is:", "options": ["A database", "A set of rules for inter-program communication", "A security protocol", "A data format"]}, {"type": "mcq", "round": 0, "ids": ["Q11"], "q": "HTML is responsible for:", "options": ["Visual appearance", "The basic structure of the page", "Interactive behavior", "Performance improvement"]}, {"type": "mcq", "round": 0, "ids": ["Q12"], "q": "Which of the following is NOT an HTML semantic element?", "options": ["header", "e-mail", "main", "footer"]}, {"type": "mcq", "round": 0, "ids": ["Q13"], "q": "CSS is used for:", "options": ["Building the structure", "Adding interaction", "Styling the appearance", "Managing databases"]}, {"type": "mcq", "round": 0, "ids": ["Q14"], "q": "Which technology is used to add interactive behavior to a page?", "options": ["HTML", "CSS", "JavaScript", "SQL"]}, {"type": "mcq", "round": 0, "ids": ["Q15"], "q": "Responsive design means:", "options": ["Adjusting the layout according to different screen sizes", "Using JavaScript only", "Improving databases", "Hiding unimportant content"]}, {"type": "mcq", "round": 0, "ids": ["Q16"], "q": "The Next.js framework is built on:", "options": ["Vue", "React", "HTML", "CSS"]}, {"type": "mcq", "round": 0, "ids": ["Q17"], "q": "The term mobile-first in responsive design means:", "options": ["Designing the page first for computers", "Designing the page first for small screens such as smartphones", "Using JavaScript to add interactivity", "Improving server speed"]}, {"type": "tf", "round": 1, "ids": ["Q18"], "q": "HTTPS is the same HTTP with TLS encryption added."}, {"type": "tf", "round": 1, "ids": ["Q19"], "q": "The frontend sends the search keywords directly to the database."}, {"type": "tf", "round": 1, "ids": ["Q20"], "q": "Status code 500 means the requested page was not found."}, {"type": "tf", "round": 1, "ids": ["Q21"], "q": "JavaScript can update part of the screen without reloading the whole page."}, {"type": "tf", "round": 1, "ids": ["Q22"], "q": "Semantic HTML changes the way the page looks on the screen."}, {"type": "tf", "round": 1, "ids": ["Q23"], "q": "Responsive design means building a separate website for phones."}, {"type": "tf", "round": 1, "ids": ["Q24"], "q": "An API is a set of rules that lets different programs exchange data."}, {"type": "tf", "round": 1, "ids": ["Q25"], "q": "A framework lets developers build things that would be impossible without it."}, {"type": "match", "round": 2, "ids": ["Q26", "Q27", "Q28", "Q29", "Q30"], "note": "Match each job to the technology that does it. Each answer is used once.", "choices": ["HTML", "CSS", "JavaScript", "responsive design", "framework"], "rows": ["Defines the structure of the page: headings, paragraphs, images and links.", "Sets the colors, the fonts and the spacing.", "Filters a list of books as the user types, without reloading the page.", "Makes the layout adjust itself to a phone, a tablet or a laptop.", "Provides ready-made functions and components so development is faster."]}, {"type": "match", "round": 2, "ids": ["Q31", "Q32", "Q33", "Q34", "Q35"], "note": "Match each situation to what the server sends back, or to the method used. Each answer is used once.", "choices": ["200", "404", "500", "GET", "POST"], "rows": ["The page was found and sent successfully.", "The address that was typed does not exist.", "The server failed while it was handling the request.", "The method used to request a page or search results.", "The method used to send a sign-up form to the server."]}, {"type": "match", "round": 2, "ids": ["Q36", "Q37", "Q38"], "note": "Match each description to its tier. Each answer is used once.", "choices": ["Frontend", "Backend", "Database"], "rows": ["Displays the screen and collects what the user enters.", "Processes the request and decides what the answer is.", "Stores the records and returns them when they are asked for."]}, {"type": "order", "round": 3, "ids": ["Q39", "Q40", "Q41", "Q42", "Q43"], "note": "A student taps a link to the school results page. Put the five steps in order.", "top": "First", "bottom": "Last", "items": ["The server receives the request and processes it", "The browser, which is the client, sends a request using the GET method", "The browser displays the results page on the screen", "The request travels to the server over HTTPS, so its content is encrypted", "The server returns a response carrying status code 200 and the page content"]}, {"type": "order", "round": 3, "ids": ["Q44", "Q45", "Q46"], "note": "One web page is built up in three layers. Put them in the order they are added.", "top": "Added first", "bottom": "Added last", "items": ["CSS gives that same content its colors, its fonts and its layout", "JavaScript makes the finished page react when the user types or clicks", "HTML puts the content on the page: the headings, the list and the links"]}, {"type": "fill", "round": 4, "ids": ["Q47", "Q48", "Q49", "Q50", "Q51"], "note": "Type the missing word, or tap a word from the bank. Not every word is used.", "bank": ["client", "server", "protocol", "status code", "API", "JSON", "database"], "rows": [{"before": "The side that sends the request is the", "after": "."}, {"before": "The side that receives it, processes it and replies is the", "after": "."}, {"before": "HTTP and HTTPS are two examples of a", "after": "."}, {"before": "The number in a response that reports the result of the processing is the", "after": "."}, {"before": "Data is often exchanged between programs in the", "after": "format."}]}, {"type": "fill", "round": 4, "ids": ["Q52", "Q53", "Q54", "Q55", "Q56"], "note": "Type the missing word, or tap a word from the bank. Not every word is used.", "bank": ["HTML", "CSS", "JavaScript", "semantic", "responsive", "framework", "accessibility"], "rows": [{"before": "The structure of a web page is written in", "after": "."}, {"before": "The colors, the fonts and the layout are set by", "after": "."}, {"before": "Behavior and interactivity are added by", "after": "."}, {"before": "A design whose layout adjusts automatically to the screen size is called", "after": "design."}, {"before": "Tags that say what each part of the page means are called", "after": "HTML."}]}, {"type": "essay", "round": 5, "ids": ["E1"], "q": "Explain the difference between GET and POST methods, giving an example of each. [Assessment book page 53, homework]", "marks": 3, "refer": ["what each method is for", "one example of each"]}, {"type": "essay", "round": 5, "ids": ["E2"], "q": "Why should HTTPS be used on a login page? [Assessment book page 55, Model A]", "marks": 3, "refer": ["what the login page sends", "what HTTPS adds, and what it prevents"]}, {"type": "essay", "round": 5, "ids": ["E3"], "q": "Explain how HTML, CSS, and JavaScript work together to create a complete web page. [Assessment book page 60, Model B]", "marks": 4, "refer": ["the role of each one", "a sentence about what they do together"]}, {"type": "essay", "round": 5, "ids": ["E4"], "q": "Mention the benefits of using semantic HTML for search engines. [Assessment book page 61, Model C]", "marks": 3, "refer": ["what the search engine can do with the tags", "what the page gains"]}], "rounds": [{"era": "The tap", "tag": "Tap", "eraName": "What happens the moment you touch it", "title": "Quick picks", "how": "Choose one answer, then tap Check. Once checked, it is locked in."}, {"era": "Read it twice", "tag": "Check", "eraName": "The sentences that cost marks", "title": "○ or ×", "how": "Is the statement true (○) or false (×)?"}, {"era": "Who does what", "tag": "Match", "eraName": "Every job to its owner", "title": "Match it", "how": "Give every description its answer, then check the whole set."}, {"era": "The journey", "tag": "Order", "eraName": "From your finger to the screen", "title": "Put it in order", "how": "Move each card up or down until the order is right, then check."}, {"era": "The words", "tag": "Words", "eraName": "The terms the exam uses", "title": "Fill the gap", "how": "Type the missing word, or tap one from the word bank."}, {"era": "Your verdict", "tag": "You", "eraName": "Your own words", "title": "Explain it", "how": "Write full answers in English, like in the exam, in your own words and without any AI help. El Bashmohandes marks these."}], "minutes": 50, "arTime": "خمسين دقيقة", "kicker": "Homework 7 · Programming and AI", "h1": ["From the tap ", "to the ", "page"], "lead": "Six rounds across everything you have learned about web applications: the three tiers behind the screen, the request and the response that travel between them, and the three technologies that draw the page you end up looking at. Most of the questions are the ministry assessment book's own. Answer, check, and see which level you reach."};
+const HW = {"id": "hw7", "title": "Homework 7: From the Tap to the Page", "sheet": "Homework 7", "salt": "one-tap-three-tiers-and-the-page-you-see", "endpoint": "https://script.google.com/macros/s/AKfycbwlkc3-gi4B4E7s3xEKEeDWZsyU8OstLs-Rr2UFe1bbHEDYSTV_1KKZ4ljDQ6nc1MUt/exec", "screens": [{"type": "mcq", "round": 0, "ids": ["Q1"], "q": "A web application is usually built from:", "options": ["Three layers", "Two layers", "One layer", "Several layers"]}, {"type": "mcq", "round": 0, "ids": ["Q2"], "q": "The layer responsible for displaying screens and collecting user data and actions is:", "options": ["Backend", "Database", "Frontend", "Processing server"]}, {"type": "mcq", "round": 0, "ids": ["Q3"], "q": "Storing post data, follower relationships, and messages in a social networking service is the function of:", "options": ["Processing server", "Database", "Frontend", "Backend"]}, {"type": "mcq", "round": 0, "ids": ["Q4"], "q": "The client in web applications is:", "options": ["The server that processes requests", "The program or device that sends requests", "The database", "The communication protocol"]}, {"type": "mcq", "round": 0, "ids": ["Q5"], "q": "When sending login information, it is preferable to use:", "options": ["GET", "POST", "200", "404"]}, {"type": "mcq", "round": 0, "ids": ["Q6"], "q": "Status code 200 means:", "options": ["Internal server error", "Successful request", "Resource not found", "Unauthorized request"]}, {"type": "mcq", "round": 0, "ids": ["Q7"], "q": "Which of the following status codes indicates an internal server error?", "options": ["200", "404", "500", "302"]}, {"type": "mcq", "round": 0, "ids": ["Q8"], "q": "The main difference between HTTP and HTTPS is:", "options": ["HTTPS uses TLS encryption", "HTTP is always faster", "HTTPS does not support POST", "HTTP uses JSON"]}, {"type": "mcq", "round": 0, "ids": ["Q9"], "q": "JSON format is used for:", "options": ["Designing the user interface", "Exchanging structured data", "Encrypting communication", "Determining status codes"]}, {"type": "mcq", "round": 0, "ids": ["Q10"], "q": "The API is:", "options": ["A database", "A set of rules for inter-program communication", "A security protocol", "A data format"]}, {"type": "mcq", "round": 0, "ids": ["Q11"], "q": "HTML is responsible for:", "options": ["Visual appearance", "The basic structure of the page", "Interactive behavior", "Performance improvement"]}, {"type": "mcq", "round": 0, "ids": ["Q12"], "q": "Which of the following is NOT an HTML semantic element?", "options": ["header", "e-mail", "main", "footer"]}, {"type": "mcq", "round": 0, "ids": ["Q13"], "q": "CSS is used for:", "options": ["Building the structure", "Adding interaction", "Styling the appearance", "Managing databases"]}, {"type": "mcq", "round": 0, "ids": ["Q14"], "q": "Which technology is used to add interactive behavior to a page?", "options": ["HTML", "CSS", "JavaScript", "SQL"]}, {"type": "mcq", "round": 0, "ids": ["Q15"], "q": "Responsive design means:", "options": ["Adjusting the layout according to different screen sizes", "Using JavaScript only", "Improving databases", "Hiding unimportant content"]}, {"type": "mcq", "round": 0, "ids": ["Q16"], "q": "The Next.js framework is built on:", "options": ["Vue", "React", "HTML", "CSS"]}, {"type": "mcq", "round": 0, "ids": ["Q17"], "q": "The term mobile-first in responsive design means:", "options": ["Designing the page first for computers", "Designing the page first for small screens such as smartphones", "Using JavaScript to add interactivity", "Improving server speed"]}, {"type": "tf", "round": 1, "ids": ["Q18"], "q": "HTTPS is the same HTTP with TLS encryption added."}, {"type": "tf", "round": 1, "ids": ["Q19"], "q": "The frontend sends the search keywords directly to the database."}, {"type": "tf", "round": 1, "ids": ["Q20"], "q": "Status code 500 means the requested page was not found."}, {"type": "tf", "round": 1, "ids": ["Q21"], "q": "JavaScript can update part of the screen without reloading the whole page."}, {"type": "tf", "round": 1, "ids": ["Q22"], "q": "Semantic HTML changes the way the page looks on the screen."}, {"type": "tf", "round": 1, "ids": ["Q23"], "q": "Responsive design means building a separate website for phones."}, {"type": "tf", "round": 1, "ids": ["Q24"], "q": "An API is a set of rules that lets different programs exchange data."}, {"type": "tf", "round": 1, "ids": ["Q25"], "q": "A framework lets developers build things that would be impossible without it."}, {"type": "match", "round": 2, "ids": ["Q26", "Q27", "Q28", "Q29", "Q30"], "note": "Match each job to the technology that does it. Each answer is used once.", "choices": ["HTML", "CSS", "JavaScript", "responsive design", "framework"], "rows": ["Defines the structure of the page: headings, paragraphs, images and links.", "Sets the colors, the fonts and the spacing.", "Filters a list of books as the user types, without reloading the page.", "Makes the layout adjust itself to a phone, a tablet or a laptop.", "Provides ready-made functions and components so development is faster."]}, {"type": "match", "round": 2, "ids": ["Q31", "Q32", "Q33", "Q34", "Q35"], "note": "Match each situation to what the server sends back, or to the method used. Each answer is used once.", "choices": ["200", "404", "500", "GET", "POST"], "rows": ["The page was found and sent successfully.", "The address that was typed does not exist.", "The server failed while it was handling the request.", "The method used to request a page or search results.", "The method used to send a sign-up form to the server."]}, {"type": "match", "round": 2, "ids": ["Q36", "Q37", "Q38"], "note": "Match each description to its tier. Each answer is used once.", "choices": ["Frontend", "Backend", "Database"], "rows": ["Displays the screen and collects what the user enters.", "Processes the request and decides what the answer is.", "Stores the records and returns them when they are asked for."]}, {"type": "order", "round": 3, "ids": ["Q39", "Q40", "Q41", "Q42", "Q43"], "note": "A student taps a link to the school results page. Put the five steps in order.", "top": "First", "bottom": "Last", "items": ["The server receives the request and processes it", "The browser, which is the client, sends a request using the GET method", "The browser displays the results page on the screen", "The request travels to the server over HTTPS, so its content is encrypted", "The server returns a response carrying status code 200 and the page content"]}, {"type": "order", "round": 3, "ids": ["Q44", "Q45", "Q46"], "note": "One web page is built up in three layers. Put them in the order they are added.", "top": "Added first", "bottom": "Added last", "items": ["CSS gives that same content its colors, its fonts and its layout", "JavaScript makes the finished page react when the user types or clicks", "HTML puts the content on the page: the headings, the list and the links"]}, {"type": "fill", "round": 4, "ids": ["Q47", "Q48", "Q49", "Q50", "Q51"], "note": "Type the missing word, or tap a word from the bank. Not every word is used.", "bank": ["client", "server", "protocol", "status code", "API", "JSON", "database"], "rows": [{"before": "The side that sends the request is the", "after": "."}, {"before": "The side that receives it, processes it and replies is the", "after": "."}, {"before": "HTTP and HTTPS are two examples of a", "after": "."}, {"before": "The number in a response that reports the result of the processing is the", "after": "."}, {"before": "Data is often exchanged between programs in the", "after": "format."}]}, {"type": "fill", "round": 4, "ids": ["Q52", "Q53", "Q54", "Q55", "Q56"], "note": "Type the missing word, or tap a word from the bank. Not every word is used.", "bank": ["HTML", "CSS", "JavaScript", "semantic", "responsive", "framework", "accessibility"], "rows": [{"before": "The structure of a web page is written in", "after": "."}, {"before": "The colors, the fonts and the layout are set by", "after": "."}, {"before": "Behavior and interactivity are added by", "after": "."}, {"before": "A design whose layout adjusts automatically to the screen size is called", "after": "design."}, {"before": "Tags that say what each part of the page means are called", "after": "HTML."}]}, {"type": "essay", "round": 5, "ids": ["E1"], "q": "Explain the difference between GET and POST methods, giving an example of each. [Assessment book page 53, homework]", "marks": 3, "refer": ["what each method is for", "one example of each"]}, {"type": "essay", "round": 5, "ids": ["E2"], "q": "Why should HTTPS be used on a login page? [Assessment book page 55, Model A]", "marks": 3, "refer": ["what the login page sends", "what HTTPS adds, and what it prevents"]}, {"type": "essay", "round": 5, "ids": ["E3"], "q": "Explain how HTML, CSS, and JavaScript work together to create a complete web page. [Assessment book page 60, Model B]", "marks": 4, "refer": ["the role of each one", "a sentence about what they do together"]}, {"type": "essay", "round": 5, "ids": ["E4"], "q": "Mention the benefits of using semantic HTML for search engines. [Assessment book page 61, Model C]", "marks": 3, "refer": ["what the search engine can do with the tags", "what the page gains"]}], "rounds": [{"era": "The tap", "tag": "Tap", "eraName": "What happens the moment you touch it", "title": "Quick picks", "how": "Choose one answer, then tap Check. Once checked, it is locked in."}, {"era": "Read it twice", "tag": "Check", "eraName": "The sentences that cost marks", "title": "○ or ×", "how": "Is the statement true (○) or false (×)?"}, {"era": "Who does what", "tag": "Match", "eraName": "Every job to its owner", "title": "Match it", "how": "Give every description its answer, then check the whole set."}, {"era": "The journey", "tag": "Order", "eraName": "From your finger to the screen", "title": "Put it in order", "how": "Move each card up or down until the order is right, then check."}, {"era": "The words", "tag": "Words", "eraName": "The terms the exam uses", "title": "Fill the gap", "how": "Type the missing word, or tap one from the word bank."}, {"era": "Your verdict", "tag": "You", "eraName": "Your own words", "title": "Explain it", "how": "Write full answers in English, like in the exam, in your own words and without any AI help. El Bashmohandes marks these."}], "minutes": 50, "arTime": "about 50 minutes", "kicker": "Homework 7 · Programming and AI", "h1": ["From the tap ", "to the ", "page"], "lead": "Six rounds across everything you have learned about web applications: the three tiers behind the screen, the request and the response that travel between them, and the three technologies that draw the page you end up looking at. Most of the questions are the ministry assessment book's own. Answer, check, and see which level you reach."};
 const KEYBLOB = "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";
 /* ===== Part A: data, state, scoring ===== */
 const ROUNDS = (typeof HW !== "undefined" && HW.rounds) ? HW.rounds : [
@@ -421,7 +418,6 @@ function renderHud() {
 
 const PAPER = document.getElementById("paper");
 const TAB = document.getElementById("tab");
-const AR_TYPE = { mcq:"اختيارات", tf:"صح أو غلط", match:"وصّل", order:"رتّب", fill:"الفراغات", essay:"اكتب بالتفصيل" };
 
 if (!S.startedAt) { S.startedAt = new Date().toISOString(); save(); }
 if (!S.submissionId) { S.submissionId = "s-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8); save(); }
@@ -444,7 +440,7 @@ function progress() {
   const auto = SCREENS.filter((s) => s.type !== "essay");
   const done = SCREENS.reduce((a, s, i) => a + (s.type !== "essay" && S.checked[i] ? s.ids.length : 0), 0);
   const written = SCREENS.filter((s, i) => s.type === "essay" && hasAnswer(i)).length;
-  TAB.innerHTML = "<bdi>" + done + " / " + AUTO_TOTAL + "</bdi><small>اتحلت</small>";
+  TAB.innerHTML = "<bdi>" + done + " / " + AUTO_TOTAL + "</bdi><small>marked</small>";
   const t = document.getElementById("tally");
   if (t) {
     t.innerHTML = "";
@@ -453,9 +449,9 @@ function progress() {
       d.innerHTML = '<span>' + label + '</span><span class="v ' + (ok ? "done" : "open") + '"><bdi>' + v + "</bdi></span>";
       t.appendChild(d);
     };
-    row("أسئلة اتصححت", done + " / " + AUTO_TOTAL, done === AUTO_TOTAL);
-    row("درجتك فيهم لحد دلوقتي", checkedCorrect() + " / " + AUTO_TOTAL, false);
-    row("أسئلة الكتابة", written + " / " + essayCount(), written === essayCount());
+    row("Questions marked", done + " / " + AUTO_TOTAL, done === AUTO_TOTAL);
+    row("Right so far", checkedCorrect() + " / " + AUTO_TOTAL, false);
+    row("Written answers", written + " / " + essayCount(), written === essayCount());
   }
   const btn = document.getElementById("sendBtn");
   if (btn && !S.sent) btn.disabled = !S.name.trim();
@@ -522,10 +518,10 @@ function mark(i) {
   let ar = k.ar || "";
   if (s.type === "match" || s.type === "fill" || s.type === "order") {
     const wrong = res.filter((r) => !r.ok).length;
-    why = wrong === 0 ? "كله مظبوط."
+    why = wrong === 0 ? "All correct."
       : s.type === "order"
-        ? "صح " + (res.length - wrong) + " من " + res.length + ". الأرقام الحمرا هي الترتيب الصح."
-        : "صح " + (res.length - wrong) + " من " + res.length + ". اللي بالأحمر هو الإجابة الصح.";
+        ? (res.length - wrong) + " of " + res.length + " right. The numbers in red are the right order."
+        : (res.length - wrong) + " of " + res.length + " right. What is written in red is the right answer.";
     ar = "";
   }
   const english = s.type === "mcq" || s.type === "tf";
@@ -533,8 +529,8 @@ function mark(i) {
   pen.innerHTML =
     (english
       ? '<span class="en' + (got === res.length ? " fix" : "") + '">' + head + why + "</span>"
-      : '<span class="arx">' + head + why + "</span>") +
-    (ar ? '<span class="arx">' + ar + "</span>" : "");
+      : '<span class="en">' + head + why + "</span>") +
+    "";
   pen.classList.add("on");
   progress();
 }
@@ -641,7 +637,7 @@ function buildMatch(i, d) {
   });
 
   const hint = document.createElement("p");
-  hint.className = "note-line ar";
+  hint.className = "note-line en";
   hint.textContent = s.note;
   wrap.append(hint, bank, rows);
   d.querySelector(".pennote").before(wrap);
@@ -652,8 +648,8 @@ function buildOrder(i, d) {
   const s = SCREENS[i];
   const wrap = document.createElement("div");
   const hint = document.createElement("p");
-  hint.className = "note-line ar";
-  hint.textContent = "اكتب الترتيب في المربعات: ١ لأول خطوة، وهكذا. دوس على المربع عشان الرقم يتغير.";
+  hint.className = "note-line en";
+  hint.textContent = "Write the order in the boxes: 1 for the first step, and so on. Tap a box to change its number.";
   wrap.appendChild(hint);
   const cur = orderOf(i).slice();
   const seats = s.items.map((_, k) => k);
@@ -700,7 +696,7 @@ function buildOrder(i, d) {
   const ok = document.createElement("button");
   ok.className = "okbtn";
   ok.type = "button";
-  ok.textContent = "خلصت، صحّح";
+  ok.textContent = "Done, mark it";
   ok.disabled = !S.answers["order-" + i];
   ok.onclick = () => {
     if (S.checked[i] || ok.disabled) return;
@@ -717,7 +713,7 @@ function buildFill(i, d) {
   const s = SCREENS[i];
   const wrap = document.createElement("div");
   const hint = document.createElement("p");
-  hint.className = "note-line ar";
+  hint.className = "note-line en";
   hint.textContent = s.note;
   wrap.appendChild(hint);
   s.rows.forEach((r, k) => {
@@ -775,12 +771,12 @@ function buildEssay(i, d) {
   const ta = document.createElement("textarea");
   ta.className = "essaybox";
   ta.value = S.answers[id] || "";
-  ta.placeholder = "اكتب إجابتك بالإنجليزي هنا";
+  ta.placeholder = "Write your answer in English here";
   const wc = document.createElement("div");
   wc.className = "wc";
   const count = () => {
     const n = (ta.value.trim().match(/\S+/g) || []).length;
-    wc.textContent = n + " كلمة" + (S.sent ? "" : " · بيتحفظ لوحده");
+    wc.textContent = n + (n === 1 ? " word" : " words") + (S.sent ? "" : " · saved as you write");
   };
   ta.oninput = () => { S.answers[id] = ta.value; save(); count(); progress(); };
   if (S.sent) ta.readOnly = true;
@@ -836,14 +832,14 @@ function handIn() {
   const box = document.createElement("div");
   box.className = "handin";
   box.id = "handin";
-  box.innerHTML = '<h2>سلّم الكشكول</h2>' +
+  box.innerHTML = '<h2>Hand it in</h2>' +
     '<div class="tally" id="tally"></div>' +
-    '<p class="note-line ar">لما تسلّم، الإجابات بتروح للبشمهندس وما تقدرش تغيّر حاجة بعدها. ' +
-    'أسئلة الكتابة بيصححها هو بنفسه.</p>' +
-    '<button class="send" id="sendBtn" type="button" disabled>سلّم للبشمهندس</button>' +
+    '<p class="note-line">Once you hand in, your answers go to El Bashmohandes and nothing can be ' +
+    'changed. He marks the written answers himself.</p>' +
+    '<button class="send" id="sendBtn" type="button" disabled>Hand in to El Bashmohandes</button>' +
     '<p class="status" id="status"></p>' +
-    '<p style="margin-top:12px"><button class="ghost" id="bk">احفظ نسخة على الموبايل</button>' +
-    '<button class="ghost" id="rd">افتح نسخة محفوظة</button>' +
+    '<p style="margin-top:12px"><button class="ghost" id="bk">Save a copy to this phone</button>' +
+    '<button class="ghost" id="rd">Open a copy you saved</button>' +
     '<input id="rdf" type="file" accept="application/json" hidden></p>';
   PAPER.appendChild(box);
 
@@ -852,7 +848,7 @@ function handIn() {
   document.getElementById("rd").onclick = () => document.getElementById("rdf").click();
   document.getElementById("rdf").onchange = (e) => {
     const f = e.target.files && e.target.files[0];
-    if (f) readBackup(f).then(() => location.reload()).catch(() => alert("الملف ده مش نسخة من الواجب ده."));
+    if (f) readBackup(f).then(() => location.reload()).catch(() => alert("That file is not a copy of this homework."));
   };
 }
 
@@ -890,21 +886,21 @@ function buildPayload() {
 
 async function send() {
   const btn = document.getElementById("sendBtn"), status = document.getElementById("status");
-  if (!S.name.trim()) { status.className = "status bad"; status.textContent = "اكتب اسمك فوق الأول."; return; }
+  if (!S.name.trim()) { status.className = "status bad"; status.textContent = "Write your name at the top first."; return; }
   const open = SCREENS.filter((s, i) => s.type !== "essay" && !S.checked[i]).length;
   const blank = SCREENS.filter((s, i) => s.type === "essay" && !hasAnswer(i)).length;
   if ((open || blank) && !btn.classList.contains("again")) {
     btn.classList.add("again");
-    btn.textContent = "سلّم برضه";
+    btn.textContent = "Hand in anyway";
     status.className = "status bad";
-    status.textContent = "لسه فيه " + (open ? open + " سؤال مش متحلول" : "") +
-      (open && blank ? " و" : "") + (blank ? blank + " سؤال كتابة فاضي" : "") +
-      ". دوس تاني لو عايز تسلّم كده.";
+    status.textContent = "You still have " + (open ? open + " question" + (open === 1 ? "" : "s") + " unanswered" : "") +
+      (open && blank ? " and " : "") + (blank ? blank + " empty written answer" + (blank === 1 ? "" : "s") : "") +
+      ". Tap again to hand in as it is.";
     return;
   }
   if (!HW.endpoint) {
     status.className = "status bad";
-    status.textContent = "الإرسال لسه مش مفعّل. قول للبشمهندس، وسيب الصفحة مفتوحة: إجاباتك محفوظة.";
+    status.textContent = "Sending is not switched on yet. Tell El Bashmohandes and keep this page: your answers are saved.";
     return;
   }
   SCREENS.forEach((s, i) => { if (s.type !== "essay") S.checked[i] = true; });
@@ -912,7 +908,7 @@ async function send() {
   const payload = JSON.stringify(buildPayload());
   btn.disabled = true;
   status.className = "status";
-  status.textContent = "بيروح للبشمهندس...";
+  status.textContent = "Sending to El Bashmohandes...";
   let reached = false, refused = false;
   try {
     const res = await fetch(HW.endpoint, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" },
@@ -933,15 +929,15 @@ async function send() {
     btn.disabled = false;
     status.className = "status bad";
     status.textContent = refused
-      ? "وصل بس ما اتسجلش. دوس سلّم تاني، ولو حصل مرتين قول للبشمهندس."
-      : "النت فصل. إجاباتك محفوظة، جرب تاني لما النت يرجع.";
+      ? "It reached the sheet but was not saved. Tap hand in again, and if it happens twice tell El Bashmohandes."
+      : "The connection dropped. Your answers are saved: try again when you are back online.";
     return;
   }
   S.sent = new Date().toISOString();
   save();
   status.className = "status good";
-  status.textContent = "وصل. " + fmtDate(S.sent);
-  btn.textContent = "اتسلّم";
+  status.textContent = "Handed in. " + fmtDate(S.sent);
+  btn.textContent = "Handed in";
   showResult();
 }
 
@@ -952,8 +948,8 @@ function showResult() {
   box.className = "result";
   box.id = "result";
   let html = '<div class="big">' + t.got + " <span>/ " + t.of + " · " + pct + "%</span></div>" +
-    '<div class="line ar">ده تصحيح الأسئلة اللي ليها إجابة واحدة بس. أسئلة الكتابة (' + ESSAY_MARKS +
-    ' درجة) البشمهندس بيصححها بنفسه.</div>';
+    '<div class="line">That is the mark for the questions with one right answer. The written answers (' +
+    ESSAY_MARKS + ' marks) are marked by El Bashmohandes himself.</div>';
   t.rounds.forEach((r) => { html += '<div class="line">' + r.title + ": <b>" + r.got + " / " + r.of + "</b></div>"; });
   box.innerHTML = html;
   SCREENS.forEach((s, i) => {
@@ -975,14 +971,14 @@ const nameInput = document.getElementById("nameInput");
 nameInput.value = S.name || "";
 nameInput.oninput = () => { S.name = nameInput.value; save(); progress(); };
 if (S.sent) nameInput.readOnly = true;
-document.getElementById("today").textContent = new Date().toLocaleDateString("ar-EG",
+document.getElementById("today").textContent = new Date().toLocaleDateString("en-GB",
   { day:"numeric", month:"long", year:"numeric" });
 
 if (!STORE_OK) {
   const w = document.createElement("div");
-  w.className = "warn ar";
-  w.innerHTML = "<b>المتصفح ده مش بيحفظ حاجة.</b> لو قفلت الصفحة هتلاقي الإجابات راحت. " +
-    "افتح اللينك في تبويب عادي مش Private، أو خلّص الواجب في جلسة واحدة.";
+  w.className = "warn";
+  w.innerHTML = "<b>This browser is keeping nothing.</b> If you close the page your answers are gone. " +
+    "Open the link in a normal tab, not a Private one, or finish the homework in one sitting.";
   PAPER.appendChild(w);
 }
 
