@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>One Message, Many Ways &middot; Homework 10</title>
+<meta name="description" content="Six rounds on television, radio, the newspaper, the website and SNS: what each one carries, and how the purpose decides which one you use. Homework 10 for Programming and AI.">
+<meta name="theme-color" content="#BDB5A4">
+<meta property="og:type" content="website">
+<meta property="og:title" content="One Message, Many Ways &middot; Homework 10">
+<meta property="og:description" content="No single medium is best for everything. Six rounds on choosing by purpose and audience.">
+<meta property="og:image" content="https://ahmed-abdelslam-75.github.io/homework/hw10/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23FDFBF2' stroke='%231B2A4A' stroke-width='4'/%3E%3Cg stroke='%23CFE0EE' stroke-width='2'%3E%3Cpath d='M8 22h48M8 34h48M8 46h48'/%3E%3C/g%3E%3Cpath d='M18 6v52' stroke='%23E9A0A0' stroke-width='3'/%3E%3Cpath d='M30 40l8 8 16-20' stroke='%23D1372F' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Kalam:wght@300;400;700&display=swap">
+<style>
+[hidden]{display:none!important}
+/* =====================================================================
+   The notebook skin for Homework 7.
+
+   One squared page you scroll down, a red margin the teacher marks in,
+   and handwriting for anything written by hand. Nothing here is shared
+   with the other six homeworks.
+   ===================================================================== */
+:root{
+  --paper:#FDFBF2; --grid:#CFE0EE; --marg:#E9A0A0; --ink:#1B2A4A; --soft:#6E7B96;
+  --pen:#D1372F; --ok:#1E8A5B; --amber:#B07A17; --hand:Kalam,"Comic Sans MS",cursive;
+  --title:Caveat,cursive; --body:Kalam,"Comic Sans MS",cursive;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:#BDB5A4;color:var(--ink);font-family:var(--body);font-size:18.5px;line-height:1.95;
+  padding:14px 8px 40px}
+.en{direction:ltr;text-align:left;unicode-bidi:isolate}
+
+
+/* ---------- the page ---------- */
+.book{max-width:720px;margin:0 auto;background:var(--paper);border-radius:4px;position:relative;
+  box-shadow:0 16px 40px rgba(0,0,0,.3);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:27px 27px;padding-block:30px 46px;padding-inline:72px 24px}
+.book::before{content:"";position:absolute;top:0;bottom:0;inset-inline-start:54px;width:2px;background:var(--marg)}
+.spiral{position:absolute;top:0;bottom:0;inset-inline-start:14px;width:26px;display:flex;flex-direction:column;
+  justify-content:space-around;align-items:center;padding:26px 0;pointer-events:none}
+.spiral i{width:13px;height:13px;border-radius:50%;background:#C9BFAC;box-shadow:inset 0 2px 3px rgba(0,0,0,.35)}
+@media (max-width:560px){ .book{padding-block:24px 40px;padding-inline:56px 16px;background-size:24px 24px}
+  .book::before{inset-inline-start:42px} .spiral{inset-inline-start:10px;width:20px} .spiral i{width:10px;height:10px} }
+
+/* ---------- cover ---------- */
+.cover{border-bottom:2px dashed #C6CFDD;padding-bottom:16px;margin-bottom:10px}
+.cover .k{font-family:var(--body);font-size:13.5px;color:var(--soft);letter-spacing:.02em}
+.cover h1{font-family:var(--title);font-size:42px;line-height:1.05;margin:4px 0 2px;font-weight:700}
+.cover .sub{font-family:var(--title);font-size:25px;color:var(--soft);margin:0 0 14px}
+.nameline{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.nameline label{font-family:var(--title);font-size:26px;color:var(--pen)}
+.nameline input{flex:1;min-width:190px;border:0;border-bottom:2px solid var(--ink);background:transparent;
+  font-family:var(--title);font-size:27px;color:var(--ink);padding:0 6px 2px}
+.nameline input:focus{outline:none;border-bottom-color:var(--pen)}
+.meta{font-family:var(--title);font-size:21px;color:var(--soft);margin-top:8px}
+
+.warn{border:2px solid var(--pen);border-radius:4px;background:#FDEEED;padding:12px 14px;margin:14px 0}
+.warn b{color:var(--pen)}
+
+/* ---------- section headings ---------- */
+.sec{font-family:var(--title);font-size:30px;color:var(--ink);margin:34px 0 4px;position:relative}
+.sec::after{content:"";display:block;width:120px;height:3px;background:var(--amber);border-radius:3px;margin-top:2px;
+  opacity:.5}
+.sec .cnt{font-family:var(--body);font-size:14px;color:var(--soft)}
+
+/* ---------- a question ---------- */
+.q{position:relative;margin:0 0 30px;padding-top:4px}
+.q .n{font-family:var(--title);font-size:28px;color:var(--pen);margin-inline-end:9px;unicode-bidi:isolate;direction:ltr}
+.q .st{font-size:18.5px}
+.q .note-line{font-family:var(--body);font-size:15px;color:var(--soft)}
+.opts{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:3px}
+.pick{background:none;border:0;font:inherit;font-size:18.5px;color:var(--ink);cursor:pointer;text-align:start;
+  padding:5px 13px;border-radius:42% 58% 52% 48% / 58% 42% 58% 42%;direction:ltr;width:100%}
+.pick:hover{background:rgba(27,42,74,.06)}
+.pick .let{font-family:var(--title);font-size:24px;margin-inline-end:8px;color:var(--soft)}
+.pick.chosen{box-shadow:inset 0 0 0 2.5px var(--ink)}
+.pick.good{box-shadow:inset 0 0 0 2.5px var(--ok);color:var(--ok)}
+.pick.bad{box-shadow:inset 0 0 0 2.5px var(--pen);color:var(--pen)}
+.pick[disabled]{cursor:default}
+
+/* match */
+.bank{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0 10px;padding:9px 11px;border:2px dashed #C6CFDD;border-radius:4px}
+.bank .w{font:inherit;font-size:17px;border:0;background:#EFF4F9;border-radius:3px;padding:4px 11px;cursor:pointer;
+  color:var(--ink);direction:ltr}
+.bank .w:hover{background:#DDE8F2}
+.bank .w.used{opacity:.4}
+.mrow{display:flex;gap:10px;align-items:baseline;padding:5px 0;direction:ltr}
+.mrow .t{flex:1;direction:ltr;text-align:left}
+.blank{min-width:7.5em;border-bottom:2px dotted #8C9AB5;font-family:var(--title);font-size:24px;
+  color:var(--ink);background:none;border-top:0;border-inline:0;text-align:center;padding:0 7px;cursor:pointer;
+  direction:ltr}
+.blank.live{border-bottom-color:var(--pen);background:#FBF3D9}
+.blank.good{color:var(--ok);border-bottom-color:var(--ok)}
+.blank.bad{color:var(--pen);border-bottom-color:var(--pen);text-decoration:line-through}
+
+/* order */
+.orow{display:flex;gap:11px;align-items:center;padding:5px 0}
+.obox{width:40px;height:40px;flex:none;border:2px solid var(--ink);border-radius:3px;background:none;
+  font-family:var(--title);font-size:25px;color:var(--ink);cursor:pointer;line-height:1}
+.obox.good{border-color:var(--ok);color:var(--ok)}
+.obox.bad{border-color:var(--pen);color:var(--pen)}
+.orow .t{flex:1;direction:ltr;text-align:left;font-size:17.5px}
+.okbtn{font-family:var(--title);font-size:22px;background:none;border:2px solid var(--ink);border-radius:3px;padding:3px 18px;cursor:pointer;color:var(--ink);margin-top:6px}
+.okbtn[disabled]{opacity:.35;cursor:not-allowed}
+
+/* fill */
+.frow{padding:5px 0;direction:ltr;text-align:left}
+.wr{min-width:7em;border:0;border-bottom:2px dotted #8C9AB5;background:transparent;font-family:var(--title);
+  font-size:25px;color:var(--ink);text-align:center;padding:0 6px;direction:ltr}
+.wr:focus{outline:none;border-bottom-color:var(--pen);background:#FBF3D9}
+.wr.good{color:var(--ok);border-bottom-color:var(--ok)}
+.wr.bad{color:var(--pen);border-bottom-color:var(--pen)}
+
+/* essay */
+.marks{font-family:var(--title);font-size:22px;color:var(--pen);margin-inline-start:6px}
+.refer{margin:8px 0 6px;padding:8px 12px;border-inline-start:3px solid var(--amber);background:#FCF6E7}
+.refer .t{font-family:var(--body);font-size:14px;color:var(--amber);letter-spacing:.04em;text-transform:uppercase}
+.tick{display:flex;gap:9px;align-items:center;background:none;border:0;font:inherit;font-size:17px;
+  color:var(--ink);cursor:pointer;padding:3px 0;text-align:start;width:100%}
+.tick .box{width:21px;height:21px;flex:none;border:2px solid var(--amber);border-radius:3px;display:grid;
+  place-items:center;font-size:14px;color:var(--pen);font-family:var(--title)}
+.tick[aria-checked="true"] .lb{text-decoration:line-through;color:var(--soft)}
+.essaybox{width:100%;min-height:13rem;border:0;background:
+  repeating-linear-gradient(transparent,transparent 33px,#C6CFDD 33px,#C6CFDD 34px);
+  font-family:var(--body);font-size:18px;line-height:34px;color:var(--ink);padding:0 4px;resize:vertical;
+  direction:ltr;text-align:left}
+.essaybox:focus{outline:none;background-color:#FBF8E8}
+.wc{font-family:var(--body);font-size:14px;color:var(--soft);margin-top:4px}
+
+/* the red pen */
+.red{position:absolute;inset-inline-start:-58px;top:0;width:46px;text-align:center;font-family:var(--title);
+  color:var(--pen);font-size:34px;line-height:1;opacity:0;transform:rotate(-12deg);transition:opacity .25s}
+.red.on{opacity:1}
+.red.part{font-size:24px;line-height:1.2}
+@media (max-width:560px){ .red{inset-inline-start:-46px;width:38px;font-size:28px} }
+.pennote{display:none;margin-top:7px;font-family:var(--title);font-size:22px;color:var(--pen);line-height:1.4}
+.pennote.on{display:block}
+.pennote .en{display:block;margin-bottom:2px}
+
+.pennote .fix{color:var(--ok)}
+
+/* ---------- hand in ---------- */
+.handin{margin-top:36px;border-top:2px dashed #C6CFDD;padding-top:18px}
+.handin h2{font-family:var(--title);font-size:32px;margin:0 0 6px}
+.tally{display:grid;gap:4px;margin:10px 0 14px}
+.tally div{display:flex;gap:10px;align-items:baseline;font-size:17px}
+.tally .v{font-family:var(--title);font-size:22px;margin-inline-start:auto;unicode-bidi:isolate;direction:ltr}
+.tally .v.done{color:var(--ok)} .tally .v.open{color:var(--pen)}
+.send{font-family:var(--title);font-size:26px;background:var(--ink);color:var(--paper);border:0;border-radius:4px;
+  padding:12px 30px;cursor:pointer}
+.send:disabled{opacity:.45;cursor:not-allowed}
+.send.again{background:var(--pen)}
+.status{font-size:16px;margin-top:10px;min-height:1.6em}
+.status.bad{color:var(--pen)} .status.good{color:var(--ok)}
+.ghost{font-family:var(--body);font-size:15px;background:none;border:1.5px solid #C6CFDD;border-radius:3px;
+  padding:7px 14px;cursor:pointer;color:var(--soft);margin-inline-end:8px}
+.ghost:hover{border-color:var(--ink);color:var(--ink)}
+
+/* ---------- the marked summary ---------- */
+.result{margin-top:22px;border:2.5px solid var(--pen);border-radius:4px;padding:16px 18px;background:#FFF8F7}
+.result .big{font-family:var(--title);font-size:46px;color:var(--pen);line-height:1}
+.result .big span{font-size:24px;color:var(--soft)}
+.result .line{font-size:17px;margin-top:6px}
+.model{margin-top:12px;border-inline-start:3px solid var(--ok);padding:8px 12px;background:#F1F9F4}
+.model .t{font-family:var(--body);font-size:13.5px;color:var(--ok);letter-spacing:.04em;text-transform:uppercase}
+.model p{margin:4px 0 0;font-size:17px;direction:ltr;text-align:left}
+
+/* ---------- the bookmark tab ---------- */
+.tab bdi{unicode-bidi:isolate;direction:ltr}
+.tab{position:fixed;inset-inline-end:0;top:40%;background:var(--ink);color:var(--paper);
+  font-family:var(--title);font-size:21px;padding:10px 12px;border-radius:6px 0 0 6px;
+  box-shadow:-3px 3px 10px rgba(0,0,0,.25);z-index:5;text-align:center;line-height:1.1}
+.tab small{display:block;font-family:var(--body);font-size:11px;opacity:.75}
+
+.foot{max-width:720px;margin:14px auto 0;text-align:center;color:#6B6558;font-size:13px;
+  font-family:var(--body)}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} html{scroll-behavior:auto} }
+
+</style>
+</head>
+<body>
+
+<main class="book">
+  <div class="spiral"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <div class="cover">
+    <div class="k">Programming and Artificial Intelligence &middot; Year 2</div>
+    <h1>One message, many ways</h1>
+    <p class="sub">No single medium is best for everything</p>
+    <div class="nameline">
+      <label for="nameInput">Name</label>
+      <input id="nameInput" autocomplete="name" placeholder="write your name here">
+    </div>
+    <div class="meta">Date: <span id="today"></span></div>
+  </div>
+
+  <div id="paper"></div>
+</main>
+
+<div class="tab" id="tab"></div>
+<p class="foot">Programming and Artificial Intelligence &middot; Egyptian Baccalaureate &middot; Year 2</p>
+
+<noscript><p style="max-width:720px;margin:20px auto;background:#FDFBF2;padding:20px">
+This homework needs JavaScript. Please open the link in Chrome or Safari.</p></noscript>
+
+<script>
+const HW = {"id": "hw10", "title": "Homework 10: One Message, Many Ways", "sheet": "Homework 10", "salt": "no-single-medium-is-best-for-every-purpose", "endpoint": "https://script.google.com/macros/s/AKfycbwlkc3-gi4B4E7s3xEKEeDWZsyU8OstLs-Rr2UFe1bbHEDYSTV_1KKZ4ljDQ6nc1MUt/exec", "screens": [{"type": "mcq", "round": 0, "ids": ["Q1"], "q": "Which medium conveys sound only, is generally one-way, and can be received anywhere?", "options": ["Television", "Radio", "Newspaper", "Website"]}, {"type": "mcq", "round": 0, "ids": ["Q2"], "q": "Which of the following is a constraint of websites?", "options": ["Their information cannot be updated at any time.", "Two-way interaction with users is not possible.", "A website normally requires an Internet connection.", "They can display text only and cannot include multimedia."]}, {"type": "mcq", "round": 0, "ids": ["Q3"], "q": "Which medium is most suitable for sending campaign information directly to specific people?", "options": ["Television", "Website", "Email or direct messaging", "Radio"]}, {"type": "mcq", "round": 0, "ids": ["Q4"], "q": "What is meant by two-way interaction in digital media?", "options": ["One-way interaction: from sender to receiver only, with no response.", "Users can respond and participate through features such as forms and comments.", "It is a printed medium and can be read without an Internet connection.", "Appeals only to hearing and can be received while carrying out other tasks."]}, {"type": "mcq", "round": 0, "ids": ["Q5"], "q": "Which medium remains as a physical printed product and can be read without an Internet connection?", "options": ["Television", "Social media", "Newspaper", "Website"]}, {"type": "mcq", "round": 0, "ids": ["Q6"], "q": "Which purpose is most suitable for SNS?", "options": ["Presenting detailed, structured information across many pages and sections.", "Accessing printed information without an Internet connection.", "Spreading information rapidly through sharing and word of mouth.", "Delivering information directly and individually to specific people."]}, {"type": "mcq", "round": 0, "ids": ["Q7"], "q": "What distinguishes SNS from traditional media such as television and radio?", "options": ["It is limited to one-way interaction.", "It can spread information rapidly and users can post and share information.", "It is a physical printed medium that does not require electricity.", "It conveys sound only, no images or text."]}, {"type": "mcq", "round": 0, "ids": ["Q8"], "q": "When selecting a suitable medium to transfer information, which factors should be considered?", "options": ["Purpose, target audience, and available resources.", "Printed media should always be preferred.", "Internet-based media should always be avoided.", "One medium should be used for every audience."]}, {"type": "mcq", "round": 0, "ids": ["Q9"], "q": "Which medium combines video and sound and is generally one-way interaction to reach a large audience?", "options": ["Newspaper", "Television", "Radio", "Email"]}, {"type": "mcq", "round": 0, "ids": ["Q10"], "q": "Which of the following is a strength of websites?", "options": ["They are always one-way medium and do not allow comments.", "All website functions require an Internet connection without exception.", "Information can be updated at any time and users can interact with the site.", "They cannot display images or video."]}, {"type": "mcq", "round": 0, "ids": ["Q11"], "q": "Which medium most appropriately provides a large amount of detailed information structured into pages and sections?", "options": ["Radio", "Printed newspaper", "Website", "Direct text messages"]}, {"type": "mcq", "round": 0, "ids": ["Q12"], "q": "Which of the following is a constraint of websites?", "options": ["Their information can never be updated after publication.", "Users generally need to open the website to access its content unless notifications are available.", "Images and text cannot be combined.", "A website is entirely a printed paper medium."]}, {"type": "mcq", "round": 0, "ids": ["Q13"], "q": "Which statement best expresses the main principle for selecting the most appropriate media?", "options": ["One medium is always ideal for every purpose.", "No single medium is best for every purpose; selection should depend on purpose and audience, and media may be combined.", "Television should always be used alone to avoid Internet costs.", "SNS completely replaces websites and all other media."]}, {"type": "mcq", "round": 0, "ids": ["Q14"], "q": "Which statement describes a key characteristic of a website?", "options": ["It is mainly one-way interaction, but two-way interaction can be provided through forms and comments.", "It conveys sound only.", "It can never be updated after publication.", "It cannot be accessed through mobile browsers."]}, {"type": "mcq", "round": 0, "ids": ["Q15"], "q": "A government office must make the fees, the required documents and the rules of a new service available so that any citizen can check them at any time. Which medium fits this purpose?", "options": ["A radio announcement", "A website", "A television commercial", "A post on social media"]}, {"type": "mcq", "round": 0, "ids": ["Q16"], "q": "A school publishes the new timetable on its website, and most parents never see it. Which constraint of websites does this show?", "options": ["A website normally requires an Internet connection.", "Information does not reach users unless they actively access it.", "Display and loading speed differ depending on the device.", "A website cannot combine text and images."]}, {"type": "mcq", "round": 0, "ids": ["Q17"], "q": "A television commercial sends viewers to a website, and the website asks them to share the service on social media. Why is this chain used instead of one medium?", "options": ["Because each medium fills a gap the others leave: television reaches, the website holds the detail, and SNS spreads it.", "Because a website cannot be opened unless a commercial is shown first.", "Because television is a weaker medium than social media and needs support.", "Because using three media together costs less than using one."]}, {"type": "mcq", "round": 0, "ids": ["Q18"], "q": "A service organization needs to reach families who have no Internet connection at home. Which medium reaches them where they are?", "options": ["A website with a sign-up form", "Posts on social media", "Local radio", "Email to every family"]}, {"type": "tf", "round": 1, "ids": ["Q19"], "q": "Television is a medium that allows two-way interaction with users."}, {"type": "tf", "round": 1, "ids": ["Q20"], "q": "A website normally can be viewed even without an Internet connection."}, {"type": "tf", "round": 1, "ids": ["Q21"], "q": "A website becomes two way when it offers a form or a comment box."}, {"type": "tf", "round": 1, "ids": ["Q22"], "q": "Radio is a medium that conveys information through video and audio."}, {"type": "tf", "round": 1, "ids": ["Q23"], "q": "Newspapers are the media most effective at spreading information rapidly."}, {"type": "tf", "round": 1, "ids": ["Q24"], "q": "Information on a website can be updated at any time."}, {"type": "tf", "round": 1, "ids": ["Q25"], "q": "A website reaches its users even if they never open it."}, {"type": "tf", "round": 1, "ids": ["Q26"], "q": "A website on its own is enough for every purpose and every audience."}, {"type": "tf", "round": 1, "ids": ["Q27"], "q": "SNS is two way, because users can post and share information."}, {"type": "match", "round": 2, "ids": ["Q28", "Q29", "Q30", "Q31", "Q32", "Q33"], "note": "Give every description its term. Each term is used once.", "choices": ["one way", "two way", "SNS", "website strengths", "website constraints", "combining media"], "rows": ["From sender to receiver only.", "Users can respond and share.", "Social networking services, where users post and share information.", "Diverse, updatable, global, two way.", "Needs Internet; users must seek it.", "Using several media together so each does what it does best."], "reuse": false}, {"type": "match", "round": 2, "ids": ["Q34", "Q35", "Q36", "Q37", "Q38", "Q39"], "note": "One way or two way? An answer can be used more than once.", "choices": ["One way", "Two way"], "rows": ["Television", "Radio", "A printed newspaper", "SNS", "A website with no form and no comment box", "A website with a comment box under every article"], "reuse": true}, {"type": "match", "round": 2, "ids": ["Q40", "Q41", "Q42", "Q43", "Q44", "Q45"], "note": "Name the purpose in each situation, before you name any medium. A purpose can be used more than once.", "choices": ["Wide reach", "Full detail", "Direct delivery", "Word of mouth"], "rows": ["A new service has to be announced to as many people as possible on the same evening.", "A citizen needs the fees, the documents and the rules, and may come back to read them next week.", "Only the forty students who signed up must be told that the trip is postponed.", "The school wants parents to pass the news on to other parents themselves.", "Every specification of a new product has to be available at any time.", "A short video has to be in front of a large audience at one moment."], "reuse": true}, {"type": "order", "round": 3, "ids": ["Q46", "Q47", "Q48", "Q49", "Q50", "Q51"], "note": "A company promotes a new service with the combination the textbook describes. Put the six steps in order.", "top": "First", "bottom": "Last", "items": ["The website holds the full detail, with no limit on the amount of information", "The company names the purpose of its message and the audience it has to reach", "Users post and share it themselves, so the service spreads by word of mouth", "The commercial directs viewers to the company's website", "The website encourages its visitors to share the service on SNS", "A television commercial reaches many people at the same moment with video and audio"]}, {"type": "fill", "round": 4, "ids": ["Q52", "Q53", "Q54", "Q55", "Q56", "Q57"], "note": "The spine of the lesson. Each word in the bank is used once.", "bank": ["one way", "two way", "Internet", "access", "multiple", "audience"], "rows": [{"before": "Television, radio and a newspaper are all", "after": "media."}, {"before": "SNS is", "after": "because users can respond, post and share."}, {"before": "A website cannot be viewed without an", "after": "connection."}, {"before": "Information does not reach users unless they actively", "after": "it."}, {"before": "In actual information dissemination,", "after": "media are often combined."}, {"before": "A medium is chosen according to the purpose and the target", "after": "."}]}, {"type": "fill", "round": 4, "ids": ["Q58", "Q59", "Q60", "Q61"], "note": "Type the missing medium, or tap one from the bank. Not every word is used.", "bank": ["Television", "Radio", "Newspaper", "Website", "SNS", "Email"], "rows": [{"before": "The medium that carries audio only is", "after": "."}, {"before": "The medium that stays on paper and needs no Internet connection is a", "after": "."}, {"before": "The medium that combines text, images, video and audio and can be updated at any time is a", "after": "."}, {"before": "The medium that spreads information fastest, because users share it themselves, is", "after": "."}]}, {"type": "essay", "round": 5, "ids": ["E1"], "q": "Compare television and radio in terms of the type of information they communicate and communication method. [Assessment book page 63, Performance Tasks]", "marks": 4, "refer": ["the type of information each one carries", "the communication method of each one"]}, {"type": "essay", "round": 5, "ids": ["E2"], "q": "Explain the main strengths and constraints of websites compared with traditional media. [Assessment book page 63, Performance Tasks]", "marks": 4, "refer": ["the strengths the textbook lists", "the constraints the textbook lists"]}, {"type": "essay", "round": 5, "ids": ["E3"], "q": "Explain why organizations often combine multiple media, such as directing viewers from a TV commercial to a website, rather than relying on one single medium. [Assessment book page 63, homework]", "marks": 3, "refer": ["what each medium adds", "what would be missing if only one were used"]}, {"type": "essay", "round": 5, "ids": ["E4"], "q": "Distinguish between one-way and two-way interaction. Give one example of each. [Assessment book page 67, Model C]", "marks": 3, "refer": ["a definition of each one", "one example of each one"]}], "rounds": [{"era": "Five ways", "tag": "Media", "eraName": "What each medium carries, and which way it runs", "title": "Quick picks", "how": "Choose one answer, then it is marked straight away."}, {"era": "Read it twice", "tag": "Check", "eraName": "The sentences that cost marks", "title": "True or false", "how": "Is the statement true or false?"}, {"era": "One way or two", "tag": "Sort", "eraName": "Every row to its own answer", "title": "Sort it", "how": "Give every row its answer. Some answers are used more than once."}, {"era": "The chain", "tag": "Order", "eraName": "From the commercial to the sharing", "title": "Put it in order", "how": "Number the steps, then ask for them to be marked."}, {"era": "The words", "tag": "Words", "eraName": "The terms the exam uses", "title": "Fill the gap", "how": "Type the missing word, or tap one from the word bank."}, {"era": "Your verdict", "tag": "You", "eraName": "Your own words", "title": "Explain it", "how": "Write full answers in English, in your own words and without any AI help. El Bashmohandes marks these."}], "minutes": 50, "arTime": "about 50 minutes", "kicker": "Homework 10 · Programming and AI", "h1": ["One message, ", "many ", "ways"], "lead": "Six rounds on the five ways a message can travel: what each medium carries, which way it runs, what a website is good at and what it waits for, and how the purpose decides the medium. Most of the questions are the assessment book's own."};
+const KEYBLOB = "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";
+/* ===== Part A: data, state, scoring ===== */
+const ROUNDS = (typeof HW !== "undefined" && HW.rounds) ? HW.rounds : [
+  { era: "1940s–60s", tag: "40s", eraName: "Birth of the computer", title: "Quick picks", how: "Choose one answer, then tap Check. Once checked, it is locked in." },
+  { era: "1970s–80s", tag: "70s", eraName: "Personal computers", title: "○ or ×", how: "Is the statement true (○) or false (×)?" },
+  { era: "1990s", tag: "90s", eraName: "The Internet", title: "Match it", how: "Give every situation its answer, then check the whole set." },
+  { era: "2000s", tag: "00s", eraName: "Smartphones", title: "Put it in order", how: "Move each card up or down until the order is right, then check." },
+  { era: "2010s", tag: "10s", eraName: "The cloud", title: "Fill the gap", how: "Type the missing word, or tap one from the word bank." },
+  { era: "Now", tag: "Now", eraName: "Generative AI", title: "Explain it", how: "Write full answers in English, like in the exam, in your own words and without any AI help. El Bashmohandes marks these." }
+];
+const TYPE_LABEL = { mcq: "Quick pick", tf: "True or false", match: "Match it", order: "In order", fill: "Fill the gap", essay: "Explain it" };
+
+const $ = (s, r) => (r || document).querySelector(s);
+function el(tag, attrs, ...kids) {
+  const n = document.createElement(tag);
+  if (attrs) for (const k in attrs) {
+    const v = attrs[k];
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "class") n.className = v;
+    else if (k === "text") n.textContent = v;
+    else if (k === "svg") n.innerHTML = v;
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v === true ? "" : v);
+  }
+  for (const c of kids.flat(Infinity)) if (c !== null && c !== undefined && c !== false) n.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return n;
+}
+const ICON = {
+  check: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  cross: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  half: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 12h12"/></svg>',
+  grid: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg>',
+  bolt: '<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 2L4 14h6.5L9.5 22 20 9.5h-6.8z"/></svg>',
+  up: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>',
+  down: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  send: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M3 11.5L21 3l-6.5 18-3.5-7.5z"/><path d="M11 13.5L21 3"/></svg>',
+  arrow: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  back: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
+};
+
+/* answer key, scrambled so it is not readable in the page source */
+const KEY = (function () {
+  const raw = atob(KEYBLOB), pass = HW.salt, bytes = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i) ^ pass.charCodeAt(i % pass.length);
+  return JSON.parse(new TextDecoder().decode(bytes));
+})();
+
+const SCREENS = HW.screens;
+const AUTO_TOTAL = SCREENS.filter((s) => s.type !== "essay").reduce((a, s) => a + s.ids.length, 0);
+const ESSAY_MARKS = SCREENS.filter((s) => s.type === "essay").reduce((a, s) => a + s.marks, 0);
+
+/* ---------- state, kept on this device ---------- */
+const STORE = "hw-" + HW.id + "-v2";
+function fresh() {
+  return { name: "", view: "start", answers: {}, ticks: {}, checked: {}, visited: {}, streak: 0, best: 0,
+           startedAt: null, sent: null, submissionId: null };
+}
+let S = fresh();
+try { const raw = localStorage.getItem(STORE); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
+function save() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} }
+
+/* ---------- is this browser actually keeping anything? ----------
+   A private tab on an iPhone throws the answers away the moment the tab closes, and Safari clears a site it
+   has not seen for a week. The page cannot stop either one, so it checks that writing works, asks to keep the
+   storage, and lets the student carry a copy of their own. */
+const STORE_OK = (function () {
+  try {
+    const probe = STORE + "-probe";
+    localStorage.setItem(probe, "1");
+    const ok = localStorage.getItem(probe) === "1";
+    localStorage.removeItem(probe);
+    return ok;
+  } catch (e) { return false; }
+})();
+function answeredCount() { return SCREENS.reduce((a, s, i) => a + (hasAnswer(i) ? 1 : 0), 0); }
+
+/* A copy the student keeps in their own Files, which nothing on the phone clears. */
+function backupBlob() {
+  return new Blob([JSON.stringify({ app: "homework", hw: HW.id, name: S.name, savedAt: new Date().toISOString(),
+                                    answered: answeredCount(), state: S }, null, 1)], { type: "application/json" });
+}
+function saveBackup() {
+  const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-");
+  const url = URL.createObjectURL(backupBlob());
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = (HW.id + "-" + (S.name || "answers") + "-" + stamp + ".json").replace(/\s+/g, "-");
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+function readBackup(file) {
+  return new Promise((resolve) => {
+    const r = new FileReader();
+    r.onerror = () => resolve(null);
+    r.onload = () => {
+      try {
+        const d = JSON.parse(String(r.result));
+        resolve(d && d.state && d.hw === HW.id ? d : null);
+      } catch (e) { resolve(null); }
+    };
+    r.readAsText(file);
+  });
+}
+
+/* ---------- scoring ---------- */
+function norm(s) {
+  return String(s || "").toLowerCase().replace(/[‘’`´]/g, "'").replace(/[^a-z0-9.,'\/ ]/g, " ")
+    .replace(/\s+/g, " ").trim().replace(/[.,]+$/, "").trim();
+}
+function orderOf(i) {
+  const s = SCREENS[i];
+  const cur = S.answers["order-" + i];
+  return Array.isArray(cur) && cur.length === s.items.length ? cur : s.items.map((_, k) => k);
+}
+/* one entry per point: {id, ok, given, correct} */
+function itemResults(i) {
+  const s = SCREENS[i], k = KEY.screens[i], A = S.answers;
+  if (s.type === "mcq") {
+    const v = A[s.ids[0]];
+    return [{ id: s.ids[0], ok: v === k.answer, given: typeof v === "number" ? "ABCD"[v] + ". " + s.options[v] : "no answer", correct: "ABCD"[k.answer] + ". " + s.options[k.answer] }];
+  }
+  if (s.type === "tf") {
+    const v = A[s.ids[0]];
+    const t = (b) => (b ? "True" : "False");
+    return [{ id: s.ids[0], ok: v === k.answer, given: typeof v === "boolean" ? t(v) : "no answer", correct: t(k.answer) }];
+  }
+  if (s.type === "match") return s.ids.map((id, r) => {
+    const v = A[id];
+    return { id, ok: v === k.answers[r], given: typeof v === "number" ? s.choices[v] : "no answer", correct: s.choices[k.answers[r]] };
+  });
+  if (s.type === "order") {
+    const cur = orderOf(i);
+    return s.ids.map((id, p) => ({ id, ok: cur[p] === k.correct[p], given: s.items[cur[p]], correct: s.items[k.correct[p]] }));
+  }
+  if (s.type === "fill") return s.ids.map((id, r) => {
+    const v = String(A[id] || "").trim();
+    return { id, ok: k.accept[r].map(norm).includes(norm(v)), given: v || "no answer", correct: k.show[r] };
+  });
+  return [];
+}
+function screenScore(i) { const r = itemResults(i); return { got: r.filter((x) => x.ok).length, of: r.length }; }
+function hasAnswer(i) {
+  const s = SCREENS[i], A = S.answers;
+  if (s.type === "mcq" || s.type === "tf") return A[s.ids[0]] !== undefined;
+  if (s.type === "order") return !!S.visited[i];
+  if (s.type === "essay") return String(A[s.ids[0]] || "").trim().length > 0;
+  return s.ids.some((id) => A[id] !== undefined && String(A[id]).trim() !== "");
+}
+function screenState(i) {
+  const s = SCREENS[i];
+  if (s.type === "essay") return hasAnswer(i) ? "essay" : "";
+  if (S.checked[i]) { const sc = screenScore(i); return sc.got === sc.of ? "good" : sc.got === 0 ? "bad" : "part"; }
+  return hasAnswer(i) ? "seen" : "";
+}
+function totals() {
+  let got = 0;
+  const rounds = ROUNDS.map((r, ri) => ({ title: r.title, got: 0, of: 0 }));
+  SCREENS.forEach((s, i) => {
+    if (s.type === "essay") return;
+    const sc = screenScore(i);
+    rounds[s.round].of += sc.of;
+    if (S.checked[i]) { rounds[s.round].got += sc.got; got += sc.got; }
+  });
+  return { got, of: AUTO_TOTAL, rounds: rounds.filter((r) => r.of > 0) };
+}
+function checkedCorrect() {
+  let n = 0;
+  SCREENS.forEach((s, i) => { if (S.checked[i] && s.type !== "essay") n += screenScore(i).got; });
+  return n;
+}
+
+/* ---------- HUD ---------- */
+function currentRound() {
+  if (S.view.startsWith("round:")) return Number(S.view.slice(6));
+  if (S.view.startsWith("q:")) return SCREENS[Number(S.view.slice(2))].round;
+  if (S.view === "finish" || S.view === "result") return ROUNDS.length;
+  return -1;
+}
+function renderHud() {
+  const hud = $("#hud");
+  hud.hidden = S.view === "start";
+  if (hud.hidden) return;
+  const cr = currentRound();
+  $("#tl").replaceChildren(
+    el("div", { class: "tl-track" }, el("div", { class: "tl-fill", style: "width:" + Math.max(0, Math.min(100, (cr / (ROUNDS.length - 1)) * 100)) + "%" })),
+    ...ROUNDS.map((r, ri) => el("button", {
+      class: "era" + (ri < cr ? " done" : ri === cr ? " now" : ""), type: "button", title: r.era + ": " + r.title,
+      "aria-label": "Round " + (ri + 1) + ", " + r.title, onclick: () => go("round:" + ri)
+    }, el("span", { class: "dot" }), el("span", { class: "lab", text: r.tag }))));
+  $("#statOk").replaceChildren(el("span", { svg: ICON.check }), String(checkedCorrect()));
+  const st = $("#statStreak");
+  st.replaceChildren(el("span", { svg: ICON.bolt }), String(S.streak));
+  st.classList.toggle("hot", S.streak >= 3);
+  st.title = "Streak: " + S.streak + " in a row (best " + S.best + ")";
+}
+
+/* ===== The notebook renderer for Homework 7 =====
+   One page, every question written down the sheet, marked in red pen in the margin the moment it is
+   answered. State, scoring and storage all come from app_a.js, which the other homeworks share, so an
+   answer is scored here exactly as it would be there. Sending reuses the same payload shape, so the rows
+   land in the same sheet under the same headings. */
+
+const PAPER = document.getElementById("paper");
+const TAB = document.getElementById("tab");
+
+if (!S.startedAt) { S.startedAt = new Date().toISOString(); save(); }
+if (!S.submissionId) { S.submissionId = "s-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8); save(); }
+
+/* ---------- small helpers ---------- */
+function nodeFor(i) { return document.getElementById("q" + i); }
+function markOf(i) { return nodeFor(i).querySelector(".red"); }
+function penOf(i) { return nodeFor(i).querySelector(".pennote"); }
+
+function allFilled(i) {
+  const s = SCREENS[i], A = S.answers;
+  if (s.type === "mcq" || s.type === "tf") return A[s.ids[0]] !== undefined;
+  if (s.type === "match") return s.ids.every((id) => A[id] !== undefined);
+  if (s.type === "fill") return s.ids.every((id) => String(A[id] || "").trim() !== "");
+  if (s.type === "order") return !!S.visited[i];
+  return false;
+}
+
+function progress() {
+  const auto = SCREENS.filter((s) => s.type !== "essay");
+  const done = SCREENS.reduce((a, s, i) => a + (s.type !== "essay" && S.checked[i] ? s.ids.length : 0), 0);
+  const written = SCREENS.filter((s, i) => s.type === "essay" && hasAnswer(i)).length;
+  TAB.innerHTML = "<bdi>" + done + " / " + AUTO_TOTAL + "</bdi><small>marked</small>";
+  const t = document.getElementById("tally");
+  if (t) {
+    t.innerHTML = "";
+    const row = (label, v, ok) => {
+      const d = document.createElement("div");
+      d.innerHTML = '<span>' + label + '</span><span class="v ' + (ok ? "done" : "open") + '"><bdi>' + v + "</bdi></span>";
+      t.appendChild(d);
+    };
+    row("Questions marked", done + " / " + AUTO_TOTAL, done === AUTO_TOTAL);
+    row("Right so far", checkedCorrect() + " / " + AUTO_TOTAL, false);
+    row("Written answers", written + " / " + essayCount(), written === essayCount());
+  }
+  const btn = document.getElementById("sendBtn");
+  if (btn && !S.sent) btn.disabled = !S.name.trim();
+}
+function essayCount() { return SCREENS.filter((s) => s.type === "essay").length; }
+
+/* ---------- marking ---------- */
+function mark(i) {
+  if (S.checked[i]) return;
+  S.checked[i] = true;
+  const res = itemResults(i), k = KEY.screens[i], s = SCREENS[i];
+  const got = res.filter((r) => r.ok).length;
+  S.streak = got === res.length ? S.streak + 1 : 0;
+  S.best = Math.max(S.best || 0, S.streak);
+  save();
+
+  const node = nodeFor(i), red = markOf(i), pen = penOf(i);
+  if (s.type === "mcq" || s.type === "tf") {
+    const picks = node.querySelectorAll(".pick");
+    picks.forEach((b, idx) => {
+      b.disabled = true;
+      b.classList.remove("chosen");
+      const isAnswer = s.type === "tf" ? (idx === 0) === k.answer : idx === k.answer;
+      const chosen = s.type === "tf" ? S.answers[s.ids[0]] === (idx === 0) : S.answers[s.ids[0]] === idx;
+      if (isAnswer) b.classList.add("good");
+      else if (chosen) b.classList.add("bad");
+    });
+  }
+  if (s.type === "match") {
+    node.querySelectorAll(".blank").forEach((bl, r) => {
+      bl.classList.remove("live");
+      bl.classList.add(res[r].ok ? "good" : "bad");
+      if (!res[r].ok) bl.textContent = s.choices[k.answers[r]];
+      bl.disabled = true;
+    });
+    node.querySelectorAll(".bank .w").forEach((w) => w.disabled = true);
+  }
+  if (s.type === "fill") {
+    node.querySelectorAll(".wr").forEach((inp, r) => {
+      inp.readOnly = true;
+      inp.classList.add(res[r].ok ? "good" : "bad");
+      if (!res[r].ok) inp.value = k.show[r];
+    });
+  }
+  if (s.type === "order") {
+    const cur = orderOf(i);
+    const rightPos = {};
+    k.correct.forEach((item, pos) => { rightPos[item] = pos + 1; });
+    node.querySelectorAll(".obox").forEach((b) => b.disabled = true);
+    node.querySelectorAll(".orow").forEach((row, idx) => {
+      const box = row.querySelector(".obox");
+      const given = cur.indexOf(idx) + 1;
+      const want = rightPos[idx];
+      box.classList.add(given === want ? "good" : "bad");
+      box.textContent = want;
+    });
+    const btn = node.querySelector(".okbtn");
+    if (btn) btn.remove();
+  }
+
+  red.textContent = got === res.length ? "✓" : got === 0 ? "✗" : got + "/" + res.length;
+  red.className = "red on" + (got && got < res.length ? " part" : "");
+  let why = k.why || "";
+  let ar = k.ar || "";
+  if (s.type === "match" || s.type === "fill" || s.type === "order") {
+    const wrong = res.filter((r) => !r.ok).length;
+    why = wrong === 0 ? "All correct."
+      : s.type === "order"
+        ? (res.length - wrong) + " of " + res.length + " right. The numbers in red are the right order."
+        : (res.length - wrong) + " of " + res.length + " right. What is written in red is the right answer.";
+    ar = "";
+  }
+  const english = s.type === "mcq" || s.type === "tf";
+  const head = got === res.length ? "" : fixLine(i, res);
+  pen.innerHTML =
+    (english
+      ? '<span class="en' + (got === res.length ? " fix" : "") + '">' + head + why + "</span>"
+      : '<span class="en">' + head + why + "</span>") +
+    "";
+  pen.classList.add("on");
+  progress();
+}
+
+function fixLine(i, res) {
+  const s = SCREENS[i];
+  if (s.type === "mcq" || s.type === "tf") return "→ " + res[0].correct + ". ";
+  return "";
+}
+
+/* ---------- builders for each kind of question ---------- */
+function qShell(i, number, stem, extra) {
+  const d = document.createElement("div");
+  d.className = "q";
+  d.id = "q" + i;
+  d.innerHTML = '<span class="red"></span>' +
+    '<span class="n">' + number + ".</span>" +
+    '<span class="st en">' + stem + "</span>" +
+    (extra ? '<span class="marks">' + extra + "</span>" : "") +
+    '<div class="pennote"></div>';
+  return d;
+}
+
+function buildChoice(i, d) {
+  const s = SCREENS[i];
+  const ul = document.createElement("ul");
+  ul.className = "opts";
+  const labels = s.type === "tf" ? ["True", "False"] : s.options;
+  labels.forEach((o, k) => {
+    const li = document.createElement("li");
+    const b = document.createElement("button");
+    b.className = "pick";
+    b.type = "button";
+    b.innerHTML = '<span class="let">' + "abcd"[k] + ")</span>" + o;
+    const val = s.type === "tf" ? (k === 0) : k;
+    if (S.answers[s.ids[0]] === val) b.classList.add("chosen");
+    b.onclick = () => {
+      if (S.checked[i]) return;
+      S.answers[s.ids[0]] = val;
+      save();
+      ul.querySelectorAll(".pick").forEach((x) => x.classList.remove("chosen"));
+      b.classList.add("chosen");
+      mark(i);
+    };
+    li.appendChild(b);
+    ul.appendChild(li);
+  });
+  d.querySelector(".pennote").before(ul);
+}
+
+function buildMatch(i, d) {
+  const s = SCREENS[i];
+  const wrap = document.createElement("div");
+  const bank = document.createElement("div");
+  bank.className = "bank";
+  const rows = document.createElement("div");
+  let live = null;
+
+  const paint = () => {
+    bank.querySelectorAll(".w").forEach((w, c) => {
+      const used = !s.reuse && s.ids.some((id) => S.answers[id] === c);
+      w.classList.toggle("used", used);
+    });
+  };
+
+  s.choices.forEach((c, ci) => {
+    const w = document.createElement("button");
+    w.className = "w";
+    w.type = "button";
+    w.textContent = c;
+    w.onclick = () => {
+      if (S.checked[i] || !live) return;
+      const r = Number(live.dataset.row);
+      if (!s.reuse) s.ids.forEach((id, rr) => { if (rr !== r && S.answers[id] === ci) { delete S.answers[id]; rows.querySelectorAll(".blank")[rr].textContent = "......"; } });
+      S.answers[s.ids[r]] = ci;
+      live.textContent = c;
+      live.classList.remove("live");
+      live = null;
+      save();
+      paint();
+      if (allFilled(i)) mark(i);
+    };
+    bank.appendChild(w);
+  });
+
+  s.rows.forEach((t, r) => {
+    const row = document.createElement("div");
+    row.className = "mrow";
+    row.innerHTML = '<span class="t en">' + t + "</span>";
+    const bl = document.createElement("button");
+    bl.className = "blank";
+    bl.type = "button";
+    bl.dataset.row = r;
+    const cur = S.answers[s.ids[r]];
+    bl.textContent = cur === undefined ? "......" : s.choices[cur];
+    bl.onclick = () => {
+      if (S.checked[i]) return;
+      rows.querySelectorAll(".blank").forEach((x) => x.classList.remove("live"));
+      bl.classList.add("live");
+      live = bl;
+    };
+    row.appendChild(bl);
+    rows.appendChild(row);
+  });
+
+  const hint = document.createElement("p");
+  hint.className = "note-line en";
+  hint.textContent = s.note;
+  wrap.append(hint, bank, rows);
+  d.querySelector(".pennote").before(wrap);
+  paint();
+}
+
+function buildOrder(i, d) {
+  const s = SCREENS[i];
+  const wrap = document.createElement("div");
+  const hint = document.createElement("p");
+  hint.className = "note-line en";
+  hint.textContent = "Write the order in the boxes: 1 for the first step, and so on. Tap a box to change its number.";
+  wrap.appendChild(hint);
+  const cur = orderOf(i).slice();
+  const seats = s.items.map((_, k) => k);
+
+  s.items.forEach((t, k) => {
+    const row = document.createElement("div");
+    row.className = "orow";
+    const box = document.createElement("button");
+    box.className = "obox";
+    box.type = "button";
+    const posOf = () => cur.indexOf(k);
+    box.textContent = posOf() >= 0 && S.visited[i] ? posOf() + 1 : "";
+    box.onclick = () => {
+      if (S.checked[i]) return;
+      const taken = seats.map((p) => cur[p]);
+      const now = Number(box.textContent || 0);
+      const next = now >= s.items.length ? 0 : now + 1;
+      box.textContent = next || "";
+      const chosen = [];
+      wrap.querySelectorAll(".obox").forEach((b, idx) => {
+        const v = Number(b.textContent || 0);
+        if (v) chosen.push([v, idx]);
+      });
+      const seen = {};
+      let clash = false;
+      chosen.forEach(([v]) => { if (seen[v]) clash = true; seen[v] = 1; });
+      const ready = chosen.length === s.items.length && !clash;
+      if (ready) {
+        const order = [];
+        chosen.sort((a, b2) => a[0] - b2[0]).forEach(([, idx]) => order.push(idx));
+        S.answers["order-" + i] = order;
+        save();
+      }
+      const ok = wrap.querySelector(".okbtn");
+      if (ok) ok.disabled = !ready;
+    };
+    row.appendChild(box);
+    const t2 = document.createElement("span");
+    t2.className = "t en";
+    t2.textContent = t;
+    row.appendChild(t2);
+    wrap.appendChild(row);
+  });
+  const ok = document.createElement("button");
+  ok.className = "okbtn";
+  ok.type = "button";
+  ok.textContent = "Done, mark it";
+  ok.disabled = !S.answers["order-" + i];
+  ok.onclick = () => {
+    if (S.checked[i] || ok.disabled) return;
+    S.visited[i] = true;
+    save();
+    mark(i);
+    ok.remove();
+  };
+  wrap.appendChild(ok);
+  d.querySelector(".pennote").before(wrap);
+}
+
+function buildFill(i, d) {
+  const s = SCREENS[i];
+  const wrap = document.createElement("div");
+  const hint = document.createElement("p");
+  hint.className = "note-line en";
+  hint.textContent = s.note;
+  wrap.appendChild(hint);
+  s.rows.forEach((r, k) => {
+    const row = document.createElement("div");
+    row.className = "frow en";
+    row.append(document.createTextNode(r.before + " "));
+    const inp = document.createElement("input");
+    inp.className = "wr";
+    inp.value = S.answers[s.ids[k]] || "";
+    inp.placeholder = "......";
+    inp.autocomplete = "off";
+    inp.oninput = () => { S.answers[s.ids[k]] = inp.value; save(); };
+    inp.onblur = () => { if (!S.checked[i] && allFilled(i)) mark(i); };
+    inp.onkeydown = (e) => { if (e.key === "Enter") inp.blur(); };
+    row.appendChild(inp);
+    row.append(document.createTextNode(" " + r.after));
+    wrap.appendChild(row);
+  });
+  const bank = document.createElement("div");
+  bank.className = "bank";
+  s.bank.forEach((w) => {
+    const b = document.createElement("span");
+    b.className = "w";
+    b.textContent = w;
+    bank.appendChild(b);
+  });
+  wrap.insertBefore(bank, wrap.children[1]);
+  d.querySelector(".pennote").before(wrap);
+}
+
+function buildEssay(i, d) {
+  const s = SCREENS[i], id = s.ids[0];
+  const wrap = document.createElement("div");
+  if (s.refer && s.refer.length) {
+    const ref = document.createElement("div");
+    ref.className = "refer";
+    ref.innerHTML = '<div class="t">in your answer, refer to</div>';
+    s.refer.forEach((r, k) => {
+      const b = document.createElement("button");
+      b.className = "tick";
+      b.type = "button";
+      const key = id + "-" + k;
+      b.setAttribute("aria-checked", S.ticks[key] ? "true" : "false");
+      b.innerHTML = '<span class="box">' + (S.ticks[key] ? "✓" : "") + '</span><span class="lb en">' + r + "</span>";
+      b.onclick = () => {
+        S.ticks[key] = !S.ticks[key];
+        save();
+        b.setAttribute("aria-checked", S.ticks[key] ? "true" : "false");
+        b.querySelector(".box").textContent = S.ticks[key] ? "✓" : "";
+      };
+      ref.appendChild(b);
+    });
+    wrap.appendChild(ref);
+  }
+  const ta = document.createElement("textarea");
+  ta.className = "essaybox";
+  ta.value = S.answers[id] || "";
+  ta.placeholder = "Write your answer in English here";
+  const wc = document.createElement("div");
+  wc.className = "wc";
+  const count = () => {
+    const n = (ta.value.trim().match(/\S+/g) || []).length;
+    wc.textContent = n + (n === 1 ? " word" : " words") + (S.sent ? "" : " · saved as you write");
+  };
+  ta.oninput = () => { S.answers[id] = ta.value; save(); count(); progress(); };
+  if (S.sent) ta.readOnly = true;
+  count();
+  wrap.append(ta, wc);
+  d.querySelector(".pennote").before(wrap);
+}
+
+/* ---------- lay the whole notebook out ---------- */
+function layout() {
+  let round = -1, number = 0;
+  SCREENS.forEach((s, i) => {
+    if (s.round !== round) {
+      round = s.round;
+      const h = document.createElement("p");
+      h.className = "sec";
+      const n = SCREENS.filter((x) => x.round === round).reduce((a, x) => a + x.ids.length, 0);
+      h.innerHTML = ROUNDS[round].title + ' <span class="cnt">(' + n +
+        (s.type === "essay" ? " marks" : " points") + ")</span>";
+      PAPER.appendChild(h);
+    }
+    number++;
+    const stem = s.type === "essay" ? s.q
+      : s.type === "mcq" || s.type === "tf" ? s.q
+      : s.note ? "" : "";
+    const d = qShell(i, number,
+      s.type === "match" ? "Match each one." : s.type === "order" ? "Put these in order." :
+      s.type === "fill" ? "Complete the sentences." : stem,
+      s.type === "essay" ? "[" + s.marks + "]" : "");
+    if (s.type === "mcq" || s.type === "tf") buildChoice(i, d);
+    else if (s.type === "match") buildMatch(i, d);
+    else if (s.type === "order") buildOrder(i, d);
+    else if (s.type === "fill") buildFill(i, d);
+    else buildEssay(i, d);
+    PAPER.appendChild(d);
+    if (S.checked[i]) replay(i, d);
+  });
+  handIn();
+  progress();
+  if (S.sent) showResult();
+}
+
+/* a question that was already marked before the page was reopened */
+function replay(i, d) {
+  S.checked[i] = false;
+  const s = SCREENS[i];
+  if (s.type === "order") S.visited[i] = true;
+  mark(i);
+}
+
+/* ---------- hand in ---------- */
+function handIn() {
+  const box = document.createElement("div");
+  box.className = "handin";
+  box.id = "handin";
+  box.innerHTML = '<h2>Hand it in</h2>' +
+    '<div class="tally" id="tally"></div>' +
+    '<p class="note-line">Once you hand in, your answers go to El Bashmohandes and nothing can be ' +
+    'changed. He marks the written answers himself.</p>' +
+    '<button class="send" id="sendBtn" type="button" disabled>Hand in to El Bashmohandes</button>' +
+    '<p class="status" id="status"></p>' +
+    '<p style="margin-top:12px"><button class="ghost" id="bk">Save a copy to this phone</button>' +
+    '<button class="ghost" id="rd">Open a copy you saved</button>' +
+    '<input id="rdf" type="file" accept="application/json" hidden></p>';
+  PAPER.appendChild(box);
+
+  document.getElementById("sendBtn").onclick = send;
+  document.getElementById("bk").onclick = () => saveBackup();
+  document.getElementById("rd").onclick = () => document.getElementById("rdf").click();
+  document.getElementById("rdf").onchange = (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (f) readBackup(f).then(() => location.reload()).catch(() => alert("That file is not a copy of this homework."));
+  };
+}
+
+function fmtDate(d) {
+  try { return new Date(d).toLocaleString("en-GB", { day:"numeric", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit" }); }
+  catch (e) { return String(d); }
+}
+function countWords(a) { return (String(a).trim().match(/\S+/g) || []).length; }
+
+function buildPayload() {
+  const now = new Date();
+  const results = [];
+  SCREENS.forEach((s, i) => { if (s.type !== "essay") itemResults(i).forEach((r) => results.push(r)); });
+  const t = totals();
+  const pct = Math.round((t.got / t.of) * 100);
+  const mistakes = results.filter((r) => !r.ok).map((r) => ({ id:r.id, lesson:KEY.lessons[r.id], given:r.given, correct:r.correct }));
+  const essays = SCREENS.map((s, i) => [s, i]).filter(([s]) => s.type === "essay").map(([s, i]) => {
+    const id = s.ids[0], a = String(S.answers[id] || "").trim();
+    return { id, lesson:KEY.lessons[id], marks:s.marks, question:s.q, answer:a, words:countWords(a) };
+  });
+  const minutes = S.startedAt ? Math.round((now - new Date(S.startedAt)) / 60000) : "";
+  const columns = [
+    ["Submitted at", fmtDate(now)], ["Student", S.name], ["Score", t.got], ["Out of", t.of], ["Percent", pct + "%"],
+    ["Essay mark /" + ESSAY_MARKS + " (you fill)", ""], ["Mistakes", mistakes.length],
+    ["Minutes since starting", minutes], ["Best streak", S.best]
+  ];
+  t.rounds.forEach((r) => columns.push([r.title, r.got + "/" + r.of]));
+  results.forEach((r) => columns.push([r.id + " [" + KEY.lessons[r.id] + "]", (r.ok ? "✓ " : "✗ ") + r.given + (r.ok ? "" : "  →  " + r.correct)]));
+  essays.forEach((e) => columns.push([e.id + " [" + e.lesson + "] /" + e.marks, e.answer || "(no answer)"]));
+  columns.push(["Submission ID", S.submissionId]);
+  return { homework:HW.title, sheet:HW.sheet, submissionId:S.submissionId, name:S.name, submittedAt:now.toISOString(),
+           minutes, score:t.got, outOf:t.of, percent:pct, essayMarks:ESSAY_MARKS, bestStreak:S.best,
+           rounds:t.rounds, mistakes, essays, columns };
+}
+
+async function send() {
+  const btn = document.getElementById("sendBtn"), status = document.getElementById("status");
+  if (!S.name.trim()) { status.className = "status bad"; status.textContent = "Write your name at the top first."; return; }
+  const open = SCREENS.filter((s, i) => s.type !== "essay" && !S.checked[i]).length;
+  const blank = SCREENS.filter((s, i) => s.type === "essay" && !hasAnswer(i)).length;
+  if ((open || blank) && !btn.classList.contains("again")) {
+    btn.classList.add("again");
+    btn.textContent = "Hand in anyway";
+    status.className = "status bad";
+    status.textContent = "You still have " + (open ? open + " question" + (open === 1 ? "" : "s") + " unanswered" : "") +
+      (open && blank ? " and " : "") + (blank ? blank + " empty written answer" + (blank === 1 ? "" : "s") : "") +
+      ". Tap again to hand in as it is.";
+    return;
+  }
+  if (!HW.endpoint) {
+    status.className = "status bad";
+    status.textContent = "Sending is not switched on yet. Tell El Bashmohandes and keep this page: your answers are saved.";
+    return;
+  }
+  SCREENS.forEach((s, i) => { if (s.type !== "essay") S.checked[i] = true; });
+  save();
+  const payload = JSON.stringify(buildPayload());
+  btn.disabled = true;
+  status.className = "status";
+  status.textContent = "Sending to El Bashmohandes...";
+  let reached = false, refused = false;
+  try {
+    const res = await fetch(HW.endpoint, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" },
+                                           body:payload, redirect:"follow" });
+    let data = null;
+    try { data = await res.json(); } catch (e) { data = null; }
+    if (data && data.ok) reached = true;
+    else if (data && data.ok === false) refused = true;
+    else reached = res.ok;
+  } catch (e) {
+    try {
+      await fetch(HW.endpoint, { method:"POST", mode:"no-cors",
+                                 headers:{ "Content-Type":"text/plain;charset=utf-8" }, body:payload });
+      reached = true;
+    } catch (e2) { reached = false; }
+  }
+  if (refused || !reached) {
+    btn.disabled = false;
+    status.className = "status bad";
+    status.textContent = refused
+      ? "It reached the sheet but was not saved. Tap hand in again, and if it happens twice tell El Bashmohandes."
+      : "The connection dropped. Your answers are saved: try again when you are back online.";
+    return;
+  }
+  S.sent = new Date().toISOString();
+  save();
+  status.className = "status good";
+  status.textContent = "Handed in. " + fmtDate(S.sent);
+  btn.textContent = "Handed in";
+  showResult();
+}
+
+function showResult() {
+  if (document.getElementById("result")) return;
+  const t = totals(), pct = Math.round((t.got / t.of) * 100);
+  const box = document.createElement("div");
+  box.className = "result";
+  box.id = "result";
+  let html = '<div class="big">' + t.got + " <span>/ " + t.of + " · " + pct + "%</span></div>" +
+    '<div class="line">That is the mark for the questions with one right answer. The written answers (' +
+    ESSAY_MARKS + ' marks) are marked by El Bashmohandes himself.</div>';
+  t.rounds.forEach((r) => { html += '<div class="line">' + r.title + ": <b>" + r.got + " / " + r.of + "</b></div>"; });
+  box.innerHTML = html;
+  SCREENS.forEach((s, i) => {
+    if (s.type !== "essay") return;
+    const k = KEY.screens[i];
+    if (!k || !k.model) return;
+    const m = document.createElement("div");
+    m.className = "model";
+    m.innerHTML = '<div class="t">model answer &middot; ' + s.marks + ' marks</div><p class="en">' + k.model + "</p>";
+    box.appendChild(m);
+  });
+  document.getElementById("handin").appendChild(box);
+  document.querySelectorAll(".essaybox").forEach((t2) => t2.readOnly = true);
+  box.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+/* ---------- name, warning, boot ---------- */
+const nameInput = document.getElementById("nameInput");
+nameInput.value = S.name || "";
+nameInput.oninput = () => { S.name = nameInput.value; save(); progress(); };
+if (S.sent) nameInput.readOnly = true;
+document.getElementById("today").textContent = new Date().toLocaleDateString("en-GB",
+  { day:"numeric", month:"long", year:"numeric" });
+
+if (!STORE_OK) {
+  const w = document.createElement("div");
+  w.className = "warn";
+  w.innerHTML = "<b>This browser is keeping nothing.</b> If you close the page your answers are gone. " +
+    "Open the link in a normal tab, not a Private one, or finish the homework in one sitting.";
+  PAPER.appendChild(w);
+}
+
+layout();
+
+</script>
+</body>
+</html>
