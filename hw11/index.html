@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Down and Back Up &middot; Homework 11</title>
+<meta name="description" content="Six rounds on the frontend, the backend and the database: whose job is whose, and the six steps a search takes down the tiers and back. Homework 11 for Programming and AI.">
+<meta name="theme-color" content="#BDB5A4">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Down and Back Up &middot; Homework 11">
+<meta property="og:description" content="A request goes down the three tiers and the answer climbs back. Six rounds on who does what.">
+<meta property="og:image" content="https://ahmed-abdelslam-75.github.io/homework/hw11/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23FDFBF2' stroke='%231B2A4A' stroke-width='4'/%3E%3Cg stroke='%23CFE0EE' stroke-width='2'%3E%3Cpath d='M8 22h48M8 34h48M8 46h48'/%3E%3C/g%3E%3Cpath d='M18 6v52' stroke='%23E9A0A0' stroke-width='3'/%3E%3Cpath d='M30 40l8 8 16-20' stroke='%23D1372F' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Kalam:wght@300;400;700&display=swap">
+<style>
+[hidden]{display:none!important}
+/* =====================================================================
+   The notebook skin for Homework 7.
+
+   One squared page you scroll down, a red margin the teacher marks in,
+   and handwriting for anything written by hand. Nothing here is shared
+   with the other six homeworks.
+   ===================================================================== */
+:root{
+  --paper:#FDFBF2; --grid:#CFE0EE; --marg:#E9A0A0; --ink:#1B2A4A; --soft:#6E7B96;
+  --pen:#D1372F; --ok:#1E8A5B; --amber:#B07A17; --hand:Kalam,"Comic Sans MS",cursive;
+  --title:Caveat,cursive; --body:Kalam,"Comic Sans MS",cursive;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:#BDB5A4;color:var(--ink);font-family:var(--body);font-size:18.5px;line-height:1.95;
+  padding:14px 8px 40px}
+.en{direction:ltr;text-align:left;unicode-bidi:isolate}
+
+
+/* ---------- the page ---------- */
+.book{max-width:720px;margin:0 auto;background:var(--paper);border-radius:4px;position:relative;
+  box-shadow:0 16px 40px rgba(0,0,0,.3);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:27px 27px;padding-block:30px 46px;padding-inline:72px 24px}
+.book::before{content:"";position:absolute;top:0;bottom:0;inset-inline-start:54px;width:2px;background:var(--marg)}
+.spiral{position:absolute;top:0;bottom:0;inset-inline-start:14px;width:26px;display:flex;flex-direction:column;
+  justify-content:space-around;align-items:center;padding:26px 0;pointer-events:none}
+.spiral i{width:13px;height:13px;border-radius:50%;background:#C9BFAC;box-shadow:inset 0 2px 3px rgba(0,0,0,.35)}
+@media (max-width:560px){ .book{padding-block:24px 40px;padding-inline:56px 16px;background-size:24px 24px}
+  .book::before{inset-inline-start:42px} .spiral{inset-inline-start:10px;width:20px} .spiral i{width:10px;height:10px} }
+
+/* ---------- cover ---------- */
+.cover{border-bottom:2px dashed #C6CFDD;padding-bottom:16px;margin-bottom:10px}
+.cover .k{font-family:var(--body);font-size:13.5px;color:var(--soft);letter-spacing:.02em}
+.cover h1{font-family:var(--title);font-size:42px;line-height:1.05;margin:4px 0 2px;font-weight:700}
+.cover .sub{font-family:var(--title);font-size:25px;color:var(--soft);margin:0 0 14px}
+.nameline{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.nameline label{font-family:var(--title);font-size:26px;color:var(--pen)}
+.nameline input{flex:1;min-width:190px;border:0;border-bottom:2px solid var(--ink);background:transparent;
+  font-family:var(--title);font-size:27px;color:var(--ink);padding:0 6px 2px}
+.nameline input:focus{outline:none;border-bottom-color:var(--pen)}
+.meta{font-family:var(--title);font-size:21px;color:var(--soft);margin-top:8px}
+
+.warn{border:2px solid var(--pen);border-radius:4px;background:#FDEEED;padding:12px 14px;margin:14px 0}
+.warn b{color:var(--pen)}
+
+/* ---------- section headings ---------- */
+.sec{font-family:var(--title);font-size:30px;color:var(--ink);margin:34px 0 4px;position:relative}
+.sec::after{content:"";display:block;width:120px;height:3px;background:var(--amber);border-radius:3px;margin-top:2px;
+  opacity:.5}
+.sec .cnt{font-family:var(--body);font-size:14px;color:var(--soft)}
+
+/* ---------- a question ---------- */
+.q{position:relative;margin:0 0 30px;padding-top:4px}
+.q .n{font-family:var(--title);font-size:28px;color:var(--pen);margin-inline-end:9px;unicode-bidi:isolate;direction:ltr}
+.q .st{font-size:18.5px}
+.q .note-line{font-family:var(--body);font-size:15px;color:var(--soft)}
+.opts{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:3px}
+.pick{background:none;border:0;font:inherit;font-size:18.5px;color:var(--ink);cursor:pointer;text-align:start;
+  padding:5px 13px;border-radius:42% 58% 52% 48% / 58% 42% 58% 42%;direction:ltr;width:100%}
+.pick:hover{background:rgba(27,42,74,.06)}
+.pick .let{font-family:var(--title);font-size:24px;margin-inline-end:8px;color:var(--soft)}
+.pick.chosen{box-shadow:inset 0 0 0 2.5px var(--ink)}
+.pick.good{box-shadow:inset 0 0 0 2.5px var(--ok);color:var(--ok)}
+.pick.bad{box-shadow:inset 0 0 0 2.5px var(--pen);color:var(--pen)}
+.pick[disabled]{cursor:default}
+
+/* match */
+.bank{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0 10px;padding:9px 11px;border:2px dashed #C6CFDD;border-radius:4px}
+.bank .w{font:inherit;font-size:17px;border:0;background:#EFF4F9;border-radius:3px;padding:4px 11px;cursor:pointer;
+  color:var(--ink);direction:ltr}
+.bank .w:hover{background:#DDE8F2}
+.bank .w.used{opacity:.4}
+.mrow{display:flex;gap:10px;align-items:baseline;padding:5px 0;direction:ltr}
+.mrow .t{flex:1;direction:ltr;text-align:left}
+.blank{min-width:7.5em;border-bottom:2px dotted #8C9AB5;font-family:var(--title);font-size:24px;
+  color:var(--ink);background:none;border-top:0;border-inline:0;text-align:center;padding:0 7px;cursor:pointer;
+  direction:ltr}
+.blank.live{border-bottom-color:var(--pen);background:#FBF3D9}
+.blank.good{color:var(--ok);border-bottom-color:var(--ok)}
+.blank.bad{color:var(--pen);border-bottom-color:var(--pen);text-decoration:line-through}
+
+/* order */
+.orow{display:flex;gap:11px;align-items:center;padding:5px 0}
+.obox{width:40px;height:40px;flex:none;border:2px solid var(--ink);border-radius:3px;background:none;
+  font-family:var(--title);font-size:25px;color:var(--ink);cursor:pointer;line-height:1}
+.obox.good{border-color:var(--ok);color:var(--ok)}
+.obox.bad{border-color:var(--pen);color:var(--pen)}
+.orow .t{flex:1;direction:ltr;text-align:left;font-size:17.5px}
+.okbtn{font-family:var(--title);font-size:22px;background:none;border:2px solid var(--ink);border-radius:3px;padding:3px 18px;cursor:pointer;color:var(--ink);margin-top:6px}
+.okbtn[disabled]{opacity:.35;cursor:not-allowed}
+
+/* fill */
+.frow{padding:5px 0;direction:ltr;text-align:left}
+.wr{min-width:7em;border:0;border-bottom:2px dotted #8C9AB5;background:transparent;font-family:var(--title);
+  font-size:25px;color:var(--ink);text-align:center;padding:0 6px;direction:ltr}
+.wr:focus{outline:none;border-bottom-color:var(--pen);background:#FBF3D9}
+.wr.good{color:var(--ok);border-bottom-color:var(--ok)}
+.wr.bad{color:var(--pen);border-bottom-color:var(--pen)}
+
+/* essay */
+.marks{font-family:var(--title);font-size:22px;color:var(--pen);margin-inline-start:6px}
+.refer{margin:8px 0 6px;padding:8px 12px;border-inline-start:3px solid var(--amber);background:#FCF6E7}
+.refer .t{font-family:var(--body);font-size:14px;color:var(--amber);letter-spacing:.04em;text-transform:uppercase}
+.tick{display:flex;gap:9px;align-items:center;background:none;border:0;font:inherit;font-size:17px;
+  color:var(--ink);cursor:pointer;padding:3px 0;text-align:start;width:100%}
+.tick .box{width:21px;height:21px;flex:none;border:2px solid var(--amber);border-radius:3px;display:grid;
+  place-items:center;font-size:14px;color:var(--pen);font-family:var(--title)}
+.tick[aria-checked="true"] .lb{text-decoration:line-through;color:var(--soft)}
+.essaybox{width:100%;min-height:13rem;border:0;background:
+  repeating-linear-gradient(transparent,transparent 33px,#C6CFDD 33px,#C6CFDD 34px);
+  font-family:var(--body);font-size:18px;line-height:34px;color:var(--ink);padding:0 4px;resize:vertical;
+  direction:ltr;text-align:left}
+.essaybox:focus{outline:none;background-color:#FBF8E8}
+.wc{font-family:var(--body);font-size:14px;color:var(--soft);margin-top:4px}
+
+/* the red pen */
+.red{position:absolute;inset-inline-start:-58px;top:0;width:46px;text-align:center;font-family:var(--title);
+  color:var(--pen);font-size:34px;line-height:1;opacity:0;transform:rotate(-12deg);transition:opacity .25s}
+.red.on{opacity:1}
+.red.part{font-size:24px;line-height:1.2}
+@media (max-width:560px){ .red{inset-inline-start:-46px;width:38px;font-size:28px} }
+.pennote{display:none;margin-top:7px;font-family:var(--title);font-size:22px;color:var(--pen);line-height:1.4}
+.pennote.on{display:block}
+.pennote .en{display:block;margin-bottom:2px}
+
+.pennote .fix{color:var(--ok)}
+
+/* ---------- hand in ---------- */
+.handin{margin-top:36px;border-top:2px dashed #C6CFDD;padding-top:18px}
+.handin h2{font-family:var(--title);font-size:32px;margin:0 0 6px}
+.tally{display:grid;gap:4px;margin:10px 0 14px}
+.tally div{display:flex;gap:10px;align-items:baseline;font-size:17px}
+.tally .v{font-family:var(--title);font-size:22px;margin-inline-start:auto;unicode-bidi:isolate;direction:ltr}
+.tally .v.done{color:var(--ok)} .tally .v.open{color:var(--pen)}
+.send{font-family:var(--title);font-size:26px;background:var(--ink);color:var(--paper);border:0;border-radius:4px;
+  padding:12px 30px;cursor:pointer}
+.send:disabled{opacity:.45;cursor:not-allowed}
+.send.again{background:var(--pen)}
+.status{font-size:16px;margin-top:10px;min-height:1.6em}
+.status.bad{color:var(--pen)} .status.good{color:var(--ok)}
+.ghost{font-family:var(--body);font-size:15px;background:none;border:1.5px solid #C6CFDD;border-radius:3px;
+  padding:7px 14px;cursor:pointer;color:var(--soft);margin-inline-end:8px}
+.ghost:hover{border-color:var(--ink);color:var(--ink)}
+
+/* ---------- the marked summary ---------- */
+.result{margin-top:22px;border:2.5px solid var(--pen);border-radius:4px;padding:16px 18px;background:#FFF8F7}
+.result .big{font-family:var(--title);font-size:46px;color:var(--pen);line-height:1}
+.result .big span{font-size:24px;color:var(--soft)}
+.result .line{font-size:17px;margin-top:6px}
+.model{margin-top:12px;border-inline-start:3px solid var(--ok);padding:8px 12px;background:#F1F9F4}
+.model .t{font-family:var(--body);font-size:13.5px;color:var(--ok);letter-spacing:.04em;text-transform:uppercase}
+.model p{margin:4px 0 0;font-size:17px;direction:ltr;text-align:left}
+
+/* ---------- the bookmark tab ---------- */
+.tab bdi{unicode-bidi:isolate;direction:ltr}
+.tab{position:fixed;inset-inline-end:0;top:40%;background:var(--ink);color:var(--paper);
+  font-family:var(--title);font-size:21px;padding:10px 12px;border-radius:6px 0 0 6px;
+  box-shadow:-3px 3px 10px rgba(0,0,0,.25);z-index:5;text-align:center;line-height:1.1}
+.tab small{display:block;font-family:var(--body);font-size:11px;opacity:.75}
+
+.foot{max-width:720px;margin:14px auto 0;text-align:center;color:#6B6558;font-size:13px;
+  font-family:var(--body)}
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} html{scroll-behavior:auto} }
+
+</style>
+</head>
+<body>
+
+<main class="book">
+  <div class="spiral"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+  <div class="cover">
+    <div class="k">Programming and Artificial Intelligence &middot; Year 2</div>
+    <h1>Down and back up</h1>
+    <p class="sub">A request goes down the three tiers, and the answer climbs back</p>
+    <div class="nameline">
+      <label for="nameInput">Name</label>
+      <input id="nameInput" autocomplete="name" placeholder="write your name here">
+    </div>
+    <div class="meta">Date: <span id="today"></span></div>
+  </div>
+
+  <div id="paper"></div>
+</main>
+
+<div class="tab" id="tab"></div>
+<p class="foot">Programming and Artificial Intelligence &middot; Egyptian Baccalaureate &middot; Year 2</p>
+
+<noscript><p style="max-width:720px;margin:20px auto;background:#FDFBF2;padding:20px">
+This homework needs JavaScript. Please open the link in Chrome or Safari.</p></noscript>
+
+<script>
+const HW = {"id": "hw11", "title": "Homework 11: Down and Back Up", "sheet": "Homework 11", "salt": "a-request-flows-down-the-tiers-and-a-reply-returns", "endpoint": "https://script.google.com/macros/s/AKfycbwlkc3-gi4B4E7s3xEKEeDWZsyU8OstLs-Rr2UFe1bbHEDYSTV_1KKZ4ljDQ6nc1MUt/exec", "screens": [{"type": "mcq", "round": 0, "ids": ["Q1"], "q": "A web application is usually built from:", "options": ["Three layers.", "Two layers.", "One layer.", "Several layers."]}, {"type": "mcq", "round": 0, "ids": ["Q2"], "q": "The layer responsible for displaying screens and collecting user data and actions is:", "options": ["Backend.", "Database.", "Frontend.", "Processing server."]}, {"type": "mcq", "round": 0, "ids": ["Q3"], "q": "In a video-sharing website, collecting the number of views and selecting recommended videos belongs to:", "options": ["Frontend", "Backend", "Database", "Communication network"]}, {"type": "mcq", "round": 0, "ids": ["Q4"], "q": "Storing post data, follower relationships, and messages in a social networking service is the function of:", "options": ["Processing server", "Database", "Frontend", "Backend"]}, {"type": "mcq", "round": 0, "ids": ["Q5"], "q": "Sending payment requests and handling their results in an E-commerce website is a shared task of processing and control in:", "options": ["Frontend", "Database", "Backend", "User browser"]}, {"type": "mcq", "round": 0, "ids": ["Q6"], "q": "The main role of the database layer in web applications is:", "options": ["Receiving user actions", "Storing and retrieving data", "Processing calculations", "Displaying screens and interfaces"]}, {"type": "mcq", "round": 0, "ids": ["Q7"], "q": "In a video-sharing website, viewing history and user information are stored in:", "options": ["Search screens", "Backend", "Frontend", "Database layer"]}, {"type": "mcq", "round": 0, "ids": ["Q8"], "q": "Controlling push notifications and determining the target audience for posts are performed through:", "options": ["Backend", "Frontend", "Database", "Timeline"]}, {"type": "mcq", "round": 0, "ids": ["Q9"], "q": "Which of the following represents the role of the frontend in a web application?", "options": ["Processing requests", "Displaying content and receiving user input", "Storing data", "Verifying login information"]}, {"type": "mcq", "round": 0, "ids": ["Q10"], "q": "When searching for a product in an online store, which layer sends the request to the database?", "options": ["Frontend", "Backend", "The database itself", "Browser"]}, {"type": "mcq", "round": 0, "ids": ["Q11"], "q": "Which of the following is an example of data stored in an e-commerce website's database?", "options": ["Search screen", "Order log", "Verify login", "User interface"]}, {"type": "mcq", "round": 0, "ids": ["Q12"], "q": "The main idea of the overall structure of web applications is:", "options": ["The application is built from only one layer.", "Three layers cooperate together: frontend, backend and database.", "The application works only through the browser.", "The application depends on the backend without the database."]}, {"type": "mcq", "round": 0, "ids": ["Q13"], "q": "Which of the following is an example of a web application?", "options": ["A video player program installed on a device", "An online map website", "A desktop calculator application", "An image editing program"]}, {"type": "mcq", "round": 0, "ids": ["Q14"], "q": "In a video-sharing website, which layer stores video and user data?", "options": ["Frontend", "Backend", "Database", "Browser"]}, {"type": "mcq", "round": 0, "ids": ["Q15"], "q": "Which of the following represents a function of the backend in a web application?", "options": ["Displaying product pages", "Displaying the search box to the user", "Verifying login information", "Storing order history"]}, {"type": "mcq", "round": 0, "ids": ["Q16"], "q": "The backend has just searched the database for the products that match the keywords. What happens next?", "options": ["The frontend displays the results on the user's screen.", "The database returns the data of the matching products to the backend.", "The backend sends the keywords to the database a second time.", "The frontend sends the search keywords to the backend."]}, {"type": "mcq", "round": 0, "ids": ["Q17"], "q": "A clinic's booking page opens normally on the screen, but no free time slots ever appear on it. Which tier is clearly working?", "options": ["The frontend, because the page was displayed.", "The database, because the page was displayed.", "The backend, because the page was displayed.", "None of the three is working."]}, {"type": "mcq", "round": 0, "ids": ["Q18"], "q": "A weather app lets a user type a city and see the forecast. Which job can the frontend NOT do on its own?", "options": ["Taking the name of the city from the user.", "Looking up the forecast data.", "Showing the forecast on the screen.", "Noticing that the user tapped the button."]}, {"type": "tf", "round": 1, "ids": ["Q19"], "q": "The frontend is the screen component that users see directly."}, {"type": "tf", "round": 1, "ids": ["Q20"], "q": "The backend is the part that runs on the browser."}, {"type": "tf", "round": 1, "ids": ["Q21"], "q": "A database is a system that organizes, stores, and manages data."}, {"type": "tf", "round": 1, "ids": ["Q22"], "q": "A web application operates with the frontend alone."}, {"type": "tf", "round": 1, "ids": ["Q23"], "q": "A web application requires dedicated software to be installed before it can be used."}, {"type": "tf", "round": 1, "ids": ["Q24"], "q": "The database sends its results straight back to the frontend."}, {"type": "tf", "round": 1, "ids": ["Q25"], "q": "Stock checking on an e-commerce site is the work of the database tier."}, {"type": "tf", "round": 1, "ids": ["Q26"], "q": "The cart screen of an online store belongs to the frontend."}, {"type": "tf", "round": 1, "ids": ["Q27"], "q": "In a three-tier application each tier does its work separately, without cooperating with the others."}, {"type": "match", "round": 2, "ids": ["Q28", "Q29", "Q30", "Q31", "Q32", "Q33"], "note": "Give every description its term. Each term is used once.", "choices": ["web application", "frontend", "backend", "database", "three-tier architecture", "browser"], "rows": ["An application used through the web, with no dedicated software to install.", "The screen component users see directly, which accepts their input.", "The hidden server-side processing that makes the decisions.", "A system that organizes, stores, and manages data.", "Frontend and backend and database, cooperating.", "The program on the device that the application is opened in."], "reuse": false}, {"type": "match", "round": 2, "ids": ["Q34", "Q35", "Q36", "Q37", "Q38", "Q39"], "note": "An e-commerce site. Give every job its tier. An answer is used more than once.", "choices": ["Frontend", "Backend", "Database"], "rows": ["Product listing page", "Stock checking processing", "Storage of customer information", "Cart screen", "Payment processing", "Storage of order history"], "reuse": true}, {"type": "match", "round": 2, "ids": ["Q40", "Q41", "Q42", "Q43", "Q44", "Q45"], "note": "A social networking service. Same three tiers, different jobs.", "choices": ["Frontend", "Backend", "Database"], "rows": ["Storage of follow relationships", "Timeline screen", "Notification processing", "Storage of post data", "Post screen", "Processing that determines the audience for a post"], "reuse": true}, {"type": "order", "round": 3, "ids": ["Q46", "Q47", "Q48", "Q49", "Q50", "Q51"], "note": "A user searches for a product on an online shopping site. Put the six steps in order.", "top": "First", "bottom": "Last", "items": ["The backend searches the database for products that match the criteria", "The frontend displays the search results on the user's screen", "The frontend receives the search keywords entered by the user", "The backend organizes the search results and returns them to the frontend", "The frontend sends the search keywords to the backend", "The database returns the data of the matching products to the backend"]}, {"type": "fill", "round": 4, "ids": ["Q52", "Q53", "Q54", "Q55", "Q56", "Q57"], "note": "The passage the textbook asks you to complete. Each word in the bank is used once.", "bank": ["browser", "frontend", "backend", "database", "three tiers", "cooperate"], "rows": [{"before": "A web application is used through a web", "after": "and needs no dedicated software installed."}, {"before": "The screen component that users see directly is called the", "after": "."}, {"before": "The part responsible for server-side processing that users do not see is called the", "after": "."}, {"before": "A system that organizes, stores, and manages data is called the", "after": "."}, {"before": "A web application is broadly composed of", "after": "."}, {"before": "In response to user actions, the three tiers", "after": "to perform the processing."}]}, {"type": "fill", "round": 4, "ids": ["Q58", "Q59", "Q60", "Q61"], "note": "The one line that holds the whole lesson. Not every word is used.", "bank": ["shows", "decides", "processes", "retrieves", "returns", "collects"], "rows": [{"before": "The frontend", "after": "and collects."}, {"before": "The backend decides and", "after": "."}, {"before": "The database stores and", "after": "."}, {"before": "A request flows down the tiers, and a reply", "after": "."}]}, {"type": "essay", "round": 5, "ids": ["E1"], "q": "Explain the difference between the frontend and backend in web applications, providing an example for each. [Assessment book page 50, Model A]", "marks": 4, "refer": ["what each one does", "one example of each one"]}, {"type": "essay", "round": 5, "ids": ["E2"], "q": "Trace the steps of a product search request in an online store across the three-layer architecture, and explain the role of each layer. [Assessment book page 50, Model A]", "marks": 4, "refer": ["the order of the steps", "the role of each tier"]}, {"type": "essay", "round": 5, "ids": ["E3"], "q": "Explain how the three tiers integrate to provide a video-sharing service, mentioning an example of a function for each layer. [Assessment book page 49, Second Period homework]", "marks": 3, "refer": ["one function for each tier", "how they work together"]}, {"type": "essay", "round": 5, "ids": ["E4"], "q": "Discuss the importance of dividing a web application into main layers. [Assessment book page 51, Model B]", "marks": 3, "refer": ["what the division gives you", "what would happen without it"]}], "rounds": [{"era": "The three tiers", "tag": "Tiers", "eraName": "Who shows, who decides, who stores", "title": "Quick picks", "how": "Choose one answer, then it is marked straight away."}, {"era": "Read it twice", "tag": "Check", "eraName": "The sentences that cost marks", "title": "True or false", "how": "Is the statement true or false?"}, {"era": "Whose job is it", "tag": "Sort", "eraName": "Every job to the tier that does it", "title": "Sort it", "how": "Give every row its answer. Some answers are used more than once."}, {"era": "The round trip", "tag": "Order", "eraName": "From the search box back to the screen", "title": "Put it in order", "how": "Number the steps, then ask for them to be marked."}, {"era": "The words", "tag": "Words", "eraName": "The terms the exam uses", "title": "Fill the gap", "how": "Type the missing word, or tap one from the word bank."}, {"era": "Your verdict", "tag": "You", "eraName": "Your own words", "title": "Explain it", "how": "Write full answers in English, in your own words and without any AI help. El Bashmohandes marks these."}], "minutes": 50, "arTime": "about 50 minutes", "kicker": "Homework 11 · Programming and AI", "h1": ["Down ", "and back ", "up"], "lead": "Six rounds on the three tiers a web application is built from: which one shows the screen, which one decides, which one stores, and the order they talk in when you search for something. Most of the questions are the assessment book's own."};
+const KEYBLOB = "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";
+/* ===== Part A: data, state, scoring ===== */
+const ROUNDS = (typeof HW !== "undefined" && HW.rounds) ? HW.rounds : [
+  { era: "1940s–60s", tag: "40s", eraName: "Birth of the computer", title: "Quick picks", how: "Choose one answer, then tap Check. Once checked, it is locked in." },
+  { era: "1970s–80s", tag: "70s", eraName: "Personal computers", title: "○ or ×", how: "Is the statement true (○) or false (×)?" },
+  { era: "1990s", tag: "90s", eraName: "The Internet", title: "Match it", how: "Give every situation its answer, then check the whole set." },
+  { era: "2000s", tag: "00s", eraName: "Smartphones", title: "Put it in order", how: "Move each card up or down until the order is right, then check." },
+  { era: "2010s", tag: "10s", eraName: "The cloud", title: "Fill the gap", how: "Type the missing word, or tap one from the word bank." },
+  { era: "Now", tag: "Now", eraName: "Generative AI", title: "Explain it", how: "Write full answers in English, like in the exam, in your own words and without any AI help. El Bashmohandes marks these." }
+];
+const TYPE_LABEL = { mcq: "Quick pick", tf: "True or false", match: "Match it", order: "In order", fill: "Fill the gap", essay: "Explain it" };
+
+const $ = (s, r) => (r || document).querySelector(s);
+function el(tag, attrs, ...kids) {
+  const n = document.createElement(tag);
+  if (attrs) for (const k in attrs) {
+    const v = attrs[k];
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "class") n.className = v;
+    else if (k === "text") n.textContent = v;
+    else if (k === "svg") n.innerHTML = v;
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+    else n.setAttribute(k, v === true ? "" : v);
+  }
+  for (const c of kids.flat(Infinity)) if (c !== null && c !== undefined && c !== false) n.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return n;
+}
+const ICON = {
+  check: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  cross: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  half: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 12h12"/></svg>',
+  grid: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="6" height="6" rx="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5"/></svg>',
+  bolt: '<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 2L4 14h6.5L9.5 22 20 9.5h-6.8z"/></svg>',
+  up: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>',
+  down: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  send: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M3 11.5L21 3l-6.5 18-3.5-7.5z"/><path d="M11 13.5L21 3"/></svg>',
+  arrow: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  back: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>'
+};
+
+/* answer key, scrambled so it is not readable in the page source */
+const KEY = (function () {
+  const raw = atob(KEYBLOB), pass = HW.salt, bytes = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i) ^ pass.charCodeAt(i % pass.length);
+  return JSON.parse(new TextDecoder().decode(bytes));
+})();
+
+const SCREENS = HW.screens;
+const AUTO_TOTAL = SCREENS.filter((s) => s.type !== "essay").reduce((a, s) => a + s.ids.length, 0);
+const ESSAY_MARKS = SCREENS.filter((s) => s.type === "essay").reduce((a, s) => a + s.marks, 0);
+
+/* ---------- state, kept on this device ---------- */
+const STORE = "hw-" + HW.id + "-v2";
+function fresh() {
+  return { name: "", view: "start", answers: {}, ticks: {}, checked: {}, visited: {}, streak: 0, best: 0,
+           startedAt: null, sent: null, submissionId: null };
+}
+let S = fresh();
+try { const raw = localStorage.getItem(STORE); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
+function save() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} }
+
+/* ---------- is this browser actually keeping anything? ----------
+   A private tab on an iPhone throws the answers away the moment the tab closes, and Safari clears a site it
+   has not seen for a week. The page cannot stop either one, so it checks that writing works, asks to keep the
+   storage, and lets the student carry a copy of their own. */
+const STORE_OK = (function () {
+  try {
+    const probe = STORE + "-probe";
+    localStorage.setItem(probe, "1");
+    const ok = localStorage.getItem(probe) === "1";
+    localStorage.removeItem(probe);
+    return ok;
+  } catch (e) { return false; }
+})();
+function answeredCount() { return SCREENS.reduce((a, s, i) => a + (hasAnswer(i) ? 1 : 0), 0); }
+
+/* A copy the student keeps in their own Files, which nothing on the phone clears. */
+function backupBlob() {
+  return new Blob([JSON.stringify({ app: "homework", hw: HW.id, name: S.name, savedAt: new Date().toISOString(),
+                                    answered: answeredCount(), state: S }, null, 1)], { type: "application/json" });
+}
+function saveBackup() {
+  const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-");
+  const url = URL.createObjectURL(backupBlob());
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = (HW.id + "-" + (S.name || "answers") + "-" + stamp + ".json").replace(/\s+/g, "-");
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+function readBackup(file) {
+  return new Promise((resolve) => {
+    const r = new FileReader();
+    r.onerror = () => resolve(null);
+    r.onload = () => {
+      try {
+        const d = JSON.parse(String(r.result));
+        resolve(d && d.state && d.hw === HW.id ? d : null);
+      } catch (e) { resolve(null); }
+    };
+    r.readAsText(file);
+  });
+}
+
+/* ---------- scoring ---------- */
+function norm(s) {
+  return String(s || "").toLowerCase().replace(/[‘’`´]/g, "'").replace(/[^a-z0-9.,'\/ ]/g, " ")
+    .replace(/\s+/g, " ").trim().replace(/[.,]+$/, "").trim();
+}
+function orderOf(i) {
+  const s = SCREENS[i];
+  const cur = S.answers["order-" + i];
+  return Array.isArray(cur) && cur.length === s.items.length ? cur : s.items.map((_, k) => k);
+}
+/* one entry per point: {id, ok, given, correct} */
+function itemResults(i) {
+  const s = SCREENS[i], k = KEY.screens[i], A = S.answers;
+  if (s.type === "mcq") {
+    const v = A[s.ids[0]];
+    return [{ id: s.ids[0], ok: v === k.answer, given: typeof v === "number" ? "ABCD"[v] + ". " + s.options[v] : "no answer", correct: "ABCD"[k.answer] + ". " + s.options[k.answer] }];
+  }
+  if (s.type === "tf") {
+    const v = A[s.ids[0]];
+    const t = (b) => (b ? "True" : "False");
+    return [{ id: s.ids[0], ok: v === k.answer, given: typeof v === "boolean" ? t(v) : "no answer", correct: t(k.answer) }];
+  }
+  if (s.type === "match") return s.ids.map((id, r) => {
+    const v = A[id];
+    return { id, ok: v === k.answers[r], given: typeof v === "number" ? s.choices[v] : "no answer", correct: s.choices[k.answers[r]] };
+  });
+  if (s.type === "order") {
+    const cur = orderOf(i);
+    return s.ids.map((id, p) => ({ id, ok: cur[p] === k.correct[p], given: s.items[cur[p]], correct: s.items[k.correct[p]] }));
+  }
+  if (s.type === "fill") return s.ids.map((id, r) => {
+    const v = String(A[id] || "").trim();
+    return { id, ok: k.accept[r].map(norm).includes(norm(v)), given: v || "no answer", correct: k.show[r] };
+  });
+  return [];
+}
+function screenScore(i) { const r = itemResults(i); return { got: r.filter((x) => x.ok).length, of: r.length }; }
+function hasAnswer(i) {
+  const s = SCREENS[i], A = S.answers;
+  if (s.type === "mcq" || s.type === "tf") return A[s.ids[0]] !== undefined;
+  if (s.type === "order") return !!S.visited[i];
+  if (s.type === "essay") return String(A[s.ids[0]] || "").trim().length > 0;
+  return s.ids.some((id) => A[id] !== undefined && String(A[id]).trim() !== "");
+}
+function screenState(i) {
+  const s = SCREENS[i];
+  if (s.type === "essay") return hasAnswer(i) ? "essay" : "";
+  if (S.checked[i]) { const sc = screenScore(i); return sc.got === sc.of ? "good" : sc.got === 0 ? "bad" : "part"; }
+  return hasAnswer(i) ? "seen" : "";
+}
+function totals() {
+  let got = 0;
+  const rounds = ROUNDS.map((r, ri) => ({ title: r.title, got: 0, of: 0 }));
+  SCREENS.forEach((s, i) => {
+    if (s.type === "essay") return;
+    const sc = screenScore(i);
+    rounds[s.round].of += sc.of;
+    if (S.checked[i]) { rounds[s.round].got += sc.got; got += sc.got; }
+  });
+  return { got, of: AUTO_TOTAL, rounds: rounds.filter((r) => r.of > 0) };
+}
+function checkedCorrect() {
+  let n = 0;
+  SCREENS.forEach((s, i) => { if (S.checked[i] && s.type !== "essay") n += screenScore(i).got; });
+  return n;
+}
+
+/* ---------- HUD ---------- */
+function currentRound() {
+  if (S.view.startsWith("round:")) return Number(S.view.slice(6));
+  if (S.view.startsWith("q:")) return SCREENS[Number(S.view.slice(2))].round;
+  if (S.view === "finish" || S.view === "result") return ROUNDS.length;
+  return -1;
+}
+function renderHud() {
+  const hud = $("#hud");
+  hud.hidden = S.view === "start";
+  if (hud.hidden) return;
+  const cr = currentRound();
+  $("#tl").replaceChildren(
+    el("div", { class: "tl-track" }, el("div", { class: "tl-fill", style: "width:" + Math.max(0, Math.min(100, (cr / (ROUNDS.length - 1)) * 100)) + "%" })),
+    ...ROUNDS.map((r, ri) => el("button", {
+      class: "era" + (ri < cr ? " done" : ri === cr ? " now" : ""), type: "button", title: r.era + ": " + r.title,
+      "aria-label": "Round " + (ri + 1) + ", " + r.title, onclick: () => go("round:" + ri)
+    }, el("span", { class: "dot" }), el("span", { class: "lab", text: r.tag }))));
+  $("#statOk").replaceChildren(el("span", { svg: ICON.check }), String(checkedCorrect()));
+  const st = $("#statStreak");
+  st.replaceChildren(el("span", { svg: ICON.bolt }), String(S.streak));
+  st.classList.toggle("hot", S.streak >= 3);
+  st.title = "Streak: " + S.streak + " in a row (best " + S.best + ")";
+}
+
+/* ===== The notebook renderer for Homework 7 =====
+   One page, every question written down the sheet, marked in red pen in the margin the moment it is
+   answered. State, scoring and storage all come from app_a.js, which the other homeworks share, so an
+   answer is scored here exactly as it would be there. Sending reuses the same payload shape, so the rows
+   land in the same sheet under the same headings. */
+
+const PAPER = document.getElementById("paper");
+const TAB = document.getElementById("tab");
+
+if (!S.startedAt) { S.startedAt = new Date().toISOString(); save(); }
+if (!S.submissionId) { S.submissionId = "s-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8); save(); }
+
+/* ---------- small helpers ---------- */
+function nodeFor(i) { return document.getElementById("q" + i); }
+function markOf(i) { return nodeFor(i).querySelector(".red"); }
+function penOf(i) { return nodeFor(i).querySelector(".pennote"); }
+
+function allFilled(i) {
+  const s = SCREENS[i], A = S.answers;
+  if (s.type === "mcq" || s.type === "tf") return A[s.ids[0]] !== undefined;
+  if (s.type === "match") return s.ids.every((id) => A[id] !== undefined);
+  if (s.type === "fill") return s.ids.every((id) => String(A[id] || "").trim() !== "");
+  if (s.type === "order") return !!S.visited[i];
+  return false;
+}
+
+function progress() {
+  const auto = SCREENS.filter((s) => s.type !== "essay");
+  const done = SCREENS.reduce((a, s, i) => a + (s.type !== "essay" && S.checked[i] ? s.ids.length : 0), 0);
+  const written = SCREENS.filter((s, i) => s.type === "essay" && hasAnswer(i)).length;
+  TAB.innerHTML = "<bdi>" + done + " / " + AUTO_TOTAL + "</bdi><small>marked</small>";
+  const t = document.getElementById("tally");
+  if (t) {
+    t.innerHTML = "";
+    const row = (label, v, ok) => {
+      const d = document.createElement("div");
+      d.innerHTML = '<span>' + label + '</span><span class="v ' + (ok ? "done" : "open") + '"><bdi>' + v + "</bdi></span>";
+      t.appendChild(d);
+    };
+    row("Questions marked", done + " / " + AUTO_TOTAL, done === AUTO_TOTAL);
+    row("Right so far", checkedCorrect() + " / " + AUTO_TOTAL, false);
+    row("Written answers", written + " / " + essayCount(), written === essayCount());
+  }
+  const btn = document.getElementById("sendBtn");
+  if (btn && !S.sent) btn.disabled = !S.name.trim();
+}
+function essayCount() { return SCREENS.filter((s) => s.type === "essay").length; }
+
+/* ---------- marking ---------- */
+function mark(i) {
+  if (S.checked[i]) return;
+  S.checked[i] = true;
+  const res = itemResults(i), k = KEY.screens[i], s = SCREENS[i];
+  const got = res.filter((r) => r.ok).length;
+  S.streak = got === res.length ? S.streak + 1 : 0;
+  S.best = Math.max(S.best || 0, S.streak);
+  save();
+
+  const node = nodeFor(i), red = markOf(i), pen = penOf(i);
+  if (s.type === "mcq" || s.type === "tf") {
+    const picks = node.querySelectorAll(".pick");
+    picks.forEach((b, idx) => {
+      b.disabled = true;
+      b.classList.remove("chosen");
+      const isAnswer = s.type === "tf" ? (idx === 0) === k.answer : idx === k.answer;
+      const chosen = s.type === "tf" ? S.answers[s.ids[0]] === (idx === 0) : S.answers[s.ids[0]] === idx;
+      if (isAnswer) b.classList.add("good");
+      else if (chosen) b.classList.add("bad");
+    });
+  }
+  if (s.type === "match") {
+    node.querySelectorAll(".blank").forEach((bl, r) => {
+      bl.classList.remove("live");
+      bl.classList.add(res[r].ok ? "good" : "bad");
+      if (!res[r].ok) bl.textContent = s.choices[k.answers[r]];
+      bl.disabled = true;
+    });
+    node.querySelectorAll(".bank .w").forEach((w) => w.disabled = true);
+  }
+  if (s.type === "fill") {
+    node.querySelectorAll(".wr").forEach((inp, r) => {
+      inp.readOnly = true;
+      inp.classList.add(res[r].ok ? "good" : "bad");
+      if (!res[r].ok) inp.value = k.show[r];
+    });
+  }
+  if (s.type === "order") {
+    const cur = orderOf(i);
+    const rightPos = {};
+    k.correct.forEach((item, pos) => { rightPos[item] = pos + 1; });
+    node.querySelectorAll(".obox").forEach((b) => b.disabled = true);
+    node.querySelectorAll(".orow").forEach((row, idx) => {
+      const box = row.querySelector(".obox");
+      const given = cur.indexOf(idx) + 1;
+      const want = rightPos[idx];
+      box.classList.add(given === want ? "good" : "bad");
+      box.textContent = want;
+    });
+    const btn = node.querySelector(".okbtn");
+    if (btn) btn.remove();
+  }
+
+  red.textContent = got === res.length ? "✓" : got === 0 ? "✗" : got + "/" + res.length;
+  red.className = "red on" + (got && got < res.length ? " part" : "");
+  let why = k.why || "";
+  let ar = k.ar || "";
+  if (s.type === "match" || s.type === "fill" || s.type === "order") {
+    const wrong = res.filter((r) => !r.ok).length;
+    why = wrong === 0 ? "All correct."
+      : s.type === "order"
+        ? (res.length - wrong) + " of " + res.length + " right. The numbers in red are the right order."
+        : (res.length - wrong) + " of " + res.length + " right. What is written in red is the right answer.";
+    ar = "";
+  }
+  const english = s.type === "mcq" || s.type === "tf";
+  const head = got === res.length ? "" : fixLine(i, res);
+  pen.innerHTML =
+    (english
+      ? '<span class="en' + (got === res.length ? " fix" : "") + '">' + head + why + "</span>"
+      : '<span class="en">' + head + why + "</span>") +
+    "";
+  pen.classList.add("on");
+  progress();
+}
+
+function fixLine(i, res) {
+  const s = SCREENS[i];
+  if (s.type === "mcq" || s.type === "tf") return "→ " + res[0].correct + ". ";
+  return "";
+}
+
+/* ---------- builders for each kind of question ---------- */
+function qShell(i, number, stem, extra) {
+  const d = document.createElement("div");
+  d.className = "q";
+  d.id = "q" + i;
+  d.innerHTML = '<span class="red"></span>' +
+    '<span class="n">' + number + ".</span>" +
+    '<span class="st en">' + stem + "</span>" +
+    (extra ? '<span class="marks">' + extra + "</span>" : "") +
+    '<div class="pennote"></div>';
+  return d;
+}
+
+function buildChoice(i, d) {
+  const s = SCREENS[i];
+  const ul = document.createElement("ul");
+  ul.className = "opts";
+  const labels = s.type === "tf" ? ["True", "False"] : s.options;
+  labels.forEach((o, k) => {
+    const li = document.createElement("li");
+    const b = document.createElement("button");
+    b.className = "pick";
+    b.type = "button";
+    b.innerHTML = '<span class="let">' + "abcd"[k] + ")</span>" + o;
+    const val = s.type === "tf" ? (k === 0) : k;
+    if (S.answers[s.ids[0]] === val) b.classList.add("chosen");
+    b.onclick = () => {
+      if (S.checked[i]) return;
+      S.answers[s.ids[0]] = val;
+      save();
+      ul.querySelectorAll(".pick").forEach((x) => x.classList.remove("chosen"));
+      b.classList.add("chosen");
+      mark(i);
+    };
+    li.appendChild(b);
+    ul.appendChild(li);
+  });
+  d.querySelector(".pennote").before(ul);
+}
+
+function buildMatch(i, d) {
+  const s = SCREENS[i];
+  const wrap = document.createElement("div");
+  const bank = document.createElement("div");
+  bank.className = "bank";
+  const rows = document.createElement("div");
+  let live = null;
+
+  const paint = () => {
+    bank.querySelectorAll(".w").forEach((w, c) => {
+      const used = !s.reuse && s.ids.some((id) => S.answers[id] === c);
+      w.classList.toggle("used", used);
+    });
+  };
+
+  s.choices.forEach((c, ci) => {
+    const w = document.createElement("button");
+    w.className = "w";
+    w.type = "button";
+    w.textContent = c;
+    w.onclick = () => {
+      if (S.checked[i] || !live) return;
+      const r = Number(live.dataset.row);
+      if (!s.reuse) s.ids.forEach((id, rr) => { if (rr !== r && S.answers[id] === ci) { delete S.answers[id]; rows.querySelectorAll(".blank")[rr].textContent = "......"; } });
+      S.answers[s.ids[r]] = ci;
+      live.textContent = c;
+      live.classList.remove("live");
+      live = null;
+      save();
+      paint();
+      if (allFilled(i)) mark(i);
+    };
+    bank.appendChild(w);
+  });
+
+  s.rows.forEach((t, r) => {
+    const row = document.createElement("div");
+    row.className = "mrow";
+    row.innerHTML = '<span class="t en">' + t + "</span>";
+    const bl = document.createElement("button");
+    bl.className = "blank";
+    bl.type = "button";
+    bl.dataset.row = r;
+    const cur = S.answers[s.ids[r]];
+    bl.textContent = cur === undefined ? "......" : s.choices[cur];
+    bl.onclick = () => {
+      if (S.checked[i]) return;
+      rows.querySelectorAll(".blank").forEach((x) => x.classList.remove("live"));
+      bl.classList.add("live");
+      live = bl;
+    };
+    row.appendChild(bl);
+    rows.appendChild(row);
+  });
+
+  const hint = document.createElement("p");
+  hint.className = "note-line en";
+  hint.textContent = s.note;
+  wrap.append(hint, bank, rows);
+  d.querySelector(".pennote").before(wrap);
+  paint();
+}
+
+function buildOrder(i, d) {
+  const s = SCREENS[i];
+  const wrap = document.createElement("div");
+  const hint = document.createElement("p");
+  hint.className = "note-line en";
+  hint.textContent = "Write the order in the boxes: 1 for the first step, and so on. Tap a box to change its number.";
+  wrap.appendChild(hint);
+  const cur = orderOf(i).slice();
+  const seats = s.items.map((_, k) => k);
+
+  s.items.forEach((t, k) => {
+    const row = document.createElement("div");
+    row.className = "orow";
+    const box = document.createElement("button");
+    box.className = "obox";
+    box.type = "button";
+    const posOf = () => cur.indexOf(k);
+    box.textContent = posOf() >= 0 && S.visited[i] ? posOf() + 1 : "";
+    box.onclick = () => {
+      if (S.checked[i]) return;
+      const taken = seats.map((p) => cur[p]);
+      const now = Number(box.textContent || 0);
+      const next = now >= s.items.length ? 0 : now + 1;
+      box.textContent = next || "";
+      const chosen = [];
+      wrap.querySelectorAll(".obox").forEach((b, idx) => {
+        const v = Number(b.textContent || 0);
+        if (v) chosen.push([v, idx]);
+      });
+      const seen = {};
+      let clash = false;
+      chosen.forEach(([v]) => { if (seen[v]) clash = true; seen[v] = 1; });
+      const ready = chosen.length === s.items.length && !clash;
+      if (ready) {
+        const order = [];
+        chosen.sort((a, b2) => a[0] - b2[0]).forEach(([, idx]) => order.push(idx));
+        S.answers["order-" + i] = order;
+        save();
+      }
+      const ok = wrap.querySelector(".okbtn");
+      if (ok) ok.disabled = !ready;
+    };
+    row.appendChild(box);
+    const t2 = document.createElement("span");
+    t2.className = "t en";
+    t2.textContent = t;
+    row.appendChild(t2);
+    wrap.appendChild(row);
+  });
+  const ok = document.createElement("button");
+  ok.className = "okbtn";
+  ok.type = "button";
+  ok.textContent = "Done, mark it";
+  ok.disabled = !S.answers["order-" + i];
+  ok.onclick = () => {
+    if (S.checked[i] || ok.disabled) return;
+    S.visited[i] = true;
+    save();
+    mark(i);
+    ok.remove();
+  };
+  wrap.appendChild(ok);
+  d.querySelector(".pennote").before(wrap);
+}
+
+function buildFill(i, d) {
+  const s = SCREENS[i];
+  const wrap = document.createElement("div");
+  const hint = document.createElement("p");
+  hint.className = "note-line en";
+  hint.textContent = s.note;
+  wrap.appendChild(hint);
+  s.rows.forEach((r, k) => {
+    const row = document.createElement("div");
+    row.className = "frow en";
+    row.append(document.createTextNode(r.before + " "));
+    const inp = document.createElement("input");
+    inp.className = "wr";
+    inp.value = S.answers[s.ids[k]] || "";
+    inp.placeholder = "......";
+    inp.autocomplete = "off";
+    inp.oninput = () => { S.answers[s.ids[k]] = inp.value; save(); };
+    inp.onblur = () => { if (!S.checked[i] && allFilled(i)) mark(i); };
+    inp.onkeydown = (e) => { if (e.key === "Enter") inp.blur(); };
+    row.appendChild(inp);
+    row.append(document.createTextNode(" " + r.after));
+    wrap.appendChild(row);
+  });
+  const bank = document.createElement("div");
+  bank.className = "bank";
+  s.bank.forEach((w) => {
+    const b = document.createElement("span");
+    b.className = "w";
+    b.textContent = w;
+    bank.appendChild(b);
+  });
+  wrap.insertBefore(bank, wrap.children[1]);
+  d.querySelector(".pennote").before(wrap);
+}
+
+function buildEssay(i, d) {
+  const s = SCREENS[i], id = s.ids[0];
+  const wrap = document.createElement("div");
+  if (s.refer && s.refer.length) {
+    const ref = document.createElement("div");
+    ref.className = "refer";
+    ref.innerHTML = '<div class="t">in your answer, refer to</div>';
+    s.refer.forEach((r, k) => {
+      const b = document.createElement("button");
+      b.className = "tick";
+      b.type = "button";
+      const key = id + "-" + k;
+      b.setAttribute("aria-checked", S.ticks[key] ? "true" : "false");
+      b.innerHTML = '<span class="box">' + (S.ticks[key] ? "✓" : "") + '</span><span class="lb en">' + r + "</span>";
+      b.onclick = () => {
+        S.ticks[key] = !S.ticks[key];
+        save();
+        b.setAttribute("aria-checked", S.ticks[key] ? "true" : "false");
+        b.querySelector(".box").textContent = S.ticks[key] ? "✓" : "";
+      };
+      ref.appendChild(b);
+    });
+    wrap.appendChild(ref);
+  }
+  const ta = document.createElement("textarea");
+  ta.className = "essaybox";
+  ta.value = S.answers[id] || "";
+  ta.placeholder = "Write your answer in English here";
+  const wc = document.createElement("div");
+  wc.className = "wc";
+  const count = () => {
+    const n = (ta.value.trim().match(/\S+/g) || []).length;
+    wc.textContent = n + (n === 1 ? " word" : " words") + (S.sent ? "" : " · saved as you write");
+  };
+  ta.oninput = () => { S.answers[id] = ta.value; save(); count(); progress(); };
+  if (S.sent) ta.readOnly = true;
+  count();
+  wrap.append(ta, wc);
+  d.querySelector(".pennote").before(wrap);
+}
+
+/* ---------- lay the whole notebook out ---------- */
+function layout() {
+  let round = -1, number = 0;
+  SCREENS.forEach((s, i) => {
+    if (s.round !== round) {
+      round = s.round;
+      const h = document.createElement("p");
+      h.className = "sec";
+      const n = SCREENS.filter((x) => x.round === round).reduce((a, x) => a + x.ids.length, 0);
+      h.innerHTML = ROUNDS[round].title + ' <span class="cnt">(' + n +
+        (s.type === "essay" ? " marks" : " points") + ")</span>";
+      PAPER.appendChild(h);
+    }
+    number++;
+    const stem = s.type === "essay" ? s.q
+      : s.type === "mcq" || s.type === "tf" ? s.q
+      : s.note ? "" : "";
+    const d = qShell(i, number,
+      s.type === "match" ? "Match each one." : s.type === "order" ? "Put these in order." :
+      s.type === "fill" ? "Complete the sentences." : stem,
+      s.type === "essay" ? "[" + s.marks + "]" : "");
+    if (s.type === "mcq" || s.type === "tf") buildChoice(i, d);
+    else if (s.type === "match") buildMatch(i, d);
+    else if (s.type === "order") buildOrder(i, d);
+    else if (s.type === "fill") buildFill(i, d);
+    else buildEssay(i, d);
+    PAPER.appendChild(d);
+    if (S.checked[i]) replay(i, d);
+  });
+  handIn();
+  progress();
+  if (S.sent) showResult();
+}
+
+/* a question that was already marked before the page was reopened */
+function replay(i, d) {
+  S.checked[i] = false;
+  const s = SCREENS[i];
+  if (s.type === "order") S.visited[i] = true;
+  mark(i);
+}
+
+/* ---------- hand in ---------- */
+function handIn() {
+  const box = document.createElement("div");
+  box.className = "handin";
+  box.id = "handin";
+  box.innerHTML = '<h2>Hand it in</h2>' +
+    '<div class="tally" id="tally"></div>' +
+    '<p class="note-line">Once you hand in, your answers go to El Bashmohandes and nothing can be ' +
+    'changed. He marks the written answers himself.</p>' +
+    '<button class="send" id="sendBtn" type="button" disabled>Hand in to El Bashmohandes</button>' +
+    '<p class="status" id="status"></p>' +
+    '<p style="margin-top:12px"><button class="ghost" id="bk">Save a copy to this phone</button>' +
+    '<button class="ghost" id="rd">Open a copy you saved</button>' +
+    '<input id="rdf" type="file" accept="application/json" hidden></p>';
+  PAPER.appendChild(box);
+
+  document.getElementById("sendBtn").onclick = send;
+  document.getElementById("bk").onclick = () => saveBackup();
+  document.getElementById("rd").onclick = () => document.getElementById("rdf").click();
+  document.getElementById("rdf").onchange = (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (f) readBackup(f).then(() => location.reload()).catch(() => alert("That file is not a copy of this homework."));
+  };
+}
+
+function fmtDate(d) {
+  try { return new Date(d).toLocaleString("en-GB", { day:"numeric", month:"short", year:"numeric", hour:"2-digit", minute:"2-digit" }); }
+  catch (e) { return String(d); }
+}
+function countWords(a) { return (String(a).trim().match(/\S+/g) || []).length; }
+
+function buildPayload() {
+  const now = new Date();
+  const results = [];
+  SCREENS.forEach((s, i) => { if (s.type !== "essay") itemResults(i).forEach((r) => results.push(r)); });
+  const t = totals();
+  const pct = Math.round((t.got / t.of) * 100);
+  const mistakes = results.filter((r) => !r.ok).map((r) => ({ id:r.id, lesson:KEY.lessons[r.id], given:r.given, correct:r.correct }));
+  const essays = SCREENS.map((s, i) => [s, i]).filter(([s]) => s.type === "essay").map(([s, i]) => {
+    const id = s.ids[0], a = String(S.answers[id] || "").trim();
+    return { id, lesson:KEY.lessons[id], marks:s.marks, question:s.q, answer:a, words:countWords(a) };
+  });
+  const minutes = S.startedAt ? Math.round((now - new Date(S.startedAt)) / 60000) : "";
+  const columns = [
+    ["Submitted at", fmtDate(now)], ["Student", S.name], ["Score", t.got], ["Out of", t.of], ["Percent", pct + "%"],
+    ["Essay mark /" + ESSAY_MARKS + " (you fill)", ""], ["Mistakes", mistakes.length],
+    ["Minutes since starting", minutes], ["Best streak", S.best]
+  ];
+  t.rounds.forEach((r) => columns.push([r.title, r.got + "/" + r.of]));
+  results.forEach((r) => columns.push([r.id + " [" + KEY.lessons[r.id] + "]", (r.ok ? "✓ " : "✗ ") + r.given + (r.ok ? "" : "  →  " + r.correct)]));
+  essays.forEach((e) => columns.push([e.id + " [" + e.lesson + "] /" + e.marks, e.answer || "(no answer)"]));
+  columns.push(["Submission ID", S.submissionId]);
+  return { homework:HW.title, sheet:HW.sheet, submissionId:S.submissionId, name:S.name, submittedAt:now.toISOString(),
+           minutes, score:t.got, outOf:t.of, percent:pct, essayMarks:ESSAY_MARKS, bestStreak:S.best,
+           rounds:t.rounds, mistakes, essays, columns };
+}
+
+async function send() {
+  const btn = document.getElementById("sendBtn"), status = document.getElementById("status");
+  if (!S.name.trim()) { status.className = "status bad"; status.textContent = "Write your name at the top first."; return; }
+  const open = SCREENS.filter((s, i) => s.type !== "essay" && !S.checked[i]).length;
+  const blank = SCREENS.filter((s, i) => s.type === "essay" && !hasAnswer(i)).length;
+  if ((open || blank) && !btn.classList.contains("again")) {
+    btn.classList.add("again");
+    btn.textContent = "Hand in anyway";
+    status.className = "status bad";
+    status.textContent = "You still have " + (open ? open + " question" + (open === 1 ? "" : "s") + " unanswered" : "") +
+      (open && blank ? " and " : "") + (blank ? blank + " empty written answer" + (blank === 1 ? "" : "s") : "") +
+      ". Tap again to hand in as it is.";
+    return;
+  }
+  if (!HW.endpoint) {
+    status.className = "status bad";
+    status.textContent = "Sending is not switched on yet. Tell El Bashmohandes and keep this page: your answers are saved.";
+    return;
+  }
+  SCREENS.forEach((s, i) => { if (s.type !== "essay") S.checked[i] = true; });
+  save();
+  const payload = JSON.stringify(buildPayload());
+  btn.disabled = true;
+  status.className = "status";
+  status.textContent = "Sending to El Bashmohandes...";
+  let reached = false, refused = false;
+  try {
+    const res = await fetch(HW.endpoint, { method:"POST", headers:{ "Content-Type":"text/plain;charset=utf-8" },
+                                           body:payload, redirect:"follow" });
+    let data = null;
+    try { data = await res.json(); } catch (e) { data = null; }
+    if (data && data.ok) reached = true;
+    else if (data && data.ok === false) refused = true;
+    else reached = res.ok;
+  } catch (e) {
+    try {
+      await fetch(HW.endpoint, { method:"POST", mode:"no-cors",
+                                 headers:{ "Content-Type":"text/plain;charset=utf-8" }, body:payload });
+      reached = true;
+    } catch (e2) { reached = false; }
+  }
+  if (refused || !reached) {
+    btn.disabled = false;
+    status.className = "status bad";
+    status.textContent = refused
+      ? "It reached the sheet but was not saved. Tap hand in again, and if it happens twice tell El Bashmohandes."
+      : "The connection dropped. Your answers are saved: try again when you are back online.";
+    return;
+  }
+  S.sent = new Date().toISOString();
+  save();
+  status.className = "status good";
+  status.textContent = "Handed in. " + fmtDate(S.sent);
+  btn.textContent = "Handed in";
+  showResult();
+}
+
+function showResult() {
+  if (document.getElementById("result")) return;
+  const t = totals(), pct = Math.round((t.got / t.of) * 100);
+  const box = document.createElement("div");
+  box.className = "result";
+  box.id = "result";
+  let html = '<div class="big">' + t.got + " <span>/ " + t.of + " · " + pct + "%</span></div>" +
+    '<div class="line">That is the mark for the questions with one right answer. The written answers (' +
+    ESSAY_MARKS + ' marks) are marked by El Bashmohandes himself.</div>';
+  t.rounds.forEach((r) => { html += '<div class="line">' + r.title + ": <b>" + r.got + " / " + r.of + "</b></div>"; });
+  box.innerHTML = html;
+  SCREENS.forEach((s, i) => {
+    if (s.type !== "essay") return;
+    const k = KEY.screens[i];
+    if (!k || !k.model) return;
+    const m = document.createElement("div");
+    m.className = "model";
+    m.innerHTML = '<div class="t">model answer &middot; ' + s.marks + ' marks</div><p class="en">' + k.model + "</p>";
+    box.appendChild(m);
+  });
+  document.getElementById("handin").appendChild(box);
+  document.querySelectorAll(".essaybox").forEach((t2) => t2.readOnly = true);
+  box.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+/* ---------- name, warning, boot ---------- */
+const nameInput = document.getElementById("nameInput");
+nameInput.value = S.name || "";
+nameInput.oninput = () => { S.name = nameInput.value; save(); progress(); };
+if (S.sent) nameInput.readOnly = true;
+document.getElementById("today").textContent = new Date().toLocaleDateString("en-GB",
+  { day:"numeric", month:"long", year:"numeric" });
+
+if (!STORE_OK) {
+  const w = document.createElement("div");
+  w.className = "warn";
+  w.innerHTML = "<b>This browser is keeping nothing.</b> If you close the page your answers are gone. " +
+    "Open the link in a normal tab, not a Private one, or finish the homework in one sitting.";
+  PAPER.appendChild(w);
+}
+
+layout();
+
+</script>
+</body>
+</html>
