@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1B2A4A">
+<title>رسايل الجروبات</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231B2A4A'/%3E%3Cpath d='M14 46l4-11a18 18 0 1 1 8 7z' fill='%2325D366'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F2EC; --card:#FFFFFF; --ink:#1B2A4A; --muted:#5E6882; --line:#E1DDD2;
+  --chip:#F7F5F0; --sel:#1B2A4A; --sel-ink:#FFFFFF; --sel-muted:#C9D2E6;
+  --go:#128C4A; --go-ink:#FFFFFF; --bubble:#DCF8C6; --bubble-ink:#111B21;
+  --warn-bg:#FFF3D6; --warn-ink:#6B4300; --info-bg:#EAF1FB; --info-ink:#21406E;
+  --tag:#E9E5DA; --tag-ink:#4A4436; --shadow:0 1px 2px rgba(27,42,74,.06),0 4px 14px rgba(27,42,74,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10141C; --card:#191F2B; --ink:#E7EBF3; --muted:#9AA4B9; --line:#2A3244;
+    --chip:#1F2635; --sel:#E7EBF3; --sel-ink:#10141C; --sel-muted:#3B465E;
+    --go:#25D366; --go-ink:#06240F; --bubble:#1E3A2D; --bubble-ink:#E7EBF3;
+    --warn-bg:#3A2E12; --warn-ink:#F2CB7A; --info-bg:#18273F; --info-ink:#A9C4EE;
+    --tag:#2A3244; --tag-ink:#C9D0DE; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10141C; --card:#191F2B; --ink:#E7EBF3; --muted:#9AA4B9; --line:#2A3244;
+  --chip:#1F2635; --sel:#E7EBF3; --sel-ink:#10141C; --sel-muted:#3B465E;
+  --go:#25D366; --go-ink:#06240F; --bubble:#1E3A2D; --bubble-ink:#E7EBF3;
+  --warn-bg:#3A2E12; --warn-ink:#F2CB7A; --info-bg:#18273F; --info-ink:#A9C4EE;
+  --tag:#2A3244; --tag-ink:#C9D0DE; --shadow:none;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "IBM Plex Sans Arabic",system-ui,"Segoe UI",Tahoma,sans-serif}
+main{max-width:680px;margin:0 auto;padding:20px 16px 120px}
+header h1{font-size:26px;margin:4px 0 2px;font-weight:700}
+header p{margin:0 0 18px;color:var(--muted);font-size:15px}
+section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:0 0 14px;box-shadow:var(--shadow)}
+h2{font-size:17px;margin:0 0 10px;display:flex;align-items:center;gap:8px;font-weight:700}
+h2 small{font-weight:400;color:var(--muted);font-size:13px}
+.n{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--sel);color:var(--sel-ink);font-size:13px;flex:none}
+.grid{display:grid;gap:8px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:560px){ .g2.wide{grid-template-columns:repeat(3,minmax(0,1fr))} }
+.chip{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:start;width:100%;
+  min-height:56px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--chip);color:var(--ink);
+  font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.chip:focus-visible,.big:focus-visible,.link:focus-visible{outline:3px solid var(--go);outline-offset:2px}
+.chip .t{font-weight:700;font-size:16px;line-height:1.3}
+.chip .s{font-size:12.5px;color:var(--muted);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.chip .en{direction:ltr;unicode-bidi:isolate}
+.chip.on{background:var(--sel);color:var(--sel-ink);border-color:var(--sel)}
+.chip.on .s{color:var(--sel-muted)}
+.chip.on .tag{background:var(--sel-muted);color:var(--sel)}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.tag{font-size:11.5px;line-height:1.2;padding:3px 7px;border-radius:99px;background:var(--tag);color:var(--tag-ink);font-weight:500}
+.tag.next{background:var(--go);color:var(--go-ink)}
+.tag.warn{background:var(--warn-bg);color:var(--warn-ink)}
+.hint{color:var(--muted);font-size:14px;margin:0}
+.note{border-radius:12px;padding:10px 12px;margin:0 0 8px;font-size:14.5px}
+.note.warn{background:var(--warn-bg);color:var(--warn-ink)}
+.note.info{background:var(--info-bg);color:var(--info-ink)}
+#notes{margin:0 0 14px}
+#notes:empty{display:none}
+.bubble{background:var(--bubble);color:var(--bubble-ink);border-radius:14px 14px 4px 14px;padding:12px 14px;white-space:pre-wrap;
+  overflow-wrap:anywhere;font-size:15px;line-height:1.6;margin:0 0 12px;unicode-bidi:plaintext;text-align:start}
+.big{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:12px 16px;margin:0 0 10px;border-radius:14px;
+  border:1.5px solid var(--line);background:var(--chip);color:var(--ink);font:inherit;font-weight:700;font-size:16.5px;cursor:pointer;text-align:start}
+.big .k{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--sel);color:var(--sel-ink);font-size:15px;flex:none}
+.big .sub{display:block;font-weight:400;font-size:12.5px;color:var(--muted);margin-top:1px}
+.big.primary{background:var(--go);color:var(--go-ink);border-color:var(--go)}
+.big.primary .k{background:var(--go-ink);color:var(--go)}
+.big.primary .sub{color:var(--go-ink);opacity:.85}
+.big[disabled]{opacity:.5;cursor:default}
+.big.done::after{content:"✓";margin-inline-start:auto;font-size:20px}
+.row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+.link{background:none;border:0;padding:8px 2px;color:var(--muted);font:inherit;font-size:14.5px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+summary{cursor:pointer;font-weight:700}
+#hist{list-style:none;margin:10px 0 0;padding:0}
+#hist li{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line);font-size:14.5px}
+#hist li span{flex:1}
+#hist button{background:none;border:0;color:var(--muted);font-size:18px;cursor:pointer;padding:4px 8px}
+.fine{color:var(--muted);font-size:12.5px;margin:8px 0 0}
+#toast{position:fixed;inset-inline:16px;bottom:18px;margin:0 auto;max-width:480px;background:var(--sel);color:var(--sel-ink);
+  border-radius:12px;padding:12px 14px;display:flex;gap:12px;align-items:center;justify-content:space-between;
+  transform:translateY(150%);transition:transform .25s ease;font-size:15px;z-index:9}
+#toast.show{transform:none}
+#toast button{background:none;border:0;color:var(--go);font:inherit;font-weight:700;cursor:pointer}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>رسايل الجروبات</h1>
+    <p>اختار الجروب والدرس، وابعت الملف الأول وبعده الرسالة.</p>
+  </header>
+
+  <section>
+    <h2><span class="n">1</span>الجروب</h2>
+    <div id="groups" class="grid g2 wide"></div>
+  </section>
+
+  <section>
+    <h2><span class="n">2</span>الدرس <small>(علّم على درسين لو الحصة كانت درسين)</small></h2>
+    <div id="lessons" class="grid g2"></div>
+  </section>
+
+  <section id="hwSec" hidden>
+    <h2><span class="n">3</span>الواجب</h2>
+    <div id="hws" class="grid g2"></div>
+  </section>
+
+  <div id="notes"></div>
+
+  <section id="sendSec" hidden>
+    <h2>الرسالة زي ما هتتبعت</h2>
+    <div class="bubble" id="preview"></div>
+    <button id="btnPdf" class="big" type="button"><span class="k">1</span><span><span id="pdfLabel">ابعت الـ PDF</span><span class="sub" id="pdfSub"></span></span></button>
+    <button id="btnMsg" class="big primary" type="button"><span class="k">2</span><span>ابعت الرسالة على واتساب<span class="sub" id="msgSub">بيفتح واتساب والرسالة مكتوبة، وإنت تختار الجروب</span></span></button>
+    <div class="row">
+      <button id="btnCopy" class="link" type="button">انسخ الرسالة</button>
+      <button id="btnAlt" class="link" type="button">نزّل الملفات</button>
+    </div>
+  </section>
+
+  <details id="histBox">
+    <summary>اللي اتبعت قبل كده</summary>
+    <ul id="hist"></ul>
+    <p class="fine">السجل ده محفوظ على الجهاز ده بس. الحاجة بتتسجل لما تدوس «ابعت الرسالة».</p>
+  </details>
+</main>
+<div id="toast" role="status" aria-live="polite"><span id="toastText"></span><button id="toastBtn" type="button" hidden>تراجع</button></div>
+
+<script>
+const D = {"base": "https://ahmed-abdelslam-75.github.io/homework/", "groups": [{"id": "wed", "name": "الأربع", "day": 3}, {"id": "satg", "name": "السبت بنات", "day": 6}, {"id": "satb", "name": "السبت ولاد", "day": 6}, {"id": "sun", "name": "الحد", "day": 0}, {"id": "mon", "name": "الاتنين", "day": 1}, {"id": "tue", "name": "التلات", "day": 2}], "lessons": [{"id": "0-0+1-1", "label": "0-0 + 1-1", "title": "Orientation + 1-1", "file": "0-0_1-1.pdf", "name": "0-0 + 1-1 Study Companion.pdf", "kb": 1577, "learn": null, "hws": ["hw1"]}, {"id": "1-2", "label": "1-2", "title": "How AI Works", "file": "1-2.pdf", "name": "1-2 How AI Works - Study Companion.pdf", "kb": 2027, "learn": null, "hws": ["hw1"]}, {"id": "1-3", "label": "1-3", "title": "AI in Daily Life and Industry", "file": "1-3.pdf", "name": "1-3 AI in Daily Life and Industry - Study Companion.pdf", "kb": 2725, "learn": null, "hws": ["hw2"]}, {"id": "1-4", "label": "1-4", "title": "Ethical Issues with AI", "file": "1-4.pdf", "name": "1-4 Ethical Issues with AI - Study Companion.pdf", "kb": 1784, "learn": null, "hws": ["hw2"]}, {"id": "2-1", "label": "2-1", "title": "Cryptographic Technologies and Authentication", "file": "2-1.pdf", "name": "2-1 Cryptographic Technologies and Authentication - Study Companion.pdf", "kb": 1727, "learn": "2-1", "hws": ["hw3"]}, {"id": "2-2", "label": "2-2", "title": "Network Security Design", "file": "2-2.pdf", "name": "2-2 Network Security Design - Study Companion.pdf", "kb": 1459, "learn": null, "hws": ["hw4"]}, {"id": "2-3", "label": "2-3", "title": "Incident Response and Risk Management", "file": "2-3.pdf", "name": "2-3 Incident Response and Risk Management - Study Companion.pdf", "kb": 1327, "learn": "2-3", "hws": ["hw5"]}, {"id": "3-1", "label": "3-1", "title": "The Overall Structure of Web Applications", "file": "3-1.pdf", "name": "3-1 The Overall Structure of Web Applications - Study Companion.pdf", "kb": 884, "learn": "3-1", "hws": ["hw6", "hw8", "hw11"]}, {"id": "3-2", "label": "3-2", "title": "Web Application Communication Methods", "file": "3-2.pdf", "name": "3-2 Web Application Communication Methods - Study Companion.pdf", "kb": 1888, "learn": null, "hws": ["hw9"]}, {"id": "3-3", "label": "3-3", "title": "Fundamentals of Frontend Technology", "file": "3-3.pdf", "name": "3-3 Fundamentals of Frontend Technology - Study Companion.pdf", "kb": 1788, "learn": "3-3", "hws": ["hw7"]}, {"id": "4-1", "label": "4-1", "title": "Types and Characteristics of Media", "file": "4-1.pdf", "name": "4-1 Types and Characteristics of Media - Study Companion.pdf", "kb": 1205, "learn": null, "hws": ["hw10"]}, {"id": "4-2", "label": "4-2", "title": "Information Design and User Experience for Websites", "file": "4-2.pdf", "name": "4-2 Information Design and User Experience for Websites - Study Companion.pdf", "kb": 2177, "learn": null, "hws": []}], "hw": {"hw1": {"n": 50, "min": 75, "title": "From ENIAC to ChatGPT", "num": 1, "covers": ["0-0+1-1", "1-2"]}, "hw2": {"n": 49, "min": 75, "title": "From Your Pocket to the Rules", "num": 2, "covers": ["1-3", "1-4"]}, "hw3": {"n": 19, "min": 25, "title": "Behind the Padlock", "num": 3, "covers": ["2-1"]}, "hw4": {"n": 35, "min": 45, "title": "Layers of Defense", "num": 4, "covers": ["2-2"]}, "hw5": {"n": 35, "min": 45, "title": "After the Breach", "num": 5, "covers": ["2-3"]}, "hw6": {"n": 37, "min": 45, "title": "Behind the Screen", "num": 6, "covers": ["3-1"]}, "hw7": {"n": 36, "min": 50, "title": "From the Tap to the Page", "num": 7, "covers": ["3-1", "3-2", "3-3"]}, "hw8": {"n": 36, "min": 55, "title": "Three Tiers, One App", "num": 8, "covers": ["3-1"]}, "hw9": {"n": 36, "min": 50, "title": "Ask and Answer", "num": 9, "covers": ["3-2"]}, "hw10": {"n": 37, "min": 50, "title": "One Message, Many Ways", "num": 10, "covers": ["4-1"]}, "hw11": {"n": 37, "min": 50, "title": "Down and Back Up", "num": 11, "covers": ["3-1"]}}};
+
+// CORE START
+const ORDER = D.lessons.map(l => l.id);
+const LES = Object.fromEntries(D.lessons.map(l => [l.id, l]));
+const idx = id => ORDER.indexOf(id);
+const byOrder = (a, b) => idx(a) - idx(b);
+const sorted = ids => [...ids].sort(byOrder);
+const lbl = id => '⁦' + LES[id].label + '⁩';   // isolate, so "1-2" never shows as "2-1" inside Arabic
+
+function laterLessons(h, lessons) {
+  const maxI = Math.max(...lessons.map(idx));
+  return D.hw[h].covers.filter(c => idx(c) > maxI);
+}
+function hwCandidates(lessons) {
+  const out = [];
+  for (const id of sorted(lessons)) for (const h of LES[id].hws) if (!out.includes(h)) out.push(h);
+  return out;
+}
+function defaultHws(lessons, sentHw) {
+  if (!lessons.length) return [];
+  const out = [];
+  for (const id of sorted(lessons)) {
+    const c = LES[id].hws.filter(h => laterLessons(h, lessons).length === 0);
+    if (!c.length) continue;
+    const pick = c.find(h => !sentHw.has(h)) || c[0];
+    if (!out.includes(pick)) out.push(pick);
+  }
+  return out;
+}
+function buildMessage(lessons, hws) {
+  const L = sorted(lessons).map(id => LES[id]);
+  const parts = ['محاضرة النهاردة'];
+  const learn = L.filter(l => l.learn).map(l => D.base + 'learn/' + l.learn + '/');
+  if (learn.length) {
+    parts.push('في حاجة مش فاهمينها؟ افتحوا الشرح ده تحت كل جزء زرار «مش فاهم؟» بيشرحه بطريقة تانية:\n' + learn.join('\n'));
+  }
+  if (hws.length) {
+    const list = [...hws].sort((a, b) => D.hw[a].num - D.hw[b].num);
+    const n = list.reduce((s, h) => s + D.hw[h].n, 0);
+    const m = list.reduce((s, h) => s + D.hw[h].min, 0);
+    parts.push('الواجب:\n' + list.map(h => D.base + h + '/').join('\n'));
+    parts.push([
+      '• ' + n + ' سؤال، وقتهم حوالي ' + m + ' دقيقة.',
+      '• اكتبوا اسمكم فوق الأول، من غيره الواجب مش هيتبعت.',
+      '• كل سؤال بيتصحح قدامكم على طول، وتحته السبب بالقلم الأحمر.',
+      '• أسئلة المقالي أنا اللي بصححها بنفسي.',
+      '• الإجابات بتتحفظ أول بأول، فتقدروا تقفلوا وترجعوا تكمّلوا. بس متفتحوش اللينك في private tab',
+      '• لما تخلصوا دوسوا Hand in to El Bashmohandes في آخر الصفحة، والإجابات بتوصلني على طول.'
+    ].join('\n'));
+  }
+  return parts.join('\n\n');
+}
+// CORE END
+
+const $ = id => document.getElementById(id);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } }
+};
+const HKEY = 'gm.history.v1';
+let hist = store.get(HKEY, []);
+if (!Array.isArray(hist)) hist = [];
+const S = { g: null, lessons: [], hws: [], hwAuto: true, done: { pdf: false } };
+const files = {};
+const touch = (() => { try { return matchMedia('(pointer: coarse)').matches; } catch (e) { return false; } })();
+
+const fmt = t => { const d = new Date(t); return d.getDate() + '/' + (d.getMonth() + 1); };
+const groupHist = g => hist.filter(h => h.g === g);
+const sentLesson = g => { const m = {}; for (const h of groupHist(g)) for (const l of h.lessons) m[l] = h.t; return m; };
+const sentHw = g => { const m = {}; for (const h of groupHist(g)) for (const w of h.hws) m[w] = h.t; return m; };
+function lastIdx(g) { let m = -1; for (const h of groupHist(g)) for (const l of h.lessons) m = Math.max(m, idx(l)); return m; }
+function suggest(g) { const i = lastIdx(g); return (i >= 0 && i + 1 < ORDER.length) ? [ORDER[i + 1]] : []; }
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+function tag(text, cls) { return '<span class="tag' + (cls ? ' ' + cls : '') + '">' + esc(text) + '</span>'; }
+function chip(on, html, onclick, pressed) {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'chip' + (on ? ' on' : ''); b.innerHTML = html; b.onclick = onclick;
+  b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  return b;
+}
+
+function recomputeHws() {
+  if (S.hwAuto) S.hws = defaultHws(S.lessons, new Set(Object.keys(S.g ? sentHw(S.g) : {})));
+  const c = hwCandidates(S.lessons);
+  S.hws = S.hws.filter(h => c.includes(h));
+}
+
+function renderGroups() {
+  const today = new Date().getDay();
+  $('groups').replaceChildren(...D.groups.map(g => {
+    const h = groupHist(g.id), last = h[h.length - 1];
+    const sub = last ? 'آخر حاجة: ' + sorted(last.lessons).map(lbl).join(' + ') + ' · ' + fmt(last.t) : 'لسه مفيش حاجة اتسجلت';
+    const tags = g.day === today ? '<span class="tags">' + tag('حصته النهاردة', 'next') + '</span>' : '';
+    return chip(S.g === g.id, '<span class="t">' + esc(g.name) + '</span><span class="s">' + esc(sub) + '</span>' + tags, () => {
+      S.g = g.id; S.lessons = suggest(g.id); S.hwAuto = true; S.done.pdf = false; update();
+    });
+  }));
+}
+
+function renderLessons() {
+  const sl = S.g ? sentLesson(S.g) : {}, li = S.g ? lastIdx(S.g) : -1;
+  $('lessons').replaceChildren(...D.lessons.map((l, i) => {
+    const t = [];
+    if (S.g && li >= 0 && i === li + 1) t.push(tag('الجاي', 'next'));
+    if (sl[l.id]) t.push(tag('اتبعت ' + fmt(sl[l.id])));
+    const html = '<span class="t en">' + esc(l.label) + '</span><span class="s en">' + esc(l.title) + '</span>' + (t.length ? '<span class="tags">' + t.join('') + '</span>' : '');
+    return chip(S.lessons.includes(l.id), html, () => {
+      S.lessons = S.lessons.includes(l.id) ? S.lessons.filter(x => x !== l.id) : S.lessons.concat(l.id);
+      S.hwAuto = true; S.done.pdf = false; update();
+    });
+  }));
+}
+
+function renderHws() {
+  const c = hwCandidates(S.lessons);
+  $('hwSec').hidden = !c.length;
+  const sh = S.g ? sentHw(S.g) : {};
+  $('hws').replaceChildren(...c.map(h => {
+    const w = D.hw[h], later = laterLessons(h, S.lessons), t = [];
+    if (later.length) t.push(tag('فيه أسئلة على ' + later.map(lbl).join(' و '), 'warn'));
+    if (sh[h]) t.push(tag('اتبعت للجروب ده ' + fmt(sh[h])));
+    const html = '<span class="t en">' + esc(h) + '</span><span class="s">' + w.n + ' سؤال · ' + w.min + ' دقيقة · <span class="en">' + esc(w.title) + '</span></span>' + (t.length ? '<span class="tags">' + t.join('') + '</span>' : '');
+    return chip(S.hws.includes(h), html, () => {
+      S.hwAuto = false;
+      S.hws = S.hws.includes(h) ? S.hws.filter(x => x !== h) : S.hws.concat(h);
+      update();
+    });
+  }));
+}
+
+function renderNotes() {
+  const out = [];
+  if (!S.lessons.length) { $('notes').replaceChildren(); return; }
+  const c = hwCandidates(S.lessons);
+  for (const h of c) {
+    const later = laterLessons(h, S.lessons);
+    if (!later.length) continue;
+    const names = later.map(lbl).join(' و ');
+    if (S.hws.includes(h)) out.push(['warn', 'خد بالك: ' + h + ' فيه أسئلة على ' + names + '، والدرس ده مش متعلّم عليه.']);
+    else out.push(['info', h + ' فيه أسئلة على ' + names + '، عشان كده مش في الرسالة. لو الجروب خد ' + names + ' كمان علّم عليه، أو علّم على ' + h + ' بإيدك.']);
+  }
+  const noHw = sorted(S.lessons).filter(id => !LES[id].hws.length).map(lbl);
+  if (noHw.length) out.push(['info', noHw.join(' و ') + ' ملوش واجب.']);
+  if (!S.hws.length && S.lessons.length) out.push(['info', 'الرسالة من غير جزء الواجب.']);
+  const noLearn = sorted(S.lessons).filter(id => !LES[id].learn).map(lbl);
+  if (noLearn.length) out.push(['info', noLearn.join(' و ') + ' ملوش صفحة «مش فاهم»' + (noLearn.length === S.lessons.length ? '، فالسطرين بتوعها مش في الرسالة.' : '.')]);
+  if (S.g) {
+    const sl = sentLesson(S.g), sh = sentHw(S.g);
+    const again = sorted(S.lessons).filter(id => sl[id]);
+    if (again.length) out.push(['warn', 'الجروب ده اتبعتله ' + again.map(id => lbl(id) + ' يوم ' + fmt(sl[id])).join(' و ') + ' قبل كده.']);
+    const hwAgain = S.hws.filter(h => sh[h]);
+    if (hwAgain.length) out.push(['warn', hwAgain.map(h => h + ' اتبعت للجروب ده يوم ' + fmt(sh[h])).join(' و ') + '.']);
+  } else {
+    out.push(['warn', 'اختار الجروب الأول، عشان الصفحة تفتكر إنه اتبعتله.']);
+  }
+  $('notes').replaceChildren(...out.map(([k, t]) => { const p = document.createElement('p'); p.className = 'note ' + k; p.textContent = t; return p; }));
+}
+
+function prefetch() {
+  for (const id of S.lessons) {
+    if (files[id]) continue;
+    files[id] = 'loading';
+    fetch('pdf/' + LES[id].file).then(r => { if (!r.ok) throw new Error(r.status); return r.blob(); })
+      .then(b => { files[id] = new File([b], LES[id].name, { type: 'application/pdf' }); })
+      .catch(() => { files[id] = 'error'; })
+      .finally(renderButtons);
+  }
+}
+const readyFiles = () => sorted(S.lessons).map(id => files[id]);
+
+function renderButtons() {
+  const fs = readyFiles();
+  const loading = fs.some(f => f === 'loading'), failed = fs.some(f => f === 'error');
+  const n = S.lessons.length;
+  $('pdfLabel').textContent = (touch ? 'ابعت ' : 'نزّل ') + (n > 1 ? 'ملفات الـ PDF (' + n + ')' : 'الـ PDF');
+  $('pdfSub').textContent = failed ? 'ملف ما اتحمّلش، اتأكد من النت وجرب تاني'
+    : loading ? 'بيحمّل الملف...'
+    : (touch ? 'بيفتح قايمة المشاركة: اختار واتساب وبعدين الجروب' : 'وبعدين اسحبه جوه شات الجروب') + ' · ' + sorted(S.lessons).map(id => '⁦' + LES[id].label + ' (' + (LES[id].kb / 1024).toFixed(1) + ' MB)⁩').join('، ');
+  $('btnPdf').disabled = loading || !n;
+  $('btnPdf').classList.toggle('done', S.done.pdf);
+  $('btnAlt').textContent = touch ? 'نزّل الملفات بس' : 'شارك الملفات';
+  $('btnAlt').hidden = !touch && !(navigator.canShare);
+}
+
+function renderHistory() {
+  const items = [...hist].reverse().slice(0, 40);
+  $('hist').replaceChildren(...items.map(h => {
+    const li = document.createElement('li');
+    const g = D.groups.find(x => x.id === h.g);
+    const s = document.createElement('span');
+    s.textContent = fmt(h.t) + ' · ' + (g ? g.name : h.g) + ' · ' + sorted(h.lessons).map(lbl).join(' + ') + (h.hws.length ? ' · ' + h.hws.join(' + ') : '');
+    const x = document.createElement('button'); x.type = 'button'; x.textContent = '×'; x.setAttribute('aria-label', 'امسح');
+    x.onclick = () => { if (confirm('أمسح السطر ده من السجل؟')) { hist = hist.filter(e => e !== h); store.set(HKEY, hist); update(); } };
+    li.append(s, x); return li;
+  }));
+  $('histBox').hidden = !hist.length;
+}
+
+function update() {
+  recomputeHws();
+  renderGroups(); renderLessons(); renderHws(); renderNotes();
+  $('sendSec').hidden = !S.lessons.length;
+  if (S.lessons.length) { $('preview').textContent = buildMessage(S.lessons, S.hws); prefetch(); renderButtons(); }
+  renderHistory();
+}
+
+let toastTimer;
+function toast(text, undo) {
+  $('toastText').textContent = text;
+  $('toastBtn').hidden = !undo;
+  $('toastBtn').onclick = () => { if (undo) undo(); $('toast').classList.remove('show'); };
+  $('toast').classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').classList.remove('show'), undo ? 7000 : 2600);
+}
+
+function download(fs) {
+  fs.forEach((f, i) => setTimeout(() => {
+    const a = document.createElement('a'); a.href = URL.createObjectURL(f); a.download = f.name;
+    document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  }, i * 400));
+  S.done.pdf = true; renderButtons();
+}
+function share(fs) {
+  if (navigator.canShare && navigator.canShare({ files: fs })) {
+    navigator.share({ files: fs }).then(() => { S.done.pdf = true; renderButtons(); })
+      .catch(e => { if (e && e.name !== 'AbortError') { toast('المشاركة ما اشتغلتش، فهنزّل الملف'); download(fs); } });
+  } else { toast('الجهاز ده مش بيشارك ملفات، فهنزّل الملف'); download(fs); }
+}
+
+$('btnPdf').onclick = () => {
+  const fs = readyFiles();
+  if (fs.some(f => !(f instanceof File))) { toast('الملف لسه بيحمّل، استنى ثانية'); return; }
+  touch ? share(fs) : download(fs);
+};
+$('btnAlt').onclick = () => {
+  const fs = readyFiles();
+  if (fs.some(f => !(f instanceof File))) { toast('الملف لسه بيحمّل، استنى ثانية'); return; }
+  touch ? download(fs) : share(fs);
+};
+$('btnMsg').onclick = () => {
+  const msg = buildMessage(S.lessons, S.hws);
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+  if (!S.g) { toast('الرسالة اتفتحت، بس ما اتسجلتش لأنك ما اخترتش جروب'); return; }
+  const entry = { g: S.g, lessons: sorted(S.lessons), hws: [...S.hws], t: Date.now() };
+  const same = hist.findIndex(e => e.g === entry.g && e.lessons.join() === entry.lessons.join() && e.t > entry.t - 3 * 3600e3);
+  const prev = hist.slice();
+  if (same >= 0) hist[same] = entry; else hist.push(entry);
+  store.set(HKEY, hist);
+  const g = D.groups.find(x => x.id === S.g);
+  update();
+  toast('اتسجّل: ' + g.name + '، ' + entry.lessons.map(lbl).join(' + '), () => { hist = prev; store.set(HKEY, hist); update(); });
+};
+$('btnCopy').onclick = () => {
+  const msg = buildMessage(S.lessons, S.hws);
+  const fallback = () => { const t = document.createElement('textarea'); t.value = msg; document.body.append(t); t.select(); try { document.execCommand('copy'); toast('اتنسخت'); } catch (e) { toast('ما عرفتش أنسخ، علّم على الرسالة وانسخها بإيدك'); } t.remove(); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(msg).then(() => toast('اتنسخت'), fallback); else fallback();
+};
+
+(function init() {
+  const q = new URLSearchParams(location.search);
+  const today = new Date().getDay();
+  const todays = D.groups.filter(g => g.day === today);
+  if (q.get('g') && D.groups.some(g => g.id === q.get('g'))) S.g = q.get('g');
+  else if (todays.length === 1) S.g = todays[0].id;
+  if (S.g) S.lessons = suggest(S.g);
+  if (q.get('l')) S.lessons = q.get('l').split(',').filter(id => LES[id]);
+  update();
+})();
+</script>
+</body>
+</html>
