@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lesson 4-2 &middot; Information Design and User Experience</title>
+<meta name="description" content="The Study Companion for Lesson 4-2 on screen, with a button on every part that explains it a different way.">
+<meta name="theme-color" content="#0B1437">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B1437'/%3E%3Crect x='14' y='15' width='36' height='11' rx='3' fill='%2327E1C1'/%3E%3Crect x='14' y='30' width='10' height='19' rx='3' fill='%2327E1C1' opacity='.72'/%3E%3Crect x='27' y='30' width='10' height='19' rx='3' fill='%2327E1C1' opacity='.58'/%3E%3Crect x='40' y='30' width='10' height='19' rx='3' fill='%2327E1C1' opacity='.44'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap">
+<style>
+:root{--ink:#16213E;--navy:#0B1437;--teal:#0E7C66;--amber:#A2620A;--red:#B3261E;--line:#C7D0E0;
+      --soft:#F5F7FC;--muted:#5E6C8A;--page:#FFFFFF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:#E9EDF5;color:var(--ink);font-family:Georgia,"Times New Roman",serif;
+     font-size:17px;line-height:1.72}
+.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff}
+.top-in{max-width:720px;margin:0 auto;padding:10px 18px;display:flex;align-items:baseline;gap:10px}
+.top .ls{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#8FE8D8}
+.top .nm{font-size:15px}
+.bar{height:3px;background:#22305F}
+.bar i{display:block;height:100%;width:0;background:#27E1C1;transition:width .15s linear}
+.sheet{max-width:720px;margin:0 auto;background:var(--page);min-height:100vh;
+       padding:0 22px 48px;box-shadow:0 0 28px rgba(11,20,55,.12)}
+.cover{padding:30px 0 6px;border-bottom:3px solid var(--navy);margin-bottom:20px}
+.cover .k{font-family:Cambria,Georgia,serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;
+          color:var(--teal);font-weight:bold}
+.cover h1{font-family:Cambria,Georgia,serif;font-size:27px;line-height:1.25;margin:6px 0 4px;color:var(--navy)}
+.cover .s{color:var(--muted);font-size:15px;margin:0}
+.howto{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:13px 15px;
+       margin:16px 0 4px;direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;
+       font-size:15.5px;line-height:1.85}
+.howto b{color:var(--teal)}
+
+.blk{padding:16px 0 4px;border-bottom:1px solid #E8ECF4}
+.blk:last-of-type{border-bottom:0}
+h2{font-family:Cambria,Georgia,serif;font-size:20px;color:var(--navy);margin:0 0 9px;line-height:1.35}
+.kick{font-size:13.5px;color:var(--muted);font-style:italic;margin:0 0 8px}
+.blk p{margin:0 0 11px}
+.blk p:last-child{margin-bottom:0}
+.blk b{color:var(--navy)}
+ul,ol{margin:0 0 11px;padding-left:22px}
+li{margin-bottom:7px}
+ol.circ{list-style:none;counter-reset:c;padding-left:0}
+ol.circ li{counter-increment:c;padding-left:30px;position:relative}
+ol.circ li::before{content:counter(c);position:absolute;left:0;top:2px;width:20px;height:20px;
+  border-radius:50%;background:var(--navy);color:#fff;font-family:Cambria,serif;font-size:12px;
+  display:flex;align-items:center;justify-content:center}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15.5px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:#EEF2FA;font-family:Cambria,serif;color:var(--navy);font-size:14.5px}
+td.k{font-weight:bold;color:var(--navy);width:30%}
+td .sm{font-weight:normal;color:var(--muted);font-size:13.5px}
+.formula{text-align:center;background:#FDF6EC;border:1.5px solid #A2620A;border-radius:8px;
+  padding:8px 10px;margin:10px 0;font-family:Cambria,Georgia,serif;font-size:17px;font-weight:bold;
+  color:#A2620A}
+.gq{font-style:italic;color:var(--teal);font-size:18px;border-left:3px solid var(--teal);
+    padding-left:12px;margin:0 0 12px}
+.kf{background:#EFFAF6;border:1px solid #A9DDCC;border-radius:8px;padding:10px 13px;font-size:16px}
+.kf b{color:var(--teal)}
+.q{font-weight:bold;color:var(--navy)}
+.ans{background:var(--soft);border-left:3px solid var(--teal);padding:10px 13px;border-radius:0 8px 8px 0;
+     font-size:16px}
+.note,.cap{color:var(--muted);font-size:14px;font-style:italic}
+p.ar{direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:16px;
+     line-height:1.9;color:var(--ink);background:#F4F6FB;border-radius:8px;padding:10px 13px}
+figure{margin:12px 0}
+figure svg{width:100%;height:auto;display:block}
+figcaption{text-align:center;color:var(--muted);font-size:14px;font-style:italic;margin-top:6px;
+  direction:rtl;font-family:Tajawal,"Segoe UI",Arial,sans-serif}
+
+.qbox{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:13px 0}
+.qbox.new{border-color:#A9DDCC;background:#FCFEFD}
+.tag{display:inline-block;font-family:ui-monospace,monospace;font-size:10.5px;font-weight:bold;
+  letter-spacing:.08em;padding:2px 9px;border-radius:999px;margin:0 0 8px;background:#EEF2FA;
+  color:var(--navy)}
+.tag.new{background:#E8F8F3;color:var(--teal)}
+.qbox p{margin:0 0 9px}
+.qbox p:last-child{margin-bottom:0}
+.ask{margin:12px 0 2px}
+.ask button{font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:15.5px;font-weight:700;cursor:pointer;
+  background:#FFF6E8;color:var(--amber);border:1.5px solid #E8C89A;border-radius:999px;padding:8px 18px;
+  line-height:1.3}
+.ask button:hover{background:var(--amber);border-color:var(--amber);color:#fff}
+.ask button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.ask .cnt{font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:13.5px;color:var(--muted);
+  margin-inline-start:10px}
+.way{direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:16.5px;
+  line-height:1.95;background:#FFFBF3;border:1px solid #E8C89A;border-radius:10px;padding:13px 16px;
+  margin-top:10px}
+.way p{margin:0 0 10px}
+.way p:last-child{margin-bottom:0}
+.way b{color:var(--amber)}
+.way ol{padding-right:22px;padding-left:0}
+.way figure{margin:2px 0}
+.end{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:24px;
+  text-align:center;direction:rtl;font-family:Tajawal,"Segoe UI",Arial,sans-serif}
+.end h2{margin:0 0 6px}
+.end p{color:var(--muted);font-size:15.5px;margin:0 0 13px}
+.btn{display:inline-block;text-decoration:none;background:var(--teal);color:#fff;font-weight:700;
+  border-radius:999px;padding:11px 24px}
+.foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px}
+@media (max-width:460px){ body{font-size:16px} .sheet{padding:0 15px 40px} .cover h1{font-size:23px}
+  h2{font-size:18.5px} table{font-size:14.5px} th,td{padding:6px 7px} }
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .bar i{transition:none} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in"><span class="ls">LESSON 4-2</span><span class="nm">Study Companion</span></div>
+  <div class="bar"><i id="prog"></i></div>
+</header>
+
+<main class="sheet">
+  <div class="cover">
+    <div class="k">Part A &middot; The Lesson</div>
+    <h1>Information Design and User Experience for Websites</h1>
+    <p class="s">Lesson 4-2 &middot; Unit 4 &middot; Web and Media Design</p>
+  </div>
+
+  <div class="howto">نفس كلام الـ <b>Study Companion</b> بالظبط. الجديد هنا إن تحت أي جزء مش واضح فيه زرار
+  <b>مش فاهم؟</b>، تدوس عليه يشرحلك نفس الجزء بطريقة تانية خالص، وتدوس تاني يديك طريقة ثالثة.</div>
+
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;الوحدة التالتة علّمتنا نبني موقع. الدرس ده بيسأل سؤال تاني خالص.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;في الوحدة التالتة عرفنا &lt;b&gt;إزاي&lt;/b&gt; الموقع بيشتغل: الطبقات، والرسايل، والصفحة اللي بتترسم. وفي\n4-1 عرفنا &lt;b&gt;نختار&lt;/b&gt; الوسيلة المناسبة. الدرس ده بيسأل: الموقع ده مبني &lt;b&gt;لمين&lt;/b&gt;؟&lt;/p&gt;\n&lt;p&gt;والفرق مش شكلي. ممكن موقع يكون مبني صح مية في المية من ناحية الكود، وبرضه الزائر يفتحه ويتوه فيه.\nليه؟ لأن اللي بناه كان عارف كل حاجة فيه، فكل حاجة كانت واضحة &lt;b&gt;عنده هو&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;وعشان كده الكتاب بيبدأ بجملة غريبة شوية: «التصميم بيبدأ من &lt;b&gt;المستخدم&lt;/b&gt;، مش من اللي بيبني».\nيعني قبل ما تفتح أي برنامج تصميم، لازم تعرف الشخص اللي هيفتح الصفحة دي مين.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;الرسمة اللي فوق هي خريطة الدرس كله. تعالى نقراها.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;أربع مراحل بالترتيب، وكل واحدة بتجاوب &lt;b&gt;سؤال واحد&lt;/b&gt; وبتسلّم اللي بعدها حاجة:&lt;/p&gt;\n&lt;ol class=\&quot;circ\&quot;&gt;\n  &lt;li&gt;&lt;b&gt;Persona:&lt;/b&gt; المستخدم مين؟ تطلع منها بشخص واحد محدد.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;Wireframe:&lt;/b&gt; إيه مكانه فين، ومين الأهم؟ تطلع منها بترتيب من غير لون.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;CRAP:&lt;/b&gt; إزاي نخلي الصفحة واضحة؟ تطلع منها بصفحة بتقرا نفسها.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;UCD:&lt;/b&gt; القرار ده لمين؟ تطلع منها بموقع متجرب مع ناس حقيقيين.&lt;/li&gt;\n&lt;/ol&gt;\n&lt;p&gt;والمستطيل الأصفر تحت هو الحتة اللي الامتحان بيدور عليها: &lt;b&gt;الألوان والخطوط بتتقرر بعد المرحلة\nالتانية، مش قبلها&lt;/b&gt;. اللي بيبدأ باللون بيقرر شكل حاجة &lt;b&gt;لسه ما اتقررش إيه هي&lt;/b&gt;.&lt;/p&gt;&quot;]">
+<p class="kick">Unit 4 &middot; Web and Media Design &middot; textbook pages 81 to 87</p>
+<h2>Lesson 4-2: Information Design and User Experience for Websites</h2>
+
+<p class="gq">How do designers plan a website around its users, and what principles make a page clear
+and easy to use?</p>
+
+<p>A website that makes sense to its designer can still confuse its visitors. Good design therefore
+begins with the user, not the creator. Designers first picture a real user (a <b>persona</b>), sketch
+where information will go before choosing any colours (a <b>wireframe</b>), and follow four simple
+principles, contrast, repetition, alignment and proximity, so the page is clear at a glance. This
+user-first mindset is called <b>user-centered design</b>.</p>
+
+<div class="kf"><b>Key Fact.</b> Good web design starts from the user: a persona clarifies who they are,
+a wireframe fixes what goes where, the CRAP principles make it clear, and user-centered design keeps
+every choice on the user's side.</div>
+
+<figure>
+<svg viewBox="0 0 540 266" role="img" aria-label="Four stages in a row. The persona answers who the user
+ is and produces one concrete person. The wireframe answers what goes where and produces a layout with no
+ colour. The four principles answer how to make it clear. User centered design answers who every decision
+ is for. A note underneath says colours and fonts are chosen only after stage two.">
+  <defs>
+    <marker id="ch" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8795B5"/></marker>
+  </defs>
+  <rect x="8" y="16" width="116" height="178" rx="9" fill="#EAF6F2" stroke="#0E7C66" stroke-width="1.6"/><circle cx="30" cy="42" r="13" fill="#0E7C66"/><text x="30" y="47" text-anchor="middle" font-size="14" font-weight="bold" fill="#FFFFFF">1</text><text x="50" y="47" font-family="Cambria,Georgia,serif" font-size="13" font-weight="bold" fill="#0E7C66">Persona</text><line x1="19" y1="62" x2="113" y2="62" stroke="#0E7C66" stroke-width="1.1" opacity=".45"/><text x="19" y="80" font-size="8" font-weight="bold" letter-spacing=".9" fill="#5E6C8A">IT ANSWERS</text><text x="19" y="97" font-size="9.5" fill="#16213E">Who is the user?</text><text x="19" y="140" font-size="8" font-weight="bold" letter-spacing=".9" fill="#5E6C8A">YOU END UP WITH</text><text x="19" y="157" font-size="9.5" fill="#0E7C66">one concrete</text><text x="19" y="171" font-size="9.5" fill="#0E7C66">person</text> <rect x="144" y="16" width="116" height="178" rx="9" fill="#EAF1FA" stroke="#1F5FA8" stroke-width="1.6"/><circle cx="166" cy="42" r="13" fill="#1F5FA8"/><text x="166" y="47" text-anchor="middle" font-size="14" font-weight="bold" fill="#FFFFFF">2</text><text x="186" y="47" font-family="Cambria,Georgia,serif" font-size="13" font-weight="bold" fill="#1F5FA8">Wireframe</text><line x1="155" y1="62" x2="249" y2="62" stroke="#1F5FA8" stroke-width="1.1" opacity=".45"/><text x="155" y="80" font-size="8" font-weight="bold" letter-spacing=".9" fill="#5E6C8A">IT ANSWERS</text><text x="155" y="97" font-size="9.5" fill="#16213E">What goes where,</text><text x="155" y="111" font-size="9.5" fill="#16213E">in what order?</text><text x="155" y="140" font-size="8" font-weight="bold" letter-spacing=".9" fill="#5E6C8A">YOU END UP WITH</text><text x="155" y="157" font-size="9.5" fill="#1F5FA8">a layout with</text><text x="155" y="171" font-size="9.5" fill="#1F5FA8">no colour</text> <rect x="280" y="16" width="116" height="178" rx="9" fill="#FDF4E3" stroke="#A2620A" stroke-width="1.6"/><circle cx="302" cy="42" r="13" fill="#A2620A"/><text x="302" y="47" text-anchor="middle" font-size="14" font-weight="bold" fill="#FFFFFF">3</text><text x="322" y="47" font-family="Cambria,Georgia,serif" font-size="13" font-weight="bold" fill="#A2620A">C R A P</text><line x1="291" y1="62" x2="385" y2="62" stroke="#A2620A" stroke-width="1.1" opacity=".45"/><text x="291" y="80" font-size="8" font-weight="bold" letter-spacing=".9" fill="#5E6C8A">IT ANSWERS</text><text x="291" y="97" font-size="9.5" fill="#16213E">How do we make</text><text x="291" y="111" font-size="9.5" fill="#16213E">it clear?</text><text x="291" y="140" font-size="8" font-weight="bold" letter-spacing=".9" fill="#5E6C8A">YOU END UP WITH</text><text x="291" y="157" font-size="9.5" fill="#A2620A">a page that</text><text x="291" y="171" font-size="9.5" fill="#A2620A">reads itself</text> <rect x="416" y="16" width="116" height="178" rx="9" fill="#FBECF1" stroke="#8A1C3B" stroke-width="1.6"/><circle cx="438" cy="42" r="13" fill="#8A1C3B"/><text x="438" y="47" text-anchor="middle" font-size="14" font-weight="bold" fill="#FFFFFF">4</text><text x="458" y="47" font-family="Cambria,Georgia,serif" font-size="13" font-weight="bold" fill="#8A1C3B">UCD</text><line x1="427" y1="62" x2="521" y2="62" stroke="#8A1C3B" stroke-width="1.1" opacity=".45"/><text x="427" y="80" font-size="8" font-weight="bold" letter-spacing=".9" fill="#5E6C8A">IT ANSWERS</text><text x="427" y="97" font-size="9.5" fill="#16213E">Who is every</text><text x="427" y="111" font-size="9.5" fill="#16213E">decision for?</text><text x="427" y="140" font-size="8" font-weight="bold" letter-spacing=".9" fill="#5E6C8A">YOU END UP WITH</text><text x="427" y="157" font-size="9.5" fill="#8A1C3B">a site tested</text><text x="427" y="171" font-size="9.5" fill="#8A1C3B">with real users</text>
+  <path d="M 126 105 L 141 105" stroke="#8795B5" stroke-width="1.8" fill="none" marker-end="url(#ch)"/><path d="M 262 105 L 277 105" stroke="#8795B5" stroke-width="1.8" fill="none" marker-end="url(#ch)"/><path d="M 398 105 L 413 105" stroke="#8795B5" stroke-width="1.8" fill="none" marker-end="url(#ch)"/>
+  <rect x="8" y="206" width="524" height="48" rx="8" fill="#FDF4E3" stroke="#D9A94C" stroke-width="1.3"/>
+  <text x="24" y="226" font-size="10.5" fill="#7A5214">Colours, fonts and decoration are chosen only
+    after stage 2. Deciding them earlier pulls the discussion</text>
+  <text x="24" y="243" font-size="10.5" fill="#7A5214">toward personal taste instead of toward the
+    information itself.</text>
+</svg>
+<figcaption>الترتيب هو الدرس. كل مرحلة بتجاوب سؤال وبتسلّم اللي بعدها حاجة تشتغل عليها.</figcaption>
+</figure>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;جرب تحس بالفرق بنفسك.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;تخيل إن حد قال لك: «صمّم موقع لناس من 18 لـ 60 سنة». تعمل إيه؟ الخط كبير ولا صغير؟ الصفحة فيها\nتفاصيل كتير ولا قليلة؟ مفيش إجابة، لأن مفيش &lt;b&gt;حد&lt;/b&gt; تسأله.&lt;/p&gt;\n&lt;p&gt;دلوقتي خد الوصف ده بدل التاني: &lt;b&gt;موظف في التلاتينات، بيقارن أسعار من موبايله وهو في الأوتوبيس\nرايح الشغل، ووقته قصير&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;بص الفرق: دلوقتي إنت عارف إن الشاشة صغيرة، وإنه مستعجل، وإنه بيقارن يعني محتاج يشوف أكتر من منتج\nجنب بعض. التلات قرارات دول طلعوا من الوصف لوحدهم.&lt;/p&gt;\n&lt;p&gt;دي الـ persona: مش ورقة بتتعلّق على الحيطة، دي &lt;b&gt;أداة بتحسم بيها الخلافات&lt;/b&gt;. أي سؤال في\nالتصميم بيتحول لـ «الشخص ده هيعرف يعمل كده ولا لأ؟».&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;خمس حاجات بتتحط، وحاجة واحدة أشهر غلطة. ركّز فيها.&lt;/b&gt;&lt;/p&gt;\n&lt;table&gt;\n  &lt;tr&gt;&lt;th&gt;بتتحط في الـ persona&lt;/th&gt;&lt;th&gt;مثال الكتاب نفسه&lt;/th&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;السن&lt;/td&gt;&lt;td&gt;في التلاتينات&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;الشغل&lt;/td&gt;&lt;td&gt;موظف مكتب&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;الغرض&lt;/td&gt;&lt;td&gt;يقارن منتجات&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;الموقف والجهاز&lt;/td&gt;&lt;td&gt;من الموبايل، في المواصلات&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;الصعوبة&lt;/td&gt;&lt;td&gt;وقته قصير&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;\n&lt;p&gt;والغلطة اللي الامتحان بيصطاد بيها: &lt;b&gt;أداء السيرفر مش من الـ persona&lt;/b&gt;. وده سؤال في كتاب\nالتقييم بالنص.&lt;/p&gt;\n&lt;p&gt;ليه؟ لأن الـ persona بتوصف &lt;b&gt;المستخدم&lt;/b&gt;، والسيرفر جزء من &lt;b&gt;النظام&lt;/b&gt;. السن والشغل والغرض\nوالصعوبة كلهم حقايق عن &lt;b&gt;شخص&lt;/b&gt;. سرعة السيرفر حقيقة عن &lt;b&gt;موقع&lt;/b&gt;، ومفيش أي قرار عن\n«المستخدم مين» بيطلع منها.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;مثال مصري قريب منك: صفحة نتيجة المدرسة.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;الـ persona هنا مش «أولياء الأمور»، دي كلمة واسعة زي «كل الناس». الـ persona هي: &lt;b&gt;أب أو أم\nبيشتغل، بيفتح الصفحة مرتين في السنة بس، من الموبايل، وهو مستعجل، وعايز رقم واحد&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;والصعوبة اللي بتميّزه: &lt;b&gt;هو مش مستخدم دايم&lt;/b&gt;. يعني مفيش حاجة في الصفحة مألوفة عنده، ومش\nهيفتكر فين كان الزرار المرة اللي فاتت.&lt;/p&gt;\n&lt;p&gt;الوصف ده لوحده بيغيّر الصفحة كلها: الدرجة لازم تبقى أكبر حاجة في الشاشة، والصفحة لازم تشتغل على\nموبايل، ومحدش يستنى منه إنه يدوّر في قايمة. قارن ده بالصفحة اللي بيصممها حد من المدرسة بيفتحها كل\nيوم، فكل حاجة عنده في مكانها الطبيعي.&lt;/p&gt;&quot;]">
+<h2>1. Persona</h2>
+
+<p>A <b>persona</b> is a typical user image of those who will use the website, set up as a concrete
+person. Details such as age, occupation, purpose and challenges are selected.</p>
+
+<p>By setting up a persona, designers can think specifically about <b>"what this user needs"</b>, and
+the direction of the design becomes less likely to drift.</p>
+
+<p>The textbook's own example: a person in their 30s, an office worker, who wants to compare products
+on a smartphone during the commute, and wants to obtain information in a short time.</p>
+
+<div class="qbox"><span class="tag">GOING DEEPER</span>
+<p><b>Why a person and not a group.</b></p>
+<p>"Our users are everyone aged 18 to 60" gives a design team nothing to decide with. Every argument
+about the site can then be settled by whoever speaks loudest. A persona replaces that with a single
+person who has a purpose and a problem, so a question like "should the price be bigger?" becomes
+"would a commuter comparing products on a phone find this price quickly?", which has an answer.</p>
+<p>Notice what the book's example contains and what it does not. It contains age, occupation, purpose
+and a challenge. It does not contain the person's name, their favourite colour, or anything about the
+server. The assessment book tests exactly this: the performance of the website's server is <b>not</b>
+appropriate information for a persona, because a persona describes the user, not the system.</p>
+</div>
+
+<p class="ar">الـ <b>persona</b> يعني تحط المستخدم كشخص <b>واحد محدد</b>، مش "كل الناس". سنه، شغله، إيه
+اللي جايبه للموقع، وإيه اللي بيصعّب عليه. لما يبقى قدامك شخص واحد، أي خلاف على التصميم بيتحل بسؤال:
+الشخص ده هيلاقي اللي عايزه ولا لأ؟ ولاحظ إن أداء السيرفر <b>مش</b> جزء من الـ persona، لأنها بتوصف
+المستخدم مش النظام.</p>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;الرسمة اللي فوق فيها حاجة لازم تشوفها بعينك: ولا مربع اتحرك.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;بص على الصورتين وقارن مكان كل مربع. الـ LOGO في نفس المكان، والقايمة في نفس المكان، والصورة\nالكبيرة في نفس المكان، والتلات أخبار في نفس المكان، والفوتر في نفس المكان.&lt;/p&gt;\n&lt;p&gt;اللي اتغير إيه بقى؟ &lt;b&gt;اللون والشكل بس&lt;/b&gt;. يعني كل القرارات الصعبة (إيه الأهم؟ الأخبار فوق ولا\nتحت؟ الصورة كبيرة قد إيه؟) اتاخدت وهي &lt;b&gt;رمادي على أبيض&lt;/b&gt;، ومحدش كان بيتخانق على لون وقتها.&lt;/p&gt;\n&lt;p&gt;وده معنى جملة الكتاب: «what information to place where can be considered &lt;b&gt;separately&lt;/b&gt; from\nvisual design». كلمة separately هي المفتاح: مشكلتين، كل واحدة لوحدها.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;السبب التاني، اللي كل الطلبة بينسوه. خد مثال واقعي.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;اجتماع فيه أربع ناس: صاحب المشروع، والمصمم، والمبرمج، ومدير التسويق. السؤال: الأزرق ده غامق أوي\nولا لأ؟&lt;/p&gt;\n&lt;p&gt;الأربعة عندهم رأي، وكل رأي &lt;b&gt;صح من ناحيته&lt;/b&gt;، لأن ده ذوق شخصي ومفيش طريقة تثبت إن واحد منهم\nغلط. الاجتماع ده ما بيخلصش.&lt;/p&gt;\n&lt;p&gt;دلوقتي غيّر السؤال: مواعيد العمل تبقى فوق الخريطة ولا تحتها؟ هنا الكلام بيتحول لحجة: «الناس\nبتفتح الصفحة عشان تعرف احنا فاتحين ولا لأ، فالمواعيد فوق». وده سؤال &lt;b&gt;ليه إجابة&lt;/b&gt;، فالناس\nبتتفق.&lt;/p&gt;\n&lt;p&gt;وعشان كده الكتاب بيقول إن تحديد الترتيب الأول بيخلي &lt;b&gt;أصحاب المصلحة يتفقوا&lt;/b&gt;. والسبب ده\nبالذات هو اللي الكتاب حاططه في سطر &lt;b&gt;Refer to&lt;/b&gt; بتاع سؤال الست درجات، يعني مش اختياري.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;وفيه سبب تالت عملي، مش في الكتاب بس بيوضّح الاتنين اللي فيه.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;اسأل نفسك: إيه أرخص حاجة تتغير بعدين، وإيه أغلى حاجة؟&lt;/p&gt;\n&lt;p&gt;تغيير اللون بعد ما الموقع خلص: دقيقة واحدة، سطر في ملف الـ CSS. تغيير &lt;b&gt;الترتيب&lt;/b&gt; بعد ما\nالموقع خلص: يعني تعيد ترتيب الصفحة كلها، وتعيد كتابة النص، وتعيد قياس كل صورة، ويمكن تبدأ من\nالأول.&lt;/p&gt;\n&lt;p&gt;فالقاعدة: &lt;b&gt;القرار الأغلى في التعديل بيتاخد الأول، والأرخص بيتاخد آخر حاجة&lt;/b&gt;. والترتيب أغلى\nمن اللون، فالترتيب الأول.&lt;/p&gt;\n&lt;p&gt;ودي نفسها إجابة Pause and Think اللي جاية تحت، فخليها في بالك.&lt;/p&gt;&quot;]">
+<h2>2. Wireframe</h2>
+
+<p>A <b>wireframe</b> is a rough blueprint of the layout of a web page. It does <b>not</b> include
+colour or design decoration; it is created to determine the <b>placement and priority</b> of
+information.</p>
+
+<p>By using a wireframe, "what information to place where" can be considered separately from visual
+design. If decorations such as colours and fonts are decided first, discussions tend to drift toward
+personal preferences in appearance, so finalizing the placement and priority of information first makes
+it easier for <b>stakeholders to reach agreement</b>.</p>
+
+<figure>
+<svg viewBox="0 0 540 196" role="img" aria-label="The same page twice. On the left a wireframe: plain
+ dashed boxes labelled logo, menu, main image, three news blocks and a footer, with no colour at all. On
+ the right the finished design: the same boxes in the same places, now with colour and styling. A note
+ says that not one box moved between the two.">
+  <rect x="10" y="16" width="220" height="150" rx="7" fill="#FFFFFF" stroke="#C7D0E0" stroke-width="1.4"/><rect x="20" y="26" width="60" height="16" rx="3" fill="#FFFFFF" stroke="#9AA7C0" stroke-width="1.1" stroke-dasharray="3 2"/><text x="50" y="37" text-anchor="middle" font-size="7" fill="#5E6C8A">LOGO</text><rect x="160" y="26" width="60" height="16" rx="3" fill="#FFFFFF" stroke="#9AA7C0" stroke-width="1.1" stroke-dasharray="3 2"/><text x="190" y="37" text-anchor="middle" font-size="7" fill="#5E6C8A">MENU</text><rect x="20" y="50" width="200" height="42" rx="3" fill="#F3F5F9" stroke="#9AA7C0" stroke-width="1.1" stroke-dasharray="3 2"/><text x="120" y="74" text-anchor="middle" font-size="8" fill="#5E6C8A">MAIN IMAGE</text><rect x="20" y="98" width="62" height="34" rx="3" fill="#F3F5F9" stroke="#9AA7C0" stroke-width="1.1" stroke-dasharray="3 2"/><text x="51" y="118" text-anchor="middle" font-size="7" fill="#5E6C8A">NEWS</text><rect x="89" y="98" width="62" height="34" rx="3" fill="#F3F5F9" stroke="#9AA7C0" stroke-width="1.1" stroke-dasharray="3 2"/><text x="120" y="118" text-anchor="middle" font-size="7" fill="#5E6C8A">NEWS</text><rect x="158" y="98" width="62" height="34" rx="3" fill="#F3F5F9" stroke="#9AA7C0" stroke-width="1.1" stroke-dasharray="3 2"/><text x="189" y="118" text-anchor="middle" font-size="7" fill="#5E6C8A">NEWS</text><rect x="20" y="138" width="200" height="18" rx="3" fill="#FFFFFF" stroke="#9AA7C0" stroke-width="1.1" stroke-dasharray="3 2"/><text x="120" y="150" text-anchor="middle" font-size="7" fill="#5E6C8A">FOOTER</text><text x="120" y="182" text-anchor="middle" font-family="Cambria,Georgia,serif" font-size="11.5" font-weight="bold" fill="#5E6C8A">Wireframe: no colour, no decoration</text>
+  <path d="M 246 90 L 282 90" stroke="#8795B5" stroke-width="2" fill="none" marker-end="url(#wa)"/>
+  <defs>
+    <marker id="wa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8795B5"/></marker>
+  </defs>
+  <rect x="310" y="16" width="220" height="150" rx="7" fill="#FFFFFF" stroke="#C7D0E0" stroke-width="1.4"/><rect x="320" y="26" width="60" height="16" rx="3" fill="#0B1437" stroke="#0B1437" stroke-width="1.1"/><text x="350" y="37" text-anchor="middle" font-size="7" fill="#FFFFFF">LOGO</text><rect x="460" y="26" width="60" height="16" rx="3" fill="#EAF6F2" stroke="#0E7C66" stroke-width="1.1"/><text x="490" y="37" text-anchor="middle" font-size="7" fill="#0E7C66">MENU</text><rect x="320" y="50" width="200" height="42" rx="3" fill="#DCE8F6" stroke="#1F5FA8" stroke-width="1.1"/><text x="420" y="74" text-anchor="middle" font-size="8" fill="#1F5FA8">MAIN IMAGE</text><rect x="320" y="98" width="62" height="34" rx="3" fill="#FFFFFF" stroke="#C7D0E0" stroke-width="1.1"/><text x="351" y="118" text-anchor="middle" font-size="7" fill="#0B1437">NEWS</text><rect x="389" y="98" width="62" height="34" rx="3" fill="#FFFFFF" stroke="#C7D0E0" stroke-width="1.1"/><text x="420" y="118" text-anchor="middle" font-size="7" fill="#0B1437">NEWS</text><rect x="458" y="98" width="62" height="34" rx="3" fill="#FFFFFF" stroke="#C7D0E0" stroke-width="1.1"/><text x="489" y="118" text-anchor="middle" font-size="7" fill="#0B1437">NEWS</text><rect x="320" y="138" width="200" height="18" rx="3" fill="#0B1437" stroke="#0B1437" stroke-width="1.1"/><text x="420" y="150" text-anchor="middle" font-size="7" fill="#FFFFFF">FOOTER</text><text x="420" y="182" text-anchor="middle" font-family="Cambria,Georgia,serif" font-size="11.5" font-weight="bold" fill="#0B1437">The design, built inside it</text>
+  <text x="270" y="78" text-anchor="middle" font-size="8.5" fill="#5E6C8A">colour</text>
+  <text x="270" y="104" text-anchor="middle" font-size="8.5" fill="#5E6C8A">added</text>
+</svg>
+<figcaption>ولا مربع اتحرك من مكانه. اللي اتغير هو الشكل بس، والقرارات اللي في الـ wireframe فضلت زي ما هي.
+</figcaption>
+</figure>
+
+<div class="qbox"><span class="tag">GOING DEEPER</span>
+<p><b>The two reasons, and the one students forget.</b></p>
+<p><b>The first is about the work.</b> Structure and appearance are different problems, and solving
+them at the same time means solving neither well. The wireframe settles structure on its own terms.</p>
+<p><b>The second is about the people.</b> Nobody has a strong personal opinion about whether the
+opening hours belong above or below the map, but everybody has an opinion about the shade of blue. A
+discussion that starts with colour never finishes. A discussion that starts with a wireframe ends in an
+agreement that the visual designer can then work inside.</p>
+<p>Students almost always write the first reason and leave out the second. The second is the one the
+textbook puts in its own Exam-Style Question, under "Refer to: reaching agreement with
+stakeholders".</p>
+</div>
+
+<p class="ar">الـ <b>wireframe</b> رسمة بالقلم الرصاص: إيه مكانه فين، ومين الأهم. من غير ألوان ولا
+خطوط ولا زخرفة. وفيه سببين لده، والطلبة بيكتبوا الأول وبينسوا التاني: الأول إن الترتيب والشكل مشكلتين
+مختلفتين، والتاني إن <b>الناس بتتفق</b> على الترتيب بسهولة لكن بتتخانق على اللون. اللي بيبدأ باللون ما
+بيخلصش.</p>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;الإجابة دي فيها تلات حتت، وكل حتة بتجيب درجة. متكتبش واحدة منهم بس.&lt;/b&gt;&lt;/p&gt;\n&lt;ol class=\&quot;circ\&quot;&gt;\n  &lt;li&gt;&lt;b&gt;المكان والأهمية قرارات عن المستخدم، واللون قرار عن الشكل.&lt;/b&gt; الأولانية لازم تتحسم عشان\n  التانية تلاقي حاجة تلبّسها.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;البدء بالترتيب بيبعد النقاش عن الذوق الشخصي&lt;/b&gt;، فالناس بتتفق على الهيكل بدل ما تتخانق على\n  الزخرفة.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;تغيير اللون بعدين ما بيكلّفش حاجة، وتغيير الهيكل بعدين يعني تبدأ من الأول.&lt;/b&gt;&lt;/li&gt;\n&lt;/ol&gt;\n&lt;p&gt;لو كتبت واحدة بس من التلاتة، إجابتك صح بس ناقصة. ولو كتبت التلاتة، إنت كتبت الإجابة النموذجية\nبالظبط.&lt;/p&gt;&quot;]">
+
+<div class="qbox new"><span class="tag new">PAUSE AND THINK &middot; PAGE 83</span>
+<p class="q">Why decide where information goes (wireframe) before choosing colours and fonts?</p>
+<div class="ans">Because placement and priority are decisions about the <b>user's needs</b>, while
+colour and font are decisions about appearance, and the first has to be settled before the second has
+anything to dress. Deciding the layout first also keeps the discussion off personal taste, so the people
+involved can agree on the structure instead of arguing about the decoration. Once everyone has agreed
+what goes where and what matters most, the visual design has a fixed brief to work to, and a change of
+colour later costs nothing, while a change of structure later means starting again.</div>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;أربع كلمات عربي، وخلاص. احفظهم وسيب التعريفات.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;contrast&lt;/b&gt; بتـ&lt;b&gt;برز&lt;/b&gt;. &lt;b&gt;repetition&lt;/b&gt; بتـ&lt;b&gt;وحّد&lt;/b&gt;. &lt;b&gt;alignment&lt;/b&gt; بتـ&lt;b&gt;رتّب&lt;/b&gt;.\n&lt;b&gt;proximity&lt;/b&gt; بتـ&lt;b&gt;جمّع&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;دلوقتي جرّب أي تحسين تصميم وشوف بيعمل إيه في الكلام:&lt;/p&gt;\n&lt;ul&gt;\n  &lt;li&gt;«نكبّر العنوان ونعمله عريض» ← بيـ&lt;b&gt;برز&lt;/b&gt; ← &lt;b&gt;Contrast&lt;/b&gt;.&lt;/li&gt;\n  &lt;li&gt;«نوحّد خط العناوين في كل الصفحات» ← بيـ&lt;b&gt;وحّد&lt;/b&gt; ← &lt;b&gt;Repetition&lt;/b&gt;.&lt;/li&gt;\n  &lt;li&gt;«نظبّط حروف النص والصور على خط واحد» ← بيـ&lt;b&gt;رتّب&lt;/b&gt; ← &lt;b&gt;Alignment&lt;/b&gt;.&lt;/li&gt;\n  &lt;li&gt;«نحط السعر تحت صورة المنتج من غير مسافة» ← بيـ&lt;b&gt;جمّع&lt;/b&gt; ← &lt;b&gt;Proximity&lt;/b&gt;.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;في الامتحان: &lt;b&gt;سمّي الفعل الأول، والاسم هييجي لوحده&lt;/b&gt;. اللي بيبدأ بالاسم بيخمّن، واللي بيبدأ\nبالفعل بيعرف.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;الصورة اللي فوق أهم حاجة في الجزء ده. غطّي عمود \&quot;Done well\&quot; بإيدك الأول.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;بص على عمود &lt;b&gt;Done badly&lt;/b&gt; لوحده وقول المشكلة في كل سطر إيه:&lt;/p&gt;\n&lt;ul&gt;\n  &lt;li&gt;&lt;b&gt;السطر الأول:&lt;/b&gt; العنوان نفس حجم الكلام، فمفيش حاجة بتقول لعينك ابدأ من هنا.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;التاني:&lt;/b&gt; تلات عناوين بتلات ألوان وتلات أحجام، فكل سطر شكله حاجة مختلفة.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;التالت:&lt;/b&gt; كل سطر بيبدأ من مكان، فالشاشة شكلها مبعوترة.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;الرابع:&lt;/b&gt; الأسماء والأسعار المسافة بينهم واحدة، فمش عارف أنهي سعر لأنهي منتج.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;دلوقتي شيل إيدك. أهم حاجة تلاحظها: &lt;b&gt;محدش ضاف ولا كلمة جديدة&lt;/b&gt;. نفس المحتوى بالظبط في\nالعمودين. اللي اتغير هو إن الكلام اتبرز، أو اتوحّد، أو اترتّب، أو اتجمّع.&lt;/p&gt;\n&lt;p&gt;ودي فكرة الـ CRAP كلها: مش بتضيف محتوى، &lt;b&gt;بتنظّم المحتوى اللي موجود&lt;/b&gt;.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;Repetition و Proximity: الاتنين اللي بيضيّعوا الدرجة. خد الفرق في سطر.&lt;/b&gt;&lt;/p&gt;\n&lt;table&gt;\n  &lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th&gt;Proximity&lt;/th&gt;&lt;th&gt;Repetition&lt;/th&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;بتتكلم عن إيه&lt;/td&gt;&lt;td&gt;&lt;b&gt;قرب&lt;/b&gt; جوه الصفحة&lt;/td&gt;&lt;td&gt;&lt;b&gt;تشابه&lt;/b&gt; عبر الصفحات&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;مثال&lt;/td&gt;&lt;td&gt;السعر تحت صورة المنتج من غير مسافة&lt;/td&gt;\n      &lt;td&gt;نفس شكل العنوان في كل صفحة في الموقع&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;بتحل مشكلة إيه&lt;/td&gt;&lt;td&gt;ما تخلطش بين منتج والتاني&lt;/td&gt;\n      &lt;td&gt;ما تتوهش وإنت بتتنقل بين الصفحات&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;\n&lt;p&gt;ليه بيتلخبطوا؟ لأن الاتنين بيتعاملوا مع &lt;b&gt;أكتر من عنصر&lt;/b&gt; مع بعض، فالطالب بيحس إنهم نفس\nالفكرة.&lt;/p&gt;\n&lt;p&gt;الفرق في كلمة واحدة: &lt;b&gt;فين&lt;/b&gt;. الـ proximity جوه صفحة واحدة، والـ repetition عبر الصفحات\nكلها.&lt;/p&gt;\n&lt;p&gt;ولو السؤال فيه &lt;b&gt;across all pages&lt;/b&gt; يبقى repetition، ولو فيه &lt;b&gt;close together&lt;/b&gt; يبقى\nproximity. الكلمتين دول بيحلّوا السؤال من غير تفكير.&lt;/p&gt;&quot;]">
+<h2>3. The Four Principles of Design (CRAP Principles)</h2>
+
+<p>Designs that are easy to view and understand follow these four principles.</p>
+
+<table>
+  <tr><th style="width:20%">Principle</th><th style="width:40%">Description (purpose)</th>
+      <th>Specific techniques and examples</th></tr>
+  <tr><td class="k">Contrast</td>
+      <td>Make the priority of information clear and immediately highlight the most important
+      elements</td>
+      <td>Make headings large and bold to differentiate them from body text. Use accent colours for
+      important buttons, for example purchase.</td></tr>
+  <tr><td class="k">Repetition</td>
+      <td>Repeat specific characteristics so that the whole design has consistency, allowing users to
+      navigate without getting lost</td>
+      <td>Standardize the colour, size and font of headings on each page. Match the design of bullet
+      point icons.</td></tr>
+  <tr><td class="k">Alignment</td>
+      <td>Align the position of each element to a common baseline, giving order to the entire
+      screen</td>
+      <td>Align the left edges of text and images precisely. Make a consistent rule for whether to use
+      centre or left alignment.</td></tr>
+  <tr><td class="k">Proximity</td>
+      <td>Place related information close together so that it can be perceived as a single group at a
+      glance</td>
+      <td>Group product images, names and prices together. Leave appropriate spacing (margins) between
+      items.</td></tr>
+</table>
+
+<figure>
+<svg viewBox="0 0 540 236" role="img" aria-label="Each principle shown twice, once done badly and once
+ done well. Contrast: a heading the same size as the text, then a heading large and dark. Repetition:
+ three headings in three different styles, then three identical ones. Alignment: three lines each starting
+ at a different point, then three lines sharing one edge. Proximity: a name and a price with equal gaps
+ everywhere, then grouped with space between the groups. Nothing is added between the two columns.">
+  <text x="190" y="14" text-anchor="middle" font-family="Cambria,Georgia,serif" font-size="11.5"
+    font-weight="bold" fill="#B3261E">Done badly</text>
+  <text x="418" y="14" text-anchor="middle" font-family="Cambria,Georgia,serif" font-size="11.5"
+    font-weight="bold" fill="#0E7C66">Done well</text>
+  <text x="8" y="48" font-family="Cambria,Georgia,serif" font-size="11" font-weight="bold" fill="#B3261E">Contrast</text><rect x="92" y="22" width="196" height="44" rx="5" fill="#FDF0EE" stroke="#E0A79F" stroke-width="1.1"/><rect x="320" y="22" width="196" height="44" rx="5" fill="#EFFAF6" stroke="#A9DDCC" stroke-width="1.1"/><rect x="104" y="32" width="70" height="5" rx="2" fill="#9AA7C0"/><rect x="104" y="42" width="160" height="4" rx="2" fill="#C2CBDC"/><rect x="104" y="51" width="140" height="4" rx="2" fill="#C2CBDC"/><rect x="332" y="30" width="86" height="9" rx="2" fill="#0B1437"/><rect x="332" y="44" width="160" height="4" rx="2" fill="#C2CBDC"/><rect x="332" y="53" width="140" height="4" rx="2" fill="#C2CBDC"/><text x="8" y="98" font-family="Cambria,Georgia,serif" font-size="11" font-weight="bold" fill="#B3261E">Repetition</text><rect x="92" y="72" width="196" height="44" rx="5" fill="#FDF0EE" stroke="#E0A79F" stroke-width="1.1"/><rect x="320" y="72" width="196" height="44" rx="5" fill="#EFFAF6" stroke="#A9DDCC" stroke-width="1.1"/><rect x="104" y="80" width="54" height="8" rx="2" fill="#1F5FA8"/><rect x="104" y="92" width="44" height="5" rx="2" fill="#A2620A"/><rect x="104" y="102" width="66" height="10" rx="2" fill="#8A1C3B"/><rect x="332" y="80" width="54" height="7" rx="2" fill="#0E7C66"/><rect x="332" y="92" width="54" height="7" rx="2" fill="#0E7C66"/><rect x="332" y="104" width="54" height="7" rx="2" fill="#0E7C66"/><text x="8" y="148" font-family="Cambria,Georgia,serif" font-size="11" font-weight="bold" fill="#B3261E">Alignment</text><rect x="92" y="122" width="196" height="44" rx="5" fill="#FDF0EE" stroke="#E0A79F" stroke-width="1.1"/><rect x="320" y="122" width="196" height="44" rx="5" fill="#EFFAF6" stroke="#A9DDCC" stroke-width="1.1"/><rect x="102" y="130" width="150" height="5" rx="2" fill="#C2CBDC"/><rect x="140" y="141" width="110" height="5" rx="2" fill="#C2CBDC"/><rect x="120" y="152" width="140" height="5" rx="2" fill="#C2CBDC"/><rect x="332" y="130" width="150" height="5" rx="2" fill="#C2CBDC"/><rect x="332" y="141" width="110" height="5" rx="2" fill="#C2CBDC"/><rect x="332" y="152" width="140" height="5" rx="2" fill="#C2CBDC"/><text x="8" y="198" font-family="Cambria,Georgia,serif" font-size="11" font-weight="bold" fill="#B3261E">Proximity</text><rect x="92" y="172" width="196" height="44" rx="5" fill="#FDF0EE" stroke="#E0A79F" stroke-width="1.1"/><rect x="320" y="172" width="196" height="44" rx="5" fill="#EFFAF6" stroke="#A9DDCC" stroke-width="1.1"/><rect x="98" y="178" width="26" height="20" rx="3" fill="#C2CBDC"/><rect x="130" y="182" width="30" height="5" rx="2" fill="#9AA7C0"/><rect x="166" y="182" width="20" height="5" rx="2" fill="#0E7C66"/><rect x="192" y="178" width="26" height="20" rx="3" fill="#C2CBDC"/><rect x="224" y="182" width="30" height="5" rx="2" fill="#9AA7C0"/><rect x="260" y="182" width="20" height="5" rx="2" fill="#0E7C66"/><rect x="330" y="178" width="34" height="20" rx="3" fill="#C2CBDC"/><rect x="368" y="180" width="44" height="5" rx="2" fill="#9AA7C0"/><rect x="368" y="189" width="26" height="5" rx="2" fill="#0E7C66"/><rect x="436" y="178" width="34" height="20" rx="3" fill="#C2CBDC"/><rect x="474" y="180" width="38" height="5" rx="2" fill="#9AA7C0"/><rect x="474" y="189" width="24" height="5" rx="2" fill="#0E7C66"/>
+</svg>
+<figcaption>محدش ضاف كلام جديد بين العمودين. نفس المحتوى بالظبط، اللي اتغير إنه اتبرز، أو اتوحّد، أو
+اترتّب، أو اتجمّع.</figcaption>
+</figure>
+
+<div class="qbox"><span class="tag">GOING DEEPER</span>
+<p><b>One verb for each principle.</b></p>
+<p>The four are easy to mix up because all four make a page look better. They are easy to separate if
+you ask what each one actually does to the content, in one verb:</p>
+<ul>
+  <li><b>Contrast highlights.</b> Something becomes more important than the things around it.</li>
+  <li><b>Repetition unifies.</b> Things in different places become recognisably the same family.</li>
+  <li><b>Alignment orders.</b> Things line up on a shared edge, so the screen stops looking
+  scattered.</li>
+  <li><b>Proximity groups.</b> Things that belong together are read as one item.</li>
+</ul>
+<p>Then test any improvement against the four verbs. "Standardize the heading font across all pages"
+unifies, so it is repetition. "Put the price under the product photo with no gap" groups, so it is
+proximity. The pair that students confuse is repetition and proximity, because both deal with more than
+one element at a time; the difference is that repetition is about <b>sameness across the site</b> and
+proximity is about <b>closeness on the page</b>.</p>
+</div>
+
+<p class="ar">أربع مبادئ، وأسهل طريقة تفرق بينهم إنك تسأل الحركة بتعمل إيه بالظبط: <b>contrast</b>
+بتـ<b>برز</b>، <b>repetition</b> بتـ<b>وحّد</b>، <b>alignment</b> بتـ<b>رتّب</b>، <b>proximity</b>
+بتـ<b>جمّع</b>. والاتنين اللي بيتلخبطوا هما repetition و proximity: الأولى تشابه <b>عبر الصفحات</b>،
+والتانية قرب <b>جوه الصفحة</b>.</p>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;السؤال ده سهل، بس فيه حتة بتفرق بين إجابة كاملة وإجابة ناقصة.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;الإجابة القصيرة: &lt;b&gt;proximity&lt;/b&gt; بتجمّع، و&lt;b&gt;contrast&lt;/b&gt; بتبرز. ودي صح.&lt;/p&gt;\n&lt;p&gt;بس الإجابة الكاملة بتضيف &lt;b&gt;مثال وسبب&lt;/b&gt; لكل واحدة:&lt;/p&gt;\n&lt;ul&gt;\n  &lt;li&gt;&lt;b&gt;Proximity:&lt;/b&gt; صورة المنتج واسمه وسعره جنب بعض، &lt;b&gt;ومسافة بينهم وبين المجموعة اللي\n  بعدها&lt;/b&gt;، فكل مجموعة بتتقري كحاجة واحدة بنظرة. لاحظ إن &lt;b&gt;المسافة بين المجموعات&lt;/b&gt; جزء من\n  المبدأ، مش حاجة زيادة.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;Contrast:&lt;/b&gt; العنوان كبير وعريض فبيبان غير النص، ولون مميز للزر المهم زي الشراء، فأهمية\n  المعلومة بتبان &lt;b&gt;على طول&lt;/b&gt;.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;كلمة &lt;b&gt;immediately&lt;/b&gt; في التعريف مهمة: الـ contrast مش بتخلي الحاجة أحلى، بتخليها\n&lt;b&gt;تتشاف من أول نظرة&lt;/b&gt;.&lt;/p&gt;&quot;]">
+
+<div class="qbox new"><span class="tag new">PAUSE AND THINK &middot; PAGE 84</span>
+<p class="q">Which principle groups related items together, and which makes the most important item
+stand out?</p>
+<div class="ans"><b>Proximity</b> groups related items together: product images, names and prices are
+placed close to each other with space left between the groups, so each group is perceived as a single
+item at a glance. <b>Contrast</b> makes the most important item stand out: a heading is made large and
+bold so it is clearly different from the body text, and an accent colour is used for an important button
+such as purchase, so the priority of the information is immediately visible.</div>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;تعالى نشوف الفرق بين الاتنين بمثال واحد.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;موقع نتيجة مدرسة. ولي الأمر بيفتحه، بيكتب رقم الجلوس، وفي ثانيتين الدرجة قدامه. ده\n&lt;b&gt;usability&lt;/b&gt; حلوة: خطوات قليلة، ووصل للي عايزه بسرعة، ومغلطش.&lt;/p&gt;\n&lt;p&gt;دلوقتي نفس الصفحة بالظبط، بس ولي أمر تاني نظره ضعيف. الدرجة مكتوبة بخط صغير رمادي فاتح على أبيض.\nهو مش بيشتكي إن الموقع &lt;b&gt;صعب&lt;/b&gt;، هو &lt;b&gt;مش شايفه&lt;/b&gt; أصلًا. ده &lt;b&gt;accessibility&lt;/b&gt; وحشة.&lt;/p&gt;\n&lt;p&gt;شوف الفرق: الـ usability بتسأل &lt;b&gt;«يعمل المهمة أسرع؟»&lt;/b&gt;، والـ accessibility بتسأل\n&lt;b&gt;«يعمل المهمة من أصله؟»&lt;/b&gt;. وعشان كده الكتاب سمّاهم &lt;b&gt;هدفين&lt;/b&gt; للـ UCD، مش واحدة جوه التانية:\nممكن الأولى تكون ممتازة والتانية صفر في نفس الصفحة.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;وطب الـ UCD نفسها؟ خدها كسؤال واحد بتسأله قبل كل قرار.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;القرار ده &lt;b&gt;لمين&lt;/b&gt;؟ لو الإجابة «عشان أسهل علينا إحنا اللي بنبني»، يبقى ده مش UCD. لو الإجابة\n«عشان المستخدم محتاج كذا، في الموقف الفلاني»، يبقى ده UCD.&lt;/p&gt;\n&lt;p&gt;وخد بالك من نص السؤال اللي الناس بتنساه: &lt;b&gt;في أي موقف&lt;/b&gt;. نفس المستخدم في البيت على اللاب غير\nنفس المستخدم في الأوتوبيس على موبايل والبطارية 4%. الكتاب بيقول الاتنين مع بعض: «what the user needs»\nو«in what situation it will be used».&lt;/p&gt;\n&lt;p&gt;والـ persona اللي أخدناها في أول الدرس مش حاجة منفصلة عن ده: هي &lt;b&gt;الطريقة العملية&lt;/b&gt; اللي بتنفّذ\nبيها الـ UCD. الكتاب بيقول كده بالنص: تحديد persona هو واحد من الطرق المحددة لممارسة الـ UCD.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;الدايرة اللي فوق مش شكل حلو، هي اللي بتفرق بين UCD وبين تخمين.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;اللي بيصمم من غير UCD بيمشي في &lt;b&gt;خط&lt;/b&gt;: يفهم مرة واحدة، يصمم، يطلّع الموقع، وخلاص. اللي بيمشي\nبالـ UCD بيقفل &lt;b&gt;دايرة&lt;/b&gt;: يفهم، يصمم، &lt;b&gt;يجرّب مع ناس حقيقيين&lt;/b&gt;، يحسّن، ويرجع يفهم تاني.&lt;/p&gt;\n&lt;p&gt;وأهم سهم في الرسمة هو الأخضر اللي راجع من &lt;b&gt;Improve&lt;/b&gt; لـ &lt;b&gt;Understand&lt;/b&gt;، لأنه بيقول حاجة\nمهمة: &lt;b&gt;التجربة مع المستخدمين بتعلّمك حاجة ما كنتش تعرفها عنهم&lt;/b&gt;. يعني أنت رجعت أعرف بالمستخدم بعد\nالتجربة من قبلها.&lt;/p&gt;\n&lt;p&gt;وكتاب التقييم بيسأل ده مباشرة: اوصف مراحل الـ UCD من فهم احتياجات المستخدم لحد تقييم واختبار\nالموقع.&lt;/p&gt;&quot;]">
+<h2>4. User-Centered Design (UCD)</h2>
+
+<p><b>User-Centered Design (UCD)</b> is a design approach that designs websites and services from the
+perspective of the <b>user</b>, rather than the convenience of the <b>creator</b>.</p>
+
+<p>In UCD, design begins from "what the user needs" and "in what situation it will be used". Setting up
+a persona is one specific way of practising UCD; by clarifying the user image, design decisions can be
+kept consistently aligned with the user's perspective.</p>
+
+<p>Improving <b>usability</b> for users and <b>accessibility</b> for a wide range of people are
+important goals of UCD.</p>
+
+<figure>
+<svg viewBox="0 0 540 196" role="img" aria-label="Four stages in a loop. Understand the user and the
+ situation. Design from what they need. Test it with real users. Improve what the test showed. An arrow
+ returns from Improve back to Understand, so the loop never ends.">
+  <defs>
+    <marker id="u1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8795B5"/></marker>
+    <marker id="u2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0E7C66"/></marker>
+  </defs>
+  <rect x="28" y="18" width="80" height="86" rx="9" fill="#EAF6F2" stroke="#0E7C66" stroke-width="1.6"/><text x="68" y="40" text-anchor="middle" font-family="Cambria,Georgia,serif" font-size="13" font-weight="bold" fill="#0E7C66">Understand</text><text x="68" y="62" text-anchor="middle" font-size="9.5" fill="#16213E">who the user is</text><text x="68" y="78" text-anchor="middle" font-size="9.5" fill="#16213E">and in what</text><text x="68" y="94" text-anchor="middle" font-size="9.5" fill="#16213E">situation</text><rect x="164" y="18" width="80" height="86" rx="9" fill="#EDF1FA" stroke="#0B1437" stroke-width="1.6"/><text x="204" y="40" text-anchor="middle" font-family="Cambria,Georgia,serif" font-size="13" font-weight="bold" fill="#0B1437">Design</text><text x="204" y="62" text-anchor="middle" font-size="9.5" fill="#16213E">from what they</text><text x="204" y="78" text-anchor="middle" font-size="9.5" fill="#16213E">need, not from</text><text x="204" y="94" text-anchor="middle" font-size="9.5" fill="#16213E">what looks good</text><rect x="300" y="18" width="80" height="86" rx="9" fill="#FDF4E3" stroke="#A2620A" stroke-width="1.6"/><text x="340" y="40" text-anchor="middle" font-family="Cambria,Georgia,serif" font-size="13" font-weight="bold" fill="#A2620A">Test</text><text x="340" y="62" text-anchor="middle" font-size="9.5" fill="#16213E">with real users,</text><text x="340" y="78" text-anchor="middle" font-size="9.5" fill="#16213E">not with the</text><text x="340" y="94" text-anchor="middle" font-size="9.5" fill="#16213E">people who built it</text><rect x="436" y="18" width="80" height="86" rx="9" fill="#FBECF1" stroke="#8A1C3B" stroke-width="1.6"/><text x="476" y="40" text-anchor="middle" font-family="Cambria,Georgia,serif" font-size="13" font-weight="bold" fill="#8A1C3B">Improve</text><text x="476" y="62" text-anchor="middle" font-size="9.5" fill="#16213E">change what the</text><text x="476" y="78" text-anchor="middle" font-size="9.5" fill="#16213E">test showed,</text><text x="476" y="94" text-anchor="middle" font-size="9.5" fill="#16213E">then go again</text>
+  <path d="M 128 58 L 148 58" stroke="#8795B5" stroke-width="2" fill="none" marker-end="url(#u1)"/>
+  <path d="M 264 58 L 284 58" stroke="#8795B5" stroke-width="2" fill="none" marker-end="url(#u1)"/>
+  <path d="M 400 58 L 420 58" stroke="#8795B5" stroke-width="2" fill="none" marker-end="url(#u1)"/>
+  <path d="M 472 104 L 472 134 L 68 134 L 68 104" stroke="#0E7C66" stroke-width="2.6" fill="none"
+        marker-end="url(#u2)"/>
+  <text x="270" y="152" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#0E7C66">
+    and round again, with what the test taught you</text>
+  <rect x="60" y="162" width="420" height="26" rx="7" fill="#EFFAF6" stroke="#A9DDCC" stroke-width="1.2"/>
+  <text x="270" y="179" text-anchor="middle" font-size="11" fill="#0E7C66">The goals of the loop:
+    usability, how easily users achieve their goals, and accessibility, whether a wide range of people
+    can use it at all.</text>
+</svg>
+<figcaption>الـ UCD دايرة مش خط: بتفهم، تصمّم، تجرّب مع ناس حقيقيين، تحسّن، وترجع تفهم تاني.</figcaption>
+</figure>
+
+<div class="qbox"><span class="tag">GOING DEEPER</span>
+<p><b>Usability and accessibility are not the same word.</b></p>
+<p><b>Usability</b> is how easily users can use the site and achieve their goals: how few steps it takes,
+how quickly the thing they came for is found, how rarely they make a mistake.</p>
+<p><b>Accessibility</b> is whether a wide range of people can use it at all: someone with low vision,
+someone who cannot use a mouse, someone on a slow connection or an old phone.</p>
+<p>A site can have good usability for most visitors and still have bad accessibility, which is why the
+textbook names both as goals of UCD rather than treating one as part of the other. The assessment book
+asks the difference directly.</p>
+</div>
+
+<p class="ar">الـ <b>UCD</b> مش تقنية، دي زاوية نظر: القرار بيتاخد من ناحية المستخدم مش من ناحية اللي
+بيبني. وهدفها حاجتين مختلفتين: <b>usability</b> يعني يستخدمه بسهولة ويوصل للي عايزه، و<b>accessibility</b>
+يعني <b>يقدر</b> يستخدمه أصلًا، زي حد نظره ضعيف أو عنده نت بطيء. ممكن موقع يبقى سهل لمعظم الناس وبرضه
+مقفول في وش ناس تانية.</p>
+
+  </section>
+  <section class="blk" data-ways="[]">
+
+<div class="qbox new"><span class="tag new">EGYPTIAN EXAMPLE</span>
+<p>Take a school results page that parents use. The <b>persona</b> is a working parent who opens the
+page once a term on a phone, in a hurry, and wants one number. The <b>wireframe</b> decides that the
+student's name and grade go at the top and the school news goes at the bottom, before anyone chooses a
+colour. <b>Contrast</b> makes the grade the largest thing on the screen. <b>Proximity</b> keeps the
+subject name and its mark together instead of in two separate columns. <b>Repetition</b> gives every
+term's page the same heading style, so a parent who used it last term does not have to learn it again.
+And <b>accessibility</b> means the grade is still readable for a parent with weak eyesight, which is why
+the size is not decided by what looks elegant.</p>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;عشر كلمات كتير تتحفظ مرة واحدة. قسّمهم لتلات مجموعات.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;اتنين عن التخطيط، قبل أي شكل:&lt;/b&gt; &lt;b&gt;persona&lt;/b&gt; المستخدم مين، و&lt;b&gt;wireframe&lt;/b&gt; إيه مكانه فين.\nالاتنين دول بيحصلوا &lt;b&gt;قبل&lt;/b&gt; ما حد يفتح علبة الألوان.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;أربعة عن الشكل، وكلهم أفعال:&lt;/b&gt; &lt;b&gt;contrast&lt;/b&gt; بتبرز، &lt;b&gt;repetition&lt;/b&gt; بتوحّد،\n&lt;b&gt;alignment&lt;/b&gt; بترتّب، &lt;b&gt;proximity&lt;/b&gt; بتجمّع. و&lt;b&gt;CRAP&lt;/b&gt; هي أول حرف من كل واحدة فيهم بالإنجليزي.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;تلاتة عن الزاوية اللي بتبص منها:&lt;/b&gt; &lt;b&gt;UCD&lt;/b&gt; إن القرار للمستخدم مش للي بيبني، و&lt;b&gt;usability&lt;/b&gt;\nإنه يستخدمه بسهولة، و&lt;b&gt;accessibility&lt;/b&gt; إنه &lt;b&gt;يقدر&lt;/b&gt; يستخدمه أصلًا.&lt;/p&gt;\n&lt;p&gt;لو حفظت التقسيمة دي، أي سؤال في الامتحان هتعرف من أي مجموعة هو قبل ما تقرا الاختيارات.&lt;/p&gt;&quot;]">
+<h2>Key Terms</h2>
+
+<table>
+  <tr><td class="k">persona</td><td>a typical user pictured as a concrete person, with details such as
+    age, occupation, purpose and challenges.</td></tr>
+  <tr><td class="k">wireframe</td><td>a layout blueprint of a web page before any colour or decoration,
+    created to fix the placement and priority of information.</td></tr>
+  <tr><td class="k">contrast</td><td>making the priority of information clear and immediately
+    highlighting the most important elements.</td></tr>
+  <tr><td class="k">repetition</td><td>repeating specific characteristics so the whole design has
+    consistency and users navigate without getting lost.</td></tr>
+  <tr><td class="k">alignment</td><td>aligning each element to a common baseline, giving order to the
+    entire screen.</td></tr>
+  <tr><td class="k">proximity</td><td>placing related information close together so it is perceived as a
+    single group at a glance.</td></tr>
+  <tr><td class="k">CRAP</td><td>contrast, repetition, alignment, proximity: the four principles of
+    design, named by their English initials.</td></tr>
+  <tr><td class="k">user-centered design (UCD)</td><td>designing from the perspective of the user rather
+    than the convenience of the creator.</td></tr>
+  <tr><td class="k">usability</td><td>how easily users can use the site and achieve their goals.</td></tr>
+  <tr><td class="k">accessibility</td><td>whether the site is usable by a wide range of people.</td></tr>
+</table>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;لاحظ إن السؤالين دول بيختبروا نفس الحاجة بطريقتين مختلفتين، وده مقصود.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;سؤال (1) بيديك &lt;b&gt;تعريف&lt;/b&gt; ويسألك صح ولا غلط. وطريقة الغلط فيه واحدة بس: &lt;b&gt;يقلب التعريف&lt;/b&gt;.\nB قلبت الـ wireframe لتصميم نهائي فيه ألوان، وD قلبت الـ UCD من ناحية المستخدم لناحية اللي بيبني.\nفلو شفت جملة في الامتحان شكلها مظبوط بس فيها كلمة واحدة مقلوبة، دي هي.&lt;/p&gt;\n&lt;p&gt;سؤال (2) بيديك &lt;b&gt;وصف لحركة&lt;/b&gt; ويسألك اسمها إيه. وهنا بتمشي بالفعل: «يبرز» ← contrast،\n«يوحّد» ← repetition، «يرتّب» ← alignment، «يجمّع» ← proximity.&lt;/p&gt;\n&lt;p&gt;يعني في الامتحان: لو السؤال فيه &lt;b&gt;تعريف&lt;/b&gt;، دوّر على الكلمة المقلوبة. لو فيه &lt;b&gt;حركة&lt;/b&gt;،\nسمّي الفعل الأول والاسم هييجي لوحده.&lt;/p&gt;&quot;]">
+<h2>Worked Example</h2>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p><b>(1) Mark each statement with true or false.</b></p>
+<table>
+  <tr><td class="k" style="width:7%">A</td><td>A persona is a typical user image of those who will use
+    the website, set up as a concrete person.</td></tr>
+  <tr><td class="k">B</td><td>A wireframe is a final-version design that includes colour and design
+    decoration.</td></tr>
+  <tr><td class="k">C</td><td>"Proximity" in the four principles of design means grouping related
+    information close together.</td></tr>
+  <tr><td class="k">D</td><td>User-centered design is a design approach that prioritizes the convenience
+    of the creator.</td></tr>
+</table>
+<div class="ans">
+<p><b>A: true.</b> Correct definition of a persona.</p>
+<p><b>B: false.</b> A wireframe is a blueprint for determining the placement and priority of
+information, <b>without</b> including colour or design decoration.</p>
+<p><b>C: true.</b> Correct definition of proximity.</p>
+<p><b>D: false.</b> User-centered design is a design approach from the perspective of the
+<b>user</b>.</p>
+</div>
+</div>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p><b>(2) Match each description with the most appropriate principle of design.</b></p>
+<p>A Contrast &middot; B Repetition &middot; C Alignment &middot; D Proximity</p>
+<table>
+  <tr><td class="k" style="width:7%">a</td><td>Highlight important information and visually indicate
+    priority</td></tr>
+  <tr><td class="k">b</td><td>Repeat the same style to give a unified appearance</td></tr>
+  <tr><td class="k">c</td><td>Align the positions of elements to give an organized look</td></tr>
+  <tr><td class="k">d</td><td>Group related information close together</td></tr>
+</table>
+<div class="ans">
+<p><b>a: A, contrast. b: B, repetition. c: C, alignment. d: D, proximity.</b></p>
+<p>These four are the four verbs again, in the book's own order: highlight, unify, order, group.</p>
+</div>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;السؤال ده هو أهم سؤال في الدرس، وأكتر سؤال بيتكتب ناقص. تعالى نشوف ليه.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;اللي بيقرا السؤال بسرعة بيشوف كلمتين: persona و wireframe. فبيكتب تعريفهم ويقفل. ده بياخد\n&lt;b&gt;درجتين من ستة&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;بس السؤال مش بيسأل &lt;b&gt;إيه هما&lt;/b&gt;. السؤال بيسأل &lt;b&gt;ليه دول الأول، قبل الألوان والخطوط&lt;/b&gt;.\nيعني الأربع درجات الباقيين مش في التعريف، هما في &lt;b&gt;السببين&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;السبب الأول:&lt;/b&gt; التصميم ما يبعدش عن المستخدم. لما يبقى قدامك شخص محدد، كل قرار بيتقاس عليه.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;السبب التاني:&lt;/b&gt; &lt;b&gt;الناس بتتفق&lt;/b&gt;. لو بدأت باللون، كل واحد عنده رأي والنقاش ما بيخلصش.\nلو بدأت بالترتيب، الناس بتتفق بسهولة لأن محدش عنده رأي شخصي قوي في إن المواعيد فوق الخريطة ولا تحتها.&lt;/p&gt;\n&lt;p&gt;والسبب التاني ده هو اللي الكل بينساه، والكتاب نفسه حاططه في سطر &lt;b&gt;Refer to&lt;/b&gt;، يعني مش اختياري.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;طريقة عملية تكتب بيها الست جمل من غير ما تتوه.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;اكتب الإجابة على شكل &lt;b&gt;سلّم&lt;/b&gt;، كل درجة جملة:&lt;/p&gt;\n&lt;ol class=\&quot;circ\&quot;&gt;\n  &lt;li&gt;&lt;b&gt;المبدأ:&lt;/b&gt; التصميم بيبدأ من المستخدم مش من اللي بيبني.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;الـ persona إيه:&lt;/b&gt; مستخدم نموذجي كشخص محدد، بسنه وشغله وغرضه وصعوباته.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;فايدتها:&lt;/b&gt; التصميم ما يبعدش عن المستخدم ده.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;الـ wireframe إيه:&lt;/b&gt; بتحدد المكان والأهمية، من غير لون ولا زخرفة.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;فايدتها:&lt;/b&gt; &lt;b&gt;الناس تتفق&lt;/b&gt;، لأن البدء باللون بيودّي النقاش للأذواق الشخصية.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;النتيجة:&lt;/b&gt; الألوان والخطوط آخر حاجة، بعد ما المستخدم والهيكل بقوا متفق عليهم.&lt;/li&gt;\n&lt;/ol&gt;\n&lt;p&gt;لو كتبت الستة دول بالترتيب ده، إنت كتبت ست جمل لست درجات، وكل جملة بتشيل حاجة لوحدها. متكتبش\nفقرة واحدة طويلة، لأن المصحح بيعدّ &lt;b&gt;نقط&lt;/b&gt; مش &lt;b&gt;سطور&lt;/b&gt;.&lt;/p&gt;&quot;]">
+<h2>Exam-Style Question</h2>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p><b>Explain why a designer creates a persona and a wireframe before choosing colours and fonts.
+[6]</b></p>
+<p><b>Refer to:</b> the user's needs, and reaching agreement with stakeholders.</p>
+<div class="ans">
+<p><b>Model answer, one mark per sentence.</b></p>
+<ol class="circ">
+  <li>Good design begins from the user and not from the creator, so the first step is to find out who
+  the user is.</li>
+  <li>A persona is a typical user set up as a concrete person, with age, occupation, purpose and
+  challenges, so the team can think specifically about what this user needs.</li>
+  <li>With the persona fixed, the direction of the design is less likely to drift away from that
+  user.</li>
+  <li>The wireframe comes next and fixes the placement and the priority of the information, with no
+  colour or decoration, so what goes where is decided separately from how it will look.</li>
+  <li>This helps the stakeholders reach agreement, because if colours and fonts are decided first, the
+  discussion tends to drift toward personal preferences in appearance.</li>
+  <li>Colours and fonts are therefore chosen last, once the user's needs and the structure are already
+  agreed, so every visual decision serves a user who is already known.</li>
+</ol>
+<p><b>Where the marks are lost.</b> An answer that only defines a persona and a wireframe earns two
+marks out of six. The question asks <b>why they come first</b>, so four of the marks are in the two
+reasons: the design stops drifting away from the user, and the stakeholders can agree on the structure
+before anyone argues about colour. The second reason is the one that is almost always missing, and the
+book puts it in its own Refer to list, so it is not optional.</p>
+</div>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;التلات أسئلة دول بيختبروا تلات حاجات مختلفة، وكل واحد له مفتاح.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;سؤال 1 مفتاحه: اقرا آخر كلمة في السؤال.&lt;/b&gt; السؤال الرابع بيقول «Also give its three-letter\nabbreviation». اللي كتب user-centered design وبس، إجابته ناقصة. السؤال طلب حاجتين.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;سؤال 2(1) مفتاحه كلمة NOT.&lt;/b&gt; تلاتة من الاختيارات بيوصفوا &lt;b&gt;شخص&lt;/b&gt;، وواحد بيوصف\n&lt;b&gt;موقع&lt;/b&gt;. الـ persona بتوصف المستخدم، فأي حاجة عن السيرفر أو سرعة التحميل مش منها.&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;سؤال 2(2) مفتاحه الفعل.&lt;/b&gt; بص على التحسين واسأل: بيبرز؟ بيوحّد؟ بيرتّب؟ بيجمّع؟&lt;/p&gt;\n&lt;p&gt;وخد بالك من b و d مع بعض، دول اللي بيتلخبطوا: الاتنين فيهم أكتر من عنصر. الفرق إن\n&lt;b&gt;b قرب جوه صفحة واحدة&lt;/b&gt; (proximity)، و&lt;b&gt;d تشابه عبر كل الصفحات&lt;/b&gt; (repetition).&lt;/p&gt;&quot;]">
+<h2>Try</h2>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p><b>1. Answer the following questions.</b></p>
+<ol class="circ">
+  <li>What is the term for a typical user image of those who will use the website, set up as a concrete
+  person?</li>
+  <li>What is the term for a blueprint that shows the placement and priority of information on a web
+  page?</li>
+  <li>What are the four principles of design called when expressed by their English initials?</li>
+  <li>What is the term for the design approach that designs websites and services from the perspective
+  of the user? Also give its three-letter abbreviation.</li>
+</ol>
+<div class="ans">
+<p><b>1. A persona. 2. A wireframe. 3. CRAP:</b> contrast, repetition, alignment, proximity.
+<b>4. User-centered design,</b> abbreviated <b>UCD</b>. The question asks for both, so an answer that
+gives only one of them is incomplete.</p>
+</div>
+</div>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p><b>2 (1). Choose the one that is NOT an appropriate piece of information to include in setting up a
+persona.</b></p>
+<table>
+  <tr><td class="k" style="width:7%">A</td><td>The user's age and occupation</td></tr>
+  <tr><td class="k">B</td><td>The user's purpose for using the website</td></tr>
+  <tr><td class="k">C</td><td>The performance of the website's server</td></tr>
+  <tr><td class="k">D</td><td>The challenges the user faces</td></tr>
+</table>
+<div class="ans"><b>Answer: C.</b> A persona describes the <b>user</b>, not the system. Age and
+occupation, the purpose for using the site, and the challenges the user faces are all facts about a
+person. Server performance is a fact about the website, and no design decision about who the user is
+follows from it.</div>
+</div>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p><b>2 (2). For each design improvement, indicate which of the four principles it corresponds
+to.</b></p>
+<p>A Contrast &middot; B Repetition &middot; C Alignment &middot; D Proximity</p>
+<table>
+  <tr><td class="k" style="width:7%">a</td><td>Making headings large and bold to distinguish them from
+    body text</td></tr>
+  <tr><td class="k">b</td><td>Grouping product names, prices and photos close together</td></tr>
+  <tr><td class="k">c</td><td>Aligning the left edges of text and images</td></tr>
+  <tr><td class="k">d</td><td>Standardizing the font and colour of headings across all pages</td></tr>
+</table>
+<div class="ans">
+<p><b>a: A, contrast.</b> It highlights. <b>b: D, proximity.</b> It groups. <b>c: C, alignment.</b>
+It orders. <b>d: B, repetition.</b> It unifies.</p>
+<p>Watch b and d together: both involve several elements, which is why they are confused. <b>b is
+closeness on one page; d is sameness across pages.</b></p>
+</div>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;لو هتفتكر حاجة واحدة من الدرس كله، خليها السلسلة دي.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;&lt;b&gt;مين&lt;/b&gt; ← persona. &lt;b&gt;فين&lt;/b&gt; ← wireframe. &lt;b&gt;وضّحها&lt;/b&gt; ← CRAP. &lt;b&gt;وكل قرار للمستخدم&lt;/b&gt; ← UCD.&lt;/p&gt;\n&lt;p&gt;أربع كلمات عربي بتفتح لك الدرس كله، وكل واحدة فيهم بتجاوب سؤال مختلف:&lt;/p&gt;\n&lt;ol class=\&quot;circ\&quot;&gt;\n  &lt;li&gt;&lt;b&gt;المستخدم مين؟&lt;/b&gt; تطلع بشخص واحد محدد.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;إيه مكانه فين ومين الأهم؟&lt;/b&gt; تطلع بترتيب من غير لون.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;إزاي أخليها واضحة؟&lt;/b&gt; تطلع بصفحة بتقرا نفسها.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;القرار ده لمين؟&lt;/b&gt; تطلع بموقع متجرب مع ناس حقيقيين.&lt;/li&gt;\n&lt;/ol&gt;\n&lt;p&gt;وأهم حاجة في السلسلة دي هي &lt;b&gt;ترتيبها&lt;/b&gt;، مش أسماءها. الألوان والخطوط بتيجي بعد المرحلة التانية،\nمش قبلها. اللي بيبدأ باللون بيقرر شكل حاجة &lt;b&gt;لسه ما اتقررش إيه هي&lt;/b&gt;.&lt;/p&gt;&quot;]">
+<h2>Lesson Question, Answered</h2>
+
+<p class="gq">How do designers plan a website around its users, and what principles make a page clear
+and easy to use?</p>
+
+<p>Design begins from the user, not the creator. A <b>persona</b> pictures a typical user as a concrete
+person, with age, occupation, purpose and challenges, so the team can focus on what that user needs. A
+<b>wireframe</b> then fixes the placement and priority of information before any colour or decoration,
+which keeps discussion on structure and helps stakeholders agree. To make the page clear, four
+principles are applied: <b>contrast</b> to highlight priority, <b>repetition</b> for consistency,
+<b>alignment</b> for order, and <b>proximity</b> to group related items. All of this is guided by
+<b>user-centered design (UCD)</b>, which starts from what the user needs and aims to improve usability
+and accessibility. Good design, therefore, is planned from the user inward: who they are, what goes
+where, and how to make it clear.</p>
+
+<div class="kf"><b>Key Takeaway.</b> Persona (who) then wireframe (where) then CRAP (make it clear) then
+UCD (decide for the user). Design from the user inward.</div>
+
+  </section>
+
+  <div class="end">
+    <h2>خلصت الدرس</h2>
+    <p>باقي الـ PDF فيه الأسئلة والتمارين بإجاباتها، وزيادة عليها Part C.</p>
+    <a class="btn" href="../../">كل الواجبات</a>
+  </div>
+
+  <p class="foot">Programming and Artificial Intelligence &middot; Egyptian Baccalaureate &middot; Year 2</p>
+</main>
+
+<script>
+const KEY = "learn-4-2-open";
+let open = {};
+try { open = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { open = {}; }
+function remember() { try { localStorage.setItem(KEY, JSON.stringify(open)); } catch (e) {} }
+
+document.querySelectorAll(".blk").forEach((blk, i) => {
+  const ways = JSON.parse(blk.dataset.ways || "[]");
+  if (!ways.length) return;
+
+  const wrap = document.createElement("div");
+  wrap.className = "ask";
+  const btn = document.createElement("button");
+  btn.type = "button";
+  const cnt = document.createElement("span");
+  cnt.className = "cnt";
+  const panel = document.createElement("div");
+  panel.hidden = true;
+  wrap.append(btn, cnt, panel);
+  blk.append(wrap);
+
+  let at = typeof open[i] === "number" ? open[i] : -1;   // -1 means closed
+
+  function paint() {
+    if (at < 0) {
+      panel.hidden = true;
+      panel.innerHTML = "";
+      btn.textContent = "مش فاهم؟";
+      cnt.textContent = "";
+      return;
+    }
+    panel.hidden = false;
+    panel.className = "way";
+    panel.innerHTML = ways[at];
+    btn.textContent = at + 1 < ways.length ? "اشرحها بطريقة تانية" : "إخفاء";
+    cnt.textContent = ways.length > 1 ? "طريقة " + (at + 1) + " من " + ways.length : "";
+  }
+
+  btn.addEventListener("click", () => {
+    at = at + 1 < ways.length ? at + 1 : -1;
+    open[i] = at;
+    remember();
+    paint();
+  });
+  paint();
+});
+
+const prog = document.getElementById("prog");
+function scrolled() {
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  prog.style.width = (max > 0 ? Math.min(100, (h.scrollTop / max) * 100) : 0) + "%";
+}
+addEventListener("scroll", scrolled, { passive: true });
+addEventListener("resize", scrolled);
+scrolled();
+</script>
+</body>
+</html>
