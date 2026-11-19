@@ -171,23 +171,17 @@ function defaultHws(lessons, sentHw) {
 }
 function buildMessage(lessons, hws) {
   const L = sorted(lessons).map(id => LES[id]);
-  const parts = ['محاضرة النهاردة'];
+  const parts = [];
   const learn = L.filter(l => l.learn).map(l => D.base + 'learn/' + l.learn + '/');
   if (learn.length) {
-    parts.push('في حاجة مش فاهمينها؟ افتحوا الشرح ده تحت كل جزء زرار «مش فاهم؟» بيشرحه بطريقة تانية:\n' + learn.join('\n'));
+    parts.push('ده لينك بتاع "مش فاهم":\n' + learn.join('\n'));
   }
   if (hws.length) {
     const list = [...hws].sort((a, b) => D.hw[a].num - D.hw[b].num);
-    const n = list.reduce((s, h) => s + D.hw[h].n, 0);
-    const m = list.reduce((s, h) => s + D.hw[h].min, 0);
     parts.push('الواجب:\n' + list.map(h => D.base + h + '/').join('\n'));
     parts.push([
-      '• ' + n + ' سؤال، وقتهم حوالي ' + m + ' دقيقة.',
-      '• اكتبوا اسمكم فوق الأول، من غيره الواجب مش هيتبعت.',
-      '• كل سؤال بيتصحح قدامكم على طول، وتحته السبب بالقلم الأحمر.',
-      '• أسئلة المقالي أنا اللي بصححها بنفسي.',
-      '• الإجابات بتتحفظ أول بأول، فتقدروا تقفلوا وترجعوا تكمّلوا. بس متفتحوش اللينك في private tab',
-      '• لما تخلصوا دوسوا Hand in to El Bashmohandes في آخر الصفحة، والإجابات بتوصلني على طول.'
+      'اكتبوا اسمكوا فوق الأول',
+      'لما تخلصوا دوسوا Hand in to El Bashmohandes والإجابات بتوصلي علطو.'
     ].join('\n'));
   }
   return parts.join('\n\n');
@@ -342,7 +336,12 @@ function update() {
   recomputeHws();
   renderGroups(); renderLessons(); renderHws(); renderNotes();
   $('sendSec').hidden = !S.lessons.length;
-  if (S.lessons.length) { $('preview').textContent = buildMessage(S.lessons, S.hws); prefetch(); renderButtons(); }
+  if (S.lessons.length) {
+    const msg = buildMessage(S.lessons, S.hws);
+    $('preview').textContent = msg || 'مفيش رسالة المرة دي، ابعت الـ PDF بس.';
+    $('btnMsg').disabled = $('btnCopy').disabled = !msg;
+    prefetch(); renderButtons();
+  }
   renderHistory();
 }
 
