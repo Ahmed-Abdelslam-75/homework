@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lesson 4-3 &middot; Methods for Evaluating Websites</title>
+<meta name="description" content="The Study Companion for Lesson 4-3 on screen, with a button on every part that explains it a different way.">
+<meta name="theme-color" content="#0B1437">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B1437'/%3E%3Crect x='13' y='34' width='9' height='17' rx='2' fill='%2327E1C1' opacity='.5'/%3E%3Crect x='27' y='25' width='9' height='26' rx='2' fill='%2327E1C1' opacity='.75'/%3E%3Crect x='41' y='15' width='9' height='36' rx='2' fill='%2327E1C1'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap">
+<style>
+:root{--ink:#16213E;--navy:#0B1437;--teal:#0E7C66;--amber:#A2620A;--red:#B3261E;--line:#C7D0E0;
+      --soft:#F5F7FC;--muted:#5E6C8A;--page:#FFFFFF}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:#E9EDF5;color:var(--ink);font-family:Georgia,"Times New Roman",serif;
+     font-size:17px;line-height:1.72}
+.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff}
+.top-in{max-width:720px;margin:0 auto;padding:10px 18px;display:flex;align-items:baseline;gap:10px}
+.top .ls{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#8FE8D8}
+.top .nm{font-size:15px}
+.bar{height:3px;background:#22305F}
+.bar i{display:block;height:100%;width:0;background:#27E1C1;transition:width .15s linear}
+.sheet{max-width:720px;margin:0 auto;background:var(--page);min-height:100vh;
+       padding:0 22px 48px;box-shadow:0 0 28px rgba(11,20,55,.12)}
+.cover{padding:30px 0 6px;border-bottom:3px solid var(--navy);margin-bottom:20px}
+.cover .k{font-family:Cambria,Georgia,serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;
+          color:var(--teal);font-weight:bold}
+.cover h1{font-family:Cambria,Georgia,serif;font-size:27px;line-height:1.25;margin:6px 0 4px;color:var(--navy)}
+.cover .s{color:var(--muted);font-size:15px;margin:0}
+.howto{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:13px 15px;
+       margin:16px 0 4px;direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;
+       font-size:15.5px;line-height:1.85}
+.howto b{color:var(--teal)}
+
+.blk{padding:16px 0 4px;border-bottom:1px solid #E8ECF4}
+.blk:last-of-type{border-bottom:0}
+h2{font-family:Cambria,Georgia,serif;font-size:20px;color:var(--navy);margin:0 0 9px;line-height:1.35}
+h3.sub{font-family:Cambria,Georgia,serif;font-size:18px;color:var(--navy);margin:22px 0 9px;
+  padding-top:14px;border-top:1px solid #E8ECF4;line-height:1.35}
+.kick{font-size:13.5px;color:var(--muted);font-style:italic;margin:0 0 8px}
+.blk p{margin:0 0 11px}
+.blk p:last-child{margin-bottom:0}
+.blk b{color:var(--navy)}
+ul,ol{margin:0 0 11px;padding-left:22px}
+li{margin-bottom:7px}
+ol.circ{list-style:none;counter-reset:c;padding-left:0;padding-right:0}
+ol.circ li{counter-increment:c;padding-left:0;padding-inline-start:30px;position:relative}
+ol.circ li::before{content:counter(c);position:absolute;inset-inline-start:0;top:2px;width:20px;
+  height:20px;border-radius:50%;background:var(--navy);color:#fff;font-family:Cambria,serif;
+  font-size:12px;display:flex;align-items:center;justify-content:center}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15.5px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:#EEF2FA;font-family:Cambria,serif;color:var(--navy);font-size:14.5px}
+td.k{font-weight:bold;color:var(--navy)}
+table.terms td.k{width:32%}
+td .sm{font-weight:normal;color:var(--muted);font-size:13.5px}
+.gq{font-style:italic;color:var(--teal);font-size:18px;border-left:3px solid var(--teal);
+    padding-left:12px;margin:0 0 12px}
+.kf{background:#EFFAF6;border:1px solid #A9DDCC;border-radius:8px;padding:10px 13px;font-size:16px}
+.kf b{color:var(--teal)}
+.q{font-weight:bold;color:var(--navy)}
+.ans{background:var(--soft);border-left:3px solid var(--teal);padding:10px 13px;border-radius:0 8px 8px 0;
+     font-size:16px;margin-top:10px}
+.ans ol{padding-left:20px}
+.ans table{margin:10px 0;font-size:15px}
+.note,.cap{color:var(--muted);font-size:14px;font-style:italic}
+p.ar{direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:16px;
+     line-height:1.9;color:var(--ink);background:#F4F6FB;border-radius:8px;padding:10px 13px}
+figure{margin:12px 0}
+figure svg{width:100%;height:auto;display:block}
+figcaption{text-align:center;color:var(--muted);font-size:14px;font-style:italic;margin-top:6px;
+  direction:rtl;font-family:Tajawal,"Segoe UI",Arial,sans-serif}
+
+/* An English term sitting inside an Arabic sentence. Without its own direction and isolation,
+   "A/B testing" and "PV (Page View)" are reordered by the bidi algorithm and come out reversed. */
+p.ar .k,.way .k,figcaption .k{font-family:ui-monospace,Consolas,monospace;font-size:.9em;
+  font-weight:700;direction:ltr;unicode-bidi:isolate}
+p.ar .k{color:var(--navy)}
+.way .k{color:#7A5214}
+
+.qbox{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:13px 0}
+.qbox.new{border-color:#A9DDCC;background:#FCFEFD}
+.tag{display:inline-block;font-family:ui-monospace,monospace;font-size:10.5px;font-weight:bold;
+  letter-spacing:.08em;padding:2px 9px;border-radius:999px;margin:0 0 8px;background:#EEF2FA;
+  color:var(--navy)}
+.tag.new{background:#E8F8F3;color:var(--teal)}
+.qbox p{margin:0 0 9px}
+.qbox p:last-child{margin-bottom:0}
+.ask{margin:12px 0 2px}
+.ask button{font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:15.5px;font-weight:700;cursor:pointer;
+  background:#FFF6E8;color:var(--amber);border:1.5px solid #E8C89A;border-radius:999px;padding:8px 18px;
+  line-height:1.3}
+.ask button:hover{background:var(--amber);border-color:var(--amber);color:#fff}
+.ask button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.ask .cnt{font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:13.5px;color:var(--muted);
+  margin-inline-start:10px}
+.way{direction:rtl;text-align:right;font-family:Tajawal,"Segoe UI",Arial,sans-serif;font-size:16.5px;
+  line-height:1.95;background:#FFFBF3;border:1px solid #E8C89A;border-radius:10px;padding:13px 16px;
+  margin-top:10px}
+.way p{margin:0 0 10px}
+.way p:last-child{margin-bottom:0}
+.way b{color:var(--amber)}
+.way ol,.way ul{padding-right:22px;padding-left:0}
+.way ol.circ{padding-right:0}
+.way figure{margin:2px 0}
+.way table{font-size:15px;margin:11px 0}
+.way th,.way td{border-color:#E8C89A;text-align:right;vertical-align:top}
+.way th{background:#FBF1DF;color:#7A5214;font-family:Tajawal,"Segoe UI",Arial,sans-serif;
+  font-size:14.5px}
+.way td.n{font-weight:700;color:#7A5214;white-space:nowrap}
+.end{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:24px;
+  text-align:center;direction:rtl;font-family:Tajawal,"Segoe UI",Arial,sans-serif}
+.end h2{margin:0 0 6px}
+.end p{color:var(--muted);font-size:15.5px;margin:0 0 13px}
+.btn{display:inline-block;text-decoration:none;background:var(--teal);color:#fff;font-weight:700;
+  border-radius:999px;padding:11px 24px}
+.foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px}
+@media (max-width:460px){ body{font-size:16px} .sheet{padding:0 15px 40px} .cover h1{font-size:23px}
+  h2{font-size:18.5px} table{font-size:14.5px} th,td{padding:6px 7px} .way table{font-size:14px} }
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .bar i{transition:none} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in"><span class="ls">LESSON 4-3</span><span class="nm">Study Companion</span></div>
+  <div class="bar"><i id="prog"></i></div>
+</header>
+
+<main class="sheet">
+  <div class="cover">
+    <div class="k">Part A &middot; The Lesson</div>
+    <h1>Methods for Evaluating Websites</h1>
+    <p class="s">Lesson 4-3 &middot; Unit 4 &middot; Web and Media Design</p>
+  </div>
+
+  <div class="howto">نفس كلام الـ <b>Study Companion</b> بالظبط. الجديد هنا إن تحت أي جزء مش واضح فيه زرار
+  <b>مش فاهم؟</b>، تدوس عليه يشرحلك نفس الجزء بطريقة تانية خالص، وتدوس تاني يديك طريقة ثالثة.</div>
+
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;ليه الدرس ده موجود أصلا؟&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;في 4-1 اخترنا الوسيلة، وفي 4-2 صممنا الصفحة حوالين المستخدم. والدرس ده بيسأل السؤال اللي بعديهم\nعلى طول: &lt;b&gt;الموقع اللي عملناه، اشتغل فعلا ولا لأ؟&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;ولاحظ الجملة الأولى في الكتاب، لأنها هي الفكرة كلها: الموقع ممكن &lt;b&gt;يتنشر، ويبان خلصان، وبرضه\nيفشل مع الناس اللي بتستخدمه&lt;/b&gt;. يعني إن الشغل خلص مش دليل إنه نجح. الدليل الوحيد هو إنك تروح\n&lt;b&gt;تقيس&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;والقياس ده ليه طريقتين مختلفتين تماما، وكل واحدة بتجاوب سؤال التانية &lt;b&gt;ما تقدرش&lt;/b&gt; تجاوبه. وده\nاللي الدرس كله ماشي عليه.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;تعالى نقرا الرسمة اللي فوق، لأنها الدرس كله في صورة.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;فوق خالص: &lt;b&gt;موقع واحد&lt;/b&gt;. وتحته سهمين، مش عشان فيه رأيين، لأ، عشان فيه &lt;b&gt;سؤالين&lt;/b&gt;:&lt;/p&gt;\n&lt;ul&gt;\n  &lt;li&gt;&lt;b&gt;الشمال:&lt;/b&gt; «قد إيه؟ كام واحد؟» ← ده &lt;span class=\&quot;k\&quot;&gt;quantitative&lt;/span&gt;، وأدواته\n  &lt;span class=\&quot;k\&quot;&gt;web analytics&lt;/span&gt; و&lt;span class=\&quot;k\&quot;&gt;A/B testing&lt;/span&gt;. وإجابته بتتكتب\n  &lt;b&gt;رقم&lt;/b&gt;.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;اليمين:&lt;/b&gt; «ليه؟ إيه اللي وقّفهم؟» ← ده &lt;span class=\&quot;k\&quot;&gt;qualitative&lt;/span&gt;، وأدواته\n  &lt;span class=\&quot;k\&quot;&gt;usability testing&lt;/span&gt; و&lt;span class=\&quot;k\&quot;&gt;interviews&lt;/span&gt; و\n  &lt;span class=\&quot;k\&quot;&gt;heuristic evaluation&lt;/span&gt;. وإجابته بتتكتب &lt;b&gt;جملة بيقولها حد&lt;/b&gt;.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;والمستطيل اللي تحت هو الحتة اللي الامتحان بيدور عليها: دول مش اتنين بيتخانقوا على نفس الحاجة.\n&lt;b&gt;كل واحد فيهم بيجاوب سؤال التاني أصلا ما يعرفش يجاوبه.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;وخد القاعدة دي معاك من دلوقتي: لو إجابة السؤال ممكن تتكتب &lt;b&gt;رقم&lt;/b&gt;، يبقى\n&lt;span class=\&quot;k\&quot;&gt;quantitative&lt;/span&gt;. لو إجابته &lt;b&gt;جملة&lt;/b&gt;، يبقى\n&lt;span class=\&quot;k\&quot;&gt;qualitative&lt;/span&gt;.&lt;/p&gt;&quot;]">
+<p class="kick">Unit 4 &middot; Web and Media Design &middot; textbook pages 88 to 94</p>
+<h2>Lesson 4-3: Methods for Evaluating Websites</h2>
+
+<p class="gq">How can a website be evaluated, and why is it useful to combine numbers with users'
+voices?</p>
+
+<p>A website can be launched, look finished, and still fail the people who use it. The only way to
+know is to evaluate it, and there are two different ways to do that. You can count: how many people
+came, how long they stayed, how many bought something. Or you can watch and ask: sit beside a real
+user, see where they hesitate, and hear in their own words what confused them. The first gives you
+<b>numbers</b>. The second gives you <b>reasons</b>. Numbers tell you <b>how much</b> is happening;
+users' voices tell you <b>why</b>. Teams that evaluate well use both, and they use them in a
+particular order.</p>
+
+<div class="kf"><b>Key Fact.</b> Evaluation comes in two kinds. Quantitative evaluation answers
+<b>how much</b> with numbers. Qualitative evaluation answers <b>why</b> with users' voices and
+behaviour. The accurate picture comes from combining them.</div>
+<figure>
+<svg viewBox="0 0 540 272" role="img" aria-label="One website at the top, with two arrows leading down to two cards. The left card is quantitative evaluation, which asks how much and how many, and uses web analytics and A B testing; its answer is a number. The right card is qualitative evaluation, which asks why and what stopped them, and uses usability testing, interviews and heuristic evaluation; its answer is a sentence. A note underneath says these are not two opinions about one site but two different questions.">
+<defs><marker id="tw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#8795B5"/></marker></defs><text x="270" y="20" font-size="16" fill="#0B1437" font-weight="bold" text-anchor="middle" font-family="Cambria,Georgia,serif">One website, two different questions</text><rect x="185" y="32" width="170" height="34" rx="8" fill="#0B1437"/><text x="270" y="54" font-size="13" fill="#FFFFFF" font-weight="bold" text-anchor="middle" font-family="Cambria,Georgia,serif">The same website</text><path d="M 232 68 L 150 92" stroke="#8795B5" stroke-width="2" fill="none" marker-end="url(#tw)"/><path d="M 308 68 L 390 92" stroke="#8795B5" stroke-width="2" fill="none" marker-end="url(#tw)"/><rect x="14" y="96" width="250" height="112" rx="10" fill="#EAF1FA" stroke="#1F5FA8" stroke-width="1.6"/><text x="30" y="120" font-size="15.5" fill="#1F5FA8" font-weight="bold" font-family="Cambria,Georgia,serif">Quantitative</text><text x="30" y="141" font-size="12.5" fill="#1F5FA8" font-weight="bold">How much? How many?</text><text x="30" y="161" font-size="11.5" fill="#16213E">Web analytics: PV, bounce rate, CVR.</text><text x="30" y="177" font-size="11.5" fill="#16213E">A/B testing: which version wins.</text><text x="30" y="199" font-size="10" fill="#5E6C8A" font-weight="bold" letter-spacing=".7">THE ANSWER IS A NUMBER</text><rect x="276" y="96" width="250" height="112" rx="10" fill="#EAF6F2" stroke="#0E7C66" stroke-width="1.6"/><text x="292" y="120" font-size="15.5" fill="#0E7C66" font-weight="bold" font-family="Cambria,Georgia,serif">Qualitative</text><text x="292" y="141" font-size="12.5" fill="#0E7C66" font-weight="bold">Why? What stopped them?</text><text x="292" y="161" font-size="11.5" fill="#16213E">Usability testing, interviews.</text><text x="292" y="177" font-size="11.5" fill="#16213E">Heuristic evaluation.</text><text x="292" y="199" font-size="10" fill="#5E6C8A" font-weight="bold" letter-spacing=".7">THE ANSWER IS A SENTENCE</text><rect x="14" y="220" width="512" height="44" rx="8" fill="#F5F7FC" stroke="#C7D0E0" stroke-width="1.3"/><text x="30" y="240" font-size="12" fill="#3B4A6B">These are not two opinions about one site. They are two different questions,</text><text x="30" y="256" font-size="12" fill="#3B4A6B">and neither answer can be given by the other method.</text></svg>
+<figcaption>الموقع واحد، والسؤال اللي بتسأله هو اللي بيحدد النوع.</figcaption>
+</figure>
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;الجدول ده هو نفس جدول الكتاب، بس بكلام الحصة.&lt;/b&gt;&lt;/p&gt;\n&lt;table&gt;\n  &lt;tr&gt;&lt;th&gt;النوع&lt;/th&gt;&lt;th&gt;بيعمل إيه&lt;/th&gt;&lt;th&gt;تقنياته في الكتاب&lt;/th&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;n\&quot;&gt;Qualitative&lt;/td&gt;\n      &lt;td&gt;يحفر في &lt;b&gt;أسباب&lt;/b&gt; سلوك المستخدم، والحاجات اللي ما تتكتبش في رقم&lt;/td&gt;\n      &lt;td&gt;&lt;span class=\&quot;k\&quot;&gt;Usability testing&lt;/span&gt;: تتفرج على حد بيستخدم الموقع.&lt;br&gt;\n          &lt;span class=\&quot;k\&quot;&gt;Interviews&lt;/span&gt;: تسمع منه بصوته هو.&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;n\&quot;&gt;Quantitative&lt;/td&gt;\n      &lt;td&gt;يستخدم &lt;b&gt;بيانات رقمية&lt;/b&gt; زي عدد الزيارات والوقت، ويحكم بموضوعية&lt;/td&gt;\n      &lt;td&gt;&lt;span class=\&quot;k\&quot;&gt;Web analytics&lt;/span&gt;: تحليل مؤشرات زي الـ PV والوقت.&lt;br&gt;\n          &lt;span class=\&quot;k\&quot;&gt;A/B testing&lt;/span&gt;: تقارن نسختين وتشوف مين أحسن.&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;\n&lt;p&gt;الأربع تقنيات دول بالاسم مطلوبين منك، واحفظهم &lt;b&gt;بنوعهم&lt;/b&gt; مش لوحدهم، لأن السؤال في الامتحان\nبيجي بالشكل ده: «أنهي واحدة فيهم كمية؟».&lt;/p&gt;\n&lt;p&gt;وفي &lt;b&gt;خامسة&lt;/b&gt; هتقابلها بعد شوية في الدرس اسمها &lt;span class=\&quot;k\&quot;&gt;heuristic evaluation&lt;/span&gt;،\nوالكتاب مأخّرها عشان هي الفترة التانية، بس هي &lt;b&gt;qualitative&lt;/b&gt; وبتتسأل زيهم بالظبط. يعني الجدول\nده نصّه مش كله.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;ليه الكتاب أصلا قسّمهم اتنين؟ عشان في فرق في اللي بيطلع من كل واحد.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;تخيل معايا موقع حجز. لو سألت الأرقام، هتقولك: &lt;b&gt;مية واحد دخلوا، سبعة حجزوا&lt;/b&gt;. تمام. طيب\nالتلاتة وتسعين اللي ما حجزوش، ليه؟&lt;/p&gt;\n&lt;p&gt;الرقم &lt;b&gt;مش ناقصه شغل&lt;/b&gt;، الرقم ناقصه حاجة من أصله: &lt;b&gt;السبب&lt;/b&gt;. الرقم ما بيجيش ومعاه سبب\nملزوق فيه. وعشان كده مهما جبت أرقام أكتر، مش هتوصل لـ «ليه».&lt;/p&gt;\n&lt;p&gt;وفي المقابل، لو قعدت مع خمس ناس وسألتهم، هيقولولك السبب بالظبط. بس عمرهم ما هيقولولك\n&lt;b&gt;كام واحد&lt;/b&gt; اتعذب بنفس المشكلة، لأنهم خمسة بس.&lt;/p&gt;\n&lt;p&gt;يعني المشكلة مش إن واحد فيهم أحسن. المشكلة إن كل واحد فيهم &lt;b&gt;أعمى&lt;/b&gt; في الحتة اللي التاني\nشايفها.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;الجملة اللي الكتاب بيقفل بيها الجزء ده، وهي اللي بتتسأل:&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;«الكيفي مناسب إنك تستكشف سبب &lt;b&gt;ليه الموقع صعب الاستخدام&lt;/b&gt;، والكمي مناسب إنك تمسك الاتجاه\nالعام لـ &lt;b&gt;قد إيه الموقع بيتستخدم&lt;/b&gt;. وبدمج الاتنين، تقييم أدق بيبقى ممكن.»&lt;/p&gt;\n&lt;p&gt;لاحظ تلات كلمات في الجملة دي، لأن كل واحدة منهم بتجيب درجة:&lt;/p&gt;\n&lt;ul&gt;\n  &lt;li&gt;&lt;b&gt;سبب&lt;/b&gt; (cause) ← دي الكيفي.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;الاتجاه العام&lt;/b&gt; (overall trend) ← دي الكمي. مش رقم واحد، الصورة الكبيرة.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;أدق&lt;/b&gt; (more accurate) ← دي نتيجة &lt;b&gt;الدمج&lt;/b&gt;، مش نتيجة واحد لوحده.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;والكلمة الأخيرة دي بالذات هي جواب سؤال الست درجات اللي في آخر الدرس.&lt;/p&gt;&quot;]">
+<h2>1. Qualitative and Quantitative Evaluation</h2>
+
+<p>Methods for evaluation generally fall into two main categories, <b>qualitative evaluation</b> and
+<b>quantitative evaluation</b>. These two categories are not special to websites. They are used across
+many fields, and the same ideas apply when a website is the thing being evaluated.</p>
+
+<table>
+  <tr><th style="width:22%">Evaluation method</th><th style="width:40%">Description (purpose)</th>
+      <th>Specific techniques</th></tr>
+  <tr><td class="k">Qualitative evaluation</td>
+      <td>Explore in depth the <b>reasons</b> behind users' psychology and behaviour, and evaluate
+      qualitative aspects that cannot be expressed in numbers.</td>
+      <td><b>Usability testing:</b> observe actual operations to identify points that are hard to
+      use.<br><b>Interviews:</b> hear users' direct voices to understand their needs and
+      dissatisfactions.</td></tr>
+  <tr><td class="k">Quantitative evaluation</td>
+      <td>Use numerical data such as access counts and time, and evaluate the current state
+      objectively and statistically.</td>
+      <td><b>Web analytics:</b> analyse metrics such as PV count and time spent.<br>
+      <b>A/B testing:</b> compare two options to verify which leads to better results.</td></tr>
+</table>
+
+<p>Qualitative evaluation is suited to exploring the cause of <b>"why is it hard to use"</b>, while
+quantitative evaluation is suited to grasping the overall trend of <b>"how much is it being used"</b>.
+By combining both, more accurate evaluation is possible.</p>
+
+<p class="ar">الفرق كله في سؤالين: <b>قد إيه؟</b> دي <span class="k">quantitative</span>، و<b>ليه؟</b>
+دي <span class="k">qualitative</span>. ولو إجابة السؤال ممكن تتكتب رقم يبقى كمي، ولو إجابته جملة
+بيقولها حد يبقى كيفي.</p>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;الحتة اللي الطلبة بتقع فيها هنا: الإجابة مش «لأ» وبس.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;السؤال فيه &lt;b&gt;نصين&lt;/b&gt;: «هيقولك ليه؟» و«أنهي طريقة هتقول؟». ولو كتبت «لأ» وسبت، تكون جاوبت نص\nالسؤال وخدت نص الدرجة.&lt;/p&gt;\n&lt;p&gt;والسبب في «لأ» مهم يتكتب صح: مش عشان العدّ مش دقيق، ولا عشان محتاج أرقام أكتر. العدّ\n&lt;b&gt;مظبوط تماما&lt;/b&gt;، بس هو &lt;b&gt;رقم&lt;/b&gt;، والرقم ما بيجيش ومعاه سبب.&lt;/p&gt;\n&lt;p&gt;وأجمل جزء في إجابة الكتاب هو المثال: &lt;b&gt;قايمة مربكة&lt;/b&gt; و&lt;b&gt;صفحة بطيئة&lt;/b&gt; بيطلّعوا\n&lt;b&gt;نفس الرقم بالظبط&lt;/b&gt;. يعني مشكلتين مختلفتين خالص، وبيبانوا واحدة في الأرقام. فلو اتفرجت على\nالرقم بس، مستحيل تعرف أنت قدام أنهي واحدة فيهم.&lt;/p&gt;\n&lt;p&gt;وآخر سطر في الإجابة هو اللي الناس بتنساه: &lt;b&gt;العدّ برضه مهم&lt;/b&gt;، لأنه هو اللي قالك تروح تتفرج على\n&lt;b&gt;أنهي صفحة&lt;/b&gt;. من غيره كنت هتتفرج على الموقع كله.&lt;/p&gt;&quot;]">
+
+<div class="qbox"><span class="tag">PAUSE &amp; THINK</span>
+<p class="q">Would counting visits tell you why people leave a page? Which method would?</p>
+<div class="ans">
+<p>No. A visit count tells you how many people arrived and how many left, and that is all it can ever
+tell you. It is a number, and a number has no reason attached to it. Two completely different
+problems, a confusing menu and a page that loads too slowly, produce exactly the same count.</p>
+<p>The method that answers <b>why</b> is qualitative: a usability test, where you watch a real user
+try the task and see the moment they hesitate, or an interview, where you ask them directly what they
+expected to happen. The counting still matters, because it is what told you which page to go and
+watch.</p>
+</div>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;اللفة دي هي إجابة سؤال الست درجات، بس مرسومة.&lt;/b&gt;&lt;/p&gt;\n&lt;ol class=\&quot;circ\&quot;&gt;\n  &lt;li&gt;&lt;b&gt;قيس&lt;/b&gt; بالأرقام (&lt;span class=\&quot;k\&quot;&gt;PV&lt;/span&gt;، &lt;span class=\&quot;k\&quot;&gt;bounce rate&lt;/span&gt;،\n  &lt;span class=\&quot;k\&quot;&gt;CVR&lt;/span&gt;). دي بتقولك &lt;b&gt;فين&lt;/b&gt; المشكلة.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;حقّق&lt;/b&gt; في المكان ده بالناس (تجربة استخدام، مقابلة، مراجعة خبير). دي بتقولك\n  &lt;b&gt;ليه&lt;/b&gt;.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;غيّر حاجة واحدة&lt;/b&gt; بس.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;قيس تاني&lt;/b&gt;، أو اعمل &lt;span class=\&quot;k\&quot;&gt;A/B test&lt;/span&gt;، عشان تعرف التغيير ده نفع ولا لأ.&lt;/li&gt;\n&lt;/ol&gt;\n&lt;p&gt;وخطوة 3 دي اللي الناس بتستهون بيها: لو غيّرت تلات حاجات مرة واحدة والرقم اتحسن، أنت\n&lt;b&gt;ما تعرفش أنهي واحدة فيهم هي اللي نفعت&lt;/b&gt;، فما تعلمتش حاجة.&lt;/p&gt;\n&lt;p&gt;وبعد خطوة 4 بترجع لـ 1 تاني. عشان كده اسمها &lt;b&gt;لفة&lt;/b&gt; مش خط: التقييم مش بيخلص.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;طيب ما دام الكيفي هو اللي بيقول «ليه»، ليه ما نستخدموش هو بس؟&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;السؤال ده منطقي جدا، وإجابته كلمة واحدة: &lt;b&gt;الحجم&lt;/b&gt;.&lt;/p&gt;\n&lt;table&gt;\n  &lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;th class=\&quot;n\&quot;&gt;الأرقام&lt;/th&gt;&lt;th class=\&quot;n\&quot;&gt;الناس&lt;/th&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;n\&quot;&gt;بتشوف كام واحد؟&lt;/td&gt;&lt;td&gt;&lt;b&gt;كل&lt;/b&gt; الزوار&lt;/td&gt;&lt;td&gt;خمسة في الساعة&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;n\&quot;&gt;بتكلف إيه؟&lt;/td&gt;&lt;td&gt;مجانا، وشغالة لوحدها&lt;/td&gt;&lt;td&gt;صبح شغل كامل&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;n\&quot;&gt;بتقولك إيه؟&lt;/td&gt;&lt;td&gt;فين المشكلة وحجمها&lt;/td&gt;&lt;td&gt;ليه بتحصل&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;\n&lt;p&gt;يعني الأرقام هي &lt;b&gt;الطريقة الوحيدة&lt;/b&gt; اللي تقدر تشوف الموقع كله مرة واحدة، والناس هي\n&lt;b&gt;الطريقة الوحيدة&lt;/b&gt; اللي تقدر تفسّر أي حتة فيه.&lt;/p&gt;\n&lt;p&gt;ولو استخدمت الناس بس، هتبقى &lt;b&gt;بتخمّن&lt;/b&gt; أنهي صفحة تروحلها. ولو استخدمت الأرقام بس، هتبقى عارف\nالمشكلة فين بالظبط و&lt;b&gt;عمرك ما هتعرف هي إيه&lt;/b&gt;.&lt;/p&gt;&quot;]">
+<h2>How a site is actually evaluated</h2>
+
+<p>The textbook gives the two methods as a table and says in one line that combining them is better.
+It never draws the <b>order</b> in which a team uses them, and that order is what the six-mark
+question is really asking for.</p>
+<figure>
+<svg viewBox="0 0 540 320" role="img" aria-label="An evaluation loop of four steps. Step one, measure with web analytics, page views, bounce rate and conversion rate, which tells you where the problem is. Step two, investigate with a usability test, an interview or a heuristic review, which tells you why. Step three, change one thing. Step four, measure again or run an A B test to see whether it worked, and a dashed arrow returns to step one. A note says the numbers find the place and the people find the cause.">
+<defs><marker id="lp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#8795B5"/></marker></defs><text x="270" y="20" font-size="16" fill="#0B1437" font-weight="bold" text-anchor="middle" font-family="Cambria,Georgia,serif">How a site is actually evaluated</text><rect x="14" y="34" width="200" height="92" rx="10" fill="#EAF1FA" stroke="#1F5FA8" stroke-width="1.8"/><circle cx="38" cy="60" r="13" fill="#1F5FA8"/><text x="38" y="65" font-size="14" fill="#FFFFFF" font-weight="bold" text-anchor="middle">1</text><text x="60" y="65" font-size="15" fill="#1F5FA8" font-weight="bold" font-family="Cambria,Georgia,serif">Measure</text><text x="30" y="88" font-size="11.5" fill="#16213E">PV, bounce rate, CVR.</text><text x="30" y="103" font-size="11.5" fill="#16213E">Tells you WHERE.</text><rect x="326" y="34" width="200" height="92" rx="10" fill="#EAF6F2" stroke="#0E7C66" stroke-width="1.8"/><circle cx="350" cy="60" r="13" fill="#0E7C66"/><text x="350" y="65" font-size="14" fill="#FFFFFF" font-weight="bold" text-anchor="middle">2</text><text x="372" y="65" font-size="15" fill="#0E7C66" font-weight="bold" font-family="Cambria,Georgia,serif">Investigate</text><text x="342" y="88" font-size="11.5" fill="#16213E">Usability test, interview,</text><text x="342" y="103" font-size="11.5" fill="#16213E">heuristic review.</text><text x="342" y="118" font-size="11.5" fill="#16213E">Tells you WHY.</text><rect x="326" y="166" width="200" height="92" rx="10" fill="#FDF4E3" stroke="#A2620A" stroke-width="1.8"/><circle cx="350" cy="192" r="13" fill="#A2620A"/><text x="350" y="197" font-size="14" fill="#FFFFFF" font-weight="bold" text-anchor="middle">3</text><text x="372" y="197" font-size="15" fill="#A2620A" font-weight="bold" font-family="Cambria,Georgia,serif">Change one thing</text><text x="342" y="220" font-size="11.5" fill="#16213E">One change at a time, or</text><text x="342" y="235" font-size="11.5" fill="#16213E">you cannot tell which</text><text x="342" y="250" font-size="11.5" fill="#16213E">one worked.</text><rect x="14" y="166" width="200" height="92" rx="10" fill="#EAF1FA" stroke="#1F5FA8" stroke-width="1.8"/><circle cx="38" cy="192" r="13" fill="#1F5FA8"/><text x="38" y="197" font-size="14" fill="#FFFFFF" font-weight="bold" text-anchor="middle">4</text><text x="60" y="197" font-size="15" fill="#1F5FA8" font-weight="bold" font-family="Cambria,Georgia,serif">Measure again</text><text x="30" y="220" font-size="11.5" fill="#16213E">Did it work? A/B test</text><text x="30" y="235" font-size="11.5" fill="#16213E">the two versions.</text><path d="M 220 80 L 318 80" stroke="#8795B5" stroke-width="2.2" fill="none" marker-end="url(#lp)"/><path d="M 426 130 L 426 160" stroke="#8795B5" stroke-width="2.2" fill="none" marker-end="url(#lp)"/><path d="M 318 212 L 222 212" stroke="#8795B5" stroke-width="2.2" fill="none" marker-end="url(#lp)"/><path d="M 114 162 L 114 132" stroke="#8795B5" stroke-width="2.2" fill="none" stroke-dasharray="6 4" marker-end="url(#lp)"/><text x="132" y="152" font-size="11.5" fill="#5E6C8A">and round again, with the change in place</text><rect x="14" y="272" width="512" height="40" rx="8" fill="#EAF6F2" stroke="#0E7C66" stroke-width="1.4"/><text x="30" y="288" font-size="12" fill="#0B5A4A">The numbers find the place. The people find the cause.</text><text x="30" y="304" font-size="12" fill="#0B5A4A">Neither step can do the other one's job.</text></svg>
+<figcaption>الكمي والكيفي مش رأيين في نفس الموقع. دول <b>خطوتين في لفة واحدة</b>، وبيجروا بالترتيب ده.</figcaption>
+</figure>
+<div class="qbox new"><span class="tag new">GOING DEEPER</span>
+<p>Why not just use the one that gives reasons, since reasons are what you actually want? Because of
+scale. Web analytics watches <b>every</b> visitor, all day, for free, and it never forgets. A usability
+test watches five people for an hour and costs a morning of work. So the numbers are the only method
+that can see the whole site at once, and the voices are the only method that can explain any part of
+it. Using voices alone means guessing which page to investigate; using numbers alone means knowing
+exactly where the problem is and never finding out what it is.</p>
+<p>This also explains the order in the figure above. You do not interview people and then go looking
+for a number to support it. You let the numbers choose the question, then spend the expensive method
+on the exact spot that deserves it.</p>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;التلات مؤشرات بكلام الحصة، وكل واحد فيهم بيتسأل بالشكل ده بالظبط.&lt;/b&gt;&lt;/p&gt;\n&lt;table&gt;\n  &lt;tr&gt;&lt;th&gt;المؤشر&lt;/th&gt;&lt;th&gt;بيقيس إيه بالظبط&lt;/th&gt;&lt;th&gt;بيستخدم في إيه&lt;/th&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;PV (Page View)&lt;/td&gt;\n      &lt;td&gt;الصفحة اتشافت &lt;b&gt;كام مرة&lt;/b&gt;&lt;/td&gt;\n      &lt;td&gt;مؤشر أساسي على انتشار الموقع وقد إيه بيتشاف&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;Bounce rate&lt;/td&gt;\n      &lt;td&gt;نسبة الزيارات اللي &lt;b&gt;انتهت بعد أول صفحة&lt;/b&gt; بس&lt;/td&gt;\n      &lt;td&gt;بيقولك المحتوى طابق توقع الزائر ولا لأ&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;CVR (Conversion rate)&lt;/td&gt;\n      &lt;td&gt;نسبة الزيارات اللي &lt;b&gt;حققت الهدف&lt;/b&gt;: شراء، تسجيل، حجز&lt;/td&gt;\n      &lt;td&gt;أهم مؤشر، لأنه بيربط الموقع بنتيجته الحقيقية&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;\n&lt;p&gt;والفرق اللي الامتحان بيلعب عليه: &lt;span class=\&quot;k\&quot;&gt;PV&lt;/span&gt; &lt;b&gt;عدد&lt;/b&gt; بيزيد بس، والاتنين\nالتانيين &lt;b&gt;نسب&lt;/b&gt;. فممكن النسبة تقل والعدد يزيد في نفس الشهر، وده مش تناقض، ده طبيعة الرقمين.&lt;/p&gt;\n&lt;p&gt;وخد بالك من حاجة في التعريفات الإنجليزية: &lt;span class=\&quot;k\&quot;&gt;bounce rate&lt;/span&gt; و\n&lt;span class=\&quot;k\&quot;&gt;CVR&lt;/span&gt; الاتنين بيبدأوا بنفس الكلام،\n&lt;span class=\&quot;k\&quot;&gt;the proportion of visits that&lt;/span&gt;. الفرق في &lt;b&gt;آخر&lt;/b&gt; الجملة: واحدة بتنتهي بـ\n&lt;span class=\&quot;k\&quot;&gt;left&lt;/span&gt; والتانية بـ &lt;span class=\&quot;k\&quot;&gt;achieved&lt;/span&gt;. &lt;b&gt;اقرا لآخر\nالسطر.&lt;/b&gt;&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;أول حاجة لازم تثبت في دماغك: واحد فيهم عدد، واتنين نسبة.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;شوف الرسمة فوق تاني. الصف الأول فيه &lt;b&gt;ورقات&lt;/b&gt; بتتعدّ. الصف التاني والتالت فيهم &lt;b&gt;شريطة\nواحدة&lt;/b&gt; متقسمة.&lt;/p&gt;\n&lt;ul&gt;\n  &lt;li&gt;&lt;span class=\&quot;k\&quot;&gt;PV&lt;/span&gt; = &lt;b&gt;عدد&lt;/b&gt;. رقم صحيح بيزيد وخلاص. ما ينفعش يكون 80 في المية.&lt;/li&gt;\n  &lt;li&gt;&lt;span class=\&quot;k\&quot;&gt;Bounce rate&lt;/span&gt; = &lt;b&gt;نسبة&lt;/b&gt; من الزيارات. من 100 زيارة، 38 خرجوا من أول\n  صفحة.&lt;/li&gt;\n  &lt;li&gt;&lt;span class=\&quot;k\&quot;&gt;CVR&lt;/span&gt; = &lt;b&gt;نسبة&lt;/b&gt; من الزيارات كمان. من نفس الـ 100، سبعة عملوا\n  المطلوب.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;وليه ده مهم؟ عشان العدد والنسبة بيتحركوا &lt;b&gt;مستقلين عن بعض&lt;/b&gt;. ممكن الزيارات تتضاعف والنسبة ما\nتتغيرش. وده بالظبط سؤال من أسئلة Part C.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;أسهل طريقة تفرق بين bounce rate و CVR، وهما أكتر اتنين بيتلخبطوا.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;التعريفين بيبتدوا بنفس الكلام بالحرف: «نسبة الزيارات اللي...». فالطالب بيقرا أول نص سطر ويختار\nغلط.&lt;/p&gt;\n&lt;p&gt;العلاج: &lt;b&gt;ما تقراش الأول، اقرا الآخر&lt;/b&gt;.&lt;/p&gt;\n&lt;table&gt;\n  &lt;tr&gt;&lt;th&gt;المؤشر&lt;/th&gt;&lt;th&gt;الجملة بتنتهي بإيه&lt;/th&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;n\&quot;&gt;Bounce rate&lt;/td&gt;&lt;td&gt;...&lt;b&gt;خرجت&lt;/b&gt; من أول صفحة (left)&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;n\&quot;&gt;CVR&lt;/td&gt;&lt;td&gt;...&lt;b&gt;حققت&lt;/b&gt; الهدف (achieved)&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;\n&lt;p&gt;كلمتين: &lt;b&gt;left&lt;/b&gt; و&lt;b&gt;achieved&lt;/b&gt;. دول اللي بيفرقوا بين إجابة صح وإجابة غلط في سؤال\nالاختيار.&lt;/p&gt;\n&lt;p&gt;وللـ &lt;span class=\&quot;k\&quot;&gt;PV&lt;/span&gt; كلمة بتميّزه برضه: &lt;b&gt;number&lt;/b&gt;. هو الوحيد اللي تعريفه فيه كلمة\n«عدد» مش «نسبة».&lt;/p&gt;&quot;]">
+<h2>2. Major Indicators in Web Analytics</h2>
+
+<p><b>Web analytics</b> is a technique for analysing how a website is accessed using numerical values.
+It is the central method of quantitative evaluation for websites. The indicators below are the ones
+commonly used, and the three the lesson names are the three you are expected to know.</p>
+<figure>
+<svg viewBox="0 0 540 394" role="img" aria-label="Three rows, one for each indicator. PV is marked as a count and drawn as ten page icons. Bounce rate is marked as a proportion and drawn as a bar of one hundred visits with thirty eight of them shaded as leaving at once. Conversion rate is marked as a proportion and drawn as the same bar with seven of the hundred shaded as having bought. A note underneath says PV can rise while both proportions fall.">
+<text x="270" y="20" font-size="16" fill="#0B1437" font-weight="bold" text-anchor="middle" font-family="Cambria,Georgia,serif">The three indicators, and what each one counts</text><rect x="14" y="32" width="512" height="92" rx="9" fill="#EAF1FA" stroke="#1F5FA8" stroke-width="1.5"/><text x="30" y="60" font-size="14.5" fill="#1F5FA8" font-weight="bold" font-family="Cambria,Georgia,serif">PV (Page View)</text><rect x="436" y="44" width="62" height="18" rx="9" fill="#1F5FA8"/><text x="467.0" y="57" font-size="9.5" fill="#FFFFFF" font-weight="bold" text-anchor="middle" letter-spacing=".6">A COUNT</text><text x="30" y="84" font-size="11.5" fill="#16213E">How many times the page was opened,</text><text x="30" y="100" font-size="11.5" fill="#16213E">in total.</text><text x="30" y="116" font-size="11.5" fill="#5E6C8A">A whole number that only ever goes up.</text><rect x="290" y="72" width="12" height="16" rx="2" fill="#9AA7C0"/><rect x="307" y="72" width="12" height="16" rx="2" fill="#9AA7C0"/><rect x="324" y="72" width="12" height="16" rx="2" fill="#9AA7C0"/><rect x="341" y="72" width="12" height="16" rx="2" fill="#9AA7C0"/><rect x="358" y="72" width="12" height="16" rx="2" fill="#9AA7C0"/><rect x="375" y="72" width="12" height="16" rx="2" fill="#9AA7C0"/><rect x="392" y="72" width="12" height="16" rx="2" fill="#9AA7C0"/><rect x="409" y="72" width="12" height="16" rx="2" fill="#9AA7C0"/><rect x="426" y="72" width="12" height="16" rx="2" fill="#9AA7C0"/><rect x="443" y="72" width="12" height="16" rx="2" fill="#9AA7C0"/><text x="290" y="108" font-size="10.5" fill="#1F5FA8" font-weight="bold">10 views</text><rect x="14" y="132" width="512" height="92" rx="9" fill="#FDF4E3" stroke="#A2620A" stroke-width="1.5"/><text x="30" y="160" font-size="14.5" fill="#A2620A" font-weight="bold" font-family="Cambria,Georgia,serif">Bounce rate</text><rect x="406" y="144" width="92" height="18" rx="9" fill="#A2620A"/><text x="452.0" y="157" font-size="9.5" fill="#FFFFFF" font-weight="bold" text-anchor="middle" letter-spacing=".6">A PROPORTION</text><text x="30" y="184" font-size="11.5" fill="#16213E">Of the visits that arrived, the share</text><text x="30" y="200" font-size="11.5" fill="#16213E">that left from the first page.</text><text x="30" y="216" font-size="11.5" fill="#5E6C8A">Did it match what they came for?</text><text x="290" y="164" font-size="9.5" fill="#5E6C8A">100 visits arrived</text><rect x="290" y="172" width="200" height="16" rx="3" fill="#EFE0C4"/><rect x="290" y="172" width="76" height="16" rx="3" fill="#A2620A"/><text x="290" y="208" font-size="10.5" fill="#A2620A" font-weight="bold">38 of them left at once</text><rect x="14" y="232" width="512" height="92" rx="9" fill="#EAF6F2" stroke="#0E7C66" stroke-width="1.5"/><text x="30" y="260" font-size="14.5" fill="#0E7C66" font-weight="bold" font-family="Cambria,Georgia,serif">Conversion rate (CVR)</text><rect x="406" y="244" width="92" height="18" rx="9" fill="#0E7C66"/><text x="452.0" y="257" font-size="9.5" fill="#FFFFFF" font-weight="bold" text-anchor="middle" letter-spacing=".6">A PROPORTION</text><text x="30" y="284" font-size="11.5" fill="#16213E">Of the visits that arrived, the share</text><text x="30" y="300" font-size="11.5" fill="#16213E">that did what the site exists for.</text><text x="30" y="316" font-size="11.5" fill="#5E6C8A">Bought, registered, booked, sent.</text><text x="290" y="264" font-size="9.5" fill="#5E6C8A">100 visits arrived</text><rect x="290" y="272" width="200" height="16" rx="3" fill="#D6EDE5"/><rect x="290" y="272" width="14" height="16" rx="3" fill="#0E7C66"/><text x="290" y="308" font-size="10.5" fill="#0E7C66" font-weight="bold">7 of them bought</text><rect x="14" y="338" width="512" height="44" rx="8" fill="#F5F7FC" stroke="#C7D0E0" stroke-width="1.3"/><text x="30" y="358" font-size="12" fill="#3B4A6B">A count and a share are not the same kind of number. PV can rise while both</text><text x="30" y="374" font-size="12" fill="#3B4A6B">proportions fall, which is why one indicator on its own is never a verdict.</text></svg>
+<figcaption>عدد واحد ونسبتين. والفرق ده هو اللي بيخلي حالة «PV عالي و CVR واطي» ممكنة أصلا.</figcaption>
+</figure>
+<table>
+  <tr><th style="width:24%">Indicator</th><th style="width:36%">Meaning</th><th>What it is used
+      for</th></tr>
+  <tr><td class="k">PV (Page View)</td>
+      <td>The total number of times a page has been viewed.</td>
+      <td>A basic indicator that measures how widely the site is seen and how much exposure it
+      gets.</td></tr>
+  <tr><td class="k">Bounce rate</td>
+      <td>The proportion of visits that ended after viewing only the first page.</td>
+      <td>An indicator of whether the page content matched the user's expectations and whether
+      further actions were prompted.</td></tr>
+  <tr><td class="k">Conversion rate (CVR)</td>
+      <td>The proportion of visits that achieved a target action, such as a purchase or a
+      registration.</td>
+      <td>A very important indicator that measures how much the site contributes to business results
+      (profits).</td></tr>
+</table>
+
+<p>Notice what separates them. PV is a <b>count</b>: a whole number that only goes up. Bounce rate and
+CVR are <b>proportions</b>: a share of the visits, which can rise while the count falls, or fall while
+the count rises. That difference is what makes the next box possible.</p>
+
+<p class="ar">التلاتة بالبلدي: <span class="k">PV</span> الصفحة اتفتحت <b>كام مرة</b> (عدد).
+<span class="k">Bounce rate</span> نسبة اللي دخلوا وخرجوا من <b>أول صفحة</b>.
+<span class="k">CVR</span> نسبة اللي عملوا <b>الحاجة اللي الموقع متعمل عشانها</b>: اشترى، سجّل،
+حجز.</p>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;الحالتين دول لو فهمتهم، تكون فهمت ليه مؤشر لوحده ما بيحكمش.&lt;/b&gt;&lt;/p&gt;\n&lt;table&gt;\n  &lt;tr&gt;&lt;th&gt;الأرقام بتقول&lt;/th&gt;&lt;th&gt;يعني إيه&lt;/th&gt;&lt;th&gt;الحل&lt;/th&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;n\&quot;&gt;PV عالي&lt;br&gt;CVR واطي&lt;/td&gt;\n      &lt;td&gt;ناس كتير بتوصل، وقليل جدا بيعمل المطلوب. يبقى المشكلة &lt;b&gt;مش&lt;/b&gt; في جذب الناس، المشكلة\n      في اللي بيحصل بعد ما يدخلوا.&lt;/td&gt;\n      &lt;td&gt;روح &lt;b&gt;اتفرج&lt;/b&gt; على خمس ناس وهما بيحاولوا، لأن الأرقام وصلت لآخرها.&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;n\&quot;&gt;PV واطي&lt;br&gt;CVR عالي&lt;/td&gt;\n      &lt;td&gt;اللي بيلاقوا الموقع هما بالظبط الناس المناسبة. يبقى الموقع &lt;b&gt;شغال&lt;/b&gt;، بس\n      &lt;b&gt;محدش عارف إنه موجود&lt;/b&gt;.&lt;/td&gt;\n      &lt;td&gt;مش محتاج تغيّر في الموقع. محتاج &lt;b&gt;إعلان&lt;/b&gt;.&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;\n&lt;p&gt;نفس الموقع، ونفس الشغل، و&lt;b&gt;حل مختلف تماما&lt;/b&gt;. وده اللي الصندوق بيقوله في آخر سطر.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;مثال صفحة الواجب، بالأرقام اللي أنتم عارفينها.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;60 طالب فتحوا الصفحة (&lt;span class=\&quot;k\&quot;&gt;PV&lt;/span&gt;). 18 قفلوها من غير ما يحلوا ولا سؤال\n(&lt;span class=\&quot;k\&quot;&gt;bounce rate&lt;/span&gt; = 30 في المية). و31 دوسوا إرسال في الآخر\n(&lt;span class=\&quot;k\&quot;&gt;CVR&lt;/span&gt; = حوالي 52 في المية).&lt;/p&gt;\n&lt;p&gt;دلوقتي اسأل نفسك: التلات أرقام دول قالولي أعمل إيه؟ &lt;b&gt;ولا حاجة.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;بس هما عملوا حاجة تانية مهمة جدا: &lt;b&gt;ضيّقوا مكان المشكلة&lt;/b&gt;. الناس بتدخل (يبقى المشكلة مش في\nأول الصفحة)، واللي بيكمل بيبعت (يبقى المشكلة مش في آخرها). يبقى الضياع &lt;b&gt;في النص&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;وعشان تعرف إيه اللي بيحصل في النص، في طريقة واحدة بس: تسأل اتنين من التمنتاشر «فتحتها وقفلتها،\nحصل إيه؟». واحد فيهم يقولك «الجولة الأولى كانت باينة طويلة على الموبايل».&lt;/p&gt;\n&lt;p&gt;الجملة دي لوحدها أنفع من التلات أرقام. &lt;b&gt;بس&lt;/b&gt; من غير التلات أرقام ما كنتش هتعرف أصلا إنك\nتسأل الطالب ده بالذات.&lt;/p&gt;&quot;]">
+
+<div class="qbox new"><span class="tag new">GOING DEEPER</span>
+<p><b>The pattern the exam loves: high PV with a low CVR.</b> Many people arrive; almost nobody does
+the thing the site exists for. The number tells you the arrival is not the problem, so the problem is
+somewhere between arriving and acting, and the numbers cannot say where. That is the signal to go and
+watch five people try it.</p>
+<p>Read the opposite pattern too. A <b>low PV with a high CVR</b> means the few people who find the
+site are exactly the right people: the problem is not the site, it is that nobody knows it exists.
+Same site, same work, completely different fix. This is why one indicator on its own is never a
+verdict.</p>
+</div>
+
+<div class="qbox"><span class="tag">PAUSE &amp; THINK</span>
+<p class="q">Match the question to the method: "how many?" against "why?"</p>
+<div class="ans">
+<p><b>How many?</b> goes to quantitative evaluation: web analytics for PV, bounce rate and CVR, and
+A/B testing when you want to know which of two versions performs better.</p>
+<p><b>Why?</b> goes to qualitative evaluation: usability testing to see where users struggle,
+interviews to hear what they wanted, and heuristic evaluation for an expert's reading of the
+interface.</p>
+<p>A quick test you can apply to any exam sentence: if the answer to the question could be written as
+a number, it is quantitative. If the answer is a sentence a person says, it is qualitative.</p>
+</div>
+</div>
+
+<div class="qbox new"><span class="tag new">EGYPTIAN EXAMPLE</span>
+<p>Take the homework page you open every week. Suppose the numbers say: 60 students opened it
+(<b>PV</b>), 18 of them closed it without answering a single question (<b>bounce rate</b> of 30
+percent), and 31 pressed send at the end (<b>CVR</b> of about 52 percent).</p>
+<p>Those three numbers are worth a lot, and they still do not tell you one useful thing about what to
+fix. They say the losses are not at the start and not at the end, they are somewhere in the middle.
+The only way to learn what happens in the middle is to ask two of the eighteen: "you opened it and
+closed it, what happened?" One of them says the first round looked long on a phone. That sentence is
+the qualitative evaluation, and it is worth more than the three numbers, but you would never have
+known to ask that student without them.</p>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;التلات قواعد بكلام الحصة، وكل واحدة بمثال على كسرها.&lt;/b&gt;&lt;/p&gt;\n&lt;table&gt;\n  &lt;tr&gt;&lt;th&gt;القاعدة&lt;/th&gt;&lt;th&gt;بتسأل على إيه&lt;/th&gt;&lt;th&gt;مثال على كسرها&lt;/th&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;Consistency&lt;/td&gt;\n      &lt;td&gt;الشكل والتصرف ثابتين في كل الموقع؟&lt;/td&gt;\n      &lt;td&gt;زرار الحفظ أخضر في صفحة ورمادي في التانية، وعلى اليمين هنا وعلى الشمال هناك&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;Error prevention&lt;/td&gt;\n      &lt;td&gt;التصميم بيصعّب على المستخدم إنه يغلط؟&lt;/td&gt;\n      &lt;td&gt;خانة تاريخ بتقبل 31 فبراير، أو زرار Delete جنب Save بنفس الشكل&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;Visibility of system status&lt;/td&gt;\n      &lt;td&gt;النظام بيوري المستخدم بيعمل إيه دلوقتي؟&lt;/td&gt;\n      &lt;td&gt;تضغط إرسال وما يحصلش أي حاجة على الشاشة، فتضغط تاني&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;\n&lt;p&gt;التلاتة دول &lt;b&gt;بأسمائهم الإنجليزية&lt;/b&gt; مطلوبين. والكتاب بيسأل عليهم &lt;b&gt;بالعكس&lt;/b&gt; كمان، يعني\nبدل ما يقولك «يعني إيه error prevention؟»، بيقولك: «أنهي قاعدة بتقلل احتمال إن المستخدم\nيغلط؟».&lt;/p&gt;\n&lt;p&gt;فعشان كده ما تحفظش التعريف بس. اتمرن على الاتجاه التاني: &lt;b&gt;اقرا الموقف واسأل نفسك أنهي قاعدة\nاتكسرت&lt;/b&gt;. عمود «مثال على كسرها» ده هو اللي بيتدرب عليه.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;التعريف ده فيه حاجتين بس، وهما اللي بيتسألوا. أي كلام تاني زيادة.&lt;/b&gt;&lt;/p&gt;\n&lt;ol class=\&quot;circ\&quot;&gt;\n  &lt;li&gt;&lt;b&gt;مين بيعملها؟&lt;/b&gt; &lt;span class=\&quot;k\&quot;&gt;experts&lt;/span&gt;، خبراء. مش مستخدمين عاديين. ودي اللي\n  بتفرقها عن &lt;span class=\&quot;k\&quot;&gt;usability testing&lt;/span&gt;.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;بيراجعوا على إيه؟&lt;/b&gt; &lt;span class=\&quot;k\&quot;&gt;rules of thumb&lt;/span&gt;، قواعد خبرة، يعني أصول متعارف\n  عليها للتصميم الكويس. &lt;b&gt;مش رأيهم الشخصي.&lt;/b&gt;&lt;/li&gt;\n&lt;/ol&gt;\n&lt;p&gt;ولو السؤال جه «عرّف heuristic evaluation»، الإجابة اللي بتاخد الدرجة لازم تحتوي الكلمتين دول\nبالاسم: &lt;b&gt;خبراء&lt;/b&gt; و&lt;b&gt;قواعد خبرة&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;وانتبه لحاجة في الترجمة: &lt;span class=\&quot;k\&quot;&gt;heuristics&lt;/span&gt; لوحدها معناها &lt;b&gt;القواعد&lt;/b&gt;، مش\nالطريقة. اسم الطريقة كلمتين: &lt;span class=\&quot;k\&quot;&gt;heuristic evaluation&lt;/span&gt;.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;السؤال اللي بيلخبط: مفيش مستخدم خالص، أمال ليه كيفية؟&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;عشان التصنيف مبني على &lt;b&gt;اللي بيطلع من الطريقة&lt;/b&gt;، مش على &lt;b&gt;مين بيعملها&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;اللي بيطلع من مراجعة الخبير إيه؟ &lt;b&gt;قايمة مشاكل وأسباب مكتوبة بالكلام&lt;/b&gt;: «حالة النظام مش\nظاهرة»، «زرار المسح قريب من الحفظ». دي جمل، مش قياسات. وأي طريقة ناتجها جمل تبقى\n&lt;span class=\&quot;k\&quot;&gt;qualitative&lt;/span&gt;.&lt;/p&gt;\n&lt;p&gt;وقارنها بـ &lt;span class=\&quot;k\&quot;&gt;A/B testing&lt;/span&gt;: الناس بتشارك فيها فعلا، ومع ذلك هي\n&lt;span class=\&quot;k\&quot;&gt;quantitative&lt;/span&gt;، لأن اللي بيطلع منها &lt;b&gt;رقمين بتقارنهم&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;يعني الاتنين بيكسروا التوقع، وكل واحد في الاتجاه المعاكس للتاني. لو فهمت المبدأ (الناتج هو اللي\nبيصنّف)، مش هتغلط في أي واحدة فيهم.&lt;/p&gt;&quot;]">
+<h2>3. Heuristic Evaluation</h2>
+
+<p><b>Heuristic evaluation</b> is a method in which <b>experts</b> identify problems in a website's UI
+(user interface) based on <b>rules of thumb</b> (heuristics). It is a form of <b>qualitative</b>
+evaluation, used along with usability testing and other methods to investigate the causes of usability
+problems.</p>
+
+<p>Two things in that definition are what the exam asks for. <b>Who does it:</b> experts, not ordinary
+users. <b>What they check against:</b> rules of thumb, established principles of good interface
+design, rather than their personal taste.</p>
+<figure>
+<svg viewBox="0 0 540 234" role="img" aria-label="On the left, a browser window with a save button and a delete button side by side in the same size, ringed in red. On the right, a card headed rules of thumb listing consistency with a tick, error prevention with a cross, and visibility of system status with a cross. An arrow runs from the card to the screen. A note underneath says nothing is measured and no user is present, only an expert and a list.">
+<defs><marker id="he" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#8795B5"/></marker></defs><text x="270" y="20" font-size="16" fill="#0B1437" font-weight="bold" text-anchor="middle" font-family="Cambria,Georgia,serif">One expert, one written list, and no users at all</text><rect x="14" y="34" width="240" height="156" rx="8" fill="#FFFFFF" stroke="#C7D0E0" stroke-width="1.5"/><rect x="14" y="34" width="240" height="22" rx="8" fill="#EEF2FA" stroke="#C7D0E0" stroke-width="1.5"/><circle cx="30" cy="45" r="4" fill="#C7D0E0"/><circle cx="44" cy="45" r="4" fill="#C7D0E0"/><circle cx="58" cy="45" r="4" fill="#C7D0E0"/><rect x="32" y="70" width="92" height="9" rx="2" fill="#9AA7C0"/><rect x="32" y="90" width="190" height="5" rx="2" fill="#D5DCE8"/><rect x="32" y="102" width="160" height="5" rx="2" fill="#D5DCE8"/><rect x="32" y="114" width="176" height="5" rx="2" fill="#D5DCE8"/><rect x="32" y="136" width="58" height="20" rx="4" fill="#C7D0E0"/><rect x="96" y="136" width="58" height="20" rx="4" fill="#C7D0E0"/><text x="61" y="150" font-size="10" fill="#3B4A6B" font-weight="bold" text-anchor="middle">Save</text><text x="125" y="150" font-size="10" fill="#3B4A6B" font-weight="bold" text-anchor="middle">Delete</text><rect x="32" y="166" width="70" height="5" rx="2" fill="#D5DCE8"/><circle cx="93" cy="146" r="22" fill="none" stroke="#B3261E" stroke-width="1.8"/><text x="93" y="184" font-size="9.5" fill="#B3261E" text-anchor="middle">same size, side by side</text><rect x="292" y="34" width="234" height="156" rx="8" fill="#F5F7FC" stroke="#8795B5" stroke-width="1.3"/><text x="306" y="56" font-size="13.5" fill="#0B1437" font-weight="bold" font-family="Cambria,Georgia,serif">Rules of thumb</text><line x1="306" y1="66" x2="512" y2="66" stroke="#C7D0E0" stroke-width="1.2"/><text x="306" y="92" font-size="14" fill="#0E7C66" font-weight="bold">&#10003;</text><text x="326" y="92" font-size="12" fill="#0B1437">Consistency</text><text x="306" y="124" font-size="14" fill="#B3261E" font-weight="bold">&#10007;</text><text x="326" y="124" font-size="12" fill="#B3261E" font-weight="bold">Error prevention</text><text x="306" y="156" font-size="14" fill="#B3261E" font-weight="bold">&#10007;</text><text x="326" y="156" font-size="12" fill="#B3261E" font-weight="bold">Visibility of system status</text><text x="306" y="180" font-size="10" fill="#5E6C8A">The expert reads the screen against this list.</text><path d="M 286 112 L 262 112" stroke="#8795B5" stroke-width="2" fill="none" marker-end="url(#he)"/><rect x="14" y="198" width="512" height="30" rx="8" fill="#F5F7FC" stroke="#C7D0E0" stroke-width="1.3"/><text x="270" y="218" font-size="12" fill="#3B4A6B" text-anchor="middle">Nothing here is measured, and no user is present. It is still qualitative.</text></svg>
+<figcaption>خبير بيقرا الواجهة على <b>قايمة مكتوبة</b>، مش على ذوقه. ومفيش ولا مستخدم في الصورة.</figcaption>
+</figure>
+<p><b>Major evaluation perspectives</b></p>
+
+<table>
+  <tr><th style="width:26%">Perspective</th><th style="width:36%">What it asks</th><th>An example of a
+      failure</th></tr>
+  <tr><td class="k">Consistency</td>
+      <td>Whether the design and operations are unified across the site.</td>
+      <td>The button that saves is green on one page and grey on the next, and sits on the right here
+      and on the left there.</td></tr>
+  <tr><td class="k">Error prevention</td>
+      <td>Whether the design makes it hard for users to make mistakes.</td>
+      <td>A date field that silently accepts 31 February, or a Delete button directly beside
+      Save.</td></tr>
+  <tr><td class="k">Visibility of system status</td>
+      <td>Whether system status is clearly indicated to users.</td>
+      <td>You press send and nothing on the screen changes, so you press it again. No processing
+      indicator and no input error message.</td></tr>
+</table>
+
+<p class="ar"><span class="k">Heuristic evaluation</span> معناها إن <b>خبير</b> (مش مستخدم عادي)
+يراجع الواجهة على <b>قواعد معروفة</b> (rules of thumb)، مش على ذوقه. وهي نوع من الـ
+<span class="k">qualitative</span> لأن ناتجها كلام ومشاكل، مش أرقام.</p>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;أكتر سؤال بيتغلط فيه في الدرس كله: A/B testing كيفي ولا كمي؟&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;الإجابة: &lt;b&gt;كمي&lt;/b&gt; (&lt;span class=\&quot;k\&quot;&gt;quantitative&lt;/span&gt;).&lt;/p&gt;\n&lt;p&gt;وليه الناس بتغلط؟ عشان الاسم فيه كلمة &lt;b&gt;testing&lt;/b&gt;، وعشان فيه ناس حقيقيين بيجربوا النسختين.\nفالدماغ بتقول «فيه ناس، يبقى كيفي».&lt;/p&gt;\n&lt;p&gt;بس اسأل نفسك سؤال واحد بس: &lt;b&gt;النسخة اللي هتكسب، هتتحدد إزاي؟&lt;/b&gt;&lt;/p&gt;\n&lt;ul&gt;\n  &lt;li&gt;لو الإجابة &lt;b&gt;برقم&lt;/b&gt; (نسبة اللي اشتروا من كل نسخة) ← كمي.&lt;/li&gt;\n  &lt;li&gt;لو الإجابة &lt;b&gt;بجملة قالها حد&lt;/b&gt; ← كيفي.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;في الـ &lt;span class=\&quot;k\&quot;&gt;A/B testing&lt;/span&gt;، القرار بيتاخد بمقارنة &lt;b&gt;رقمين&lt;/b&gt;. محدش بيتسأل رأيه\nأصلا. يبقى كمي.&lt;/p&gt;\n&lt;p&gt;وخليك فاكر الحالة العكسية اللي فوق: &lt;span class=\&quot;k\&quot;&gt;heuristic evaluation&lt;/span&gt; مفيهاش ولا\nمستخدم وهي &lt;b&gt;كيفية&lt;/b&gt;. فالعبرة مش بوجود ناس، العبرة &lt;b&gt;بشكل الإجابة&lt;/b&gt;.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;الخمس تقنيات في جدول واحد. لو حفظت ده، الجزء ده من الامتحان خلص.&lt;/b&gt;&lt;/p&gt;\n&lt;table&gt;\n  &lt;tr&gt;&lt;th&gt;التقنية&lt;/th&gt;&lt;th&gt;النوع&lt;/th&gt;&lt;th&gt;بتشتغل إزاي&lt;/th&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;Usability testing&lt;/td&gt;&lt;td class=\&quot;n\&quot;&gt;Qualitative&lt;/td&gt;\n      &lt;td&gt;تتفرج على مستخدم حقيقي وهو بيحاول&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;Interviews&lt;/td&gt;&lt;td class=\&quot;n\&quot;&gt;Qualitative&lt;/td&gt;\n      &lt;td&gt;تسمع المستخدم بصوته هو&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;Heuristic evaluation&lt;/td&gt;&lt;td class=\&quot;n\&quot;&gt;Qualitative&lt;/td&gt;\n      &lt;td&gt;خبير يراجع على قواعد، من غير مستخدمين&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;Web analytics&lt;/td&gt;&lt;td class=\&quot;n\&quot;&gt;Quantitative&lt;/td&gt;\n      &lt;td&gt;تحلّل أرقام الزيارات (PV، bounce، CVR)&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;k\&quot;&gt;A/B testing&lt;/td&gt;&lt;td class=\&quot;n\&quot;&gt;Quantitative&lt;/td&gt;\n      &lt;td&gt;تقارن نسختين بالأرقام اللي طلعوها&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;\n&lt;p&gt;تلاتة كيفي واتنين كمي. والاتنين الكميين هما اللي فيهم &lt;b&gt;أرقام&lt;/b&gt;، مهما كان شكل الاسم.&lt;/p&gt;&quot;]">
+
+<div class="qbox new"><span class="tag new">GOING DEEPER</span>
+<p>Heuristic evaluation is the one qualitative method that needs <b>no users at all</b>, which is
+exactly why teams reach for it first: it is fast and it is cheap. An expert walks the interface
+against the list and writes down every place a rule is broken.</p>
+<p>Its weakness is the other side of the same coin. An expert can tell you that the status of the
+system is invisible; an expert cannot tell you that your users do not understand the word you chose
+for the button, because the expert already knows what it means. That is why the book places it
+<b>alongside</b> usability testing and not instead of it.</p>
+</div>
+
+<div class="qbox"><span class="tag">PAUSE &amp; THINK</span>
+<p class="q">Which of the four rely on numbers, and which on people's words?</p>
+<div class="ans">
+<p><b>Numbers:</b> web analytics, and A/B testing. Both are quantitative.</p>
+<p><b>People's words and behaviour:</b> usability testing, and interviews. Both are qualitative, and
+heuristic evaluation joins them as a third, with an expert in place of a user.</p>
+<p>The one that most often gets sorted into the wrong column is <b>A/B testing</b>. It feels like an
+experiment with people, so it sounds qualitative. It is not: it decides between two versions by
+<b>comparing the numbers</b> each one produces, so it belongs with the quantitative methods.</p>
+</div>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;تلتاشر مصطلح، بس هما فعليا أربع مجموعات. ذاكرهم كده.&lt;/b&gt;&lt;/p&gt;\n&lt;ol class=\&quot;circ\&quot;&gt;\n  &lt;li&gt;&lt;b&gt;النوعين:&lt;/b&gt; &lt;span class=\&quot;k\&quot;&gt;qualitative&lt;/span&gt; (ليه) و&lt;span class=\&quot;k\&quot;&gt;quantitative&lt;/span&gt;\n  (قد إيه).&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;تقنيات الكيفي التلاتة:&lt;/b&gt; &lt;span class=\&quot;k\&quot;&gt;usability testing&lt;/span&gt;،\n  &lt;span class=\&quot;k\&quot;&gt;interviews&lt;/span&gt;، &lt;span class=\&quot;k\&quot;&gt;heuristic evaluation&lt;/span&gt;.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;تقنيات الكمي الاتنين:&lt;/b&gt; &lt;span class=\&quot;k\&quot;&gt;web analytics&lt;/span&gt;،\n  &lt;span class=\&quot;k\&quot;&gt;A/B testing&lt;/span&gt;.&lt;/li&gt;\n  &lt;li&gt;&lt;b&gt;التلات مؤشرات:&lt;/b&gt; &lt;span class=\&quot;k\&quot;&gt;PV&lt;/span&gt; (عدد)، &lt;span class=\&quot;k\&quot;&gt;bounce rate&lt;/span&gt;\n  (نسبة الخروج من أول صفحة)، &lt;span class=\&quot;k\&quot;&gt;CVR&lt;/span&gt; (نسبة اللي حققوا الهدف).&lt;/li&gt;\n&lt;/ol&gt;\n&lt;p&gt;وفاضل &lt;b&gt;التلات قواعد&lt;/b&gt;: &lt;span class=\&quot;k\&quot;&gt;consistency&lt;/span&gt;،\n&lt;span class=\&quot;k\&quot;&gt;error prevention&lt;/span&gt;، &lt;span class=\&quot;k\&quot;&gt;visibility of system status&lt;/span&gt;.&lt;/p&gt;\n&lt;p&gt;يعني بدل ما تحفظ تلتاشر حاجة ورا بعض، احفظ: &lt;b&gt;2 أنواع، 5 تقنيات، 3 مؤشرات، 3 قواعد&lt;/b&gt;. ولو\nنسيت واحدة في الامتحان، هتعرف إنك ناسي، لأنك عارف العدد.&lt;/p&gt;&quot;]">
+<h2>Key Terms</h2>
+
+<table class="terms">
+  <tr><td class="k">qualitative evaluation</td>
+      <td>Evaluating the reasons behind users' behaviour, from their voices and what they do, where
+      the answer cannot be expressed as a number. The "why".</td></tr>
+  <tr><td class="k">quantitative evaluation</td>
+      <td>Evaluating objectively and statistically using numerical data such as access counts and
+      time. The "how much".</td></tr>
+  <tr><td class="k">usability testing</td>
+      <td>Observing users carrying out actual operations, to identify the points that are hard to
+      use.</td></tr>
+  <tr><td class="k">interviews</td>
+      <td>Hearing users' direct voices, to understand their needs and their
+      dissatisfactions.</td></tr>
+  <tr><td class="k">web analytics</td>
+      <td>A technique for analysing how a website is accessed using numerical values. The central
+      method of quantitative evaluation.</td></tr>
+  <tr><td class="k">A/B testing</td>
+      <td>Comparing two options to verify which one leads to better results. A quantitative
+      method.</td></tr>
+  <tr><td class="k">PV (Page View)</td>
+      <td>The total number of times a page has been viewed.</td></tr>
+  <tr><td class="k">bounce rate</td>
+      <td>The proportion of visits that ended after viewing only the first page.</td></tr>
+  <tr><td class="k">conversion rate (CVR)</td>
+      <td>The proportion of visits that achieved a target action, such as a purchase or a
+      registration.</td></tr>
+  <tr><td class="k">heuristic evaluation</td>
+      <td>A method in which experts identify problems in a website's UI based on rules of thumb. A
+      form of qualitative evaluation.</td></tr>
+  <tr><td class="k">consistency</td>
+      <td>A heuristic: whether the design and the operations are unified across the site.</td></tr>
+  <tr><td class="k">error prevention</td>
+      <td>A heuristic: whether the design makes it hard for users to make mistakes.</td></tr>
+  <tr><td class="k">visibility of system status</td>
+      <td>A heuristic: whether the system clearly shows the user what is happening.</td></tr>
+</table>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;عبارة A هي أشهر فخ في الدرس، وتستاهل تتفرجع.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;العبارة بتقول: «التقييم &lt;b&gt;الكيفي&lt;/b&gt; طريقة بتستخدم &lt;b&gt;بيانات رقمية&lt;/b&gt; عشان تقيّم\n&lt;b&gt;كميا&lt;/b&gt;».&lt;/p&gt;\n&lt;p&gt;شوف الجملة كويس. هي &lt;b&gt;مش&lt;/b&gt; جملة غلط من أصلها، هي &lt;b&gt;تعريف صح للطريقة التانية&lt;/b&gt;. الكتاب\nبيبدل الاسمين وبيسيب باقي الجملة سليمة تماما.&lt;/p&gt;\n&lt;p&gt;وده بيخلي الطالب اللي &lt;b&gt;حافظ الكلمات&lt;/b&gt; يقرا «بيانات رقمية... تقييم كمي» ويقول «أيوة صح»،\nويحط علامة صح وهو غلط.&lt;/p&gt;\n&lt;p&gt;العلاج: في أي عبارة صح وغلط في الدرس ده، &lt;b&gt;غطّي الاسم في أول الجملة&lt;/b&gt; واقرا الوصف الأول.\nاسأل نفسك: الوصف ده بتاع مين؟ وبعدين بص على الاسم وشوف مطابق ولا لأ.&lt;/p&gt;\n&lt;p&gt;وعبارة C نفس الحكاية بالظبط: الوصف بتاع &lt;span class=\&quot;k\&quot;&gt;CVR&lt;/span&gt; والاسم\n&lt;span class=\&quot;k\&quot;&gt;bounce rate&lt;/span&gt;.&lt;/p&gt;&quot;]">
+<h2>Worked Example</h2>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p class="q">(1) Mark each statement (A to D) with &#9675; if true or &times; if false.</p>
+<table>
+  <tr><td style="width:8%"><b>A</b></td>
+      <td>Qualitative evaluation is a method that uses numerical data to evaluate
+      quantitatively.</td></tr>
+  <tr><td><b>B</b></td>
+      <td>PV (Page View) is an indicator showing the number of times a page has been viewed.</td></tr>
+  <tr><td><b>C</b></td>
+      <td>The bounce rate is an indicator showing the proportion of visits that achieved a target
+      action.</td></tr>
+  <tr><td><b>D</b></td>
+      <td>Heuristic evaluation is a method in which experts identify UI problems based on rules of
+      thumb.</td></tr>
+</table>
+<div class="ans">
+<p><b>A: &times; false.</b> This is the definition of the other method. Qualitative evaluation observes
+users' voices and behaviour to evaluate qualitatively; using numerical data is <b>quantitative</b>
+evaluation. The book swaps the two names and leaves everything else correct, which is the commonest
+trick in this lesson.</p>
+<p><b>B: &#9675; true.</b> Correct definition of PV.</p>
+<p><b>C: &times; false.</b> The proportion of visits that achieved a target action is the
+<b>conversion rate</b>. The bounce rate is the proportion of visits that ended after viewing only the
+first page. Two proportions, two different things being counted.</p>
+<p><b>D: &#9675; true.</b> Correct definition of heuristic evaluation: <b>experts</b>, and <b>rules of
+thumb</b>.</p>
+</div>
+</div>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p class="q">(2) Match each description (a to c) with the most appropriate indicator.</p>
+<p>A PV (Page View) &middot; B Bounce rate &middot; C Conversion rate</p>
+<table>
+  <tr><td style="width:8%"><b>a</b></td><td>The number of times a page has been viewed</td></tr>
+  <tr><td><b>b</b></td><td>The proportion of visits that ended after viewing only the first
+      page</td></tr>
+  <tr><td><b>c</b></td><td>The proportion of visits that achieved a target action (purchase,
+      registration, and so on)</td></tr>
+</table>
+<div class="ans">
+<p><b>a: A, PV.</b> The number of page views.</p>
+<p><b>b: B, bounce rate.</b> The proportion who left after only the first page.</p>
+<p><b>c: C, conversion rate.</b> The proportion who achieved a target action.</p>
+<p>One word sorts all three: <b>number</b> for PV, <b>left</b> for bounce rate, <b>achieved</b> for
+CVR.</p>
+</div>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;ليه الطالب الشاطر بياخد درجتين من ستة في السؤال ده؟&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;لأنه بيكتب &lt;b&gt;التعريفين&lt;/b&gt;. يقول: الكمي بيستخدم أرقام، والكيفي بيستخدم آراء الناس. خلاص. والجملتين\nدول صح، وبياخدوا &lt;b&gt;درجتين بس&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;طب والأربعة التانيين فين؟ في حتة الطالب بيعدي عليها: &lt;b&gt;حدود كل واحد فيهم&lt;/b&gt;.&lt;/p&gt;\n&lt;table&gt;\n  &lt;tr&gt;&lt;th&gt;الفكرة&lt;/th&gt;&lt;th&gt;الدرجة&lt;/th&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td&gt;الكمي بيقيس قد إيه وفين&lt;/td&gt;&lt;td class=\&quot;n\&quot;&gt;1&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td&gt;وبيشوف &lt;b&gt;كل&lt;/b&gt; الزوار، فبيدي الصورة الكبيرة&lt;/td&gt;&lt;td class=\&quot;n\&quot;&gt;1&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td&gt;&lt;b&gt;لكن&lt;/b&gt; الرقم مالوش سبب، فما بيقولش &lt;b&gt;ليه&lt;/b&gt;&lt;/td&gt;&lt;td class=\&quot;n\&quot;&gt;1&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td&gt;الكيفي بيجيب الأسباب بكلام الناس&lt;/td&gt;&lt;td class=\&quot;n\&quot;&gt;1&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td&gt;&lt;b&gt;لكن&lt;/b&gt; بيتعمل مع كام واحد بس، فما بيقولش &lt;b&gt;كام&lt;/b&gt;&lt;/td&gt;&lt;td class=\&quot;n\&quot;&gt;1&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td&gt;فالدمج بيدي الاتنين: الأرقام تحدد المكان، الناس تفسّر، والأرقام تتأكد بعد التغيير&lt;/td&gt;\n      &lt;td class=\&quot;n\&quot;&gt;1&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;\n&lt;p&gt;يعني أربع درجات من الستة في كلمة &lt;b&gt;لكن&lt;/b&gt;. السؤال مش «إيه الاتنين»، السؤال\n&lt;b&gt;«ليه الاتنين مع بعض»&lt;/b&gt;، والإجابة بتبان لما تقول &lt;b&gt;إيه اللي كل واحد ما يقدرش يعمله&lt;/b&gt;.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;سطر «Refer to» مش زينة، ده الكتاب بيقولك الورقة متقسمة إزاي.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;مكتوب: «ارجع إلى: &lt;b&gt;اللي الأرقام بتوريه&lt;/b&gt;، و&lt;b&gt;اللي أصوات المستخدمين بتوريه&lt;/b&gt;». يعني\nحاجتين، يعني الإجابة لازم يكون فيها &lt;b&gt;نصين&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;ولو إجابتك كلها عن الأرقام وبس، أنت ضيّعت نص الورقة مهما كتبت كويس.&lt;/p&gt;\n&lt;p&gt;وطريقة عملية تكتب بيها السؤال ده في الامتحان: اكتب &lt;b&gt;ست جمل&lt;/b&gt;، تلاتة لكل نوع، بالترتيب ده:&lt;/p&gt;\n&lt;ol class=\&quot;circ\&quot;&gt;\n  &lt;li&gt;الكمي بيعمل إيه.&lt;/li&gt;\n  &lt;li&gt;قوته (بيشوف كل الزوار).&lt;/li&gt;\n  &lt;li&gt;حده (مفيش سبب جوه الرقم).&lt;/li&gt;\n  &lt;li&gt;الكيفي بيعمل إيه.&lt;/li&gt;\n  &lt;li&gt;حده (كام واحد بس).&lt;/li&gt;\n  &lt;li&gt;الخلاصة: الدمج، وليه هو أدق.&lt;/li&gt;\n&lt;/ol&gt;\n&lt;p&gt;ست جمل، ست درجات. وما تكتبش فقرة واحدة طويلة، لأن المصحح بيدوّر على &lt;b&gt;أفكار منفصلة&lt;/b&gt;.&lt;/p&gt;&quot;]">
+<h2>Exam-Style Question</h2>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK &middot; 6 MARKS</span>
+<p class="q">Explain why a website team should use both qualitative and quantitative evaluation rather
+than only one. [6]</p>
+<p><b>Refer to:</b> what numbers show, and what users' voices show.</p>
+<div class="ans">
+<p><b>The model answer, one mark per sentence.</b></p>
+<ol>
+  <li>Quantitative evaluation uses numerical data, such as PV, bounce rate and conversion rate, to
+  show objectively <b>how much</b> a site is being used and on which pages visits are being lost.</li>
+  <li>Because it is collected automatically from every visitor, it covers the whole site at once and
+  shows the overall trend, which no other method can do.</li>
+  <li>However, a number has no reason attached to it, so quantitative data can show that visitors
+  leave a page but never <b>why</b> they leave it.</li>
+  <li>Qualitative evaluation, through usability testing, interviews and heuristic evaluation,
+  explores the reasons behind users' behaviour and gives the causes in the users' own words.</li>
+  <li>But it is carried out with only a few users at a time, so on its own it cannot show whether the
+  problem it found affects many visitors or just those few.</li>
+  <li>Combining both is therefore more accurate: the numbers show <b>where</b> the problem is and how
+  big it is, the voices explain <b>why</b> it happens, and after a change the numbers can be checked
+  again to confirm whether the fix worked.</li>
+</ol>
+<p><b>Where students lose marks here.</b> Two definitions and nothing else is worth two marks out of
+six. The question is not "what are the two methods", it is <b>why use both</b>, so four of the six
+marks are in the limits: a number cannot say why, and a few users cannot say how many. Sentence 6 is
+the one that ties them together, and the "Refer to" line is the book telling you it expects both
+halves.</p>
+</div>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;في سؤال 2(1) فيه كلمة واحدة بتاخد الدرجة أو تضيّعها: كلمة «all».&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;السؤال بيقول «اختار &lt;b&gt;كل&lt;/b&gt; المصطلحات اللي من طرق التقييم الكمي». يعني الإجابة\n&lt;b&gt;أكتر من واحدة&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;الطالب بيقرا بسرعة، يشوف &lt;span class=\&quot;k\&quot;&gt;Web analytics&lt;/span&gt; ويقول «أيوة دي كمية»، ويحطها\nويمشي. والإجابة دي &lt;b&gt;صح&lt;/b&gt;... و&lt;b&gt;ناقصة&lt;/b&gt;، فبتاخد صفر.&lt;/p&gt;\n&lt;p&gt;الإجابة الكاملة: &lt;b&gt;B و D&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;وفي سؤال 2(2)، شوف الاختيارين B و C بيبتدوا بنفس الكلام:\n«The proportion of visits that...». الفرق في آخر كلمة بس:&lt;/p&gt;\n&lt;ul&gt;\n  &lt;li&gt;B بتنتهي بـ &lt;b&gt;ended&lt;/b&gt; (خرجت) ← دي &lt;span class=\&quot;k\&quot;&gt;bounce rate&lt;/span&gt;.&lt;/li&gt;\n  &lt;li&gt;C بتنتهي بـ &lt;b&gt;achieved&lt;/b&gt; (حققت) ← دي &lt;span class=\&quot;k\&quot;&gt;conversion rate&lt;/span&gt;، وهي\n  المطلوبة.&lt;/li&gt;\n&lt;/ul&gt;\n&lt;p&gt;و A و D مش بيوصفوا أي حاجة في الدرس أصلا. دول متبنيين من كلمات صح متركبة غلط، عشان يبانوا\nمألوفين.&lt;/p&gt;&quot;]">
+<h2>Try</h2>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p class="q">1. Answer the following questions.</p>
+<ol>
+  <li>What is the term for the method that evaluates qualitatively by observing user voices and
+  behaviour?</li>
+  <li>What is the term for the method that evaluates quantitatively using numerical data?</li>
+  <li>What is the two-letter abbreviation for the indicator showing the number of times a page has
+  been viewed?</li>
+  <li>What is the term for the method in which experts identify UI problems based on rules of
+  thumb?</li>
+</ol>
+<div class="ans">
+<p><b>1. Qualitative evaluation.</b> The giveaway words are "observing" and "voices and
+behaviour".</p>
+<p><b>2. Quantitative evaluation.</b> The giveaway word is "numerical".</p>
+<p><b>3. PV</b> (Page View).</p>
+<p><b>4. Heuristic evaluation.</b> The giveaway words are "experts" and "rules of thumb". Write the
+full two words; "heuristics" on its own names the rules, not the method.</p>
+</div>
+</div>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p class="q">2. (1) From the following options, choose <u>all</u> the terms that are part of
+quantitative evaluation methods.</p>
+<p>A Usability testing &middot; B Web analytics &middot; C Interviews &middot; D A/B testing</p>
+<div class="ans">
+<p><b>B and D.</b> Web analytics is the central quantitative method, and A/B testing decides between
+two versions by comparing the numbers each one produces.</p>
+<p>A and C are qualitative: usability testing observes a user working, and interviews hear what the
+user says. Note the word <b>all</b> in the question: an answer of B alone is incomplete and loses the
+mark even though B is correct.</p>
+</div>
+</div>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p class="q">2. (2) Choose the option that most appropriately describes the conversion rate.</p>
+<table>
+  <tr><td style="width:8%"><b>A</b></td><td>The proportion of times a page has been viewed</td></tr>
+  <tr><td><b>B</b></td><td>The proportion of visits that ended after viewing only the first
+      page</td></tr>
+  <tr><td><b>C</b></td><td>The proportion of visits that achieved a target action (product purchase,
+      member registration, and so on)</td></tr>
+  <tr><td><b>D</b></td><td>The proportion of viewed pages relative to the total number of pages on the
+      site</td></tr>
+</table>
+<div class="ans">
+<p><b>C.</b> The conversion rate is the proportion of visits that achieved a target action.</p>
+<p><b>B</b> is the bounce rate, and it is the answer most students pick when they are reading quickly,
+because both sentences begin with "the proportion of visits that". Read to the end of the sentence:
+one ends in <b>left</b>, the other in <b>achieved</b>. <b>A</b> and <b>D</b> describe nothing in the
+lesson at all; they are built out of the right words in the wrong order.</p>
+</div>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;التاسك دي في سطر واحد: الأرقام بتقولك فين، والناس بتقولك ليه.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;بس فيه حتة في السؤال ده بتضيع من أغلب الطلبة، وهي الجزء التاني من خطوة 2:\n&lt;b&gt;العميل اللي الأرقام بتخبّيه&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;تخيل واحد بيتصفّح من موبايل صغير ونت بطيء. الصفحة بتقف، فهو بيعمل &lt;b&gt;refresh&lt;/b&gt; تلات مرات.\nدلوقتي بص على الأرقام: الـ &lt;span class=\&quot;k\&quot;&gt;PV&lt;/span&gt; &lt;b&gt;زاد&lt;/b&gt; تلات مرات.&lt;/p&gt;\n&lt;p&gt;يعني إيه؟ يعني &lt;b&gt;الرقم اتحسن والمستخدم كان بيتعذب&lt;/b&gt;. ودي أقوى جملة ممكن تكتبها في السؤال ده.&lt;/p&gt;\n&lt;p&gt;ونفس الكلام على اللي بيستخدم &lt;span class=\&quot;k\&quot;&gt;screen reader&lt;/span&gt;، واللي داخل الموقع لأول مرة\nوما بيعرفش الكلمات اللي المحل مستخدمها. مفيش رقم بيشوف أي واحد فيهم، وكلهم بيبانوا في\n&lt;b&gt;دقيقتين&lt;/b&gt; لو قعدت تتفرج على حد منهم.&lt;/p&gt;&quot;, &quot;&lt;p&gt;&lt;b&gt;خطوة 3: ليه الترتيب «analytics الأول وبعدين usability test»؟&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;لأن الـ &lt;span class=\&quot;k\&quot;&gt;analytics&lt;/span&gt; &lt;b&gt;مجانية وشغالة لوحدها على كل الزوار&lt;/b&gt;. هي اللي\nهتقولك أنهي خطوة في الشراء بتخسر أكتر ناس.&lt;/p&gt;\n&lt;p&gt;وبعد ما تعرف الخطوة دي بالظبط، تيجي تصرف وقتك الغالي (تجربة استخدام) &lt;b&gt;عليها هي&lt;/b&gt;، مش على\nالموقع كله.&lt;/p&gt;\n&lt;p&gt;ولو عكست الترتيب، هتقعد تتفرج على ناس في صفحات عشوائية، ويمكن تطلع بمشاكل حقيقية بس في حتة ما\nحدش بيعدي منها أصلا.&lt;/p&gt;\n&lt;p&gt;وأحسن مؤشر تتابعه؟ &lt;span class=\&quot;k\&quot;&gt;CVR&lt;/span&gt;. ليه؟ لأن &lt;b&gt;المكتبة موجودة عشان تبيع كتب&lt;/b&gt;.\nو&lt;span class=\&quot;k\&quot;&gt;PV&lt;/span&gt; بيقولك كام واحد جه، و&lt;span class=\&quot;k\&quot;&gt;bounce rate&lt;/span&gt; بيقولك كام واحد\nمشي بسرعة، بس &lt;span class=\&quot;k\&quot;&gt;CVR&lt;/span&gt; بيقولك كام واحد &lt;b&gt;عمل اللي الموقع متعمل عشانه&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;والسؤال ده بيقبل أي إجابة، &lt;b&gt;بشرط&lt;/b&gt; إن السبب يكون مربوط بهدف الموقع.&lt;/p&gt;&quot;]">
+<h2>Think as an Engineer: Investigate &amp; Decide</h2>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p class="q">A small online bookstore in your city wants to know whether its website really works for
+customers. You plan how to evaluate it.</p>
+<p><b>1 &middot; Collect data.</b> Ask five classmates who have used an online bookstore to visit any
+online shop and, for each, record one number you could measure (for example, how many pages they
+viewed) and one thing they said was confusing. Put the results in a small table.</p>
+<p><b>2 &middot; Analyse the signals.</b> Suppose the bookstore's PV is high but its conversion rate
+is very low. What might that mean, and which method would tell you why? Then consider one customer
+the data may hide, and note one difficulty they might face that a raw PV count would never show.</p>
+<p><b>3 &middot; Decide.</b> Recommend which two evaluation methods the bookstore should use first and
+give two reasons drawn from your table. Agree with a partner on the single most useful indicator to
+track.</p>
+<div class="ans">
+<p><b>Step 1, a worked table.</b> Your own numbers will differ; what matters is that every row has a
+number on one side and a sentence on the other, because that is the whole lesson in one table.</p>
+<table>
+  <tr><th style="width:14%">Person</th><th style="width:36%">One number I could measure</th>
+      <th>One thing they said was confusing</th></tr>
+  <tr><td>A</td><td>Viewed 7 pages before finding a book</td>
+      <td>"The categories and the search box are far apart."</td></tr>
+  <tr><td>B</td><td>Left after 1 page</td><td>"The home page is all offers, I could not see any
+      books."</td></tr>
+  <tr><td>C</td><td>Took about 4 minutes to reach the basket</td>
+      <td>"I could not tell whether the book was added."</td></tr>
+  <tr><td>D</td><td>Viewed 3 pages, bought nothing</td>
+      <td>"Delivery cost only appeared at the last step."</td></tr>
+  <tr><td>E</td><td>Reached the last step, did not finish</td>
+      <td>"It asked me to register before paying."</td></tr>
+</table>
+<p><b>Step 2, what high PV with low CVR means.</b> Plenty of people reach the site, so the problem is
+not attracting visitors; the problem is between arriving and buying. The number locates the gap and
+stops there, because a conversion rate cannot name a cause. The method that tells you why is
+<b>qualitative</b>: a usability test on the path from the product page to the finished order, or
+interviews with people who abandoned a basket. Person C and person E in the table above are already
+pointing at the two likeliest causes.</p>
+<p><b>One customer the data may hide.</b> Someone shopping on a small phone screen with a slow
+connection. A raw PV count treats their visit as identical to everyone else's, and may even count
+their repeated reloads as extra views, so the number goes <b>up</b> while their experience is getting
+worse. A customer using a screen reader is hidden the same way, and so is a first-time visitor who
+does not know the shop's wording. None of this appears in the figures, and all of it appears within
+two minutes of watching one such person try to buy a book.</p>
+<p><b>Step 3, a defensible recommendation.</b> Start with <b>web analytics</b> and a short
+<b>usability test</b>, in that order. First reason: analytics is already collecting data from every
+visitor at no cost, and it is the only method that can show which step of the purchase loses the most
+people, which is where the limited time should be spent. Second reason: three of the five people in
+the table described a problem that no number would ever reveal (the hidden delivery cost, the unclear
+basket, the forced registration), so a method that produces sentences is needed as well as one that
+produces figures.</p>
+<p><b>The single most useful indicator:</b> the <b>conversion rate</b>. PV says how many people came
+and bounce rate says how many left immediately, but a bookshop exists to sell books, so the one number
+that reflects whether the site is doing its job is the share of visits that end in a purchase. Any
+answer is acceptable here if the reason is tied to the site's purpose, which is what the question is
+really testing.</p>
+</div>
+</div>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;السؤال ده بيطلب تلات حاجات، والطالب بيدي اتنين.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;اقرا السؤال تاني: «اذكر &lt;b&gt;مؤشر كمي&lt;/b&gt; واحد بيكشف المشكلة، و&lt;b&gt;طريقة كيفية&lt;/b&gt; واحدة تلاقي\nسببها، و&lt;b&gt;إصلاح&lt;/b&gt; واحد محتمل».&lt;/p&gt;\n&lt;p&gt;تلاتة. والإجابة الناقصة الشهيرة بتقول: «الـ bounce rate عالي، يبقى نحط اللي الناس عايزاه في أول\nالصفحة». دي اتنين، والتانية في النص (&lt;b&gt;الطريقة&lt;/b&gt;) &lt;b&gt;اتقفزت&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;وليه الطريقة مهمة؟ لأن من غيرها أنت &lt;b&gt;بتخمّن&lt;/b&gt; الإصلاح. الـ bounce rate قالك إن في مشكلة في\nالصفحة الأولى، ما قالكش المشكلة إيه. يمكن الصفحة بطيئة، ويمكن اللينك مش باين، ويمكن المحتوى مش اللي\nالناس جاية عشانه.&lt;/p&gt;\n&lt;p&gt;فالسلسلة هي اللي بتجيب الدرجات: &lt;b&gt;الرقم بيقول في مشكلة ← الطريقة بتقول المشكلة إيه ← وبعدين\nالإصلاح يبقى له معنى&lt;/b&gt;.&lt;/p&gt;\n&lt;p&gt;ولاحظ حاجة لطيفة في السؤال: عدد الزيارات العالي (&lt;span class=\&quot;k\&quot;&gt;PV&lt;/span&gt;) لوحده\n&lt;b&gt;بيبان خبر كويس&lt;/b&gt;. اللي بيحوّله لمشكلة هو &lt;span class=\&quot;k\&quot;&gt;bounce rate&lt;/span&gt; اللي جنبه.&lt;/p&gt;&quot;]">
+<h2>In a New Context</h2>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p class="q">A school's new website gets many visits, but most people leave after the first page. Name
+one quantitative indicator that reveals this problem, one qualitative method to find its cause, and
+one likely fix.</p>
+<div class="ans">
+<p><b>The quantitative indicator: the bounce rate.</b> It is defined as the proportion of visits that
+ended after viewing only the first page, which is exactly the behaviour described. The high visit
+count is the PV, and notice that the PV alone looks like good news; it is the bounce rate beside it
+that turns the same traffic into a problem.</p>
+<p><b>The qualitative method: a usability test.</b> Sit five parents in front of the home page and ask
+each one to find something real, for example next week's timetable or the exam dates, then watch
+without helping. Interviews are an equally good answer: ask people who visited what they came for and
+whether they found it.</p>
+<p><b>One likely fix:</b> put what visitors actually come for on the first page, with a clear link to
+it, instead of a welcome message and a photograph. If the test shows that parents arrive looking for
+the timetable and the home page opens with a greeting, the fix is to give the timetable a visible
+place at the top rather than to redesign the whole site.</p>
+<p><b>What makes the answer complete:</b> three parts are asked for and three must be named. A common
+half answer gives the bounce rate and then jumps straight to the fix, skipping the method. The marks
+are for the chain: the number shows there is a problem, the method finds the cause, and only then does
+a fix make sense.</p>
+</div>
+</div>
+
+<h3 class="sub">Lesson Question, Answered</h3>
+
+<p class="gq">How can a website be evaluated, and why is it useful to combine numbers with users'
+voices?</p>
+
+<p>Evaluation falls into two kinds. <b>Quantitative evaluation</b> uses numerical data, through web
+analytics indicators such as <b>PV</b> (how many views), <b>bounce rate</b> (how many leave after the
+first page) and <b>CVR</b> (how many reach a target action), to show objectively how much a site is
+used; A/B testing belongs here too, because it compares two versions by their numbers.
+<b>Qualitative evaluation</b> explores the reasons behind users' behaviour, through <b>usability
+testing</b>, <b>interviews</b>, and <b>heuristic evaluation</b>, in which experts check the interface
+against rules of thumb such as consistency, error prevention and visibility of system status.</p>
+
+<p>Numbers reveal what is happening but not why; users' voices and expert checks reveal the causes but
+only for the few people who were asked. Combining the two, the "how much" and the "why", gives the
+most accurate evaluation and the clearest path to improvement: the numbers point to the page that is
+losing people, the voices explain what goes wrong there, and after the change the numbers say whether
+it worked.</p>
+
+  </section>
+  <section class="blk" data-ways="[&quot;&lt;p&gt;&lt;b&gt;سؤال 3(2) مبني بطريقة تستاهل تتشاف، لأنها بتتكرر في الامتحان.&lt;/b&gt;&lt;/p&gt;\n&lt;p&gt;التلات اختيارات الغلط &lt;b&gt;مش&lt;/b&gt; كلام عشوائي. كل واحد فيهم &lt;b&gt;تعريف صحيح لطريقة تانية من نفس\nالدرس&lt;/b&gt;:&lt;/p&gt;\n&lt;table&gt;\n  &lt;tr&gt;&lt;th&gt;الاختيار&lt;/th&gt;&lt;th&gt;ده تعريف إيه فعلا&lt;/th&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;n\&quot;&gt;A&lt;/td&gt;&lt;td&gt;&lt;span class=\&quot;k\&quot;&gt;Usability testing&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;n\&quot;&gt;B&lt;/td&gt;&lt;td&gt;&lt;span class=\&quot;k\&quot;&gt;Web analytics&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;n\&quot;&gt;C&lt;/td&gt;&lt;td&gt;&lt;span class=\&quot;k\&quot;&gt;Heuristic evaluation&lt;/span&gt; ← الإجابة&lt;/td&gt;&lt;/tr&gt;\n  &lt;tr&gt;&lt;td class=\&quot;n\&quot;&gt;D&lt;/td&gt;&lt;td&gt;&lt;span class=\&quot;k\&quot;&gt;A/B testing&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;\n&lt;p&gt;ومعنى كده حاجة مهمة: السؤال ده &lt;b&gt;ما ينفعش يتحل بالاستبعاد&lt;/b&gt;. مفيش اختيار «باين إنه غلط»، لأن\nكلهم تعريفات سليمة. الطريقة الوحيدة إنك تكون عارف الأربعة.&lt;/p&gt;\n&lt;p&gt;وفقرة الملء في سؤال 2 هي أخطر حاجة في الدرس كله: &lt;b&gt;خمس فراغات فيهم الدرس بحاله&lt;/b&gt;. لو قدرت\nتملاها من دماغك، تبقى جاهز للجزء ده من أي ورقة.&lt;/p&gt;&quot;]">
+<h2>Reflect, Challenge, and the Exercise</h2>
+
+<div class="qbox"><span class="tag">REFLECT</span>
+<p class="q">If you could see only one metric for a site you use, would you choose PV, bounce rate, or
+CVR, and why?</p>
+<div class="ans">
+<p>There is no single right answer; the mark is in the reason, and the reason has to come from what
+the site is <b>for</b>.</p>
+<p>For a shop or a booking service, choose the <b>CVR</b>: the site exists so that people buy or
+reserve, so the share of visits that reach that action is the closest thing to a verdict on whether
+it works. For a news site or a school page, whose purpose is to be read, <b>PV</b> is defensible. For
+a site you suspect is broken rather than unvisited, <b>bounce rate</b> is the one that would reveal
+it fastest.</p>
+<p>Whichever you pick, say what the metric would <b>not</b> tell you. That sentence is what separates
+a full answer from a preference.</p>
+</div>
+</div>
+
+<div class="qbox"><span class="tag">CHALLENGE</span>
+<p class="q">A page has a high bounce rate. Design a short qualitative test that would reveal the
+cause, and say what you would change first.</p>
+<div class="ans">
+<p><b>The test.</b> Five people, five minutes each. Give each one a real task that the page is
+supposed to serve, for example "find the price of delivery to your area", then ask them to say out
+loud what they are looking at and what they expect to happen. Do not help, do not explain the page,
+and write down the exact moment each person hesitates and the words they use. End with one question:
+"what did you expect to see here?"</p>
+<p>Five is enough, which surprises people. You are not measuring anything, so you do not need a large
+sample; you are looking for the obstacle, and the same obstacle usually stops the second and third
+person as well.</p>
+<p><b>What I would change first.</b> Whatever stopped the most people at the earliest point. An
+obstacle in the first few seconds affects every visitor who arrives, while one at the last step
+affects only those who got that far, so fixing the earliest blocker moves the bounce rate most. Then
+measure again, because that is how you find out whether the explanation was right.</p>
+</div>
+</div>
+
+<h3 class="sub">Exercise</h3>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p class="q">2. Read the passage and fill in the blanks (a) to (e).</p>
+<p>Methods for evaluating a website include ( a ) evaluation, which observes user voices and
+behaviour, and ( b ) evaluation, which analyses using numerical data. Typical indicators used in ( b )
+evaluation are ( c ), which shows the number of times a page has been viewed; ( d ), which shows the
+proportion of visits that ended after viewing only the first page; and ( e ), which shows the
+proportion of visits that achieved a target action.</p>
+<div class="ans">
+<p><b>(a) qualitative &middot; (b) quantitative &middot; (c) PV (Page View) &middot; (d) bounce rate
+&middot; (e) conversion rate (CVR)</b></p>
+<p>This passage is the whole lesson in five blanks, and it is the most likely thing in the lesson to
+appear in an exam word for word. If you can fill it from memory, you can answer most of Part B of any
+paper on 4-3.</p>
+</div>
+</div>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p class="q">3. (1) For each method, indicate which it falls under: A qualitative evaluation, B
+quantitative evaluation.</p>
+<table>
+  <tr><td style="width:8%"><b>a</b></td><td>Have users actually explore the website and observe its
+      usability</td></tr>
+  <tr><td><b>b</b></td><td>Tally the access counts and page views of the website</td></tr>
+  <tr><td><b>c</b></td><td>Interview users to hear their impressions and improvement requests</td></tr>
+</table>
+<div class="ans">
+<p><b>a: A, qualitative.</b> This is usability testing: a user is observed working.</p>
+<p><b>b: B, quantitative.</b> Tallying counts is web analytics.</p>
+<p><b>c: A, qualitative.</b> Interviews hear the user's own words.</p>
+<p>The verbs decide it: <b>observe</b> and <b>interview</b> are qualitative, <b>tally</b> is
+quantitative.</p>
+</div>
+</div>
+
+<div class="qbox"><span class="tag">FROM THE TEXTBOOK</span>
+<p class="q">3. (2) Choose the option that most appropriately describes heuristic evaluation.</p>
+<table>
+  <tr><td style="width:8%"><b>A</b></td><td>A method in which users explore the site and usability is
+      observed</td></tr>
+  <tr><td><b>B</b></td><td>A method in which numerical data is tallied and site usage is
+      analysed</td></tr>
+  <tr><td><b>C</b></td><td>A method in which experts identify UI problems based on rules of
+      thumb</td></tr>
+  <tr><td><b>D</b></td><td>A method in which two patterns are prepared and compared with data to see
+      which is more effective</td></tr>
+</table>
+<div class="ans">
+<p><b>C.</b> Experts, and rules of thumb.</p>
+<p>The three wrong options are the other three methods in the lesson, each defined correctly: A is
+usability testing, B is web analytics, and D is A/B testing. That is worth noticing, because a
+question built this way cannot be answered by elimination unless you know all four.</p>
+</div>
+</div>
+
+<p class="ar"><b>الدرس كله في سطر:</b> الأرقام بتقولك <b>فين</b> المشكلة، والناس بتقولك
+<b>ليه</b>.</p>
+
+  </section>
+
+  <div class="end">
+    <h2>خلصت الدرس</h2>
+    <p>باقي الـ PDF فيه الأسئلة والتمارين بإجاباتها، وزيادة عليها Part C بعشر أسئلة ومفتاحها.</p>
+    <a class="btn" href="../../">كل الواجبات</a>
+  </div>
+
+  <p class="foot">Programming and Artificial Intelligence &middot; Egyptian Baccalaureate &middot; Year 2</p>
+</main>
+
+<script>
+const KEY = "learn-4-3-open";
+let open = {};
+try { open = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { open = {}; }
+function remember() { try { localStorage.setItem(KEY, JSON.stringify(open)); } catch (e) {} }
+
+document.querySelectorAll(".blk").forEach((blk, i) => {
+  const ways = JSON.parse(blk.dataset.ways || "[]");
+  if (!ways.length) return;
+
+  const wrap = document.createElement("div");
+  wrap.className = "ask";
+  const btn = document.createElement("button");
+  btn.type = "button";
+  const cnt = document.createElement("span");
+  cnt.className = "cnt";
+  const panel = document.createElement("div");
+  panel.hidden = true;
+  wrap.append(btn, cnt, panel);
+  blk.append(wrap);
+
+  let at = typeof open[i] === "number" ? open[i] : -1;   // -1 means closed
+
+  function paint() {
+    if (at < 0) {
+      panel.hidden = true;
+      panel.innerHTML = "";
+      btn.textContent = "مش فاهم؟";
+      cnt.textContent = "";
+      return;
+    }
+    panel.hidden = false;
+    panel.className = "way";
+    panel.innerHTML = ways[at];
+    btn.textContent = at + 1 < ways.length ? "اشرحها بطريقة تانية" : "إخفاء";
+    cnt.textContent = ways.length > 1 ? "طريقة " + (at + 1) + " من " + ways.length : "";
+  }
+
+  btn.addEventListener("click", () => {
+    at = at + 1 < ways.length ? at + 1 : -1;
+    open[i] = at;
+    remember();
+    paint();
+  });
+  paint();
+});
+
+const prog = document.getElementById("prog");
+function scrolled() {
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  prog.style.width = (max > 0 ? Math.min(100, (h.scrollTop / max) * 100) : 0) + "%";
+}
+addEventListener("scroll", scrolled, { passive: true });
+addEventListener("resize", scrolled);
+scrolled();
+</script>
+</body>
+</html>
